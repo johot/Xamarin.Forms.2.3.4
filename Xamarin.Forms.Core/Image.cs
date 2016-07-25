@@ -5,7 +5,7 @@ using Xamarin.Forms.Platform;
 namespace Xamarin.Forms
 {
 	[RenderWith(typeof(_ImageRenderer))]
-	public class Image : View, IImageController
+	public class Image : View, IImageController, IElementConfiguration<Image>
 	{
 		public static readonly BindableProperty SourceProperty = BindableProperty.Create("Source", typeof(ImageSource), typeof(Image), default(ImageSource), propertyChanging: OnSourcePropertyChanging,
 			propertyChanged: OnSourcePropertyChanged);
@@ -17,6 +17,13 @@ namespace Xamarin.Forms
 		internal static readonly BindablePropertyKey IsLoadingPropertyKey = BindableProperty.CreateReadOnly("IsLoading", typeof(bool), typeof(Image), default(bool));
 
 		public static readonly BindableProperty IsLoadingProperty = IsLoadingPropertyKey.BindableProperty;
+
+		readonly PlatformConfigurationRegistry<Image> _platformConfigurationRegistry;
+
+		public Image()
+		{
+			_platformConfigurationRegistry = new PlatformConfigurationRegistry<Image>(this);
+		}
 
 		public Aspect Aspect
 		{
@@ -153,6 +160,11 @@ namespace Xamarin.Forms
 		void IImageController.SetIsLoading(bool isLoading)
 		{
 			SetValue(IsLoadingPropertyKey, isLoading);
+		}
+
+		public IPlatformElementConfiguration<T, Image> On<T>() where T : IConfigPlatform
+		{
+			return _platformConfigurationRegistry.On<T>();
 		}
 	}
 }
