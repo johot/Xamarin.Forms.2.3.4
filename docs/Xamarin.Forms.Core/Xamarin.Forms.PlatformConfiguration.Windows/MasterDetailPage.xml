@@ -1,0 +1,136 @@
+<Type Name="MasterDetailPage" FullName="Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage">
+  <TypeSignature Language="C#" Value="public static class MasterDetailPage" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit MasterDetailPage extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Forms.Core</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="CollapseStyleProperty">
+      <MemberSignature Language="C#" Value="public static readonly Xamarin.Forms.BindableProperty CollapseStyleProperty;" />
+      <MemberSignature Language="ILAsm" Value=".field public static initonly class Xamarin.Forms.BindableProperty CollapseStyleProperty" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.BindableProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCollapseStyle">
+      <MemberSignature Language="C#" Value="public static Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle GetCollapseStyle (Xamarin.Forms.BindableObject element);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle GetCollapseStyle(class Xamarin.Forms.BindableObject element) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="element" Type="Xamarin.Forms.BindableObject" />
+      </Parameters>
+      <Docs>
+        <param name="element">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCollapseStyle">
+      <MemberSignature Language="C#" Value="public static Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle GetCollapseStyle (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; config);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle GetCollapseStyle(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; config) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="config">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetCollapseStyle">
+      <MemberSignature Language="C#" Value="public static void SetCollapseStyle (Xamarin.Forms.BindableObject element, Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void SetCollapseStyle(class Xamarin.Forms.BindableObject element, valuetype Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="element" Type="Xamarin.Forms.BindableObject" />
+        <Parameter Name="value" Type="Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle" />
+      </Parameters>
+      <Docs>
+        <param name="element">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UseCollapseStyle">
+      <MemberSignature Language="C#" Value="public static Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; UseCollapseStyle (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; config, Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; UseCollapseStyle(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; config, valuetype Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;" RefType="this" />
+        <Parameter Name="value" Type="Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle" />
+      </Parameters>
+      <Docs>
+        <param name="config">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UsePartialCollapse">
+      <MemberSignature Language="C#" Value="public static Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; UsePartialCollapse (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; config);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; UsePartialCollapse(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; config) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="config">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

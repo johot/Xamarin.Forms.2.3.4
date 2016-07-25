@@ -197,6 +197,7 @@
       <Type Name="Command" Kind="Class" />
       <Type Name="Command`1" DisplayName="Command&lt;T&gt;" Kind="Class" />
       <Type Name="Condition" Kind="Class" />
+      <Type Name="Configuration`2" DisplayName="Configuration&lt;TPlatform,TElement&gt;" Kind="Class" />
       <Type Name="Constraint" Kind="Class" />
       <Type Name="ConstraintExpression" Kind="Class" />
       <Type Name="ConstraintType" Kind="Enumeration" />
@@ -253,8 +254,11 @@
       <Type Name="IAppLinks" Kind="Interface" />
       <Type Name="IButtonController" Kind="Interface" />
       <Type Name="ICellController" Kind="Interface" />
+      <Type Name="IConfigElement`1" DisplayName="IConfigElement&lt;T&gt;" Kind="Interface" />
+      <Type Name="IConfigPlatform" Kind="Interface" />
       <Type Name="IDefinition" Kind="Interface" />
       <Type Name="IEffectControlProvider" Kind="Interface" />
+      <Type Name="IElementConfiguration`1" DisplayName="IElementConfiguration&lt;TElement&gt;" Kind="Interface" />
       <Type Name="IElementController" Kind="Interface" />
       <Type Name="IEntryCellController" Kind="Interface" />
       <Type Name="IEntryController" Kind="Interface" />
@@ -282,6 +286,7 @@
       <Type Name="IPageContainer`1" DisplayName="IPageContainer&lt;T&gt;" Kind="Interface" />
       <Type Name="IPageController" Kind="Interface" />
       <Type Name="IPlatform" Kind="Interface" />
+      <Type Name="IPlatformElementConfiguration`2" DisplayName="IPlatformElementConfiguration&lt;TPlatform,TElement&gt;" Kind="Interface" />
       <Type Name="IPlatformEngine" Kind="Interface" />
       <Type Name="IRegisterable" Kind="Interface" />
       <Type Name="IScrollViewController" Kind="Interface" />
@@ -446,6 +451,18 @@
       <Type Name="PreserveAttribute" Kind="Class" />
       <Type Name="Ticker" Kind="Class" />
       <Type Name="ToolbarTracker" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Xamarin.Forms.PlatformConfiguration.Android">
+      <Type Name="AndroidPlatform" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Xamarin.Forms.PlatformConfiguration.iOS">
+      <Type Name="iOSPlatform" Kind="Class" />
+      <Type Name="NavigationPage" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Xamarin.Forms.PlatformConfiguration.Windows">
+      <Type Name="CollapseStyle" Kind="Enumeration" />
+      <Type Name="MasterDetailPage" Kind="Class" />
+      <Type Name="WindowsPlatform" Kind="Class" />
     </Namespace>
     <Namespace Name="Xamarin.Forms.Xaml">
       <Type Name="IMarkupExtension" Kind="Interface" />
@@ -1061,6 +1078,115 @@
           <summary>Returns the instance of type <paramref name="T" /> that has name <paramref name="T" /> in the scope that includes <paramref name="element" />.</summary>
         </Docs>
         <Link Type="Xamarin.Forms.NameScopeExtensions" Member="M:Xamarin.Forms.NameScopeExtensions.FindByName``1(Xamarin.Forms.Element,System.String)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="EnableTranslucentNavigationBar">
+        <MemberSignature Language="C#" Value="public static Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage&gt; EnableTranslucentNavigationBar (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage&gt; config, bool value);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform, class Xamarin.Forms.NavigationPage&gt; EnableTranslucentNavigationBar(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform, class Xamarin.Forms.NavigationPage&gt; config, bool value) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage&gt;" RefType="this" />
+          <Parameter Name="value" Type="System.Boolean" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <param name="value">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.iOS.NavigationPage" Member="M:Xamarin.Forms.PlatformConfiguration.iOS.NavigationPage.EnableTranslucentNavigationBar(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage},System.Boolean)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="IsNavigationBarTranslucent">
+        <MemberSignature Language="C#" Value="public static bool IsNavigationBarTranslucent (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage&gt; config);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsNavigationBarTranslucent(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform, class Xamarin.Forms.NavigationPage&gt; config) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Boolean</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage&gt;" RefType="this" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.iOS.NavigationPage" Member="M:Xamarin.Forms.PlatformConfiguration.iOS.NavigationPage.IsNavigationBarTranslucent(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.iOS.iOSPlatform,Xamarin.Forms.NavigationPage})" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="GetCollapseStyle">
+        <MemberSignature Language="C#" Value="public static Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle GetCollapseStyle (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; config);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle GetCollapseStyle(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; config) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;" RefType="this" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage" Member="M:Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage.GetCollapseStyle(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage})" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="UseCollapseStyle">
+        <MemberSignature Language="C#" Value="public static Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; UseCollapseStyle (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; config, Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle value);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; UseCollapseStyle(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; config, valuetype Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle value) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;" RefType="this" />
+          <Parameter Name="value" Type="Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <param name="value">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage" Member="M:Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage.UseCollapseStyle(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage},Xamarin.Forms.PlatformConfiguration.Windows.CollapseStyle)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="UsePartialCollapse">
+        <MemberSignature Language="C#" Value="public static Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; UsePartialCollapse (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt; config);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; UsePartialCollapse(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform, class Xamarin.Forms.MasterDetailPage&gt; config) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage&gt;" RefType="this" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage" Member="M:Xamarin.Forms.PlatformConfiguration.Windows.MasterDetailPage.UsePartialCollapse(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.Windows.WindowsPlatform,Xamarin.Forms.MasterDetailPage})" />
       </Member>
     </ExtensionMethod>
     <ExtensionMethod>
