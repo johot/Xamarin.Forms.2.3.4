@@ -26,16 +26,11 @@ namespace Xamarin.Forms.Controls
 			_testCloudService = DependencyService.Get<ITestCloudService>();
 			InitInsights();
 
-			var mainMdp = new MasterDetailPage
+			MainPage = new MasterDetailPage
 			{
 				Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
 				Detail = CoreGallery.GetMainPage()
 			};
-
-			mainMdp.MasterBehavior = MasterBehavior.Popover;
-			mainMdp.On<Windows>().UseCollapseStyle(CollapseStyle.Partial);
-
-			MainPage = mainMdp;
 		}
 
 		protected override void OnAppLinkRequestReceived(Uri uri)
