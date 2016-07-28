@@ -295,7 +295,6 @@ IPageController PageController => Element as IPageController;
 
 		void UpdateMode()
 		{
-			// TODO EZH UpdateMode really only changes mode, we need collapsestyle and collapsedpanewidth to be properties which trigger updates as well (DPs)
 			Control.CollapseStyle = Element.OnThisPlatform().GetCollapseStyle();
 			Control.CollapsedPaneWidth = Element.OnThisPlatform().CollapsedPaneWidth();
 			Control.ShouldShowSplitMode = MasterDetailPageController.ShouldShowSplitMode;
