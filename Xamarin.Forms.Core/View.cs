@@ -17,7 +17,7 @@ namespace Xamarin.Forms
 
 		public static readonly BindableProperty MarginProperty = BindableProperty.Create("Margin", typeof(Thickness), typeof(View), default(Thickness), propertyChanged: MarginPropertyChanged);
 
-		public static readonly BindableProperty FlowDirectionProperty = BindableProperty.Create("FlowDirection", typeof(FlowDirection), typeof(View), FlowDirection.LeftToRight, BindingMode.OneWay, null, null, null, null, null, isInheritable: true);
+		public static readonly BindableProperty FlowDirectionProperty = BindableProperty.Create(nameof(FlowDirection), typeof(FlowDirection), typeof(View), FlowDirection.LeftToRight, BindingMode.OneWay, null, null, null, null, null, isInheritable: true);
 
 		readonly ObservableCollection<IGestureRecognizer> _gestureRecognizers = new ObservableCollection<IGestureRecognizer>();
 
