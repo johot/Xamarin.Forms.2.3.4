@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Internals;
 
@@ -10,7 +11,7 @@ namespace Xamarin.Forms
 	public abstract class BindableObject : INotifyPropertyChanged, IDynamicResourceHandler
 	{
 		public static readonly BindableProperty BindingContextProperty = BindableProperty.Create("BindingContext", typeof(object), typeof(BindableObject), default(object), BindingMode.OneWay, null,
-			BindingContextPropertyBindingPropertyChanged, null, null, BindingContextPropertyBindingChanging);
+			BindingContextPropertyBindingPropertyChanged, null, null, BindingContextPropertyBindingChanging, isInheritable: false);
 
 		readonly List<BindablePropertyContext> _properties = new List<BindablePropertyContext>(4);
 
@@ -125,23 +126,17 @@ namespace Xamarin.Forms
 
 		protected virtual void OnBindingContextChanged()
 		{
-			EventHandler change = BindingContextChanged;
-			if (change != null)
-				change(this, EventArgs.Empty);
+			BindingContextChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		protected virtual void OnPropertyChanging([CallerMemberName] string propertyName = null)
 		{
-			PropertyChangingEventHandler changing = PropertyChanging;
-			if (changing != null)
-				changing(this, new PropertyChangingEventArgs(propertyName));
+			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
 		}
 
 		protected void UnapplyBindings()
@@ -152,6 +147,30 @@ namespace Xamarin.Forms
 					continue;
 
 				context.Binding.Unapply();
+			}
+		}
+
+		internal void InheritProperties(BindableObject ancestor)
+		{
+			if (ancestor == null)
+			{
+				foreach (var context in _properties)
+				{
+					if ((context.Attributes & BindableContextAttributes.IsInherited) != 0)
+					{
+						ClearValue(context.Property);
+					}
+				}
+			}
+			else
+			{
+				foreach (var context in ancestor._properties)
+				{
+					if (context.Property.IsInheritable)
+					{
+						SetInheritedValue(context.Property, context.Value);
+					}
+				}
 			}
 		}
 
@@ -331,6 +350,7 @@ namespace Xamarin.Forms
 			bool silent = (privateAttributes & SetValuePrivateFlags.Silent) != 0;
 			bool fromStyle = (privateAttributes & SetValuePrivateFlags.FromStyle) != 0;
 			bool converted = (privateAttributes & SetValuePrivateFlags.Converted) != 0;
+			bool inherited = (privateAttributes & SetValuePrivateFlags.Inherited) != 0;
 
 			if (property == null)
 				throw new ArgumentNullException("property");
@@ -361,6 +381,11 @@ namespace Xamarin.Forms
 			if (fromStyle)
 				context.Attributes |= BindableContextAttributes.IsSetFromStyle;
 			// else omitted on purpose
+
+			if (inherited)
+				context.Attributes |= BindableContextAttributes.IsInherited;
+			else
+				context.Attributes &= ~BindableContextAttributes.IsInherited;
 
 			bool currentlyApplying = _applying;
 
@@ -448,9 +473,7 @@ namespace Xamarin.Forms
 			bool same = Equals(original, newValue);
 			if (!same)
 			{
-				if (property.PropertyChanging != null)
-					property.PropertyChanging(this, original, newValue);
-
+				property.PropertyChanging?.Invoke(this, original, newValue);
 				OnPropertyChanging(property.PropertyName);
 			}
 
@@ -461,8 +484,7 @@ namespace Xamarin.Forms
 			if (!same)
 			{
 				OnPropertyChanged(property.PropertyName);
-				if (property.PropertyChanged != null)
-					property.PropertyChanged(this, original, newValue);
+				property.PropertyChanged?.Invoke(this, original, newValue);
 			}
 		}
 
@@ -532,6 +554,26 @@ namespace Xamarin.Forms
 				(fromStyle ? SetValuePrivateFlags.FromStyle : SetValuePrivateFlags.ManuallySet) | (checkAccess ? SetValuePrivateFlags.CheckAccess : 0));
 		}
 
+		internal void SetInheritedValue(BindableProperty property, object value)
+		{
+			var context = GetContext(property);
+			if (context != null)
+			{
+				bool isSet = (context.Attributes & (BindableContextAttributes.IsManuallySet | BindableContextAttributes.IsDynamicResource | BindableContextAttributes.IsSetFromStyle)) != 0;
+				if (isSet)
+					return;
+			}
+			// We know this value is converted since it has already been converted by the original parent. Thus we can skip that step.
+			SetValueCore(property, value, SetValueFlags.ClearOneWayBindings | SetValueFlags.ClearDynamicResource, SetValuePrivateFlags.Inherited | SetValuePrivateFlags.Converted);
+
+			OnInheritablePropertySet(property, value);
+		}
+
+		internal virtual void OnInheritablePropertySet(BindableProperty property, object value)
+		{
+			
+		}
+
 		void SetValueActual(BindableProperty property, BindablePropertyContext context, object value, bool currentlyApplying, SetValueFlags attributes, bool silent = false)
 		{
 			object original = context.Value;
@@ -580,8 +622,12 @@ namespace Xamarin.Forms
 
 				OnPropertyChanged(property.PropertyName);
 
-				if (property.PropertyChanged != null)
-					property.PropertyChanged(this, original, value);
+				property.PropertyChanged?.Invoke(this, original, value);
+			}
+
+			if (property.IsInheritable)
+			{
+				OnInheritablePropertySet(property, value);
 			}
 		}
 
@@ -592,7 +638,8 @@ namespace Xamarin.Forms
 			IsBeingSet = 1 << 1,
 			IsDynamicResource = 1 << 2,
 			IsSetFromStyle = 1 << 3,
-			IsDefaultValue = 1 << 4
+			IsDefaultValue = 1 << 4,
+			IsInherited = 1 << 5,
 		}
 
 		class BindablePropertyContext
@@ -623,6 +670,7 @@ namespace Xamarin.Forms
 			ManuallySet = 1 << 2,
 			FromStyle = 1 << 3,
 			Converted = 1 << 4,
+			Inherited = 1 << 5,
 			Default = CheckAccess
 		}
 

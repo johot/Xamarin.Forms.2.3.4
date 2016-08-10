@@ -99,6 +99,7 @@
     <Compile Include="GeocoderUnitTests.cs" />
     <Compile Include="GroupViewUnitTests.cs" />
     <Compile Include="ImageTests.cs" />
+    <Compile Include="InheritableBindablePropertyTests.cs" />
     <Compile Include="KeyboardTests.cs" />
     <Compile Include="LabelTests.cs" />
     <Compile Include="ListProxyTests.cs" />

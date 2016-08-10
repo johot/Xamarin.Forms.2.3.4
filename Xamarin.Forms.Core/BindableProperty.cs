@@ -54,7 +54,7 @@ namespace Xamarin.Forms
 
 		BindableProperty(string propertyName, Type returnType, Type declaringType, object defaultValue, BindingMode defaultBindingMode = BindingMode.OneWay,
 								 ValidateValueDelegate validateValue = null, BindingPropertyChangedDelegate propertyChanged = null, BindingPropertyChangingDelegate propertyChanging = null,
-								 CoerceValueDelegate coerceValue = null, BindablePropertyBindingChanging bindingChanging = null, bool isReadOnly = false, CreateDefaultValueDelegate defaultValueCreator = null)
+								 CoerceValueDelegate coerceValue = null, BindablePropertyBindingChanging bindingChanging = null, bool isReadOnly = false, CreateDefaultValueDelegate defaultValueCreator = null, bool isInheritable = false)
 		{
 			if (propertyName == null)
 				throw new ArgumentNullException("propertyName");
@@ -85,6 +85,7 @@ namespace Xamarin.Forms
 			CoerceValue = coerceValue;
 			BindingChanging = bindingChanging;
 			IsReadOnly = isReadOnly;
+			IsInheritable = isInheritable;
 			DefaultValueCreator = defaultValueCreator;
 		}
 
@@ -95,6 +96,8 @@ namespace Xamarin.Forms
 		public object DefaultValue { get; }
 
 		public bool IsReadOnly { get; private set; }
+
+		public bool IsInheritable { get; private set; }
 
 		public string PropertyName { get; }
 
@@ -232,8 +235,16 @@ namespace Xamarin.Forms
 												BindingPropertyChangedDelegate propertyChanged, BindingPropertyChangingDelegate propertyChanging, CoerceValueDelegate coerceValue, BindablePropertyBindingChanging bindingChanging,
 												CreateDefaultValueDelegate defaultValueCreator = null)
 		{
+			return BindableProperty.Create(propertyName, returnType, declaringType, defaultValue, defaultBindingMode,
+				validateValue, propertyChanged, propertyChanging, coerceValue, bindingChanging, defaultValueCreator);
+		}
+
+		internal static BindableProperty Create(string propertyName, Type returnType, Type declaringType, object defaultValue, BindingMode defaultBindingMode, ValidateValueDelegate validateValue,
+												BindingPropertyChangedDelegate propertyChanged, BindingPropertyChangingDelegate propertyChanging, CoerceValueDelegate coerceValue, BindablePropertyBindingChanging bindingChanging,
+												CreateDefaultValueDelegate defaultValueCreator = null, bool isInheritable = false)
+		{
 			return new BindableProperty(propertyName, returnType, declaringType, defaultValue, defaultBindingMode, validateValue, propertyChanged, propertyChanging, coerceValue, bindingChanging,
-				defaultValueCreator: defaultValueCreator);
+				defaultValueCreator: defaultValueCreator, isInheritable: isInheritable);
 		}
 
 		[Obsolete("Generic versions of Create () are no longer supported and deprecated. They will be removed soon.")]

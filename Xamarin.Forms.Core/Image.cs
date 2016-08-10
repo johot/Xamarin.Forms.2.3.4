@@ -20,6 +20,9 @@ namespace Xamarin.Forms
 
 		public static readonly BindableProperty IsLoadingProperty = IsLoadingPropertyKey.BindableProperty;
 
+		public double ImageHeight { get; set; }
+		public double ImageWidth { get; set; }
+
 		public Aspect Aspect
 		{
 			get { return (Aspect)GetValue(AspectProperty); }
