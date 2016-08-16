@@ -97,6 +97,7 @@
     <Compile Include="ElementEventArgs.cs" />
     <Compile Include="ElementTemplate.cs" />
     <Compile Include="EmailKeyboard.cs" />
+    <Compile Include="ILabelController.cs" />
     <Compile Include="IListProxy.cs" />
     <Compile Include="IMenuItemController.cs" />
     <Compile Include="IEntryController.cs" />

@@ -113,7 +113,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		void UpdateAlignment()
 		{
-			Control.Gravity = Element.HorizontalTextAlignment.ToHorizontalGravityFlags();
+			Control.Gravity = ((IEntryController)Element).EffectiveTextAlignment.ToHorizontalGravityFlags();
 		}
 
 		void UpdateColor()

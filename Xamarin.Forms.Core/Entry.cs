@@ -84,6 +84,26 @@ namespace Xamarin.Forms
 
 		public event EventHandler<TextChangedEventArgs> TextChanged;
 
+		TextAlignment IEntryController.EffectiveTextAlignment
+		{
+			get
+			{
+				var flow = FlowDirection;
+				if (flow == FlowDirection.LeftToRight)
+					return HorizontalTextAlignment;
+				// invert in right to left mode
+				switch (HorizontalTextAlignment)
+				{
+					case TextAlignment.Start:
+						return TextAlignment.End;
+					case TextAlignment.End:
+						return TextAlignment.Start;
+					default:
+						return TextAlignment.Center;
+				}
+			}
+		}
+
 		void IEntryController.SendCompleted()
 		{
 			Completed?.Invoke(this, EventArgs.Empty);

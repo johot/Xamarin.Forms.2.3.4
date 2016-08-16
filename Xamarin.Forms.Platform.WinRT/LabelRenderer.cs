@@ -104,7 +104,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			if (label == null)
 				return;
 
-			textBlock.TextAlignment = label.HorizontalTextAlignment.ToNativeTextAlignment();
+			textBlock.TextAlignment = ((ILabelController)label).EffectiveTextAlignment.ToNativeTextAlignment();
 			textBlock.VerticalAlignment = label.VerticalTextAlignment.ToNativeVerticalAlignment();
 		}
 

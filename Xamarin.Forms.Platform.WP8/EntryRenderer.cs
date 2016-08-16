@@ -209,7 +209,7 @@ namespace Xamarin.Forms.Platform.WinPhone
 			if (Control == null)
 				return;
 
-			Control.TextAlignment = Element.HorizontalTextAlignment.ToNativeTextAlignment();
+			Control.TextAlignment = ((IEntryController)Element).EffectiveTextAlignment.ToNativeTextAlignment();
 		}
 
 		void UpdateColor()

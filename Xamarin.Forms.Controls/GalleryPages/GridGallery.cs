@@ -12,6 +12,7 @@ namespace Xamarin.Forms.Controls
 		public GridGallery ()
 		{
 			var layout = new StackLayout { 
+				FlowDirection = FlowDirection.RightToLeft,
 				Orientation = StackOrientation.Vertical
 			};
 

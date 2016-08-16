@@ -115,7 +115,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		void UpdateAlignment()
 		{
-			Control.TextAlignment = Element.HorizontalTextAlignment.ToNativeTextAlignment();
+			Control.TextAlignment = ((IEntryController)Element).EffectiveTextAlignment.ToNativeTextAlignment();
 		}
 
 		void UpdateFont()

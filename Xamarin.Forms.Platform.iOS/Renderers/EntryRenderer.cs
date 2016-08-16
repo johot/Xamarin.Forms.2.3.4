@@ -123,7 +123,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateAlignment()
 		{
-			Control.TextAlignment = Element.HorizontalTextAlignment.ToNativeTextAlignment();
+			Control.TextAlignment = ((IEntryController)Element).EffectiveTextAlignment.ToNativeTextAlignment();
 		}
 
 		void UpdateColor()

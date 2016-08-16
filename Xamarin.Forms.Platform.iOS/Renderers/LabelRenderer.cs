@@ -125,7 +125,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateAlignment()
 		{
-			Control.TextAlignment = Element.HorizontalTextAlignment.ToNativeTextAlignment();
+			Control.TextAlignment = ((ILabelController)Element).EffectiveTextAlignment.ToNativeTextAlignment();
 		}
 
 		void UpdateLineBreakMode()

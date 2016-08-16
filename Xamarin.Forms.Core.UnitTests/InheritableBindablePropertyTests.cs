@@ -61,5 +61,22 @@ namespace Xamarin.Forms.Core.UnitTests
 			Assert.AreEqual(FlowDirection.LeftToRight, child.FlowDirection);
 		}
 
+		[Test]
+		public void ReparentingGetsNewInheritedValue()
+		{
+			var layoutOne = new StackLayout();
+			var layoutTwo = new StackLayout();
+			var child = new Label();
+
+			layoutOne.FlowDirection = FlowDirection.RightToLeft;
+			layoutOne.Children.Add(child);
+
+			Assert.AreEqual(FlowDirection.RightToLeft, child.FlowDirection);
+
+			layoutOne.Children.Remove(child);
+			layoutTwo.Children.Add(child);
+
+			Assert.AreEqual(FlowDirection.LeftToRight, child.FlowDirection);
+		}
 	}
 }

@@ -1,9 +1,7 @@
 namespace Xamarin.Forms
 {
-	public interface IEntryController
+	public interface ILabelController : IViewController
 	{
-		void SendCompleted();
-
 		TextAlignment EffectiveTextAlignment { get; }
 	}
 }

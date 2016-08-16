@@ -89,7 +89,7 @@ namespace Xamarin.Forms.Platform.Android
 				UpdateText();
 				if (e.OldElement.LineBreakMode != e.NewElement.LineBreakMode)
 					UpdateLineBreakMode();
-				if (e.OldElement.HorizontalTextAlignment != e.NewElement.HorizontalTextAlignment || e.OldElement.VerticalTextAlignment != e.NewElement.VerticalTextAlignment)
+				if (((ILabelController)e.OldElement).EffectiveTextAlignment != ((ILabelController)e.NewElement).EffectiveTextAlignment || e.OldElement.VerticalTextAlignment != e.NewElement.VerticalTextAlignment)
 					UpdateGravity();
 			}
 		}
@@ -148,7 +148,7 @@ namespace Xamarin.Forms.Platform.Android
 		{
 			Label label = Element;
 
-			_view.Gravity = label.HorizontalTextAlignment.ToHorizontalGravityFlags() | label.VerticalTextAlignment.ToVerticalGravityFlags();
+			_view.Gravity = ((ILabelController)label).EffectiveTextAlignment.ToHorizontalGravityFlags() | label.VerticalTextAlignment.ToVerticalGravityFlags();
 
 			_lastSizeRequest = null;
 		}
