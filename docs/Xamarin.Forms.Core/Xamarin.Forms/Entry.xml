@@ -496,6 +496,22 @@ View CreateLoginForm ()
         </remarks>
       </Docs>
     </Member>
+    <Member MemberName="Xamarin.Forms.IEntryController.EffectiveTextAlignment">
+      <MemberSignature Language="C#" Value="Xamarin.Forms.TextAlignment Xamarin.Forms.IEntryController.EffectiveTextAlignment { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Forms.TextAlignment Xamarin.Forms.IEntryController.EffectiveTextAlignment" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.TextAlignment</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Xamarin.Forms.IEntryController.SendCompleted">
       <MemberSignature Language="C#" Value="void IEntryController.SendCompleted ();" />
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void Xamarin.Forms.IEntryController.SendCompleted() cil managed" />

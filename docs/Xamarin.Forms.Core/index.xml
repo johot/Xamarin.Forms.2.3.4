@@ -229,6 +229,7 @@
       <Type Name="ExportEffectAttribute" Kind="Class" />
       <Type Name="FileImageSource" Kind="Class" />
       <Type Name="FileImageSourceConverter" Kind="Class" />
+      <Type Name="FlowDirection" Kind="Enumeration" />
       <Type Name="FocusEventArgs" Kind="Class" />
       <Type Name="Font" Kind="Structure" />
       <Type Name="FontAttributes" Kind="Enumeration" />
@@ -263,6 +264,7 @@
       <Type Name="IImageController" Kind="Interface" />
       <Type Name="IItemsView`1" DisplayName="IItemsView&lt;T&gt;" Kind="Interface" />
       <Type Name="IItemViewController" Kind="Interface" />
+      <Type Name="ILabelController" Kind="Interface" />
       <Type Name="ILayout" Kind="Interface" />
       <Type Name="ILayoutController" Kind="Interface" />
       <Type Name="IListProxy" Kind="Interface" />

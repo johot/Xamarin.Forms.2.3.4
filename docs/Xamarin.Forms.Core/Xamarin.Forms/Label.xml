@@ -1,6 +1,6 @@
 <Type Name="Label" FullName="Xamarin.Forms.Label">
-  <TypeSignature Language="C#" Value="public class Label : Xamarin.Forms.View" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Label extends Xamarin.Forms.View" />
+  <TypeSignature Language="C#" Value="public class Label : Xamarin.Forms.View, Xamarin.Forms.ILabelController" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Label extends Xamarin.Forms.View implements class Xamarin.Forms.IElementController, class Xamarin.Forms.ILabelController, class Xamarin.Forms.IViewController, class Xamarin.Forms.IVisualElementController" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Forms.Core</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -15,6 +15,9 @@
     <BaseTypeName>Xamarin.Forms.View</BaseTypeName>
   </Base>
   <Interfaces>
+    <Interface>
+      <InterfaceName>Xamarin.Forms.ILabelController</InterfaceName>
+    </Interface>
   </Interfaces>
   <Attributes>
     <Attribute>
@@ -602,6 +605,22 @@ public class App : Application
         <summary>Backing store for the XAlign bindable property.</summary>
         <remarks>
         </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Xamarin.Forms.ILabelController.EffectiveTextAlignment">
+      <MemberSignature Language="C#" Value="Xamarin.Forms.TextAlignment Xamarin.Forms.ILabelController.EffectiveTextAlignment { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Forms.TextAlignment Xamarin.Forms.ILabelController.EffectiveTextAlignment" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.TextAlignment</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="YAlign">
