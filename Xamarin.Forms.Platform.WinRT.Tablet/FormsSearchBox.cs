@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Platform.WinRT
 	{
 		public static readonly DependencyProperty HorizontalTextAlignmentProperty = DependencyProperty.Register(
 			"HorizontalTextAlignment", typeof (Windows.UI.Xaml.TextAlignment), typeof (FormsSearchBox),
-			new PropertyMetadata(Windows.UI.Xaml.TextAlignment.Left));
+			new Windows.UI.Xaml.PropertyMetadata(Windows.UI.Xaml.TextAlignment.Left));
 
 		public Windows.UI.Xaml.TextAlignment HorizontalTextAlignment
 		{

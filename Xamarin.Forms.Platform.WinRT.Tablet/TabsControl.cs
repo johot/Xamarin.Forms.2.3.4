@@ -48,8 +48,8 @@ namespace Xamarin.Forms.Platform.WinRT
 		: ItemsControl
 	{
 
-		public static readonly DependencyProperty ToolbarForegroundProperty = DependencyProperty.Register(nameof(ToolbarForeground), typeof(Brush), typeof(TabsControl), new PropertyMetadata(default(Brush)));
-		public static readonly DependencyProperty ToolbarBackgroundProperty = DependencyProperty.Register(nameof(ToolbarBackground), typeof(Brush), typeof(TabsControl), new PropertyMetadata(default(Brush)));
+		public static readonly DependencyProperty ToolbarForegroundProperty = DependencyProperty.Register(nameof(ToolbarForeground), typeof(Brush), typeof(TabsControl), new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
+		public static readonly DependencyProperty ToolbarBackgroundProperty = DependencyProperty.Register(nameof(ToolbarBackground), typeof(Brush), typeof(TabsControl), new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
 		public Brush ToolbarBackground
 		{

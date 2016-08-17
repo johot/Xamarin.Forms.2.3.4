@@ -9,14 +9,14 @@ namespace Xamarin.Forms.Platform.UWP
 {
 	public sealed class StepperControl : Control
 	{
-		public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(StepperControl), new PropertyMetadata(default(double), OnValueChanged));
+		public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(StepperControl), new Windows.UI.Xaml.PropertyMetadata(default(double), OnValueChanged));
 
-		public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(StepperControl), new PropertyMetadata(default(double), OnMaxMinChanged));
+		public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(StepperControl), new Windows.UI.Xaml.PropertyMetadata(default(double), OnMaxMinChanged));
 
-		public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(StepperControl), new PropertyMetadata(default(double), OnMaxMinChanged));
+		public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(StepperControl), new Windows.UI.Xaml.PropertyMetadata(default(double), OnMaxMinChanged));
 
 		public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment", typeof(double), typeof(StepperControl),
-			new PropertyMetadata(default(double), OnIncrementChanged));
+			new Windows.UI.Xaml.PropertyMetadata(default(double), OnIncrementChanged));
 
 		Windows.UI.Xaml.Controls.Button _plus;
 		Windows.UI.Xaml.Controls.Button _minus;

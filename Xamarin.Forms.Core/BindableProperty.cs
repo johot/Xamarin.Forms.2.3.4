@@ -6,6 +6,32 @@ using System.Reflection;
 
 namespace Xamarin.Forms
 {
+	public struct PropertyMetadata
+	{
+		public object DefaultValue;
+		public BindingMode DefaultBindingMode;
+		public BindableProperty.ValidateValueDelegate ValidateValueDelegate;
+		public BindableProperty.BindingPropertyChangedDelegate PropertyChangedDelegate;
+		public BindableProperty.BindingPropertyChangingDelegate PropertyChangingDelegate;
+		internal BindableProperty.BindablePropertyBindingChanging BindingChangingDelegate;
+		public BindableProperty.CoerceValueDelegate CoerceValueDelegate;
+		public BindableProperty.CreateDefaultValueDelegate DefaultValueCreator;
+		public bool IsInheritable;
+
+		public PropertyMetadata(object defaultValue)
+		{
+			DefaultValue = defaultValue;
+			DefaultBindingMode = BindingMode.Default;
+			ValidateValueDelegate = null;
+			PropertyChangedDelegate = null;
+			PropertyChangingDelegate = null;
+			BindingChangingDelegate = null;
+			CoerceValueDelegate = null;
+			DefaultValueCreator = null;
+			IsInheritable = false;
+		}
+	}
+
 	[DebuggerDisplay("{PropertyName}")]
 	[TypeConverter(typeof(BindablePropertyConverter))]
 	public sealed class BindableProperty
@@ -125,11 +151,37 @@ namespace Xamarin.Forms
 		{
 			return Create(getter, defaultValue, defaultBindingMode, validateValue, propertyChanged, propertyChanging, coerceValue, null, defaultValueCreator: defaultValueCreator);
 		}
+		
+		public static BindableProperty Create(string propertyName, Type returnType, Type declaringType, PropertyMetadata propertyMetadata)
+		{
+			return new BindableProperty(
+				propertyName,
+				returnType,
+				declaringType,
+				propertyMetadata.DefaultValue,
+				propertyMetadata.DefaultBindingMode,
+				propertyMetadata.ValidateValueDelegate,
+				propertyMetadata.PropertyChangedDelegate,
+				propertyMetadata.PropertyChangingDelegate,
+				propertyMetadata.CoerceValueDelegate,
+				propertyMetadata.BindingChangingDelegate,
+				false,
+				propertyMetadata.DefaultValueCreator,
+				propertyMetadata.IsInheritable
+			);
+		}
 
 		public static BindableProperty Create(string propertyName, Type returnType, Type declaringType, object defaultValue = null, BindingMode defaultBindingMode = BindingMode.OneWay,
 											  ValidateValueDelegate validateValue = null, BindingPropertyChangedDelegate propertyChanged = null, BindingPropertyChangingDelegate propertyChanging = null,
 											  CoerceValueDelegate coerceValue = null, CreateDefaultValueDelegate defaultValueCreator = null)
 		{
+			BindableProperty.Create("Testing", typeof(Button), typeof(int), new PropertyMetadata
+			{
+				DefaultValue = 0,
+				DefaultBindingMode = BindingMode.TwoWay,
+				IsInheritable = true,
+			});
+
 			return new BindableProperty(propertyName, returnType, declaringType, defaultValue, defaultBindingMode, validateValue, propertyChanged, propertyChanging, coerceValue,
 				defaultValueCreator: defaultValueCreator);
 		}

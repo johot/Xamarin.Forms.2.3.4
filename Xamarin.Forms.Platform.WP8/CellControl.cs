@@ -10,9 +10,9 @@ namespace Xamarin.Forms.Platform.WinPhone
 	public class CellControl : ContentControl
 	{
 		public static readonly DependencyProperty CellProperty = DependencyProperty.Register("Cell", typeof(object), typeof(CellControl),
-			new PropertyMetadata((o, e) => ((CellControl)o).SetSource((Cell)e.OldValue, (Cell)e.NewValue)));
+			new System.Windows.PropertyMetadata((o, e) => ((CellControl)o).SetSource((Cell)e.OldValue, (Cell)e.NewValue)));
 
-		public static readonly DependencyProperty ShowContextActionsProperty = DependencyProperty.Register("ShowContextActions", typeof(bool), typeof(CellControl), new PropertyMetadata(true));
+		public static readonly DependencyProperty ShowContextActionsProperty = DependencyProperty.Register("ShowContextActions", typeof(bool), typeof(CellControl), new System.Windows.PropertyMetadata(true));
 
 		readonly PropertyChangedEventHandler _propertyChangedHandler;
 

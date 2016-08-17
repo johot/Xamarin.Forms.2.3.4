@@ -23,7 +23,7 @@ namespace Xamarin.Forms.ControlGallery.WP8
 		}
 
 		public static readonly DependencyProperty TextProperty = DependencyProperty.Register (
-			"Text", typeof(string), typeof(BrokenNativeControl), new PropertyMetadata (default(string), PropertyChangedCallback));
+			"Text", typeof(string), typeof(BrokenNativeControl), new System.Windows.PropertyMetadata (default(string), PropertyChangedCallback));
 
 		static void PropertyChangedCallback (DependencyObject dependencyObject,
 			DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)

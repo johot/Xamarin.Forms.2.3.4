@@ -24,18 +24,18 @@ namespace Xamarin.Forms.Platform.WinRT
 		const char ObfuscationCharacter = '●';
 
 		public static readonly DependencyProperty PlaceholderForegroundBrushProperty = DependencyProperty.Register(nameof(PlaceholderForegroundBrush), typeof(Brush), typeof(FormsTextBox),
-			new PropertyMetadata(default(Brush)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
 		public static readonly DependencyProperty PlaceholderForegroundFocusBrushProperty = DependencyProperty.Register(nameof(PlaceholderForegroundFocusBrush), typeof(Brush), typeof(FormsTextBox),
-			new PropertyMetadata(default(Brush)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
-		public static readonly DependencyProperty ForegroundFocusBrushProperty = DependencyProperty.Register(nameof(ForegroundFocusBrush), typeof(Brush), typeof(FormsTextBox), new PropertyMetadata(default(Brush)));
+		public static readonly DependencyProperty ForegroundFocusBrushProperty = DependencyProperty.Register(nameof(ForegroundFocusBrush), typeof(Brush), typeof(FormsTextBox), new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
-		public static readonly DependencyProperty BackgroundFocusBrushProperty = DependencyProperty.Register(nameof(BackgroundFocusBrush), typeof(Brush), typeof(FormsTextBox), new PropertyMetadata(default(Brush)));
+		public static readonly DependencyProperty BackgroundFocusBrushProperty = DependencyProperty.Register(nameof(BackgroundFocusBrush), typeof(Brush), typeof(FormsTextBox), new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
-		public static readonly DependencyProperty IsPasswordProperty = DependencyProperty.Register(nameof(IsPassword), typeof(bool), typeof(FormsTextBox), new PropertyMetadata(default(bool), OnIsPasswordChanged));
+		public static readonly DependencyProperty IsPasswordProperty = DependencyProperty.Register(nameof(IsPassword), typeof(bool), typeof(FormsTextBox), new Windows.UI.Xaml.PropertyMetadata(default(bool), OnIsPasswordChanged));
 
-		public new static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(FormsTextBox), new PropertyMetadata("", TextPropertyChanged));
+		public new static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(FormsTextBox), new Windows.UI.Xaml.PropertyMetadata("", TextPropertyChanged));
 
 		static InputScope s_passwordInputScope;
 		Border _borderElement;

@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Platform.WinPhone
 	public class CellTemplateSelector : DataTemplateSelector
 	{
 		public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(object), typeof(CellTemplateSelector),
-			new PropertyMetadata((o, e) => ((CellTemplateSelector)o).SetSource(e.OldValue, e.NewValue)));
+			new System.Windows.PropertyMetadata((o, e) => ((CellTemplateSelector)o).SetSource(e.OldValue, e.NewValue)));
 
 		public CellTemplateSelector()
 		{

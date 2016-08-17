@@ -14,10 +14,10 @@ namespace Xamarin.Forms.Platform.WinRT
 	public class FormsButton : Windows.UI.Xaml.Controls.Button
 	{
 		public static readonly DependencyProperty BorderRadiusProperty = DependencyProperty.Register(nameof(BorderRadius), typeof(int), typeof(FormsButton),
-			new PropertyMetadata(default(int), OnBorderRadiusChanged));
+			new Windows.UI.Xaml.PropertyMetadata(default(int), OnBorderRadiusChanged));
 
 		public static readonly DependencyProperty BackgroundColorProperty = DependencyProperty.Register(nameof(BackgroundColor), typeof(Brush), typeof(FormsButton),
-			new PropertyMetadata(default(Brush), OnBackgroundColorChanged));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush), OnBackgroundColorChanged));
 
 #if WINDOWS_UWP
 		WContentPresenter _contentPresenter;

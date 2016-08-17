@@ -31,7 +31,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 #if !WINDOWS_UWP
 		public static readonly DependencyProperty HighlightWhenSelectedProperty = DependencyProperty.RegisterAttached("HighlightWhenSelected", typeof(bool), typeof(ListViewRenderer),
-			new PropertyMetadata(false));
+			new Windows.UI.Xaml.PropertyMetadata(false));
 
 		public static bool GetHighlightWhenSelected(DependencyObject dependencyObject)
 		{

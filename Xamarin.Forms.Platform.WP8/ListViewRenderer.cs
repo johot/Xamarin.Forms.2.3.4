@@ -183,7 +183,7 @@ namespace Xamarin.Forms.Platform.WinPhone
 	public class ListViewRenderer : ViewRenderer<ListView, LongListSelector>
 	{
 		public static readonly DependencyProperty HighlightWhenSelectedProperty = DependencyProperty.RegisterAttached("HighlightWhenSelected", typeof(bool), typeof(ListViewRenderer),
-			new PropertyMetadata(false));
+			new System.Windows.PropertyMetadata(false));
 
 		readonly List<Tuple<FrameworkElement, SLBinding, Brush>> _previousHighlights = new List<Tuple<FrameworkElement, SLBinding, Brush>>();
 

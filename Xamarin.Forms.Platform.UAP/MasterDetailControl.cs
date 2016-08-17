@@ -8,34 +8,34 @@ namespace Xamarin.Forms.Platform.UWP
 	public class MasterDetailControl : Control, IToolbarProvider
 	{
 		public static readonly DependencyProperty MasterProperty = DependencyProperty.Register("Master", typeof(FrameworkElement), typeof(MasterDetailControl),
-			new PropertyMetadata(default(FrameworkElement)));
+			new Windows.UI.Xaml.PropertyMetadata(default(FrameworkElement)));
 
-		public static readonly DependencyProperty MasterTitleProperty = DependencyProperty.Register("MasterTitle", typeof(string), typeof(MasterDetailControl), new PropertyMetadata(default(string)));
+		public static readonly DependencyProperty MasterTitleProperty = DependencyProperty.Register("MasterTitle", typeof(string), typeof(MasterDetailControl), new Windows.UI.Xaml.PropertyMetadata(default(string)));
 
 		public static readonly DependencyProperty DetailProperty = DependencyProperty.Register("Detail", typeof(FrameworkElement), typeof(MasterDetailControl),
-			new PropertyMetadata(default(FrameworkElement)));
+			new Windows.UI.Xaml.PropertyMetadata(default(FrameworkElement)));
 
-		public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register("IsPaneOpen", typeof(bool), typeof(MasterDetailControl), new PropertyMetadata(default(bool)));
+		public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register("IsPaneOpen", typeof(bool), typeof(MasterDetailControl), new Windows.UI.Xaml.PropertyMetadata(default(bool)));
 
 		public static readonly DependencyProperty ShouldShowSplitModeProperty = DependencyProperty.Register("ShouldShowSplitMode", typeof(bool), typeof(MasterDetailControl),
-			new PropertyMetadata(default(bool), OnShouldShowSplitModeChanged));
+			new Windows.UI.Xaml.PropertyMetadata(default(bool), OnShouldShowSplitModeChanged));
 
-		public static readonly DependencyProperty DetailTitleProperty = DependencyProperty.Register("DetailTitle", typeof(string), typeof(MasterDetailControl), new PropertyMetadata(default(string)));
+		public static readonly DependencyProperty DetailTitleProperty = DependencyProperty.Register("DetailTitle", typeof(string), typeof(MasterDetailControl), new Windows.UI.Xaml.PropertyMetadata(default(string)));
 
 		public static readonly DependencyProperty ToolbarForegroundProperty = DependencyProperty.Register("ToolbarForeground", typeof(Brush), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Brush)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
 		public static readonly DependencyProperty ToolbarBackgroundProperty = DependencyProperty.Register("ToolbarBackground", typeof(Brush), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Brush)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush)));
 
 		public static readonly DependencyProperty MasterTitleVisibilityProperty = DependencyProperty.Register("MasterTitleVisibility", typeof(Visibility), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Visibility)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Visibility)));
 
 		public static readonly DependencyProperty DetailTitleVisibilityProperty = DependencyProperty.Register("DetailTitleVisibility", typeof(Visibility), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Visibility)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Visibility)));
 
 		public static readonly DependencyProperty MasterToolbarVisibilityProperty = DependencyProperty.Register("MasterToolbarVisibility", typeof(Visibility), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Visibility)));
+			new Windows.UI.Xaml.PropertyMetadata(default(Visibility)));
 
 		CommandBar _commandBar;
 

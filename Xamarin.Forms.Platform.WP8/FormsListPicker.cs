@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Platform.WinPhone
 	public class FormsListPicker : ListPicker
 	{
 		internal static readonly DependencyProperty ListPickerModeChangedProperty = DependencyProperty.Register("ListPickerMode", typeof(ListPickerMode), typeof(FormsListPicker),
-			new PropertyMetadata(ModeChanged));
+			new System.Windows.PropertyMetadata(ModeChanged));
 
 		protected virtual void OnListPickerModeChanged(DependencyPropertyChangedEventArgs args)
 		{

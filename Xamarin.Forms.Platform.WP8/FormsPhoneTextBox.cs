@@ -17,14 +17,14 @@ namespace Xamarin.Forms.Platform.WinPhone
 		const char ObfuscationCharacter = '●';
 
 		public static readonly DependencyProperty PlaceholderForegroundBrushProperty = DependencyProperty.Register("PlaceholderForegroundBrush", typeof(Brush), typeof(FormsPhoneTextBox),
-			new PropertyMetadata(default(Brush)));
+			new System.Windows.PropertyMetadata(default(Brush)));
 
 		public static readonly DependencyProperty IsPasswordProperty = DependencyProperty.Register("IsPassword", typeof(bool), typeof(FormsPhoneTextBox),
-			new PropertyMetadata(default(bool), OnIsPasswordChanged));
+			new System.Windows.PropertyMetadata(default(bool), OnIsPasswordChanged));
 
-		public new static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(FormsPhoneTextBox), new PropertyMetadata("", TextPropertyChanged));
+		public new static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(FormsPhoneTextBox), new System.Windows.PropertyMetadata("", TextPropertyChanged));
 
-		protected internal static readonly DependencyProperty DisabledTextProperty = DependencyProperty.Register("DisabledText", typeof(string), typeof(FormsPhoneTextBox), new PropertyMetadata(""));
+		protected internal static readonly DependencyProperty DisabledTextProperty = DependencyProperty.Register("DisabledText", typeof(string), typeof(FormsPhoneTextBox), new System.Windows.PropertyMetadata(""));
 
 		static InputScope s_passwordInputScope;
 		InputScope _cachedInputScope;

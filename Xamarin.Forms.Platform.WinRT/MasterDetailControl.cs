@@ -9,25 +9,25 @@ namespace Xamarin.Forms.Platform.WinRT
 	public class MasterDetailControl : Control
 	{
 		public static readonly DependencyProperty MasterContentProperty = DependencyProperty.Register("MasterContent", typeof(object), typeof(MasterDetailControl),
-			new PropertyMetadata(null, (d, e) => ((MasterDetailControl)d).UpdateMaster()));
+			new Windows.UI.Xaml.PropertyMetadata(null, (d, e) => ((MasterDetailControl)d).UpdateMaster()));
 
 		public static readonly DependencyProperty DetailContentProperty = DependencyProperty.Register("DetailContent", typeof(object), typeof(MasterDetailControl),
-			new PropertyMetadata(null, (d, e) => ((MasterDetailControl)d).UpdateDetail()));
+			new Windows.UI.Xaml.PropertyMetadata(null, (d, e) => ((MasterDetailControl)d).UpdateDetail()));
 
 		public static readonly DependencyProperty IsMasterVisibleProperty = DependencyProperty.Register("IsMasterVisible", typeof(bool), typeof(MasterDetailControl),
-			new PropertyMetadata(false, (d, e) => ((MasterDetailControl)d).UpdateMaster()));
+			new Windows.UI.Xaml.PropertyMetadata(false, (d, e) => ((MasterDetailControl)d).UpdateMaster()));
 
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(MasterDetailControl),
-			new PropertyMetadata("", (d, e) => ((MasterDetailControl)d).UpdateTitle()));
+			new Windows.UI.Xaml.PropertyMetadata("", (d, e) => ((MasterDetailControl)d).UpdateTitle()));
 
 		public static readonly DependencyProperty DetailTitleVisibilityProperty = DependencyProperty.Register("DetailTitleVisibility", typeof(Visibility), typeof(MasterDetailControl),
-			new PropertyMetadata(Visibility.Collapsed, (d, e) => ((MasterDetailControl)d).UpdateToolbar()));
+			new Windows.UI.Xaml.PropertyMetadata(Visibility.Collapsed, (d, e) => ((MasterDetailControl)d).UpdateToolbar()));
 
 		public static readonly DependencyProperty ToolbarForegroundProperty = DependencyProperty.Register("ToolbarForeground", typeof(Brush), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Brush), (d, e) => ((MasterDetailControl)d).UpdateToolbar()));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush), (d, e) => ((MasterDetailControl)d).UpdateToolbar()));
 
 		public static readonly DependencyProperty ToolbarBackgroundProperty = DependencyProperty.Register("ToolbarBackground", typeof(Brush), typeof(MasterDetailControl),
-			new PropertyMetadata(default(Brush), (d, e) => ((MasterDetailControl)d).UpdateToolbar()));
+			new Windows.UI.Xaml.PropertyMetadata(default(Brush), (d, e) => ((MasterDetailControl)d).UpdateToolbar()));
 
 		Windows.UI.Xaml.Controls.Grid _grd;
 
