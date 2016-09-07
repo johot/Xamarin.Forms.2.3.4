@@ -490,12 +490,12 @@ namespace Xamarin.Forms.ControlGallery.Android
 					var newScale = Math.Min(Math.Max(content.ScaleX * scale, 1f / (float)scrollView.MaxZoom), 1f);
 					content.ScaleX = content.ScaleY = newScale;
 
-					System.Diagnostics.Debug.WriteLine($"Delta: {scale}  Final: {content.ScaleX}");
+					//System.Diagnostics.Debug.WriteLine($"Delta: {scale}  Final: {content.ScaleX}");
 
 				}, () =>
 				{
 					_isScaleProcess = false;
-					System.Diagnostics.Debug.WriteLine("Finished");
+					//System.Diagnostics.Debug.WriteLine("Finished");
 				}));
 			}
 		}
@@ -567,7 +567,7 @@ namespace Xamarin.Forms.ControlGallery.Android
 
 		public override bool OnScaleBegin(ScaleGestureDetector detector)
 		{
-			System.Diagnostics.Debug.WriteLine($"Begin {detector.ScaleFactor}");
+			//System.Diagnostics.Debug.WriteLine($"Begin {detector.ScaleFactor}");
 			_skip = true;
 			return base.OnScaleBegin(detector);
 		}
