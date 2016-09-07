@@ -8,6 +8,33 @@ using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
 
 namespace Xamarin.Forms.Controls
 {
+	public class ZoomableScrollView : ScrollView
+	{
+		public static readonly BindableProperty CurrentZoomProperty = BindableProperty.Create(nameof(CurrentZoom), typeof(double), typeof(ZoomableScrollView), 1d);
+
+		public double CurrentZoom
+		{
+			get { return (double)GetValue(CurrentZoomProperty); }
+			set { SetValue(CurrentZoomProperty, value); }
+		}
+
+		public static readonly BindableProperty MaximumZoomProperty = BindableProperty.Create(nameof(MaxZoom), typeof(double), typeof(ZoomableScrollView), 1d);
+
+		public double MaxZoom
+		{
+			get { return (double)GetValue(MaximumZoomProperty); }
+			set { SetValue(MaximumZoomProperty, value); }
+		}
+
+		public static readonly BindableProperty IgnoreMinimumZoomProperty = BindableProperty.Create(nameof(IgnoreMinimumZoom), typeof(bool), typeof(ZoomableScrollView), false);
+
+		public bool IgnoreMinimumZoom
+		{
+			get { return (bool)GetValue(IgnoreMinimumZoomProperty); }
+			set { SetValue(IgnoreMinimumZoomProperty, value); }
+		}
+	}
+
 	public class App : Application
 	{
 		public const string AppName = "XamarinFormsControls";
@@ -26,10 +53,38 @@ namespace Xamarin.Forms.Controls
 			_testCloudService = DependencyService.Get<ITestCloudService>();
 			InitInsights();
 
-			MainPage = new MasterDetailPage
+			//MainPage = new MasterDetailPage
+			//{
+			//	Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
+			//	Detail = CoreGallery.GetMainPage()
+			//};
+
+			MainPage = new ContentPage
 			{
-				Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
-				Detail = CoreGallery.GetMainPage()
+				Content = new ZoomableScrollView
+				{
+					MaxZoom = 3,
+					Orientation = ScrollOrientation.Both,
+					Content = new Grid
+					{
+						WidthRequest = 1000,
+						HeightRequest = 1000,
+						ColumnSpacing = 10,
+						RowSpacing = 10,
+						Children =
+						{
+							{ new BoxView {Color = Color.Purple}, 0, 0 },
+							{ new BoxView {Color = Color.Orange}, 0, 1 },
+							{ new BoxView {Color = Color.Blue}, 0, 2 },
+							{ new BoxView {Color = Color.Purple}, 1, 0 },
+							{ new BoxView {Color = Color.Orange}, 1, 1 },
+							{ new BoxView {Color = Color.Blue}, 1, 2 },
+							{ new BoxView {Color = Color.Purple}, 2, 0 },
+							{ new BoxView {Color = Color.Orange}, 2, 1 },
+							{ new BoxView {Color = Color.Blue}, 2, 2 },
+						}
+					}
+				}
 			};
 		}
 
