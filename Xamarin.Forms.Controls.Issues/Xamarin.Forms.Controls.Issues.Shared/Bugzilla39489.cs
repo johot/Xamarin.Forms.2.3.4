@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 39489, "Memory leak when using NavigationPage with Maps")]
+	[Issue(IssueTracker.Bugzilla, 39489, "Memory leak when using NavigationPage with Maps", PlatformAffected.Android)]
 	public class Bugzilla39489 : TestNavigationPage
 	{
 		protected override void Init()
@@ -25,42 +25,28 @@ namespace Xamarin.Forms.Controls
 		[Test]
 		public async void Bugzilla39458Test()
 		{
-			RunningApp.WaitForElement(q => q.Marked("New Page"));
-			RunningApp.Tap(q => q.Marked("New Page"));
-			RunningApp.WaitForElement(q => q.Marked("New Page"));
-			await Task.Delay(3000);
-			RunningApp.Back();
+			// Original bug report (https://bugzilla.xamarin.com/show_bug.cgi?id=39489) had a crash (OOM) after 25-30
+			// page loads. Obviously it's going to depend heavily on the device and amount of available memory, but
+			// if this starts failing before 50 we'll know we've sprung another serious leak
+			int iterations = 50;
+
+			for (int n = 0; n < iterations; n++)
+			{
+				RunningApp.WaitForElement(q => q.Marked("New Page"));
+				RunningApp.Tap(q => q.Marked("New Page"));
+				RunningApp.WaitForElement(q => q.Marked("New Page"));
+				await Task.Delay(1000);
+				RunningApp.Back();
+			}
 		}
 		#endif
-	}
-
-	public class MyXFMap : Map
-	{
-		static int s_count;
-
-		public MyXFMap()
-		{
-			Interlocked.Increment(ref s_count);
-			System.Diagnostics.Debug.WriteLine($"++++++++ {nameof(MyXFMap)} : {s_count}");
-		}
-
-		~MyXFMap()
-		{
-			Interlocked.Decrement(ref s_count);
-			System.Diagnostics.Debug.WriteLine($"-------- {nameof(MyXFMap)} : {s_count}");
-		}
 	}
 
 	[Preserve(AllMembers = true)]
 	public class Bz39489Content : ContentPage
 	{
-		static int s_count;
-
 		public Bz39489Content()
 		{
-			Interlocked.Increment(ref s_count);
-			System.Diagnostics.Debug.WriteLine($"++++++++ {nameof(Bz39489Content)} : {s_count}");
-
 			var button = new Button { Text = "New Page" };
 
 			var gcbutton = new Button { Text = "GC" };
@@ -84,12 +70,6 @@ namespace Xamarin.Forms.Controls
 		void Button_Clicked(object sender, EventArgs e)
 		{
 			Navigation.PushAsync(new Bz39489Content());
-		}
-
-		~Bz39489Content()
-		{
-			Interlocked.Decrement(ref s_count);
-			System.Diagnostics.Debug.WriteLine($"-------- {nameof(Bz39489Content)} : {s_count}");
 		}
 	}
 }
