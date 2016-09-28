@@ -326,9 +326,10 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var target = Platform.GetRenderer(page);
 			target.NativeView.RemoveFromSuperview();
-			if (View.Subviews.Count() > 0)
-				View.Subviews.Last().Layer.Hidden = false;
 			target.Dispose();
+
+			ShowHidePreviousPage(false);
+
 			UpdateTitles(_currentStack.Peek().Page);
 			(page as IPageController)?.SendDisappearing();
 
@@ -342,8 +343,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			var wrapper = new PageWrapper(page);
 
 			_currentStack.Push(wrapper);
-			if (View.Subviews.Count() > 0)
-				View.Subviews.Last().Layer.Hidden = true;
+			ShowHidePreviousPage(false);
+
 			var vc = CreateViewControllerForPage(page);
 			page.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Frame.Height));
 			View.AddSubview(vc.NativeView, NSWindowOrderingMode.Above, null);
@@ -419,6 +420,16 @@ namespace Xamarin.Forms.Platform.MacOS
 		void UpdateBarTextColor()
 		{
 
+		}
+
+		void ShowHidePreviousPage(bool hidden)
+		{
+			if (View.Subviews.Count() > 0)
+			{
+				var previous = View.Subviews.Last();
+				previous.Layer.Hidden = hidden;
+				previous.Hidden = hidden;
+			}
 		}
 	}
 }
