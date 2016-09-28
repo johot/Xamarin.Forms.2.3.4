@@ -151,6 +151,16 @@
     <Compile Include="Controls\PageWrapper.cs" />
     <Compile Include="MacOSExpressionSearch.cs" />
     <Compile Include="MainToolBarDelegate.cs" />
+    <Compile Include="NativeViewWrapper.cs" />
+    <Compile Include="Extensions\LayoutExtensions.cs" />
+    <Compile Include="NativeViewWrapperRenderer.cs" />
+    <Compile Include="NativeValueConverterService.cs" />
+    <Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewPropertyListener.cs">
+      <Link>NativeViewPropertyListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core\Properties\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">

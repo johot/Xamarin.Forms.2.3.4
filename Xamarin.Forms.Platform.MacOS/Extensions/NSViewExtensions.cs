@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using AppKit;
+using static System.String;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -47,6 +48,48 @@ namespace Xamarin.Forms.Platform.MacOS
 			}
 
 			return null;
+		}
+
+		public static void SetBinding(this NSView view, string propertyName, BindingBase bindingBase, string updateSourceEventName = null)
+		{
+			var binding = bindingBase as Binding;
+			//This will allow setting bindings from Xaml by reusing the MarkupExtension
+			updateSourceEventName = updateSourceEventName ?? binding?.UpdateSourceEventName;
+
+			if (!IsNullOrEmpty(updateSourceEventName))
+			{
+				NativeBindingHelpers.SetBinding(view, propertyName, bindingBase, updateSourceEventName);
+				return;
+			}
+
+			NativeViewPropertyListener nativePropertyListener = null;
+			if (bindingBase.Mode == BindingMode.TwoWay)
+			{
+				nativePropertyListener = new NativeViewPropertyListener(propertyName);
+				view.AddObserver(nativePropertyListener, propertyName, 0, IntPtr.Zero);
+			}
+
+			NativeBindingHelpers.SetBinding(view, propertyName, bindingBase, nativePropertyListener);
+		}
+
+		public static void SetBinding(this NSView self, BindableProperty targetProperty, BindingBase binding)
+		{
+			NativeBindingHelpers.SetBinding(self, targetProperty, binding);
+		}
+
+		public static void SetValue(this NSView target, BindableProperty targetProperty, object value)
+		{
+			NativeBindingHelpers.SetValue(target, targetProperty, value);
+		}
+
+		public static void SetBindingContext(this NSView target, object bindingContext, Func<NSView, IEnumerable<NSView>> getChildren = null)
+		{
+			NativeBindingHelpers.SetBindingContext(target, bindingContext, getChildren);
+		}
+
+		internal static void TransferbindablePropertiesToWrapper(this NSView target, View wrapper)
+		{
+			NativeBindingHelpers.TransferBindablePropertiesToWrapper(target, wrapper);
 		}
 
 		//internal static NSView FindFirstResponder(this NSView view)
