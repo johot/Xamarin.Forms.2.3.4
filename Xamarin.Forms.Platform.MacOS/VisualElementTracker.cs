@@ -163,8 +163,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				// ripe for optimization
 				var transform = CATransform3D.Identity;
 
-				// Dont ever attempt to actually change the layout of a Page unless it is a ContentPage
-				// iOS is a really big fan of you not actually modifying the View's of the NSViewControllers
+				// We don't care if it0s a page or not since bounds of the window can change
 				// TODO: Find why it doesn't work to check if the parentsBounds changed  and remove true;
 				parentBoundsChanged = true;
 				if (width > 0 && height > 0 && parent != null && (boundsChanged || parentBoundsChanged))
@@ -216,10 +215,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				caLayer.Transform = transform;
 			};
 
-			if (thread)
-				CADisplayLinkTicker.Default.Invoke(update);
-			else
-				update();
+			update();
 
 			_lastBounds = view.Bounds;
 			_lastParentBounds = viewParent == null ? Rectangle.Zero : viewParent.Bounds;
@@ -260,43 +256,11 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (_layer == null)
 				return;
-			try
-			{
-				OnUpdateNativeControl(_layer);
-			}
-			catch (Exception ex)
-			{
 
-			}
+			OnUpdateNativeControl(_layer);
+
 			if (NativeControlUpdated != null)
 				NativeControlUpdated(this, EventArgs.Empty);
-
-
-			if (_element is Layout && ElementController != null)
-				EnsureChildrenPosition();
-
-		}
-
-		void EnsureChildrenPosition()
-		{
-			if (ElementController.LogicalChildren.Count == 0 || _lastBounds == _element.Bounds)
-				return;
-
-			try
-			{
-				for (var z = 0; z < ElementController.LogicalChildren.Count; z++)
-				{
-					var child = ElementController.LogicalChildren[z] as VisualElement;
-					if (child == null)
-						continue;
-					child.BatchBegin();
-					child.BatchCommit();
-				}
-			}
-			catch (Exception ex)
-			{
-
-			}
 
 		}
 	}
