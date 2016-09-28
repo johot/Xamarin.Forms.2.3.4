@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected override void SetBackgroundColor(Color color)
 		{
-			if (Element == null)
+			if (Element == null || Control == null)
 				return;
 
 			Control.BackgroundColor = color.ToNSColor();
