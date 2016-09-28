@@ -167,7 +167,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				// iOS is a really big fan of you not actually modifying the View's of the NSViewControllers
 				// TODO: Find why it doesn't work to check if the parentsBounds changed  and remove true;
 				parentBoundsChanged = true;
-				if ((!(visualElement is Page) || visualElement is ContentPage) && width > 0 && height > 0 && parent != null && (boundsChanged || parentBoundsChanged))
+				if (width > 0 && height > 0 && parent != null && (boundsChanged || parentBoundsChanged))
 				{
 					var visualParent = parent as VisualElement;
 
