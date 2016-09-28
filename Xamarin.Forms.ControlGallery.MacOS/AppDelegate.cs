@@ -147,7 +147,7 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 			if (page.NativeControlsAdded)
 				return;
 
-			StackLayout sl = page.Layout1;
+			StackLayout sl = page.Layout;
 
 			int width = 200;
 			int heightCustomLabelView = 100;
