@@ -332,6 +332,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			var newView = new FormsNSView();
 			int height = 50;
+			int width = 300;
 			int i = 0;
 			foreach (var button in arguments.Buttons)
 			{
@@ -341,11 +342,11 @@ namespace Xamarin.Forms.Platform.MacOS
 				{
 					NSApplication.SharedApplication.EndSheet(NSApplication.SharedApplication.MainWindow.AttachedSheet, ((NSButton)s).Tag + 2);
 				};
-				btn.Frame = new RectangleF(0, height * i, 300, height);
+				btn.Frame = new RectangleF(0, height * i, width, height);
 				newView.AddSubview(btn);
 				i++;
 			}
-			newView.Frame = new RectangleF(0, 0, 300, height * i);
+			newView.Frame = new RectangleF(0, 0, width, height * i);
 			return newView;
 		}
 
@@ -370,7 +371,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				_renderer.View.AddSubview(viewRenderer.NativeView);
 				if (viewRenderer.ViewController != null)
 					_renderer.AddChildViewController(viewRenderer.ViewController);
-				viewRenderer.NativeView.Frame = new RectangleF(0, 0, _renderer.View.Bounds.Width, _renderer.View.Bounds.Height);
 				viewRenderer.SetElementSize(new Size(_renderer.View.Bounds.Width, _renderer.View.Bounds.Height));
 			}
 			else
