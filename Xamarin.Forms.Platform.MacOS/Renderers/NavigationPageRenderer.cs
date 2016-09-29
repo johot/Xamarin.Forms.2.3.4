@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AppKit;
+using CoreAnimation;
+using Foundation;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.MacOS
@@ -17,6 +19,10 @@ namespace Xamarin.Forms.Platform.MacOS
 		EventTracker _events;
 		VisualElementTracker _tracker;
 		Stack<PageWrapper> _currentStack = new Stack<PageWrapper>();
+		NSView _currentView;
+		CATransition _transition;
+
+		internal readonly ToolbarTracker _toolbarTracker = new ToolbarTracker();
 
 		NSToolbar _toolbar => NSApplication.SharedApplication.MainWindow.Toolbar;
 
@@ -37,54 +43,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		public NavigationPageRenderer(IntPtr handle)
 		{
 			View = new FormsNSView { WantsLayer = true };
-
-		}
-
-		protected virtual NSToolbar ConfigureToolbar()
-		{
-			var toolbar = new NSToolbar("MainToolbar")
-			{
-				Delegate = new MainToolBarDelegate(GetCurrentPageTitle, GetPreviousPageTitle, NavigateBackFrombackButton)
-			};
-
-			return toolbar;
-		}
-
-		protected virtual void ConfigurePageRenderer()
-		{
-			//var transiton = new CATransition();
-			//transiton.Type = CAAnimation.TransitionPush;
-			//transiton.Subtype = CAAnimation.TransitionFromLeft;
-			//View.Animations = NSDictionary.FromObjectAndKey(transiton, new NSString("subviews"));
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed && disposing)
-			{
-				if (Element != null)
-				{
-					PageController?.SendDisappearing();
-					((Element as IPageContainer<Page>)?.CurrentPage as IPageController)?.SendDisappearing();
-					Element.PropertyChanged -= HandlePropertyChanged;
-					Element = null;
-				}
-
-				if (_tracker != null)
-				{
-					_tracker.Dispose();
-					_tracker = null;
-				}
-
-				if (_events != null)
-				{
-					_events.Dispose();
-					_events = null;
-				}
-
-				_disposed = true;
-			}
-			base.Dispose(disposing);
+			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
 		}
 
 		public VisualElement Element { get; private set; }
@@ -96,10 +55,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			return NativeView.GetSizeRequest(widthConstraint, heightConstraint);
 		}
 
-		public NSView NativeView
-		{
-			get { return View; }
-		}
+		public NSView NativeView => View;
 
 		public void SetElement(VisualElement element)
 		{
@@ -109,13 +65,11 @@ namespace Xamarin.Forms.Platform.MacOS
 			OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
 
 			EffectUtilities.RegisterEffectControlProvider(this, oldElement, element);
-
 		}
 
 		public void SetElementSize(Size size)
 		{
 			Element.Layout(new Rectangle(Element.X, Element.Y, size.Width, size.Height));
-
 		}
 
 		public NSViewController ViewController
@@ -138,17 +92,31 @@ namespace Xamarin.Forms.Platform.MacOS
 			return Task.FromResult(OnPush(page, animated));
 		}
 
-		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
+		protected override void Dispose(bool disposing)
 		{
-			if (e.OldElement != null)
-				e.OldElement.PropertyChanged -= HandlePropertyChanged;
+			if (!_disposed && disposing)
+			{
+				if (Element != null)
+				{
+					PageController?.SendDisappearing();
+					((Element as IPageContainer<Page>)?.CurrentPage as IPageController)?.SendDisappearing();
+					Element.PropertyChanged -= HandlePropertyChanged;
+					Element = null;
+				}
 
-			if (e.NewElement != null)
-				e.NewElement.PropertyChanged += HandlePropertyChanged;
+				_tracker?.Dispose();
+				_tracker = null;
 
-			var changed = ElementChanged;
-			if (changed != null)
-				changed(this, e);
+				_events?.Dispose();
+				_events = null;
+
+				if (_toolbarTracker != null)
+				{
+					_toolbarTracker.CollectionChanged -= ToolbarTrackerOnCollectionChanged;
+				}
+				_disposed = true;
+			}
+			base.Dispose(disposing);
 		}
 
 		public override void ViewWillDisappear()
@@ -183,27 +151,36 @@ namespace Xamarin.Forms.Platform.MacOS
 		public override void ViewWillAppear()
 		{
 			Init();
-
 			base.ViewWillAppear();
 		}
 
-		public override void ViewDidLayout()
+		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
 		{
-			base.ViewDidLayout();
+			if (e.OldElement != null)
+				e.OldElement.PropertyChanged -= HandlePropertyChanged;
+
+			if (e.NewElement != null)
+				e.NewElement.PropertyChanged += HandlePropertyChanged;
+
+			ElementChanged?.Invoke(this, e);
 		}
 
-		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+		protected virtual NSToolbar ConfigureToolbar()
 		{
-			if (_tracker == null)
-				return;
+			var toolbar = new NSToolbar("MainToolbar")
+			{
+				Delegate = new MainToolBarDelegate(GetCurrentPageTitle, GetPreviousPageTitle, GetToolbarItems, NavigateBackFrombackButton)
+			};
+			toolbar.DisplayMode = NSToolbarDisplayMode.Icon;
+			return toolbar;
+		}
 
-			if (e.PropertyName == NavigationPage.BarBackgroundColorProperty.PropertyName)
-				UpdateBarBackgroundColor();
-			else if (e.PropertyName == NavigationPage.BarTextColorProperty.PropertyName)
-				UpdateBarTextColor();
-			else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
-				UpdateBackgroundColor();
-
+		protected virtual void ConfigurePageRenderer()
+		{
+			_transition = new CATransition();
+			_transition.Type = CAAnimation.TransitionPush;
+			_transition.Subtype = CAAnimation.TransitionFromLeft;
+			View.WantsLayer = true;
 		}
 
 		protected virtual async Task<bool> OnPopToRoot(Page page, bool animated)
@@ -266,7 +243,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			Element.PropertyChanged += HandlePropertyChanged;
 
-			UpdateToolBarVisible();
 			UpdateBackgroundColor();
 		}
 
@@ -282,9 +258,9 @@ namespace Xamarin.Forms.Platform.MacOS
 		void InsertPageBefore(Page page, Page before)
 		{
 			if (before == null)
-				throw new ArgumentNullException("before");
+				throw new ArgumentNullException(nameof(before));
 			if (page == null)
-				throw new ArgumentNullException("page");
+				throw new ArgumentNullException(nameof(page));
 
 		}
 
@@ -347,7 +323,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var vc = CreateViewControllerForPage(page);
 			page.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Frame.Height));
-			View.AddSubview(vc.NativeView, NSWindowOrderingMode.Above, null);
+
+			SetCurrentView(vc.NativeView);
+
 			UpdateTitles(page);
 			(page as IPageController)?.SendAppearing();
 		}
@@ -377,8 +355,12 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (NavigationPage.GetHasNavigationBar(_currentStack.Peek().Page))
 			{
-				NSApplication.SharedApplication.MainWindow.Toolbar = ConfigureToolbar();
+				if (_toolbar == null)
+				{
+					NSApplication.SharedApplication.MainWindow.Toolbar = ConfigureToolbar();
+				}
 				UpdateToolbarItems();
+
 			}
 			else
 			{
@@ -386,18 +368,24 @@ namespace Xamarin.Forms.Platform.MacOS
 				{
 					NSApplication.SharedApplication.MainWindow.ToggleToolbarShown(this);
 				}
-
 			}
 		}
 		void UpdateToolbarItems()
 		{
+			_toolbarTracker.Target = _currentStack.Peek().Page;
+			var nItems = _toolbar.Items.Length;
+			for (int i = nItems - 1; i >= 0; i--)
+			{
+				_toolbar.RemoveItem(i);
+			}
 			_toolbar.InsertItem(MainToolBarDelegate.BackButtonIdentifier, 0);
 			_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
 			_toolbar.InsertItem(MainToolBarDelegate.TitleIdentifier, 2);
 			_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 3);
+			_toolbar.InsertItem(MainToolBarDelegate.ToolbarItemsIdentifier, 4);
 		}
 
-		async void NavigateBackFrombackButton()
+		async Task NavigateBackFrombackButton()
 		{
 			await NavigationController?.PopAsyncInner(true, true);
 		}
@@ -410,6 +398,11 @@ namespace Xamarin.Forms.Platform.MacOS
 		string GetPreviousPageTitle()
 		{
 			return _previousTitle ?? "";
+		}
+
+		List<ToolbarItem> GetToolbarItems()
+		{
+			return _toolbarTracker.ToolbarItems.ToList();
 		}
 
 		void UpdateBarBackgroundColor()
@@ -431,5 +424,40 @@ namespace Xamarin.Forms.Platform.MacOS
 				previous.Hidden = hidden;
 			}
 		}
+
+		void ToolbarTrackerOnCollectionChanged(object sender, EventArgs eventArgs)
+		{
+			UpdateToolbarItems();
+		}
+
+		void SetCurrentView(NSView view)
+		{
+			view.WantsLayer = true;
+			if (_currentView == null)
+			{
+				_currentView = view;
+				View.AddSubview(_currentView, NSWindowOrderingMode.Above, null);
+				View.Animations = NSDictionary.FromObjectAndKey(_transition, new NSString("subviews"));
+				return;
+			}
+
+			View.AddSubview(view, NSWindowOrderingMode.Above, null);
+
+			_currentView = view;
+		}
+
+		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (_tracker == null)
+				return;
+
+			if (e.PropertyName == NavigationPage.BarBackgroundColorProperty.PropertyName)
+				UpdateBarBackgroundColor();
+			else if (e.PropertyName == NavigationPage.BarTextColorProperty.PropertyName)
+				UpdateBarTextColor();
+			else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
+				UpdateBackgroundColor();
+		}
+
 	}
 }
