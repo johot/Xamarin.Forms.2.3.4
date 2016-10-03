@@ -62,6 +62,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			var oldElement = Element;
 			Element = element;
 
+			Init();
+
 			OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
 
 			EffectUtilities.RegisterEffectControlProvider(this, oldElement, element);
@@ -121,9 +123,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override void ViewWillDisappear()
 		{
+			if (_toolbar != null && _toolbar.Visible)
+				_toolbar.Visible = false;
 			base.ViewWillDisappear();
-			NSApplication.SharedApplication.MainWindow.ToggleToolbarShown(this);
-
 		}
 
 		public override void ViewDidDisappear()
@@ -150,7 +152,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override void ViewWillAppear()
 		{
-			Init();
+			if (_toolbar != null && !_toolbar.Visible)
+				_toolbar.Visible = true;
 			base.ViewWillAppear();
 		}
 
@@ -183,6 +186,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			View.WantsLayer = true;
 		}
 
+		//TODO: Implement PopToRoot
 		protected virtual async Task<bool> OnPopToRoot(Page page, bool animated)
 		{
 			var renderer = Platform.GetRenderer(page);
@@ -218,10 +222,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			var navPage = (NavigationPage)Element;
 
 			if (navPage.CurrentPage == null)
-			{
-				throw new InvalidOperationException(
-					"NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.");
-			}
+				throw new InvalidOperationException("NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.");
 
 			var navController = ((INavigationPageController)navPage);
 
@@ -234,14 +235,11 @@ namespace Xamarin.Forms.Platform.MacOS
 			UpdateBarBackgroundColor();
 			UpdateBarTextColor();
 
-			// If there is already stuff on the stack we need to push it
-			((INavigationPageController)navPage).StackCopy.Reverse().ForEach(async p => await PushPageAsync(p, false));
-
 			_events = new EventTracker(this);
 			_events.LoadEvents(NativeView);
 			_tracker = new VisualElementTracker(this);
 
-			Element.PropertyChanged += HandlePropertyChanged;
+			((INavigationPageController)navPage).StackCopy.Reverse().ForEach(async p => await PushPageAsync(p, false));
 
 			UpdateBackgroundColor();
 		}
@@ -358,6 +356,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (_toolbar == null)
 				{
 					NSApplication.SharedApplication.MainWindow.Toolbar = ConfigureToolbar();
+					_toolbar.Visible = false;
 				}
 				UpdateToolbarItems();
 
@@ -405,11 +404,13 @@ namespace Xamarin.Forms.Platform.MacOS
 			return _toolbarTracker.ToolbarItems.ToList();
 		}
 
+		//TODO: Implement
 		void UpdateBarBackgroundColor()
 		{
 
 		}
 
+		//TODO: Implement
 		void UpdateBarTextColor()
 		{
 
@@ -458,6 +459,5 @@ namespace Xamarin.Forms.Platform.MacOS
 			else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
 				UpdateBackgroundColor();
 		}
-
 	}
 }
