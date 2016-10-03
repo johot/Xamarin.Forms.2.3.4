@@ -3,50 +3,39 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using AppKit;
-using Xamarin.Forms.Internals;
-using PointF = CoreGraphics.CGPoint;
-using RectangleF = CoreGraphics.CGRect;
-using SizeF = CoreGraphics.CGSize;
+using Foundation;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	public class CarouselPageRenderer : NSViewController, IVisualElementRenderer
+	[Register("CarouselPageRenderer")]
+	public class CarouselPageRenderer : NSPageController, IVisualElementRenderer
 	{
 		bool _appeared;
-		Dictionary<Page, NSView> _containerMap;
 		bool _disposed;
 		EventTracker _events;
 		bool _ignoreNativeScrolling;
-		FormsScrollView _scrollView;
 		VisualElementTracker _tracker;
 
-		public CarouselPageRenderer()
-		{
-			View = _scrollView = new FormsScrollView
-			{
-				DocumentView = new FormsNSView { BackgroundColor = NSColor.Clear },
-				HasVerticalScroller = false,
-				HasHorizontalScroller = true,
-				VerticalScrollElasticity = NSScrollElasticity.None,
-				HorizontalScrollElasticity = NSScrollElasticity.None
-			};
-
-			_scrollView.ScrollChanged += FormsScrollViewScrollChanged;
-		}
+		public CarouselPageRenderer() { View = new FormsNSView { BackgroundColor = NSColor.Clear }; }
+		public CarouselPageRenderer(IntPtr handle) : base(handle) { }
 
 		IElementController ElementController => Element as IElementController;
-
-		protected CarouselPage Carousel
-		{
-			get { return (CarouselPage)Element; }
-		}
-
 		IPageController PageController => (IPageController)Element;
 
-		protected int SelectedIndex
+		public override nint SelectedIndex
 		{
-			get { return (int)(_scrollView.ContentView.Bounds.Location.X / _scrollView.Frame.Width); }
-			set { ScrollToPage(value); }
+			get
+			{
+				return base.SelectedIndex;
+			}
+			set
+			{
+				if (base.SelectedIndex == value)
+					return;
+				base.SelectedIndex = value;
+				if (Carousel != null)
+					Carousel.CurrentPage = (ContentPage)ElementController.LogicalChildren[(int)SelectedIndex];
+			}
 		}
 
 		public VisualElement Element { get; private set; }
@@ -58,19 +47,16 @@ namespace Xamarin.Forms.Platform.MacOS
 			return NativeView.GetSizeRequest(widthConstraint, heightConstraint);
 		}
 
-		public NSView NativeView
-		{
-			get { return View; }
-		}
+		public NSView NativeView => View;
 
 		public void SetElement(VisualElement element)
 		{
 			VisualElement oldElement = Element;
 			Element = element;
-			_containerMap = new Dictionary<Page, NSView>();
+
+			Init();
 
 			OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
-
 		}
 
 		public void SetElementSize(Size size)
@@ -104,58 +90,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			PageController.SendDisappearing();
 		}
 
-		public override void ViewDidLayout()
-		{
-			base.ViewDidLayout();
-			View.Frame = View.Superview.Bounds;
-			_scrollView.Frame = View.Bounds;
-		}
-
-		public override void ViewWillAppear()
-		{
-			base.ViewWillAppear();
-			Init();
-		}
-
-		public void Init()
-		{
-
-			_tracker = new VisualElementTracker(this);
-			_events = new EventTracker(this);
-			_events.LoadEvents(View);
-
-			UpdateBackground();
-
-
-			for (var i = 0; i < ElementController.LogicalChildren.Count; i++)
-			{
-				Element element = ElementController.LogicalChildren[i];
-				var child = element as ContentPage;
-				if (child != null)
-					InsertPage(child, i);
-			}
-
-			PositionChildren();
-			UpdateCurrentPage(false);
-
-			Carousel.PropertyChanged += OnPropertyChanged;
-			Carousel.PagesChanged += OnPagesChanged;
-		}
-
-		public override void ViewWillDisappear()
-		{
-			base.ViewWillDisappear();
-			if (_scrollView != null)
-			{
-				_scrollView.ScrollChanged -= FormsScrollViewScrollChanged;
-			}
-			if (Carousel != null)
-			{
-				Carousel.PropertyChanged -= OnPropertyChanged;
-				Carousel.PagesChanged -= OnPagesChanged;
-			}
-		}
-
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && !_disposed)
@@ -167,15 +101,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				}
 
 				Platform.SetRenderer(Element, null);
-
-				Clear();
-
-				if (_scrollView != null)
-				{
-					_scrollView.ScrollChanged -= FormsScrollViewScrollChanged;
-					_scrollView.RemoveFromSuperview();
-					_scrollView = null;
-				}
 
 				if (_appeared)
 				{
@@ -209,72 +134,57 @@ namespace Xamarin.Forms.Platform.MacOS
 				changed(this, e);
 		}
 
-		void FormsScrollViewScrollChanged(object sender, FormsScrollViewScrollChangedEventArgs e)
+		protected virtual void ConfigureNSPageController()
 		{
-			if (e.CurrentScrollPoint.X % _scrollView.Bounds.Width != 0)
-				return;
-
-			Carousel.CurrentPage = (ContentPage)ElementController.LogicalChildren[SelectedIndex];
+			TransitionStyle = NSPageControllerTransitionStyle.HorizontalStrip;
 		}
 
-		void Clear()
+		protected CarouselPage Carousel => Element as CarouselPage;
+
+		void Init()
 		{
-			foreach (KeyValuePair<Page, NSView> kvp in _containerMap)
-			{
-				kvp.Value.RemoveFromSuperview();
-				IVisualElementRenderer renderer = Platform.GetRenderer(kvp.Key);
-				if (renderer != null)
-				{
-					renderer.ViewController.RemoveFromParentViewController();
-					renderer.NativeView.RemoveFromSuperview();
-					Platform.SetRenderer(kvp.Key, null);
-				}
-			}
-			_containerMap.Clear();
+			Delegate = new PageControllerDelegate(this);
+
+			_tracker = new VisualElementTracker(this);
+			_events = new EventTracker(this);
+			_events.LoadEvents(View);
+
+			ConfigureNSPageController();
+
+			UpdateBackground();
+			UpdateSource();
+			UpdateCurrentPage(false);
+
+			Carousel.PropertyChanged += OnPropertyChanged;
+			Carousel.PagesChanged += OnPagesChanged;
 		}
 
-		void InsertPage(ContentPage page, int index)
+		void UpdateSource()
 		{
-			IVisualElementRenderer renderer = Platform.GetRenderer(page);
-			if (renderer == null)
+			var pages = new List<NSPageContainer>();
+			for (var i = 0; i < ElementController.LogicalChildren.Count; i++)
 			{
-				renderer = Platform.CreateRenderer(page);
-				Platform.SetRenderer(page, renderer);
+				Element element = ElementController.LogicalChildren[i];
+				var child = element as ContentPage;
+				if (child != null)
+					pages.Add(new NSPageContainer(child, i));
 			}
 
-			NSView container = new PageContainer(page);
-			container.AddSubview(renderer.NativeView);
-			_containerMap[page] = container;
-
-			AddChildViewController(renderer.ViewController);
-			(_scrollView.DocumentView as NSView).AddSubview(container);
-
-			if ((index == 0 && SelectedIndex == 0) || (index < SelectedIndex))
-				ScrollToPage(SelectedIndex + 1, false);
+			ArrangedObjects = pages.ToArray();
 		}
 
 		void OnPagesChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			_ignoreNativeScrolling = true;
 
-			NotifyCollectionChangedAction action = e.Apply((o, i, c) => InsertPage((ContentPage)o, i), (o, i) => RemovePage((ContentPage)o, i), Reset);
-			PositionChildren();
+			UpdateSource();
 
 			_ignoreNativeScrolling = false;
-
-			if (action == NotifyCollectionChangedAction.Reset)
-			{
-				int index = Carousel.CurrentPage != null ? CarouselPage.GetIndex(Carousel.CurrentPage) : 0;
-				if (index < 0)
-					index = 0;
-
-				ScrollToPage(index);
-			}
 		}
 
 		void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == "CurrentPage")
+			if (e.PropertyName == nameof(TabbedPage.CurrentPage))
 				UpdateCurrentPage();
 			else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
 				UpdateBackground();
@@ -282,101 +192,45 @@ namespace Xamarin.Forms.Platform.MacOS
 				UpdateBackground();
 		}
 
-		void PositionChildren()
-		{
-			nfloat x = 0;
-			RectangleF bounds = View.Bounds;
-			foreach (ContentPage child in ((CarouselPage)Element).Children)
-			{
-				NSView container = _containerMap[child];
-
-				container.Frame = new RectangleF(x, bounds.Y, bounds.Width, bounds.Height);
-				x += bounds.Width;
-			}
-
-			var contentSize = new SizeF(bounds.Width * ((CarouselPage)Element).Children.Count, bounds.Height);
-			(_scrollView.DocumentView as NSView).Frame = new RectangleF(0, Element.Height - contentSize.Height, contentSize.Width, contentSize.Height);
-
-			_scrollView.CustompageScroll = bounds.Width;
-
-		}
-
-		void RemovePage(ContentPage page, int index)
-		{
-			NSView container = _containerMap[page];
-			container.RemoveFromSuperview();
-			_containerMap.Remove(page);
-
-			IVisualElementRenderer renderer = Platform.GetRenderer(page);
-			if (renderer == null)
-				return;
-
-			renderer.ViewController.RemoveFromParentViewController();
-			renderer.NativeView.RemoveFromSuperview();
-		}
-
-		void Reset()
-		{
-			Clear();
-
-			for (var i = 0; i < ElementController.LogicalChildren.Count; i++)
-			{
-				Element element = ElementController.LogicalChildren[i];
-				var child = element as ContentPage;
-				if (child != null)
-					InsertPage(child, i);
-			}
-		}
-
-		async void ScrollToPage(int index, bool animated = true)
-		{
-			if (_scrollView.ContentView.Bounds.Location.X == index * _scrollView.Frame.Width)
-				return;
-
-			var scrollPoint = new PointF(index * _scrollView.Frame.Width, 0);
-
-			await _scrollView.ScrollToPositionAsync(scrollPoint, animated, 0.2);
-		}
-
-
 		void UpdateBackground()
 		{
 			string bgImage = ((Page)Element).BackgroundImage;
+			var formsBackgroundView = View as FormsNSView;
 			if (!string.IsNullOrEmpty(bgImage))
 			{
-				_scrollView.BackgroundColor = NSColor.FromPatternImage(NSImage.ImageNamed(bgImage));
+				formsBackgroundView.BackgroundColor = NSColor.FromPatternImage(NSImage.ImageNamed(bgImage));
 				return;
 			}
 			Color bgColor = Element.BackgroundColor;
 			if (bgColor.IsDefault)
-				_scrollView.BackgroundColor = NSColor.White;
+				formsBackgroundView.BackgroundColor = NSColor.White;
 			else
-				_scrollView.BackgroundColor = bgColor.ToNSColor();
+				formsBackgroundView.BackgroundColor = bgColor.ToNSColor();
 		}
 
 		void UpdateCurrentPage(bool animated = true)
 		{
 			ContentPage current = Carousel.CurrentPage;
 			if (current != null)
-				ScrollToPage(CarouselPage.GetIndex(current), animated);
-		}
-
-
-		class PageContainer : NSView
-		{
-			public PageContainer(VisualElement element)
 			{
-				Element = element;
-			}
+				int index = Carousel.CurrentPage != null ? CarouselPage.GetIndex(Carousel.CurrentPage) : 0;
+				if (index < 0)
+					index = 0;
 
-			public VisualElement Element { get; }
+				if (SelectedIndex == index)
+					return;
 
-			public override void Layout()
-			{
-				base.Layout();
-
-				if (Subviews.Length > 0)
-					Subviews[0].Frame = new RectangleF(0, 0, (float)Element.Width, (float)Element.Height);
+				if (animated)
+				{
+					NSAnimationContext.RunAnimation((NSAnimationContext context) =>
+					{
+						((NSPageController)Animator).SelectedIndex = index;
+					}, CompleteTransition);
+				}
+				else
+				{
+					SelectedIndex = index;
+				}
 			}
 		}
 	}

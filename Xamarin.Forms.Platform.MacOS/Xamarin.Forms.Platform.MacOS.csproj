@@ -163,6 +163,8 @@
     </Compile>
     <Compile Include="Renderers\LayoutRenderer.cs" />
     <Compile Include="Extensions\NSImageExtensions.cs" />
+    <Compile Include="Renderers\NSPageContainer.cs" />
+    <Compile Include="Renderers\PageControllerDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
