@@ -385,7 +385,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_toolbar.InsertItem(MainToolBarDelegate.ToolbarItemsIdentifier, 4);
 		}
 
-		async Task NavigateBackFrombackButton()
+		async void NavigateBackFrombackButton()
 		{
 			await NavigationController?.PopAsyncInner(true, true);
 		}

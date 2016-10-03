@@ -41,12 +41,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
 
 			OnPagesChanged(null, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-
-
-
-			TabView.DrawsBackground = false;
-			TabStyle = NSTabViewControllerTabStyle.SegmentedControlOnTop;
-			TabView.TabViewType = NSTabViewType.NSNoTabsNoBorder;
+			ConfigureTabView();
 
 			Tabbed.PropertyChanged += OnPropertyChanged;
 			Tabbed.PagesChanged += OnPagesChanged;
@@ -56,6 +51,13 @@ namespace Xamarin.Forms.Platform.MacOS
 			UpdateBarTextColor();
 
 			EffectUtilities.RegisterEffectControlProvider(this, oldElement, element);
+		}
+
+		protected virtual void ConfigureTabView()
+		{
+			TabView.DrawsBackground = false;
+			TabStyle = NSTabViewControllerTabStyle.SegmentedControlOnTop;
+			TabView.TabViewType = NSTabViewType.NSNoTabsNoBorder;
 		}
 
 		IPageController PageController => Element as IPageController;
@@ -208,7 +210,7 @@ namespace Xamarin.Forms.Platform.MacOS
 					pageRenderer.ViewController.Identifier = i.ToString();
 					var newTVI = new NSTabViewItem { ViewController = pageRenderer.ViewController, Label = page.Title };
 					if (page.Icon != null)
-						newTVI.Image = new NSImage(page.Icon);
+						newTVI.Image = NSImage.ImageNamed(page.Icon).Resize(new CoreGraphics.CGSize(19, 19));
 
 					AddTabViewItem(newTVI);
 				}
