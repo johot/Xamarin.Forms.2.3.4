@@ -13,6 +13,7 @@ namespace Xamarin.Forms.Platform.iOS
 	public abstract class ViewRenderer<TView, TNativeView> : VisualElementRenderer<TView> where TView : View where TNativeView : UIView
 	{
 		UIColor _defaultColor;
+		bool _disposed;
 
 		public TNativeView Control { get; private set; }
 
@@ -39,13 +40,20 @@ namespace Xamarin.Forms.Platform.iOS
 
 		protected override void Dispose(bool disposing)
 		{
-			base.Dispose(disposing);
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
 
 			if (disposing && Control != null && ManageNativeControlLifetime)
 			{
 				Control.Dispose();
 				Control = null;
 			}
+
+			base.Dispose(disposing);
 		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<TView> e)
