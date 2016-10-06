@@ -73,16 +73,12 @@ namespace Xamarin.Forms.Platform.MacOS
 			{
 				if (_headerRenderer != null)
 				{
-					var platform = _headerRenderer.Element.Platform as Platform;
-					if (platform != null)
-						platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
+					Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
 					_headerRenderer = null;
 				}
 				if (_footerRenderer != null)
 				{
-					var platform = _footerRenderer.Element.Platform as Platform;
-					if (platform != null)
-						platform.DisposeModelAndChildrenRenderers(_footerRenderer.Element);
+					Platform.DisposeModelAndChildrenRenderers(_footerRenderer.Element);
 					_footerRenderer = null;
 				}
 
@@ -276,9 +272,7 @@ namespace Xamarin.Forms.Platform.MacOS
 						return;
 					}
 					_table.HeaderView = null;
-					var platform = _headerRenderer.Element.Platform as Platform;
-					if (platform != null)
-						platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
+					Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
 					_headerRenderer = null;
 				}
 
@@ -295,9 +289,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			else if (_headerRenderer != null)
 			{
 				_table.HeaderView = null;
-				var platform = _headerRenderer.Element.Platform as Platform;
-				if (platform != null)
-					platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
+				Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
 				_headerRenderer.Dispose();
 				_headerRenderer = null;
 			}

@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AppKit;
 using RectangleF = CoreGraphics.CGRect;
-using SizeF = CoreGraphics.CGSize;
-using PointF = CoreGraphics.CGPoint;
 using System.Linq;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
 	public class Platform : BindableObject, IPlatform, INavigation, IDisposable
 	{
-
 		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), typeof(Platform), default(IVisualElementRenderer),
 				propertyChanged: (bindable, oldvalue, newvalue) =>
 				{
@@ -20,8 +17,8 @@ namespace Xamarin.Forms.Platform.MacOS
 						view.IsPlatformEnabled = newvalue != null;
 				});
 
-		readonly List<Page> _modals;
 		readonly PlatformRenderer _renderer;
+		readonly ModalPageTracker _modalTracker;
 		bool _animateModals = true;
 		bool _appeared;
 		bool _disposed;
@@ -29,7 +26,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		internal Platform()
 		{
 			_renderer = new PlatformRenderer(this);
-			_modals = new List<Page>();
+			_modalTracker = new ModalPageTracker(_renderer);
 
 			MessagingCenter.Subscribe(this, Page.AlertSignalName, (Page sender, AlertArguments arguments) =>
 			{
@@ -73,7 +70,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		IReadOnlyList<Page> INavigation.ModalStack
 		{
-			get { return _modals; }
+			get { return _modalTracker.ModalStack; }
 		}
 
 		IReadOnlyList<Page> INavigation.NavigationStack
@@ -91,29 +88,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			throw new InvalidOperationException("PopAsync is not supported globally on MacOS, please use a NavigationPage.");
 		}
 
-		Task<Page> INavigation.PopModalAsync()
-		{
-			return ((INavigation)this).PopModalAsync(true);
-		}
-
-		async Task<Page> INavigation.PopModalAsync(bool animated)
-		{
-			var modal = _modals.Last();
-			_modals.Remove(modal);
-			modal.DescendantRemoved -= HandleChildRemoved;
-
-			var controller = GetRenderer(modal) as NSViewController;
-
-			//if (_modals.Count >= 1 && controller != null)
-			//	await controller.DismissController();
-			//else
-			//	await _renderer.DismissController(animated);
-
-			DisposeModelAndChildrenRenderers(modal);
-
-			return modal;
-		}
-
 		Task INavigation.PopToRootAsync()
 		{
 			return ((INavigation)this).PopToRootAsync(true);
@@ -121,7 +95,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		Task INavigation.PopToRootAsync(bool animated)
 		{
-			throw new InvalidOperationException("PopToRootAsync is not supported globally on iOS, please use a NavigationPage.");
+			throw new InvalidOperationException("PopToRootAsync is not supported globally on MacOS, please use a NavigationPage.");
 		}
 
 		Task INavigation.PushAsync(Page root)
@@ -131,7 +105,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		Task INavigation.PushAsync(Page root, bool animated)
 		{
-			throw new InvalidOperationException("PushAsync is not supported globally on iOS, please use a NavigationPage.");
+			throw new InvalidOperationException("PushAsync is not supported globally on MacOS, please use a NavigationPage.");
 		}
 
 		Task INavigation.PushModalAsync(Page modal)
@@ -139,16 +113,23 @@ namespace Xamarin.Forms.Platform.MacOS
 			return ((INavigation)this).PushModalAsync(modal, true);
 		}
 
+		Task<Page> INavigation.PopModalAsync()
+		{
+			return ((INavigation)this).PopModalAsync(true);
+		}
+
 		Task INavigation.PushModalAsync(Page modal, bool animated)
 		{
-			_modals.Add(modal);
 			modal.Platform = this;
 
-			modal.DescendantRemoved += HandleChildRemoved;
-
 			if (_appeared)
-				return PresentModal(modal, _animateModals && animated);
+				return _modalTracker.PushAsync(modal, _animateModals && animated);
 			return Task.FromResult<object>(null);
+		}
+
+		Task<Page> INavigation.PopModalAsync(bool animated)
+		{
+			return _modalTracker.PopAsync(animated);
 		}
 
 		void INavigation.RemovePage(Page page)
@@ -194,9 +175,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			MessagingCenter.Unsubscribe<Page, bool>(this, Page.BusySetSignalName);
 
 			DisposeModelAndChildrenRenderers(Page);
-			foreach (var modal in _modals)
-				DisposeModelAndChildrenRenderers(modal);
 
+			_modalTracker.Dispose();
 			_renderer.Dispose();
 		}
 
@@ -225,38 +205,22 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.OnBindingContextChanged();
 		}
 
-		internal void DisposeModelAndChildrenRenderers(Element view)
+		internal static void DisposeModelAndChildrenRenderers(Element view)
 		{
 			IVisualElementRenderer renderer;
 			foreach (VisualElement child in view.Descendants())
-			{
-				renderer = GetRenderer(child);
-				child.ClearValue(RendererProperty);
-
-				if (renderer != null)
-				{
-					renderer.NativeView.RemoveFromSuperview();
-					renderer.Dispose();
-				}
-			}
+				DisposeModelAndChildrenRenderers(child);
 
 			renderer = GetRenderer((VisualElement)view);
-			if (renderer != null)
-			{
-				if (renderer.ViewController != null)
-				{
-					//var modalWrapper = renderer.ViewController.ParentViewController as ModalWrapper;
-					//if (modalWrapper != null)
-					//	modalWrapper.Dispose();		
-				}
+			renderer?.ViewController?.RemoveFromParentViewController();
 
-				renderer.NativeView.RemoveFromSuperview();
-				renderer.Dispose();
-			}
+			renderer?.NativeView?.RemoveFromSuperview();
+			renderer?.Dispose();
+
 			view.ClearValue(RendererProperty);
 		}
 
-		internal void DisposeRendererAndChildren(IVisualElementRenderer rendererToRemove)
+		internal static void DisposeRendererAndChildren(IVisualElementRenderer rendererToRemove)
 		{
 			if (rendererToRemove == null)
 				return;
@@ -355,7 +319,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			while (!Application.IsApplicationOrNull(page.RealParent))
 				page = (Page)page.RealParent;
 
-			return Page == page || _modals.Contains(page);
+			return Page == page || _modalTracker.ModalStack.Contains(page);
 		}
 
 		void AddChild(VisualElement view)
@@ -382,11 +346,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			var view = e.Element;
 			DisposeModelAndChildrenRenderers(view);
 		}
-
-		async Task PresentModal(Page modal, bool animated)
-		{
-		}
-
 	}
 }
 

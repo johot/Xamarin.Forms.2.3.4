@@ -165,6 +165,8 @@
     <Compile Include="Extensions\NSImageExtensions.cs" />
     <Compile Include="Renderers\NSPageContainer.cs" />
     <Compile Include="Renderers\PageControllerDelegate.cs" />
+    <Compile Include="Extensions\NSViewControllerExtensions.cs" />
+    <Compile Include="ModalPageTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
