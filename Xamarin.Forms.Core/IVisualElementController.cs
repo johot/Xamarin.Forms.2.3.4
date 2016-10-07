@@ -6,5 +6,6 @@ namespace Xamarin.Forms
 	{
 		void NativeSizeChanged();
 		void InvalidateMeasure(InvalidationTrigger trigger);
+		bool DisableLayout { get; set; }
 	}
 }

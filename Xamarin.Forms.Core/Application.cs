@@ -175,11 +175,6 @@ namespace Xamarin.Forms
 		{
 		}
 
-		internal static void ClearCurrent()
-		{
-			s_current = null;
-		}
-
 		public static bool IsApplicationOrNull(Element element)
 		{
 			return element == null || element is Application;
@@ -232,6 +227,11 @@ namespace Xamarin.Forms
 		void IApplicationController.SendStart()
 		{
 			OnStart();
+		}
+
+		void IApplicationController.Clear()
+		{
+			s_current = null;
 		}
 
 		async Task<IDictionary<string, object>> GetPropertiesAsync()

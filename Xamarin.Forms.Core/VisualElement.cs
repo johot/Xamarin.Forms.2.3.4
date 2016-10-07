@@ -322,7 +322,7 @@ namespace Xamarin.Forms
 			get { return ComputedConstraint | SelfConstraint; }
 		}
 
-		internal bool DisableLayout { get; set; }
+		bool IVisualElementController.DisableLayout { get; set; }
 
 		internal bool IsInNativeLayout
 		{

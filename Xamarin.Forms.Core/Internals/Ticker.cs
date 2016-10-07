@@ -24,8 +24,8 @@ namespace Xamarin.Forms.Internals
 
 		public static Ticker Default
 		{
-			internal set { s_ticker = value; }
-			get { return s_ticker ?? (s_ticker =  Device.PlatformServices.CreateTicker()); }
+			set { s_ticker = value; }
+			get { return s_ticker ?? (s_ticker = Device.PlatformServices.CreateTicker()); }
 		}
 
 		public virtual int Insert(Func<long, bool> timeout)
@@ -59,7 +59,7 @@ namespace Xamarin.Forms.Internals
 		protected abstract void DisableTimer();
 
 		protected abstract void EnableTimer();
-		
+
 		protected void SendSignals(int timestep = -1)
 		{
 			long step = timestep >= 0 ? timestep : _stopwatch.ElapsedMilliseconds;

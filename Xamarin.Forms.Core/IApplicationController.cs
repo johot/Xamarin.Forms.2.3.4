@@ -12,5 +12,6 @@ namespace Xamarin.Forms
 		Task SendSleepAsync();
 		void SendStart();
 		NavigationProxy NavigationProxy { get; }
+		void Clear();
 	}
 }

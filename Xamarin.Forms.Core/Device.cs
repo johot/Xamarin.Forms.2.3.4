@@ -114,7 +114,7 @@ namespace Xamarin.Forms
 			PlatformServices.StartTimer(interval, callback);
 		}
 
-		internal static Assembly[] GetAssemblies()
+		public static Assembly[] GetAssemblies()
 		{
 			return PlatformServices.GetAssemblies();
 		}
