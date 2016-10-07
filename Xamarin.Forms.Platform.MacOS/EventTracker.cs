@@ -86,12 +86,12 @@ namespace Xamarin.Forms.Platform.MacOS
 			{
 				var uiRecognizer = CreateTapRecognizer(tapRecognizer.NumberOfTapsRequired, r =>
 				{
-					var tapGestureRecognizer = weakRecognizer.Target as TapGestureRecognizer;
+					var tapGestureRecognizer = weakRecognizer.Target as ITapGestureRecognizerController;
 					var eventTracker = weakEventTracker.Target as EventTracker;
 					var view = eventTracker?._renderer?.Element as View;
 
-					if (tapGestureRecognizer != null && view != null)
-						tapGestureRecognizer.SendTapped(view);
+					if (view != null)
+						tapGestureRecognizer?.SendTapped(view);
 				});
 				return uiRecognizer;
 			}

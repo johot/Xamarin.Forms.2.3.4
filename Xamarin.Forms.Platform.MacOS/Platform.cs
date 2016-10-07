@@ -64,13 +64,13 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		Page Page { get; set; }
 
-		Application TargetApplication
+		IApplicationController TargetApplication
 		{
 			get
 			{
 				if (Page == null)
 					return null;
-				return Page.RealParent as Application;
+				return Page.RealParent as IApplicationController;
 			}
 		}
 
@@ -227,8 +227,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void AddChild(VisualElement view)
 		{
-			if (!Application.IsApplicationOrNull(view.RealParent))
-				Console.Error.WriteLine("Tried to add parented view to canvas directly");
+			//if (!Application.IsApplicationOrNull(view.RealParent))
+			//	Console.Error.WriteLine("Tried to add parented view to canvas directly");
 
 			if (GetRenderer(view) == null)
 			{

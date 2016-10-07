@@ -12,6 +12,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		IElementController ElementController => Element as IElementController;
 
+		IEditorController EditController => Element as IEditorController;
+
 		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
 		{
 			base.OnElementChanged(e);
@@ -98,7 +100,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		void OnEditingEnded(object sender, EventArgs eventArgs)
 		{
 			Element.SetValue(VisualElement.IsFocusedPropertyKey, false);
-			Element.SendCompleted();
+			EditController?.SendCompleted();
 		}
 
 		void OnEditingBegan(object sender, EventArgs eventArgs)
