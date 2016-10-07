@@ -12,7 +12,7 @@ namespace Xamarin.Forms
 		public DeviceOrientation CurrentOrientation
 		{
 			get { return _currentOrientation; }
-			internal set
+			set
 			{
 				if (Equals(_currentOrientation, value))
 					return;
