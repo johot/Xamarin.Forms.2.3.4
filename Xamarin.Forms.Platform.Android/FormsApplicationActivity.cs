@@ -134,7 +134,7 @@ namespace Xamarin.Forms.Platform.Android
 			_layout = new LinearLayout(BaseContext);
 			SetContentView(_layout);
 
-			Xamarin.Forms.Application.ClearCurrent();
+			_applicationController.Clear();
 
 			_previousState = _currentState;
 			_currentState = AndroidApplicationLifecycleState.OnCreate;

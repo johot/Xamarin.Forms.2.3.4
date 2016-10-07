@@ -209,7 +209,6 @@
     <Compile Include="Renderers\ListViewAdapter.cs" />
     <Compile Include="Renderers\ListViewRenderer.cs" />
     <Compile Include="Renderers\MasterDetailRenderer.cs" />
-    <Compile Include="Renderers\NavigationMenuRenderer.cs" />
     <Compile Include="Renderers\NavigationRenderer.cs" />
     <Compile Include="Renderers\ObjectJavaBox.cs" />
     <Compile Include="Renderers\CarouselPageAdapter.cs" />
@@ -244,6 +243,24 @@
     <Compile Include="Extensions\NativeBindingExtensions.cs" />
     <Compile Include="NativeValueConverterService.cs" />
     <Compile Include="NativeBindingservice.cs" />
+    <Compile Include="..\Xamarin.Forms.Core\ConcurrentDictionary.cs">
+      <Link>Shared\ConcurrentDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core\NavigationModel.cs">
+      <Link>Shared\NavigationModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core\SplitOrderedList.cs">
+      <Link>Shared\SplitOrderedList.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core\Performance.cs">
+      <Link>Shared\Performance.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core\DataTemplateExtensions.cs">
+      <Link>Shared\DataTemplateExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core\InvalidNavigationException.cs">
+      <Link>Shared\InvalidNavigationException.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -268,6 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Shared\" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

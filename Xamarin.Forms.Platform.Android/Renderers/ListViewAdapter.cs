@@ -414,7 +414,7 @@ namespace Xamarin.Forms.Platform.Android
 				if (global == position || cells.Count > 0)
 				{
 					//Always create a new cell if we are using the RecycleElement strategy
-					var headerCell = _listView.CachingStrategy == ListViewCachingStrategy.RecycleElement ? GetNewGroupHeaderCell(group) : group.HeaderContent;
+					var headerCell = (_listView as IListViewController).CachingStrategy == ListViewCachingStrategy.RecycleElement ? GetNewGroupHeaderCell(group) : group.HeaderContent;
 					cells.Add(headerCell);
 
 					if (cells.Count == take)
@@ -566,7 +566,8 @@ namespace Xamarin.Forms.Platform.Android
 
 		Cell GetNewGroupHeaderCell(ITemplatedItemsList<Cell> group)
 		{
-			var groupHeaderCell = _listView.TemplatedItems.GroupHeaderTemplate?.CreateContent(group.ItemsSource, _listView) as Cell;
+			var templatedItems = (TemplatedItemsList<ItemsView<Cell>, Cell>)TemplatedItemsView.TemplatedItems;
+			var groupHeaderCell = templatedItems.GroupHeaderTemplate.CreateContent(group.ItemsSource, _listView) as Cell;
 
 			if (groupHeaderCell != null)
 			{

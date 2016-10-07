@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Platform
 {
 	internal static class Loader
 	{
-		internal static void Load ()
+		internal static void Load()
 		{
 		}
 	}
@@ -32,93 +32,93 @@ namespace Xamarin.Forms.Platform
 	[RenderWith(typeof(EntryRenderer))]
 	internal class _EntryRenderer { }
 
-	[RenderWith (typeof (EditorRenderer))]
+	[RenderWith(typeof(EditorRenderer))]
 	internal class _EditorRenderer { }
 
-	[RenderWith (typeof (LabelRenderer))]
+	[RenderWith(typeof(LabelRenderer))]
 	internal class _LabelRenderer { }
 
-	[RenderWith (typeof (ImageRenderer))]
+	[RenderWith(typeof(ImageRenderer))]
 	internal class _ImageRenderer { }
 
-	[RenderWith (typeof (ButtonRenderer))]
+	[RenderWith(typeof(ButtonRenderer))]
 	internal class _ButtonRenderer { }
 
-	[RenderWith (typeof (TableViewRenderer))]
+	[RenderWith(typeof(TableViewRenderer))]
 	internal class _TableViewRenderer { }
 
-	[RenderWith (typeof (ListViewRenderer))]
+	[RenderWith(typeof(ListViewRenderer))]
 	internal class _ListViewRenderer { }
-	
-	[RenderWith (typeof (SliderRenderer))]
+
+	[RenderWith(typeof(SliderRenderer))]
 	internal class _SliderRenderer { }
 
-	[RenderWith (typeof (WebViewRenderer))]
+	[RenderWith(typeof(WebViewRenderer))]
 	internal class _WebViewRenderer { }
 
-	[RenderWith (typeof (SearchBarRenderer))]
+	[RenderWith(typeof(SearchBarRenderer))]
 	internal class _SearchBarRenderer { }
 
-	[RenderWith (typeof (SwitchRenderer))]
+	[RenderWith(typeof(SwitchRenderer))]
 	internal class _SwitchRenderer { }
 
-	[RenderWith (typeof (DatePickerRenderer))]
+	[RenderWith(typeof(DatePickerRenderer))]
 	internal class _DatePickerRenderer { }
 
-	[RenderWith (typeof (TimePickerRenderer))]
+	[RenderWith(typeof(TimePickerRenderer))]
 	internal class _TimePickerRenderer { }
 
-	[RenderWith (typeof (PickerRenderer))]
+	[RenderWith(typeof(PickerRenderer))]
 	internal class _PickerRenderer { }
 
-	[RenderWith (typeof (StepperRenderer))]
+	[RenderWith(typeof(StepperRenderer))]
 	internal class _StepperRenderer { }
 
-	[RenderWith (typeof (ProgressBarRenderer))]
+	[RenderWith(typeof(ProgressBarRenderer))]
 	internal class _ProgressBarRenderer { }
 
-	[RenderWith (typeof (ScrollViewRenderer))]
+	[RenderWith(typeof(ScrollViewRenderer))]
 	internal class _ScrollViewRenderer { }
 
-	[RenderWith (typeof (ActivityIndicatorRenderer))]
+	[RenderWith(typeof(ActivityIndicatorRenderer))]
 	internal class _ActivityIndicatorRenderer { }
 
-	[RenderWith (typeof (FrameRenderer))]
+	[RenderWith(typeof(FrameRenderer))]
 	internal class _FrameRenderer { }
 
 #if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
-	[RenderWith (typeof (NavigationMenuRenderer))]
+	//[RenderWith (typeof (NavigationMenuRenderer))]
 	internal class _NavigationMenuRenderer { }
 
-	[RenderWith (typeof (OpenGLViewRenderer))]
+	[RenderWith(typeof(OpenGLViewRenderer))]
 #else
 	[RenderWith (null)]
 #endif
-	
+
 	internal class _OpenGLViewRenderer { }
 
 #if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
-	[RenderWith (typeof (TabbedRenderer))]
+	[RenderWith(typeof(TabbedRenderer))]
 #else
 	[RenderWith (typeof (TabbedPageRenderer))]
 #endif
 	internal class _TabbedPageRenderer { }
 
 #if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
-	[RenderWith (typeof (NavigationRenderer))]
+	[RenderWith(typeof(NavigationRenderer))]
 #else
 	[RenderWith (typeof (NavigationPageRenderer))]
 #endif
 	internal class _NavigationPageRenderer { }
 
-	[RenderWith (typeof (CarouselPageRenderer))]
+	[RenderWith(typeof(CarouselPageRenderer))]
 	internal class _CarouselPageRenderer { }
 
-	[RenderWith (typeof (PageRenderer))]
+	[RenderWith(typeof(PageRenderer))]
 	internal class _PageRenderer { }
 
 #if !__IOS__
-	[RenderWith (typeof (MasterDetailRenderer))]
+	[RenderWith(typeof(MasterDetailRenderer))]
 #else
 	[RenderWith (typeof (PhoneMasterDetailRenderer))]
 #endif

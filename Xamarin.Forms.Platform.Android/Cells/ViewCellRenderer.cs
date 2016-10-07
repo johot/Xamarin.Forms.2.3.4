@@ -94,8 +94,8 @@ namespace Xamarin.Forms.Platform.Android
 					Performance.Start("Reuse");
 					_viewCell = cell;
 
-					cell.View.DisableLayout = true;
-					foreach (VisualElement c in cell.View.Descendants())
+					(cell.View as IVisualElementController).DisableLayout = true;
+					foreach (IVisualElementController c in cell.View.Descendants())
 						c.DisableLayout = true;
 
 					Performance.Start("Reuse.SetElement");
@@ -104,8 +104,8 @@ namespace Xamarin.Forms.Platform.Android
 
 					Platform.SetRenderer(cell.View, _view);
 
-					cell.View.DisableLayout = false;
-					foreach (VisualElement c in cell.View.Descendants())
+					(cell.View as IVisualElementController).DisableLayout = false;
+					foreach (IVisualElementController c in cell.View.Descendants())
 						c.DisableLayout = false;
 
 					var viewAsLayout = cell.View as Layout;

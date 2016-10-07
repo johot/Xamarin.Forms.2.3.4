@@ -12,6 +12,8 @@ namespace Xamarin.Forms.Platform.Android
 		bool _ignoreSourceChanges;
 		FormsWebChromeClient _webChromeClient;
 
+		IWebViewController _webViewController => Element as IWebViewController;
+
 		public WebViewRenderer()
 		{
 			AutoPackage = false;
@@ -147,14 +149,12 @@ namespace Xamarin.Forms.Platform.Android
 		{
 			if (Element == null || Control == null)
 				return;
-			Element.CanGoBack = Control.CanGoBack();
-			Element.CanGoForward = Control.CanGoForward();
+			_webViewController.UpdateCanGoBack(Control.CanGoBack());
+			_webViewController.UpdateCanGoForward(Control.CanGoForward());
 		}
 
 		class WebClient : WebViewClient
 		{
-			IWebViewController _webViewController => _renderer?.Element as IWebViewController;
-
 			WebNavigationResult _navigationResult = WebNavigationResult.Success;
 			WebViewRenderer _renderer;
 
@@ -177,7 +177,7 @@ namespace Xamarin.Forms.Platform.Android
 
 				var args = new WebNavigatedEventArgs(WebNavigationEvent.NewPage, source, url, _navigationResult);
 
-				_webViewController?.SendNavigated(args);
+				_renderer?._webViewController?.SendNavigated(args);
 
 				_renderer.UpdateCanGoBackForward();
 
@@ -211,7 +211,7 @@ namespace Xamarin.Forms.Platform.Android
 
 				var args = new WebNavigatingEventArgs(WebNavigationEvent.NewPage, new UrlWebViewSource { Url = url }, url);
 
-				_webViewController?.SendNavigating(args);
+				_renderer?._webViewController?.SendNavigating(args);
 				_navigationResult = WebNavigationResult.Success;
 
 				_renderer.UpdateCanGoBackForward();
