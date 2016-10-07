@@ -20,6 +20,8 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 		}
 
+		IWebViewController WebViewController => Element as IWebViewController;
+
 		public VisualElement Element { get; private set; }
 
 		public event EventHandler<VisualElementChangedEventArgs> ElementChanged;
@@ -158,8 +160,8 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateCanGoBackForward()
 		{
-			((WebView)Element).CanGoBack = CanGoBack;
-			((WebView)Element).CanGoForward = CanGoForward;
+			WebViewController?.UpdateCanGoBack(CanGoBack);
+			WebViewController?.UpdateCanGoForward(CanGoForward);
 		}
 
 		class CustomWebViewDelegate : UIWebViewDelegate
