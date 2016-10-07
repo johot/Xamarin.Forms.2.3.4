@@ -57,7 +57,7 @@ namespace Xamarin.Forms
 			set { SetValue(TextProperty, value); }
 		}
 
-		internal bool IsEnabled
+		public bool IsEnabled
 		{
 			get { return (bool)GetValue(IsEnabledProperty); }
 			set { SetValue(IsEnabledProperty, value); }

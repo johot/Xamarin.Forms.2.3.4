@@ -7,7 +7,7 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms
 {
-	internal interface IPlatformServices
+	public interface IPlatformServices
 	{
 		bool IsInvokeRequired { get; }
 

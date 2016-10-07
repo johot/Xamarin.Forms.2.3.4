@@ -86,7 +86,7 @@ namespace Xamarin.Forms
 
 		public static readonly BindableProperty MinimumHeightRequestProperty = BindableProperty.Create("MinimumHeightRequest", typeof(double), typeof(VisualElement), -1d, propertyChanged: OnRequestChanged);
 
-		internal static readonly BindablePropertyKey IsFocusedPropertyKey = BindableProperty.CreateReadOnly("IsFocused", typeof(bool), typeof(VisualElement), default(bool),
+		public static readonly BindablePropertyKey IsFocusedPropertyKey = BindableProperty.CreateReadOnly("IsFocused", typeof(bool), typeof(VisualElement), default(bool),
 			propertyChanged: OnIsFocusedPropertyChanged);
 
 		public static readonly BindableProperty IsFocusedProperty = IsFocusedPropertyKey.BindableProperty;
@@ -248,7 +248,7 @@ namespace Xamarin.Forms
 			set { SetValue(StyleProperty, value); }
 		}
 
-		[TypeConverter (typeof(ListStringTypeConverter))]
+		[TypeConverter(typeof(ListStringTypeConverter))]
 		public IList<string> StyleClass
 		{
 			get { return _mergedStyle.StyleClass; }
@@ -296,7 +296,7 @@ namespace Xamarin.Forms
 			private set { SetValue(YPropertyKey, value); }
 		}
 
-		internal bool Batched
+		public bool Batched
 		{
 			get { return _batched > 0; }
 		}
@@ -358,7 +358,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal bool IsPlatformEnabled
+		public bool IsPlatformEnabled
 		{
 			get { return _isPlatformEnabled; }
 			set
@@ -529,8 +529,8 @@ namespace Xamarin.Forms
 
 			if (includeMargins)
 			{
-				
-				
+
+
 
 				if (!margin.IsDefault)
 				{
@@ -629,7 +629,7 @@ namespace Xamarin.Forms
 			OnSizeAllocated(width, height);
 		}
 
-		internal event EventHandler<EventArg<VisualElement>> BatchCommitted;
+		public event EventHandler<EventArg<VisualElement>> BatchCommitted;
 
 		internal void ComputeConstrainsForChildren()
 		{
@@ -646,7 +646,7 @@ namespace Xamarin.Forms
 			view.ComputedConstraint = LayoutConstraint.None;
 		}
 
-		internal event EventHandler<FocusRequestArgs> FocusChangeRequested;
+		public event EventHandler<FocusRequestArgs> FocusChangeRequested;
 
 		internal virtual void InvalidateMeasureInternal(InvalidationTrigger trigger)
 		{
@@ -775,7 +775,7 @@ namespace Xamarin.Forms
 				SizeChanged(this, EventArgs.Empty);
 		}
 
-		internal class FocusRequestArgs : EventArgs
+		public class FocusRequestArgs : EventArgs
 		{
 			public bool Focus { get; set; }
 

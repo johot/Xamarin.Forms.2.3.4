@@ -133,7 +133,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal IPlatform Platform
+		public IPlatform Platform
 		{
 			get
 			{
@@ -158,7 +158,7 @@ namespace Xamarin.Forms
 		}
 
 		// you're not my real dad
-		internal Element RealParent { get; private set; }
+		public Element RealParent { get; private set; }
 
 		List<KeyValuePair<string, BindableProperty>> DynamicResources
 		{
@@ -388,7 +388,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal IEnumerable<Element> Descendants()
+		public IEnumerable<Element> Descendants()
 		{
 			var queue = new Queue<Element>(16);
 			queue.Enqueue(this);

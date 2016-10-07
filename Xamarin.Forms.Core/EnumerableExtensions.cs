@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Xamarin.Forms
 {
-	internal static class EnumerableExtensions
+	public static class EnumerableExtensions
 	{
 		public static IEnumerable<T> GetGesturesFor<T>(this IEnumerable<IGestureRecognizer> gestures, Func<T, bool> predicate = null) where T : GestureRecognizer
 		{
@@ -23,7 +23,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, T item)
+		public static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, T item)
 		{
 			foreach (T x in enumerable)
 				yield return x;
@@ -31,7 +31,7 @@ namespace Xamarin.Forms
 			yield return item;
 		}
 
-		internal static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
+		public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
 		{
 			foreach (T item in enumeration)
 			{
@@ -39,7 +39,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal static int IndexOf<T>(this IEnumerable<T> enumerable, T item)
+		public static int IndexOf<T>(this IEnumerable<T> enumerable, T item)
 		{
 			if (enumerable == null)
 				throw new ArgumentNullException("enumerable");
@@ -56,7 +56,7 @@ namespace Xamarin.Forms
 			return -1;
 		}
 
-		internal static int IndexOf<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate)
+		public static int IndexOf<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate)
 		{
 			var i = 0;
 			foreach (T element in enumerable)

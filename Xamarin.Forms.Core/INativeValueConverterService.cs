@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.Xaml
 {
-	interface INativeValueConverterService
+	public interface INativeValueConverterService
 	{
 		bool ConvertTo(object value, Type toType, out object nativeValue);
 	}

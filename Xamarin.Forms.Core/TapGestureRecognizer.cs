@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms
 {
-	public sealed class TapGestureRecognizer : GestureRecognizer
+	public sealed class TapGestureRecognizer : GestureRecognizer, ITapGestureRecognizerController
 	{
 		public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(TapGestureRecognizer), null);
 
@@ -35,7 +35,7 @@ namespace Xamarin.Forms
 
 		public event EventHandler Tapped;
 
-		internal void SendTapped(View sender)
+		void ITapGestureRecognizerController.SendTapped(View sender)
 		{
 			ICommand cmd = Command;
 			if (cmd != null && cmd.CanExecute(CommandParameter))
@@ -72,7 +72,8 @@ namespace Xamarin.Forms
 			TappedCallback = (s, o) => tappedCallback(s);
 		}
 
-		[Obsolete("Obsolete in 1.0.2. Use Command instead")] public static readonly BindableProperty TappedCallbackProperty = BindableProperty.Create("TappedCallback", typeof(Action<View, object>),
+		[Obsolete("Obsolete in 1.0.2. Use Command instead")]
+		public static readonly BindableProperty TappedCallbackProperty = BindableProperty.Create("TappedCallback", typeof(Action<View, object>),
 			typeof(TapGestureRecognizer), null);
 
 		[Obsolete("Obsolete in 1.0.2. Use Command instead")]
@@ -82,7 +83,8 @@ namespace Xamarin.Forms
 			set { SetValue(TappedCallbackProperty, value); }
 		}
 
-		[Obsolete("Obsolete in 1.0.2. Use Command instead")] public static readonly BindableProperty TappedCallbackParameterProperty = BindableProperty.Create("TappedCallbackParameter", typeof(object),
+		[Obsolete("Obsolete in 1.0.2. Use Command instead")]
+		public static readonly BindableProperty TappedCallbackParameterProperty = BindableProperty.Create("TappedCallbackParameter", typeof(object),
 			typeof(TapGestureRecognizer), null);
 
 		[Obsolete("Obsolete in 1.0.2. Use Command instead")]

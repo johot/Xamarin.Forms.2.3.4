@@ -21,13 +21,14 @@ namespace Xamarin.Forms
 
 		ResourceDictionary _resources;
 		bool _saveAgain;
+		NavigationProxy _navigationProxy;
 
 		protected Application()
 		{
 			var f = false;
 			if (f)
 				Loader.Load();
-			NavigationProxy = new NavigationImpl(this);
+			_navigationProxy = new NavigationImpl(this);
 			Current = this;
 			_propertiesTask = GetPropertiesAsync();
 
@@ -51,7 +52,7 @@ namespace Xamarin.Forms
 		public static Application Current
 		{
 			get { return s_current; }
-			internal set
+			set
 			{
 				if (s_current == value)
 					return;
@@ -84,7 +85,7 @@ namespace Xamarin.Forms
 				if (_mainPage != null)
 				{
 					_mainPage.Parent = this;
-					_mainPage.NavigationProxy.Inner = NavigationProxy;
+					_mainPage.NavigationProxy.Inner = _navigationProxy;
 					InternalChildren.Add(_mainPage);
 				}
 				OnPropertyChanged();
@@ -101,9 +102,7 @@ namespace Xamarin.Forms
 			get { return _logicalChildren ?? (_logicalChildren = new ReadOnlyCollection<Element>(InternalChildren)); }
 		}
 
-		internal NavigationProxy NavigationProxy { get; }
-
-		internal int PanGestureId { get; set; }
+		public int PanGestureId { get; set; }
 
 		internal IResourceDictionary SystemResources { get; }
 
@@ -113,6 +112,8 @@ namespace Xamarin.Forms
 		{
 			_appIndexProvider = provider;
 		}
+
+		NavigationProxy IApplicationController.NavigationProxy => _navigationProxy;
 
 		public ResourceDictionary Resources
 		{
@@ -179,7 +180,7 @@ namespace Xamarin.Forms
 			s_current = null;
 		}
 
-		internal static bool IsApplicationOrNull(Element element)
+		public static bool IsApplicationOrNull(Element element)
 		{
 			return element == null || element is Application;
 		}
@@ -206,24 +207,29 @@ namespace Xamarin.Forms
 
 		internal event EventHandler PopCanceled;
 
-		internal void SendOnAppLinkRequestReceived(Uri uri)
+		void IApplicationController.SetCurrentApplication(Application app)
+		{
+			Current = app;
+		}
+
+		void IApplicationController.SendOnAppLinkRequestReceived(Uri uri)
 		{
 			OnAppLinkRequestReceived(uri);
 		}
 
-		internal void SendResume()
+		void IApplicationController.SendResume()
 		{
 			s_current = this;
 			OnResume();
 		}
 
-		internal Task SendSleepAsync()
+		Task IApplicationController.SendSleepAsync()
 		{
 			OnSleep();
 			return SavePropertiesAsync();
 		}
 
-		internal void SendStart()
+		void IApplicationController.SendStart()
 		{
 			OnStart();
 		}

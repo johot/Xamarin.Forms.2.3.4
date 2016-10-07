@@ -164,7 +164,7 @@ namespace Xamarin.Forms
 			return bpcontext != null && bpcontext.Binding != null;
 		}
 
-		internal object[] GetValues(BindableProperty property0, BindableProperty property1)
+		public object[] GetValues(BindableProperty property0, BindableProperty property1)
 		{
 			var values = new object[2];
 
@@ -195,7 +195,7 @@ namespace Xamarin.Forms
 			return values;
 		}
 
-		internal object[] GetValues(BindableProperty property0, BindableProperty property1, BindableProperty property2)
+		public object[] GetValues(BindableProperty property0, BindableProperty property1, BindableProperty property2)
 		{
 			var values = new object[3];
 

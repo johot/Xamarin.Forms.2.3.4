@@ -64,7 +64,7 @@ namespace Xamarin.Forms
 			set { SetValue(UriProperty, value); }
 		}
 
-		internal async Task<Stream> GetStreamAsync(CancellationToken userToken = default(CancellationToken))
+		public async Task<Stream> GetStreamAsync(CancellationToken userToken = default(CancellationToken))
 		{
 			OnLoadingStarted();
 			userToken.Register(CancellationTokenSource.Cancel);
@@ -121,7 +121,7 @@ namespace Xamarin.Forms
 				{
 					stream = await Device.GetStreamAsync(uri, cancellationToken).ConfigureAwait(false);
 				}
-				catch (Exception ex) 
+				catch (Exception ex)
 				{
 					Log.Warning("Image Loading", $"Error getting stream for {Uri}: {ex}");
 					stream = null;

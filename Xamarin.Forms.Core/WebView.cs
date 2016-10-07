@@ -5,7 +5,7 @@ using Xamarin.Forms.Platform;
 namespace Xamarin.Forms
 {
 	[RenderWith(typeof(_WebViewRenderer))]
-	public class WebView : View, IElementConfiguration<WebView>
+	public class WebView : View, IElementConfiguration<WebView>, IWebViewController
 	{
 		public static readonly BindableProperty SourceProperty = BindableProperty.Create("Source", typeof(WebViewSource), typeof(WebView), default(WebViewSource),
 			propertyChanging: (bindable, oldvalue, newvalue) =>
@@ -82,6 +82,12 @@ namespace Xamarin.Forms
 
 		public event EventHandler<WebNavigatingEventArgs> Navigating;
 
+		public event EventHandler<EvalRequested> EvalRequested;
+
+		public event EventHandler GoBackRequested;
+
+		public event EventHandler GoForwardRequested;
+
 		protected override void OnBindingContextChanged()
 		{
 			base.OnBindingContextChanged();
@@ -95,7 +101,7 @@ namespace Xamarin.Forms
 
 		protected override void OnPropertyChanged(string propertyName)
 		{
-			if (propertyName == "BindingContext")
+			if (propertyName == nameof(BindingContext))
 			{
 				WebViewSource source = Source;
 				if (source != null)
@@ -110,24 +116,28 @@ namespace Xamarin.Forms
 			OnPropertyChanged(SourceProperty.PropertyName);
 		}
 
-		internal event EventHandler<EvalRequested> EvalRequested;
-
-		internal event EventHandler GoBackRequested;
-
-		internal event EventHandler GoForwardRequested;
-
-		internal void SendNavigated(WebNavigatedEventArgs args)
+		void IWebViewController.SendNavigated(WebNavigatedEventArgs args)
 		{
 			EventHandler<WebNavigatedEventArgs> handler = Navigated;
 			if (handler != null)
 				handler(this, args);
 		}
 
-		internal void SendNavigating(WebNavigatingEventArgs args)
+		void IWebViewController.SendNavigating(WebNavigatingEventArgs args)
 		{
 			EventHandler<WebNavigatingEventArgs> handler = Navigating;
 			if (handler != null)
 				handler(this, args);
+		}
+
+		void IWebViewController.UpdateCanGoBack(bool canGoBack)
+		{
+			CanGoBack = canGoBack;
+		}
+
+		void IWebViewController.UpdateCanGoForward(bool canGoForward)
+		{
+			CanGoForward = canGoForward;
 		}
 
 		public IPlatformElementConfiguration<T, WebView> On<T>() where T : IConfigPlatform

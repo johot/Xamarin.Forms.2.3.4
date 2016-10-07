@@ -436,6 +436,9 @@
     <Compile Include="INativeValueConverterService.cs" />
     <Compile Include="INativeBindingService.cs" />
     <Compile Include="ProvideCompiledAttribute.cs" />
+    <Compile Include="IEditorController.cs" />
+    <Compile Include="ITapGestureRecognizerController.cs" />
+    <Compile Include="IWebViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Internals
 		int _count;
 		bool _enabled;
 
-		internal Ticker()
+		public Ticker()
 		{
 			_count = 0;
 			_timeouts = new List<Tuple<int, Func<long, bool>>>();

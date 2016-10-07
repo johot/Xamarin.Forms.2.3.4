@@ -82,7 +82,8 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal string UpdateSourceEventName {
+		public string UpdateSourceEventName
+		{
 			get { return _updateSourceEventName; }
 			set {
 				ThrowIfApplied();
