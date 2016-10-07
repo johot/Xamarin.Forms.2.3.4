@@ -153,6 +153,8 @@ namespace Xamarin.Forms.Platform.Android
 
 		class WebClient : WebViewClient
 		{
+			IWebViewController _webViewController => _renderer?.Element as IWebViewController;
+
 			WebNavigationResult _navigationResult = WebNavigationResult.Success;
 			WebViewRenderer _renderer;
 
@@ -175,7 +177,7 @@ namespace Xamarin.Forms.Platform.Android
 
 				var args = new WebNavigatedEventArgs(WebNavigationEvent.NewPage, source, url, _navigationResult);
 
-				_renderer.Element.SendNavigated(args);
+				_webViewController?.SendNavigated(args);
 
 				_renderer.UpdateCanGoBackForward();
 
@@ -209,7 +211,7 @@ namespace Xamarin.Forms.Platform.Android
 
 				var args = new WebNavigatingEventArgs(WebNavigationEvent.NewPage, new UrlWebViewSource { Url = url }, url);
 
-				_renderer.Element.SendNavigating(args);
+				_webViewController?.SendNavigating(args);
 				_navigationResult = WebNavigationResult.Success;
 
 				_renderer.UpdateCanGoBackForward();

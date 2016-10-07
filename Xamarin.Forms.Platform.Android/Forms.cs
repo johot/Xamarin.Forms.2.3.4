@@ -124,10 +124,10 @@ namespace Xamarin.Forms
 			Device.PlatformServices = new AndroidPlatformServices();
 
 			// use field and not property to avoid exception in getter
-			if (Device.info != null)
+			if (Device.Info != null)
 			{
-				((AndroidDeviceInfo)Device.info).Dispose();
-				Device.info = null;
+				((AndroidDeviceInfo)Device.Info).Dispose();
+				Device.Info = null;
 			}
 
 			// probably could be done in a better way

@@ -45,6 +45,8 @@ namespace Xamarin.Forms.Platform.Android
 		int _statusBarHeight = -1;
 		global::Android.Views.View _statusBarUnderlay;
 
+		IApplicationController _applicationController => _application as IApplicationController;
+
 		// Override this if you want to handle the default Android behavior of restoring fragments on an application restart
 		protected virtual bool AllowFragmentRestore => false;
 
@@ -323,7 +325,7 @@ namespace Xamarin.Forms.Platform.Android
 				return;
 
 			var link = new Uri(strLink);
-			_application?.SendOnAppLinkRequestReceived(link);
+			_applicationController?.SendOnAppLinkRequestReceived(link);
 		}
 
 		int GetColorPrimaryDark()
@@ -423,11 +425,11 @@ namespace Xamarin.Forms.Platform.Android
 				return;
 
 			if (_previousState == AndroidApplicationLifecycleState.OnCreate && _currentState == AndroidApplicationLifecycleState.OnStart)
-				_application.SendStart();
+				_applicationController?.SendStart();
 			else if (_previousState == AndroidApplicationLifecycleState.OnStop && _currentState == AndroidApplicationLifecycleState.OnRestart)
-				_application.SendResume();
+				_applicationController?.SendResume();
 			else if (_previousState == AndroidApplicationLifecycleState.OnPause && _currentState == AndroidApplicationLifecycleState.OnStop)
-				await _application.SendSleepAsync();
+				await _applicationController?.SendSleepAsync();
 		}
 
 		void RegisterHandlerForDefaultRenderer(Type target, Type handler, Type filter)

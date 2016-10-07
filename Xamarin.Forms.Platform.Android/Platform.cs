@@ -35,6 +35,8 @@ namespace Xamarin.Forms.Platform.Android
 
 		IMasterDetailPageController MasterDetailPageController => CurrentMasterDetailPage as IMasterDetailPageController;
 
+		IApplicationController TargetApplication => Page?.RealParent as IApplicationController;
+
 		readonly Context _context;
 
 		readonly PlatformRenderer _renderer;
@@ -413,7 +415,7 @@ namespace Xamarin.Forms.Platform.Android
 			Page.Platform = this;
 			AddChild(Page, layout);
 
-			Application.Current.NavigationProxy.Inner = this;
+			TargetApplication.NavigationProxy.Inner = this;
 
 			_toolbarTracker.Target = newRoot;
 

@@ -43,6 +43,8 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		IPageController CurrentPageController => _navModel.CurrentPage as IPageController;
 
+		IApplicationController TargetApplication => Page?.RealParent as IApplicationController;
+
 		public void Dispose()
 		{
 			if (_disposed)
@@ -238,7 +240,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			Page.Platform = this;
 			AddChild(Page, layout);
 
-			Application.Current.NavigationProxy.Inner = this;
+			TargetApplication.NavigationProxy.Inner = this;
 		}
 
 		void AddChild(Page page, bool layout = false)

@@ -31,7 +31,7 @@ namespace Xamarin.Forms.Platform.Android
 
 			IEnumerable<TapGestureRecognizer> gestureRecognizers = TapGestureRecognizers(count);
 			var result = false;
-			foreach (TapGestureRecognizer gestureRecognizer in gestureRecognizers)
+			foreach (ITapGestureRecognizerController gestureRecognizer in gestureRecognizers)
 			{
 				gestureRecognizer.SendTapped(view);
 				result = true;

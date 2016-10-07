@@ -24,6 +24,8 @@ namespace Xamarin.Forms.Platform.Android
 
 		int _nextActivityResultCallbackKey;
 
+		IApplicationController _applicationController => _application as IApplicationController;
+
 		AndroidApplicationLifecycleState _previousState;
 
 		protected FormsApplicationActivity()
@@ -295,11 +297,11 @@ namespace Xamarin.Forms.Platform.Android
 				return;
 
 			if (_previousState == AndroidApplicationLifecycleState.OnCreate && _currentState == AndroidApplicationLifecycleState.OnStart)
-				_application.SendStart();
+				_applicationController?.SendStart();
 			else if (_previousState == AndroidApplicationLifecycleState.OnStop && _currentState == AndroidApplicationLifecycleState.OnRestart)
-				_application.SendResume();
+				_applicationController?.SendResume();
 			else if (_previousState == AndroidApplicationLifecycleState.OnPause && _currentState == AndroidApplicationLifecycleState.OnStop)
-				await _application.SendSleepAsync();
+				await _applicationController?.SendSleepAsync();
 		}
 
 		void SetMainPage()
