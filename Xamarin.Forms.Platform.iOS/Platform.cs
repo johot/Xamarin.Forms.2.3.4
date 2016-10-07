@@ -294,7 +294,7 @@ namespace Xamarin.Forms.Platform.iOS
 		internal void DidAppear()
 		{
 			_animateModals = false;
-			Application.Current.NavigationProxy.Inner = this;
+			TargetApplication.NavigationProxy.Inner = this;
 			_animateModals = true;
 		}
 
@@ -378,7 +378,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			Page.DescendantRemoved += HandleChildRemoved;
 
-			Application.Current.NavigationProxy.Inner = this;
+			TargetApplication.NavigationProxy.Inner = this;
 		}
 
 		internal void WillAppear()
@@ -459,6 +459,16 @@ namespace Xamarin.Forms.Platform.iOS
 			// would be safe to dismiss the VC). Fortunately this is almost never an issue
 			await _renderer.PresentViewControllerAsync(wrapper, animated);
 			await Task.Delay(5);
+		}
+
+		IApplicationController TargetApplication
+		{
+			get
+			{
+				if (Page == null)
+					return null;
+				return Page.RealParent as IApplicationController;
+			}
 		}
 
 		internal class DefaultRenderer : VisualElementRenderer<VisualElement>

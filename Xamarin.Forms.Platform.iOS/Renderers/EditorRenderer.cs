@@ -11,6 +11,8 @@ namespace Xamarin.Forms.Platform.iOS
 
 		IElementController ElementController => Element as IElementController;
 
+		IEditorController EditorController => Element as IEditorController;
+
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
 			if (!Forms.IsiOS7OrNewer)
@@ -51,7 +53,7 @@ namespace Xamarin.Forms.Platform.iOS
 					var doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, (o, a) =>
 					{
 						Control.ResignFirstResponder();
-						Element.SendCompleted();
+						EditorController?.SendCompleted();
 					});
 					_accessoryView.SetItems(new[] { spacer, doneButton }, false);
 					Control.InputAccessoryView = _accessoryView;
@@ -100,7 +102,7 @@ namespace Xamarin.Forms.Platform.iOS
 		void OnEnded(object sender, EventArgs eventArgs)
 		{
 			Element.SetValue(VisualElement.IsFocusedPropertyKey, false);
-			Element.SendCompleted();
+			EditorController?.SendCompleted();
 		}
 
 		void OnStarted(object sender, EventArgs eventArgs)

@@ -174,15 +174,16 @@ namespace Xamarin.Forms.Platform.iOS
 				_renderer = renderer;
 			}
 
-			WebView WebView
-			{
-				get { return (WebView)_renderer.Element; }
-			}
+			IWebViewController WebViewController => _renderer.Element as IWebViewController;
+
+			IElementController ElementController => _renderer.Element as IElementController;
+
+			WebView WebView => _renderer.Element as WebView;
 
 			public override void LoadFailed(UIWebView webView, NSError error)
 			{
 				var url = GetCurrentUrl();
-				WebView.SendNavigated(new WebNavigatedEventArgs(_lastEvent, new UrlWebViewSource { Url = url }, url, WebNavigationResult.Failure));
+				WebViewController?.SendNavigated(new WebNavigatedEventArgs(_lastEvent, new UrlWebViewSource { Url = url }, url, WebNavigationResult.Failure));
 
 				_renderer.UpdateCanGoBackForward();
 			}
@@ -194,11 +195,11 @@ namespace Xamarin.Forms.Platform.iOS
 
 				_renderer._ignoreSourceChanges = true;
 				var url = GetCurrentUrl();
-				((IElementController)WebView).SetValueFromRenderer(WebView.SourceProperty, new UrlWebViewSource { Url = url });
+				ElementController?.SetValueFromRenderer(WebView.SourceProperty, new UrlWebViewSource { Url = url });
 				_renderer._ignoreSourceChanges = false;
 
 				var args = new WebNavigatedEventArgs(_lastEvent, WebView.Source, url, WebNavigationResult.Success);
-				WebView.SendNavigated(args);
+				WebViewController?.SendNavigated(args);
 
 				_renderer.UpdateCanGoBackForward();
 			}
@@ -236,7 +237,7 @@ namespace Xamarin.Forms.Platform.iOS
 				var lastUrl = request.Url.ToString();
 				var args = new WebNavigatingEventArgs(navEvent, new UrlWebViewSource { Url = lastUrl }, lastUrl);
 
-				WebView.SendNavigating(args);
+				WebViewController?.SendNavigating(args);
 				_renderer.UpdateCanGoBackForward();
 				return !args.Cancel;
 			}

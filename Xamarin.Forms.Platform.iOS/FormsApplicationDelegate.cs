@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.iOS
 		Application _application;
 		bool _isSuspended;
 		UIWindow _window;
-
+		IApplicationController _applicationController => _application as IApplicationController;
 		protected FormsApplicationDelegate()
 		{
 		}
@@ -42,7 +42,7 @@ namespace Xamarin.Forms.Platform.iOS
 				throw new InvalidOperationException("You MUST invoke LoadApplication () before calling base.FinishedLaunching ()");
 
 			SetMainPage();
-			_application.SendStart();
+			_applicationController?.SendStart();
 			return true;
 		}
 
@@ -54,7 +54,7 @@ namespace Xamarin.Forms.Platform.iOS
 			if (_application != null && _isSuspended)
 			{
 				_isSuspended = false;
-				_application.SendResume();
+				_applicationController?.SendResume();
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace Xamarin.Forms.Platform.iOS
 			if (_application != null)
 			{
 				_isSuspended = true;
-				await _application.SendSleepAsync();
+				await _applicationController?.SendSleepAsync();
 			}
 		}
 
@@ -147,7 +147,7 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 
 			if (!string.IsNullOrEmpty(strLink))
-				_application.SendOnAppLinkRequestReceived(new Uri(strLink));
+				_applicationController?.SendOnAppLinkRequestReceived(new Uri(strLink));
 		}
 
 		void SetMainPage()
