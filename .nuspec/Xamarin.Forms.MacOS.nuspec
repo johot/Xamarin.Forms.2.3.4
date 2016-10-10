@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Xamarin.Forms.MacOS$IdAppend$</id>
-    <version>1.0.0-pre1</version>
+    <version>1.0.1-pre1</version>
     <authors>Xamarin Inc.</authors>
     <owners>Xamarin Inc.</owners>
     <tags>xamarin forms xamarinforms xamarin.forms</tags>
@@ -10,11 +10,11 @@
     <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
     <projectUrl>http://xamarin.com/forms</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Build native UIs for iOS, Android, and Windows Phone from a single, shared C# codebase</description>
+    <description>Build native UIs for iOS, Android, Windows or Mac from a single, shared C# codebase</description>
     <copyright>Copyright 2013-2016</copyright>
     <dependencies>
       <group targetFramework="Xamarin.Mac">
-        <dependency id="Xamarin.Forms" version="2.3.3.159-pre3"/>
+        <dependency id="Xamarin.Forms" version="2.3.3.160-pre3"/>
       </group>
     </dependencies>
     <references>
