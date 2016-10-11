@@ -112,9 +112,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="MainMenu.xib" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\bank.png" />
     <BundleResource Include="Resources\bank%402x.png" />
     <BundleResource Include="Resources\calculator.png" />

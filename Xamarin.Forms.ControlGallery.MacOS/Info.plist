@@ -28,8 +28,6 @@
 	<string>Assets.xcassets/AppIcons.appiconset</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
