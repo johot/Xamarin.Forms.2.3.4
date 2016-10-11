@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Xamarin.Forms.MacOS$IdAppend$</id>
-    <version>1.0.1-pre1</version>
+    <id>Xamarin.Forms$IdAppend$</id>
+    <version>$Version$</version>
     <authors>Xamarin Inc.</authors>
     <owners>Xamarin Inc.</owners>
     <tags>xamarin forms xamarinforms xamarin.forms</tags>
@@ -14,7 +14,7 @@
     <copyright>Copyright 2013-2016</copyright>
     <dependencies>
       <group targetFramework="Xamarin.Mac">
-        <dependency id="Xamarin.Forms" version="2.3.3.160-pre3"/>
+        <dependency id="Xamarin.Forms" version="$FormsVersion$"/>
       </group>
     </dependencies>
     <references>
