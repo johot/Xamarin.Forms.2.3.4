@@ -8,8 +8,7 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public static class NSViewExtensions
 	{
-
-		public static IEnumerable<NSView> Descendants(this NSView self)
+		internal static IEnumerable<NSView> Descendants(this NSView self)
 		{
 			if (self.Subviews == null)
 				return Enumerable.Empty<NSView>();

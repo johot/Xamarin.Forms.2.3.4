@@ -4,9 +4,9 @@ using AppKit;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	public static class NSViewControllerExtensions
+	internal static class NSViewControllerExtensions
 	{
-		public static TaskCompletionSource<T> HandleAsyncAnimation<T>(this NSViewController container, NSViewController fromViewController,
+		public static Task<T> HandleAsyncAnimation<T>(this NSViewController container, NSViewController fromViewController,
 					 NSViewController toViewController, NSViewControllerTransitionOptions transitonOption, Action animationFinishedCallback, T result)
 		{
 			var tcs = new TaskCompletionSource<T>();
@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				animationFinishedCallback?.Invoke();
 			});
 
-			return tcs;
+			return tcs.Task;
 		}
 	}
 

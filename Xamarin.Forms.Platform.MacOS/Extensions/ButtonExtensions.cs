@@ -3,7 +3,7 @@ using AppKit;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	public static class ButtonExtensions
+	internal static class ButtonExtensions
 	{
 		public static NSCellImagePosition ToNSCellImagePosition(this Button control)
 		{

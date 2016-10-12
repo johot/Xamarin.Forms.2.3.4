@@ -163,7 +163,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			var image = NSImage.ImageNamed(imageName);
 			bool shouldResize = TabStyle == NSTabViewControllerTabStyle.SegmentedControlOnTop || TabStyle == NSTabViewControllerTabStyle.SegmentedControlOnBottom;
 			if (shouldResize)
-				image = image.Resize(new CGSize(s_defaultImageSizeSegmentedButton, s_defaultImageSizeSegmentedButton));
+				image = image.ResizeTo(new CGSize(s_defaultImageSizeSegmentedButton, s_defaultImageSizeSegmentedButton));
 			return image;
 		}
 

@@ -84,8 +84,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			NSViewControllerTransitionOptions option = animated ? NSViewControllerTransitionOptions.SlideUp : NSViewControllerTransitionOptions.None;
 
-			var tcs = _renderer.HandleAsyncAnimation(fromViewController, toViewController, option, null, true);
-			return tcs.Task;
+			var task = _renderer.HandleAsyncAnimation(fromViewController, toViewController, option, null, true);
+			return task;
 		}
 
 		Task<Page> HideModalAsync(Page modal, bool animated)
@@ -97,8 +97,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			NSViewControllerTransitionOptions option = animated ? NSViewControllerTransitionOptions.SlideDown : NSViewControllerTransitionOptions.None;
 
-			var tcs = _renderer.HandleAsyncAnimation(controller, toViewController, option, () => Platform.DisposeModelAndChildrenRenderers(modal), modal);
-			return tcs.Task;
+			var task = _renderer.HandleAsyncAnimation(controller, toViewController, option, () => Platform.DisposeModelAndChildrenRenderers(modal), modal);
+			return task;
 		}
 	}
 }

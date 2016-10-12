@@ -24,17 +24,11 @@ namespace Xamarin.Forms.Platform.MacOS
 		ITemplatedItemsView<Cell> TemplatedItemsView => Element;
 		NSTableView _table;
 
-		public virtual NSTableView CreateNSTableView(ListView list)
-		{
-			var table = new NSTableView { SelectionHighlightStyle = NSTableViewSelectionHighlightStyle.SourceList };
-			table.AllowsColumnReordering = false;
-			table.AllowsColumnResizing = false;
-			table.AllowsColumnSelection = false;
+		public NSTableView TableView => _table;
 
-			//this is needed .. can we go around it ?
-			table.AddColumn(new NSTableColumn("1"));
-			//this line hides the header by default
-			table.HeaderView = null;
+		protected virtual NSTableView CreateNSTableView(ListView list)
+		{
+			var table = new NSTableView().AsListViewLook();
 
 			table.Source = _dataSource = list.HasUnevenRows ? new UnevenListViewDataSource(list, table) : new ListViewDataSource(list, table);
 

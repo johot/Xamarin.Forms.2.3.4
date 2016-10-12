@@ -4,7 +4,7 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public static class NSImageExtensions
 	{
-		public static NSImage Resize(this NSImage self, CoreGraphics.CGSize newSize)
+		public static NSImage ResizeTo(this NSImage self, CoreGraphics.CGSize newSize)
 		{
 			self.ResizingMode = NSImageResizingMode.Stretch;
 			var smallImage = new NSImage(newSize);

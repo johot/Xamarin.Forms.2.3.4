@@ -4,7 +4,7 @@ using CoreGraphics;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	public static class NSTextFieldExtensions
+	internal static class NSTextFieldExtensions
 	{
 		public static void CenterTextVertically(this NSTextField self)
 		{
