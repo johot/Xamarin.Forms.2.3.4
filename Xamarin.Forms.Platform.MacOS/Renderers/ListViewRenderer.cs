@@ -302,6 +302,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				_dataSource.Counts[section] = exArgs.Count;
 
 			var groupReset = resetWhenGrouped && Element.IsGroupingEnabled;
+			_table.ReloadData();
 
 			//switch (e.Action)
 			//{
