@@ -168,6 +168,9 @@
     <Compile Include="Extensions\NSViewControllerExtensions.cs" />
     <Compile Include="ModalPageTracker.cs" />
     <Compile Include="PlatformNavigation.cs" />
+    <Compile Include="Renderers\TableViewRenderer.cs" />
+    <Compile Include="Extensions\NSTableViewExtensions.cs" />
+    <Compile Include="Renderers\TableViewDataSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
