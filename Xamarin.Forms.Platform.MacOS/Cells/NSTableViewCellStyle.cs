@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.Platform.MacOS
 {
-	public enum NSTableViewCellStyle
+	internal enum NSTableViewCellStyle
 	{
 		Default,
 		Value1,

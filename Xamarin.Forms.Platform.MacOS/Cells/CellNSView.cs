@@ -5,7 +5,7 @@ using CoreGraphics;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	public class CellNSView : FormsNSView, INativeElementView
+	internal class CellNSView : FormsNSView, INativeElementView
 	{
 		static readonly NSColor _defaultChildViewsBackground = NSColor.Clear;
 		Cell _cell;
@@ -102,8 +102,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.Layout();
 		}
 
-
-		internal static NSView GetNativeCell(NSTableView tableView, Cell cell, string templateId = "")
+		internal static NSView GetNativeCell(NSTableView tableView, Cell cell, string templateId = "", bool isHeader = false)
 		{
 
 			var reusable = tableView.MakeView(templateId, tableView);
@@ -111,6 +110,11 @@ namespace Xamarin.Forms.Platform.MacOS
 			var nativeCell = renderer.GetCell(cell, reusable, tableView);
 			if (string.IsNullOrEmpty(nativeCell.Identifier))
 				nativeCell.Identifier = templateId;
+			if (isHeader)
+			{
+				(nativeCell as FormsNSView).BackgroundColor = NSColor.LightGray;
+
+			}
 			nativeCell.LayoutSubtreeIfNeeded();
 			return nativeCell;
 		}

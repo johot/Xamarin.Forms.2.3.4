@@ -85,7 +85,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		void SetSource()
 		{
 			var modeledView = Element;
-			_table.Source = modeledView.HasUnevenRows ? new UnEvenTableViewModelRenderer(modeledView) : new TableViewDataSource(modeledView);
+			_table.Source = modeledView.HasUnevenRows ? new UnEvenTableViewModelRenderer(this) : new TableViewDataSource(this);
 		}
 
 		void UpdateBackgroundView()
