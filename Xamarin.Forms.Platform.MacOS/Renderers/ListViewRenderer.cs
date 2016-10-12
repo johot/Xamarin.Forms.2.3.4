@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using AppKit;
 using Foundation;
 using Xamarin.Forms.Internals;
@@ -12,26 +12,29 @@ namespace Xamarin.Forms.Platform.MacOS
 	public class ListViewRenderer : ViewRenderer<ListView, NSView>
 	{
 		bool _disposed;
-		public const int DefaultRowHeight = 44;
+		NSTableView _table;
 		ListViewDataSource _dataSource;
-		bool _estimatedRowHeight;
 		IVisualElementRenderer _headerRenderer;
 		IVisualElementRenderer _footerRenderer;
-
 		ScrollToRequestedEventArgs _requestedScroll;
-		bool _shouldEstimateRowHeight = true;
+
 		IListViewController Controller => Element;
 		ITemplatedItemsView<Cell> TemplatedItemsView => Element;
-		NSTableView _table;
 
-		public NSTableView TableView => _table;
+		public const int DefaultRowHeight = 44;
+
+		public NSTableView NativeTableView => _table;
+
+		public override void ViewWillDraw()
+		{
+			UpdateHeader();
+			base.ViewWillDraw();
+		}
 
 		protected virtual NSTableView CreateNSTableView(ListView list)
 		{
 			var table = new NSTableView().AsListViewLook();
-
 			table.Source = _dataSource = list.HasUnevenRows ? new UnevenListViewDataSource(list, table) : new ListViewDataSource(list, table);
-
 			return table;
 		}
 
@@ -81,19 +84,22 @@ namespace Xamarin.Forms.Platform.MacOS
 					headerView.MeasureInvalidated -= OnHeaderMeasureInvalidated;
 				_table?.HeaderView?.Dispose();
 
-				//var footerView = Controller?.FooterElement as VisualElement;
-				//if (footerView != null)
-				//	footerView.MeasureInvalidated -= OnFooterMeasureInvalidated;
-				//Control?.?.Dispose();
+				var footerView = Controller?.FooterElement as VisualElement;
+				if (footerView != null)
+					footerView.MeasureInvalidated -= OnFooterMeasureInvalidated;
+
 			}
 
 			base.Dispose(disposing);
 		}
 
-		public override void ViewWillDraw()
+		protected override void SetBackgroundColor(Color color)
 		{
-			UpdateHeader();
-			base.ViewWillDraw();
+			base.SetBackgroundColor(color);
+			if (_table == null)
+				return;
+
+			_table.BackgroundColor = color.ToNSColor(NSColor.White);
 		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
@@ -130,8 +136,6 @@ namespace Xamarin.Forms.Platform.MacOS
 					SetNativeControl(scroller);
 				}
 
-				_shouldEstimateRowHeight = true;
-
 				var controller = (IListViewController)e.NewElement;
 
 				controller.ScrollToRequested += OnScrollToRequested;
@@ -141,8 +145,8 @@ namespace Xamarin.Forms.Platform.MacOS
 				templatedItems.GroupedCollectionChanged += OnGroupedCollectionChanged;
 
 				UpdateRowHeight();
-				//UpdateHeader();
-				//UpdateFooter();
+				UpdateHeader();
+				UpdateFooter();
 				UpdatePullToRefreshEnabled();
 				UpdateIsRefreshing();
 				UpdateSeparatorColor();
@@ -165,10 +169,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			else if (e.PropertyName == ListView.IsGroupingEnabledProperty.PropertyName)
 				_dataSource.UpdateGrouping();
 			else if (e.PropertyName == ListView.HasUnevenRowsProperty.PropertyName)
-			{
-				_estimatedRowHeight = false;
 				_table.Source = _dataSource = Element.HasUnevenRows ? new UnevenListViewDataSource(_dataSource) : new ListViewDataSource(_dataSource);
-			}
 			else if (e.PropertyName == ListView.IsPullToRefreshEnabledProperty.PropertyName)
 				UpdatePullToRefreshEnabled();
 			else if (e.PropertyName == ListView.IsRefreshingProperty.PropertyName)
@@ -183,15 +184,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				UpdateFooter();
 			else if (e.PropertyName == "RefreshAllowed")
 				UpdatePullToRefreshEnabled();
-		}
-
-		NSIndexSet[] GetPaths(int section, int index, int count)
-		{
-			var paths = new NSIndexSet[count];
-			for (var i = 0; i < paths.Length; i++)
-				paths[i] = NSIndexSet.FromIndex(index + i);
-
-			return paths;
 		}
 
 		void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -234,22 +226,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			_table.HeaderView = (NSTableHeaderView)_headerRenderer.NativeView;
 		}
 
-		void OnScrollToRequested(object sender, ScrollToRequestedEventArgs e)
-		{
-			if (Superview == null)
-			{
-				_requestedScroll = e;
-				return;
-			}
-
-			System.Diagnostics.Debug.WriteLine("OnScrollToRequested not implemented yet");
-		}
-
-		void UpdateFooter()
-		{
-			System.Diagnostics.Debug.WriteLine("Footer not implemented yet");
-		}
-
 		void UpdateHeader()
 		{
 			var header = Controller.HeaderElement;
@@ -289,12 +265,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			}
 		}
 
-		void UpdateIsRefreshing()
-		{
-			var refreshing = Element.IsRefreshing;
-			System.Diagnostics.Debug.WriteLine("Is Refreshing not implemented");
-		}
-
 		void UpdateItems(NotifyCollectionChangedEventArgs e, int section, bool resetWhenGrouped)
 		{
 			var exArgs = e as NotifyCollectionChangedEventArgsEx;
@@ -302,80 +272,55 @@ namespace Xamarin.Forms.Platform.MacOS
 				_dataSource.Counts[section] = exArgs.Count;
 
 			var groupReset = resetWhenGrouped && Element.IsGroupingEnabled;
-			_table.ReloadData();
 
-			//switch (e.Action)
-			//{
-			//	case NotifyCollectionChangedAction.Add:
-			//		UpdateEstimatedRowHeight();
-			//		if (e.NewStartingIndex == -1 || groupReset)
-			//			goto case NotifyCollectionChangedAction.Reset;
-			//		Control.BeginUpdates();
-			//		Control.InsertRows(GetPaths(section, e.NewStartingIndex, e.NewItems.Count), NSTableViewAnimation.SlideUp);
+			switch (e.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					if (e.NewStartingIndex == -1 || groupReset)
+						goto case NotifyCollectionChangedAction.Reset;
 
-			//		Control.EndUpdates();
+					_table.BeginUpdates();
+					_table.InsertRows(NSIndexSet.FromArray(Enumerable.Range(e.NewStartingIndex, e.NewItems.Count).ToArray()), NSTableViewAnimation.SlideUp);
+					_table.EndUpdates();
 
-			//		break;
+					break;
 
-			//	case NotifyCollectionChangedAction.Remove:
-			//		if (e.OldStartingIndex == -1 || groupReset)
-			//			goto case NotifyCollectionChangedAction.Reset;
-			//		Control.BeginUpdates();
-			//		Control.RemoveRows(GetPaths(section, e.OldStartingIndex, e.OldItems.Count), NSTableViewAnimation.SlideDown);
+				case NotifyCollectionChangedAction.Remove:
+					if (e.OldStartingIndex == -1 || groupReset)
+						goto case NotifyCollectionChangedAction.Reset;
 
-			//		Control.EndUpdates();
+					_table.BeginUpdates();
+					_table.RemoveRows(NSIndexSet.FromArray(Enumerable.Range(e.NewStartingIndex, e.NewItems.Count).ToArray()), NSTableViewAnimation.SlideDown);
+					_table.EndUpdates();
 
-			//		if (_estimatedRowHeight && TemplatedItemsView.TemplatedItems.Count == 0)
-			//			_estimatedRowHeight = false;
+					break;
 
-			//		break;
+				case NotifyCollectionChangedAction.Move:
+					if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1 || groupReset)
+						goto case NotifyCollectionChangedAction.Reset;
+					_table.BeginUpdates();
+					for (var i = 0; i < e.OldItems.Count; i++)
+					{
+						var oldi = e.OldStartingIndex;
+						var newi = e.NewStartingIndex;
 
-			//	case NotifyCollectionChangedAction.Move:
-			//		if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1 || groupReset)
-			//			goto case NotifyCollectionChangedAction.Reset;
-			//		Control.BeginUpdates();
-			//		for (var i = 0; i < e.OldItems.Count; i++)
-			//		{
-			//			var oldi = e.OldStartingIndex;
-			//			var newi = e.NewStartingIndex;
+						if (e.NewStartingIndex < e.OldStartingIndex)
+						{
+							oldi += i;
+							newi += i;
+						}
 
-			//			if (e.NewStartingIndex < e.OldStartingIndex)
-			//			{
-			//				oldi += i;
-			//				newi += i;
-			//			}
+						_table.MoveRow(oldi, newi);
+					}
+					_table.EndUpdates();
 
-			//			Control.MoveRow(oldi, newi);
-			//		}
-			//		Control.EndUpdates();
+					break;
 
-			//		if (_estimatedRowHeight && e.OldStartingIndex == 0)
-			//			_estimatedRowHeight = false;
-
-			//		break;
-
-			//	case NotifyCollectionChangedAction.Replace:
-			//		if (e.OldStartingIndex == -1 || groupReset)
-			//			goto case NotifyCollectionChangedAction.Reset;
-			//		Control.BeginUpdates();
-			//		Control.ReloadData(GetPaths(section, e.OldStartingIndex, e.OldItems.Count), null);
-			//		Control.EndUpdates();
-
-			//		if (_estimatedRowHeight && e.OldStartingIndex == 0)
-			//			_estimatedRowHeight = false;
-
-			//		break;
-
-			//	case NotifyCollectionChangedAction.Reset:
-			//		_estimatedRowHeight = false;
-			//		Control.ReloadData();
-			//		return;
-			//}
-		}
-
-		void UpdatePullToRefreshEnabled()
-		{
-			System.Diagnostics.Debug.WriteLine("Pull to Refresh not implemented on MacOS");
+				case NotifyCollectionChangedAction.Replace:
+				case NotifyCollectionChangedAction.Reset:
+					_table.ReloadData();
+					return;
+			}
 		}
 
 		void UpdateRowHeight()
@@ -389,44 +334,35 @@ namespace Xamarin.Forms.Platform.MacOS
 				_table.RowHeight = rowHeight <= 0 ? DefaultRowHeight : rowHeight;
 		}
 
+		//TODO: Implement UpdateIsRefreshing
+		void UpdateIsRefreshing()
+		{
+		}
+
+		//TODO: Implement PullToRefresh
+		void UpdatePullToRefreshEnabled()
+		{
+		}
+
+		//TODO: Implement SeparatorColor
 		void UpdateSeparatorColor()
 		{
-			var color = Element.SeparatorColor;
-			// ...and Steve said to the unbelievers the separator shall be gray, and gray it was. The unbelievers looked on, and saw that it was good, and 
-			// they went forth and documented the default color. The holy scripture still reflects this default.
-			// Defined here: https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/separatorColor
-			//Control.SeparatorColor = color.ToUIColor(UIColor.Gray);
-			System.Diagnostics.Debug.WriteLine("Separator not implemented on MacOS");
 		}
 
+		//TODO: Implement UpdateSeparatorVisibility
 		void UpdateSeparatorVisibility()
 		{
-			var visibility = Element.SeparatorVisibility;
-			switch (visibility)
-			{
-				case SeparatorVisibility.Default:
-					//Control.SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine;
-					break;
-				case SeparatorVisibility.None:
-					//Control.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-
-			System.Diagnostics.Debug.WriteLine("Separator not implemented on MacOS");
 		}
 
-
-		protected override void SetBackgroundColor(Color color)
+		//TODO: Implement ScrollTo
+		void OnScrollToRequested(object sender, ScrollToRequestedEventArgs e)
 		{
-			base.SetBackgroundColor(color);
-			if (_table == null)
-				return;
+		}
 
-			_table.BackgroundColor = color.ToNSColor(NSColor.White);
+		//TODO: Implement Footer
+		void UpdateFooter()
+		{
 		}
 	}
-
 }
 
