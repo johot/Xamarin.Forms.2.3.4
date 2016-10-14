@@ -104,10 +104,14 @@
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\MasterDetailPageWindows.cs" />
     <Compile Include="GalleryPages\NavigationPropertiesGallery.cs" />
     <Compile Include="ControlGalleryPages\ListViewSelectionColor.cs" />
+    <Compile Include="GalleryPages\PlatformSpecificsGalleries\ApplicationAndroid.cs" />
+    <Compile Include="GalleryPages\PlatformSpecificsGalleries\MasterDetailPageiOS.cs" />
+    <Compile Include="GalleryPages\PlatformSpecificsGalleries\MasterDetailPageWindows.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\NavigationPageiOS.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\NavigationPageWindows.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\ApplicationAndroid.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\TabbedPageAndroid.cs" />
+    <Compile Include="GalleryPages\PlatformSpecificsGalleries\TabbedPageiOS.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\TabbedPageWindows.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\VisualElementiOS.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\WindowsPlatformSpecificsGalleryHelpers.cs" />
