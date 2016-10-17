@@ -237,7 +237,10 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public override UIViewController ChildViewControllerForStatusBarHidden()
 		{
-			return (UIViewController)Platform.GetRenderer(((MasterDetailPage)Element).Detail);
+			if (((MasterDetailPage)Element).Detail != null)
+				return (UIViewController)Platform.GetRenderer(((MasterDetailPage)Element).Detail);
+			else
+				return base.ChildViewControllerForStatusBarHidden();
 		}
 
 		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
