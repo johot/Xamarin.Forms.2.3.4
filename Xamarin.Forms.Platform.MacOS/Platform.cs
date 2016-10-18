@@ -139,15 +139,18 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (rendererToRemove.Element != null && GetRenderer(rendererToRemove.Element) == rendererToRemove)
 				rendererToRemove.Element.ClearValue(RendererProperty);
 
-			var subviews = rendererToRemove.NativeView.Subviews;
-			for (var i = 0; i < subviews.Length; i++)
+			if (rendererToRemove.NativeView != null)
 			{
-				var childRenderer = subviews[i] as IVisualElementRenderer;
-				if (childRenderer != null)
-					DisposeRendererAndChildren(childRenderer);
-			}
+				var subviews = rendererToRemove.NativeView.Subviews;
+				for (var i = 0; i < subviews.Length; i++)
+				{
+					var childRenderer = subviews[i] as IVisualElementRenderer;
+					if (childRenderer != null)
+						DisposeRendererAndChildren(childRenderer);
+				}
 
-			rendererToRemove.NativeView.RemoveFromSuperview();
+				rendererToRemove.NativeView.RemoveFromSuperview();
+			}
 			rendererToRemove.Dispose();
 		}
 

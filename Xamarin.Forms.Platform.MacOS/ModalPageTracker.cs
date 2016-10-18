@@ -84,7 +84,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			NSViewControllerTransitionOptions option = animated ? NSViewControllerTransitionOptions.SlideUp : NSViewControllerTransitionOptions.None;
 
-			var task = _renderer.HandleAsyncAnimation(fromViewController, toViewController, option, null, true);
+			var task = _renderer.HandleAsyncAnimation(fromViewController, toViewController, option, () => fromViewController.View.Layer.Hidden = true, true);
 			return task;
 		}
 

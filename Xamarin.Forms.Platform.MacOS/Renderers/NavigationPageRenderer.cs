@@ -19,12 +19,10 @@ namespace Xamarin.Forms.Platform.MacOS
 		EventTracker _events;
 		VisualElementTracker _tracker;
 		Stack<PageWrapper> _currentStack = new Stack<PageWrapper>();
-		NSView _currentView;
-		CATransition _transition;
 
 		internal readonly ToolbarTracker _toolbarTracker = new ToolbarTracker();
 
-		NSToolbar _toolbar => NSApplication.SharedApplication.MainWindow.Toolbar;
+		NSToolbar _toolbar;
 
 		IPageController PageController => Element as IPageController;
 
@@ -86,12 +84,12 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public Task<bool> PopViewAsync(Page page, bool animated = true)
 		{
-			return Task.FromResult(OnPop(page, animated));
+			return OnPop(page, animated);
 		}
 
 		public Task<bool> PushPageAsync(Page page, bool animated = true)
 		{
-			return Task.FromResult(OnPush(page, animated));
+			return OnPush(page, animated);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -180,9 +178,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual void ConfigurePageRenderer()
 		{
-			_transition = new CATransition();
-			_transition.Type = CAAnimation.TransitionPush;
-			_transition.Subtype = CAAnimation.TransitionFromLeft;
 			View.WantsLayer = true;
 		}
 
@@ -199,18 +194,16 @@ namespace Xamarin.Forms.Platform.MacOS
 			return success;
 		}
 
-		protected virtual bool OnPop(Page page, bool animated)
+		protected virtual async Task<bool> OnPop(Page page, bool animated)
 		{
-			var removed = true;
-			RemovePage(page);
+			var removed = await RemovePageAsync(page, animated);
 			UpdateToolBarVisible();
 			return removed;
 		}
 
-		protected virtual bool OnPush(Page page, bool animated)
+		protected virtual async Task<bool> OnPush(Page page, bool animated)
 		{
-			var shown = true;
-			AddPage(page);
+			var shown = await AddPage(page, animated);
 			UpdateToolBarVisible();
 			return shown;
 		}
@@ -284,10 +277,10 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void OnRemovedPageRequested(object sender, NavigationRequestedEventArgs e)
 		{
-			RemovePage(e.Page);
+			RemovePageAsync(e.Page, false);
 		}
 
-		void RemovePage(Page page)
+		async Task<bool> RemovePageAsync(Page page, bool animated)
 		{
 			if (page == null)
 				throw new ArgumentNullException(nameof(page));
@@ -297,35 +290,52 @@ namespace Xamarin.Forms.Platform.MacOS
 				throw new NotSupportedException("Popped page does not appear on top of current navigation stack, please file a bug.");
 
 			_currentStack.Pop();
-
-			var target = Platform.GetRenderer(page);
-			target.NativeView.RemoveFromSuperview();
-			target.Dispose();
-
-			ShowHidePreviousPage(false);
-
-			UpdateTitles(_currentStack.Peek().Page);
 			(page as IPageController)?.SendDisappearing();
 
+			var target = Platform.GetRenderer(page);
+			var previousPage = _currentStack.Peek().Page;
+
+			UpdateTitles(previousPage);
+
+			if (animated)
+			{
+				var previousPageRenderer = Platform.GetRenderer(previousPage);
+				return await this.HandleAsyncAnimation(target.ViewController, previousPageRenderer.ViewController, NSViewControllerTransitionOptions.SlideBackward, () => Platform.DisposeRendererAndChildren(target), true);
+			}
+
+			target.NativeView.RemoveFromSuperview();
+			target.ViewController.RemoveFromParentViewController();
+			target.Dispose();
+			return true;
 		}
 
-		void AddPage(Page page)
+
+		async Task<bool> AddPage(Page page, bool animated)
 		{
 			if (page == null)
 				throw new ArgumentNullException(nameof(page));
 
-			var wrapper = new PageWrapper(page);
+			Page oldPage = null;
+			if (_currentStack.Count >= 1)
+				oldPage = _currentStack.Peek().Page;
 
+			var wrapper = new PageWrapper(page);
 			_currentStack.Push(wrapper);
-			ShowHidePreviousPage(false);
 
 			var vc = CreateViewControllerForPage(page);
 			page.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Frame.Height));
-
-			SetCurrentView(vc.NativeView);
-
 			UpdateTitles(page);
-			(page as IPageController)?.SendAppearing();
+
+			if (_currentStack.Count == 1 || !animated)
+			{
+				vc.NativeView.WantsLayer = true;
+				AddChildViewController(vc.ViewController);
+				View.AddSubview(vc.NativeView);
+				return true;
+			}
+			var vco = Platform.GetRenderer(oldPage);
+			AddChildViewController(vc.ViewController);
+			return await this.HandleAsyncAnimation(vco.ViewController, vc.ViewController, NSViewControllerTransitionOptions.SlideForward, () => (page as IPageController)?.SendAppearing(), true);
 		}
 
 		void UpdateTitles(Page page)
@@ -336,7 +346,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			else
 				_previousTitle = NavigationPage.GetHasBackButton(page) ? NavigationPage.GetBackButtonTitle(_currentStack.ElementAt(_currentStack.Count - 2).Page) ?? _currentStack.ElementAt(_currentStack.Count - 1).Page.Title : "";
 		}
-
 
 		void UpdateBackgroundColor()
 		{
@@ -353,13 +362,12 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (NavigationPage.GetHasNavigationBar(_currentStack.Peek().Page))
 			{
-				if (_toolbar == null)
+				if (_toolbar == null && NSApplication.SharedApplication.MainWindow != null)
 				{
-					NSApplication.SharedApplication.MainWindow.Toolbar = ConfigureToolbar();
+					_toolbar = NSApplication.SharedApplication.MainWindow.Toolbar = ConfigureToolbar();
 					_toolbar.Visible = false;
 				}
 				UpdateToolbarItems();
-
 			}
 			else
 			{
@@ -416,35 +424,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		}
 
-		void ShowHidePreviousPage(bool hidden)
-		{
-			if (View.Subviews.Count() > 0)
-			{
-				var previous = View.Subviews.Last();
-				previous.Layer.Hidden = hidden;
-				previous.Hidden = hidden;
-			}
-		}
-
 		void ToolbarTrackerOnCollectionChanged(object sender, EventArgs eventArgs)
 		{
 			UpdateToolbarItems();
-		}
-
-		void SetCurrentView(NSView view)
-		{
-			view.WantsLayer = true;
-			if (_currentView == null)
-			{
-				_currentView = view;
-				View.AddSubview(_currentView, NSWindowOrderingMode.Above, null);
-				View.Animations = NSDictionary.FromObjectAndKey(_transition, new NSString("subviews"));
-				return;
-			}
-
-			View.AddSubview(view, NSWindowOrderingMode.Above, null);
-
-			_currentView = view;
 		}
 
 		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
