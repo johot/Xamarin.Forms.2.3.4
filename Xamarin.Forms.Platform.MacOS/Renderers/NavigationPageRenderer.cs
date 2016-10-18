@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		VisualElementTracker _tracker;
 		Stack<PageWrapper> _currentStack = new Stack<PageWrapper>();
 
-		internal readonly ToolbarTracker _toolbarTracker = new ToolbarTracker();
+		internal ToolbarTracker _toolbarTracker;
 
 		NSToolbar _toolbar;
 
@@ -41,7 +41,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		public NavigationPageRenderer(IntPtr handle)
 		{
 			View = new FormsNSView { WantsLayer = true };
-			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
 		}
 
 		public VisualElement Element { get; private set; }
@@ -121,8 +120,14 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override void ViewWillDisappear()
 		{
-			if (_toolbar != null && _toolbar.Visible)
+			if (_toolbar != null)
+			{
 				_toolbar.Visible = false;
+				_toolbar.Dispose();
+				_toolbar = null;
+			}
+
+			System.Diagnostics.Debug.WriteLine("ViewWillDisappear");
 			base.ViewWillDisappear();
 		}
 
@@ -140,7 +145,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		public override void ViewDidAppear()
 		{
 			base.ViewDidAppear();
-
+			UpdateToolBarVisible();
 			if (_appeared)
 				return;
 
@@ -150,8 +155,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override void ViewWillAppear()
 		{
-			if (_toolbar != null && !_toolbar.Visible)
-				_toolbar.Visible = true;
 			base.ViewWillAppear();
 		}
 
@@ -173,6 +176,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				Delegate = new MainToolBarDelegate(GetCurrentPageTitle, GetPreviousPageTitle, GetToolbarItems, NavigateBackFrombackButton)
 			};
 			toolbar.DisplayMode = NSToolbarDisplayMode.Icon;
+
 			return toolbar;
 		}
 
@@ -232,6 +236,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			_events.LoadEvents(NativeView);
 			_tracker = new VisualElementTracker(this);
 
+			_toolbarTracker = new ToolbarTracker();
+			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
+
 			((INavigationPageController)navPage).StackCopy.Reverse().ForEach(async p => await PushPageAsync(p, false));
 
 			UpdateBackgroundColor();
@@ -275,9 +282,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			e.Task = PushPageAsync(e.Page, e.Animated);
 		}
 
-		void OnRemovedPageRequested(object sender, NavigationRequestedEventArgs e)
+		async void OnRemovedPageRequested(object sender, NavigationRequestedEventArgs e)
 		{
-			RemovePageAsync(e.Page, false);
+			await RemovePageAsync(e.Page, false);
 		}
 
 		async Task<bool> RemovePageAsync(Page page, bool animated)
@@ -294,7 +301,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var target = Platform.GetRenderer(page);
 			var previousPage = _currentStack.Peek().Page;
-
+			_toolbarTracker.Target = previousPage;
 			UpdateTitles(previousPage);
 
 			if (animated)
@@ -321,6 +328,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var wrapper = new PageWrapper(page);
 			_currentStack.Push(wrapper);
+			_toolbarTracker.Target = page;
+
 
 			var vc = CreateViewControllerForPage(page);
 			page.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Frame.Height));
@@ -362,11 +371,13 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (NavigationPage.GetHasNavigationBar(_currentStack.Peek().Page))
 			{
-				if (_toolbar == null && NSApplication.SharedApplication.MainWindow != null)
+				if (_toolbar == null)
 				{
-					_toolbar = NSApplication.SharedApplication.MainWindow.Toolbar = ConfigureToolbar();
-					_toolbar.Visible = false;
+					_toolbar = ConfigureToolbar();
+					//	_toolbar.Visible = false;
 				}
+				if (NSApplication.SharedApplication.MainWindow != null)
+					NSApplication.SharedApplication.MainWindow.Toolbar = _toolbar;
 				UpdateToolbarItems();
 			}
 			else
@@ -379,11 +390,16 @@ namespace Xamarin.Forms.Platform.MacOS
 		}
 		void UpdateToolbarItems()
 		{
-			_toolbarTracker.Target = _currentStack.Peek().Page;
+			if (_toolbar == null || !_currentStack.Any())
+				return;
+
 			var nItems = _toolbar.Items.Length;
-			for (int i = nItems - 1; i >= 0; i--)
+			if (nItems > 0)
 			{
-				_toolbar.RemoveItem(i);
+				for (int i = nItems - 1; i >= 0; i--)
+				{
+					_toolbar.RemoveItem(i);
+				}
 			}
 			_toolbar.InsertItem(MainToolBarDelegate.BackButtonIdentifier, 0);
 			_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
