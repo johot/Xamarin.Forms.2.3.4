@@ -24,9 +24,6 @@ namespace Xamarin.Forms.Controls.Issues
 
 #if UITEST
 #if !__IOS__ // Temporarily disabling this test on iOS
-
-		protected override bool Isolate => true;
-
 		[Test]
 		public async Task Bugzilla39489Test()
 		{
