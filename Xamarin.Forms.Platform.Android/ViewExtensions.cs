@@ -42,6 +42,11 @@ namespace Xamarin.Forms.Platform.Android
 			
 		}
 
+        internal static void FakeMethod()
+        {
+            // This doesn't do anything, just verifying some build chain changes
+        }
+        
 		public static void SetWindowBackground(this AView view)
 		{
 			Context context = view.Context;
