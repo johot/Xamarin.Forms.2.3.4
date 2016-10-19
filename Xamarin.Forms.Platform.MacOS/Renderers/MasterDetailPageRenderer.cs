@@ -141,15 +141,14 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			UpdateChildrenLayout();
 
-			AddSplitViewItem(new NSSplitViewItem { ViewController = Platform.GetRenderer(MasterDetailPage.Master).ViewController });
-			AddSplitViewItem(new NSSplitViewItem { ViewController = Platform.GetRenderer(MasterDetailPage.Detail).ViewController });
+			AddSplitViewItem(new NSSplitViewItem { ViewController = new ViewControllerWrapper(Platform.GetRenderer(MasterDetailPage.Master)) });
+			AddSplitViewItem(new NSSplitViewItem { ViewController = new ViewControllerWrapper(Platform.GetRenderer(MasterDetailPage.Detail)) });
 		}
 
 		void ClearControllers()
 		{
 			while (SplitViewItems.Length > 0)
 				RemoveSplitViewItem(SplitViewItems.Last());
-
 		}
 
 		//TODO: Implement Background color on MDP
@@ -161,6 +160,16 @@ namespace Xamarin.Forms.Platform.MacOS
 			//	View.BackgroundColor = UIColor.White;
 			//else
 			//	View.BackgroundColor = Element.BackgroundColor.ToUIColor();
+		}
+
+		class ViewControllerWrapper : NSViewController
+		{
+			public ViewControllerWrapper(IVisualElementRenderer renderer)
+			{
+				View = new FormsNSView { BackgroundColor = NSColor.Clear };
+				View.AddSubview(renderer.NativeView);
+				AddChildViewController(renderer.ViewController);
+			}
 		}
 	}
 }
