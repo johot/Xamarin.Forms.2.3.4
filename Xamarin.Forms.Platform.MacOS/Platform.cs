@@ -123,10 +123,12 @@ namespace Xamarin.Forms.Platform.MacOS
 				DisposeModelAndChildrenRenderers(child);
 
 			renderer = GetRenderer((VisualElement)view);
-			renderer?.ViewController?.RemoveFromParentViewController();
+			if (renderer?.ViewController?.ParentViewController != null)
+				renderer?.ViewController?.RemoveFromParentViewController();
 
 			renderer?.NativeView?.RemoveFromSuperview();
 			renderer?.Dispose();
+
 
 			view.ClearValue(RendererProperty);
 		}
