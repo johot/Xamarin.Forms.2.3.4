@@ -167,8 +167,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			public ViewControllerWrapper(IVisualElementRenderer renderer)
 			{
 				View = new FormsNSView { BackgroundColor = NSColor.Clear };
-				View.AddSubview(renderer.NativeView);
 				AddChildViewController(renderer.ViewController);
+				View.AddSubview(renderer.NativeView);
 			}
 		}
 	}
