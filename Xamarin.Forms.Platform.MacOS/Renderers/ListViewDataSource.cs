@@ -19,6 +19,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		ITemplatedItemsView<Cell> TemplatedItemsView => List;
 		bool _isDragging;
 		bool _selectionFromNative;
+		bool _selectionFromForms;
 
 		public ListViewDataSource(ListViewDataSource source)
 		{
@@ -62,12 +63,20 @@ namespace Xamarin.Forms.Platform.MacOS
 				//	_nsTableView.DeselectRow(selectedIndexPath.Item);
 				return;
 			}
+			_selectionFromForms = true;
+			var groupId = location.Item1;
+			var rowId = location.Item2;
 
-			_nsTableView.SelectRow(location.Item1, false);
+			_nsTableView.SelectRow(rowId, false);
 		}
 
 		public override void SelectionDidChange(NSNotification notification)
 		{
+			if (_selectionFromForms)
+			{
+				_selectionFromForms = false;
+				return;
+			}
 			int groupIndex = 1;
 
 			var row = _nsTableView.SelectedRow;
