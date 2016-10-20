@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Platform.Android
     // Just a change to test some CI triggers
     private static void DoNothing()
     {
-        for(int i = 0; i < 200; i++)
+        for(int i = 0; i < 300; i++)
         {
             System.Diagnostics.Debug.WriteLine(i);
         }
