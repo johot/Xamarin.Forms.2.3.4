@@ -11,6 +11,15 @@ namespace Xamarin.Forms.Platform.Android
 	{
 	}
 
+    // Just a change to test some CI triggers
+    private static void DoNothing()
+    {
+        for(int i = 0; i < 200; i++)
+        {
+            System.Diagnostics.Debug.WriteLine(i);
+        }
+    }
+    
 	public abstract class ViewRenderer<TView, TNativeView> : VisualElementRenderer<TView>, AView.IOnFocusChangeListener where TView : View where TNativeView : AView
 	{
 		protected virtual TNativeView CreateNativeControl()
