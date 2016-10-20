@@ -45,7 +45,7 @@ namespace Xamarin.Forms.Platform.Android
         internal static void FakeMethod()
         {
             // This doesn't do anything, just verifying some build chain changes
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 300; i++)
             {
                 System.Diagnostics.Debug.WriteLine(i);
             }
