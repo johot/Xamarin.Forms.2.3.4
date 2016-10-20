@@ -76,8 +76,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		public void SetElementSize(Size size)
 		{
 			Element.Layout(new Rectangle(Element.X, Element.Y, size.Width, size.Height));
-			var masterWidth = MasterWidthPercentage * size.Width;
-			SplitViewItems[0].MaximumThickness = SplitViewItems[0].MinimumThickness = (nfloat)masterWidth;
 			UpdateChildrenLayout();
 		}
 
@@ -116,9 +114,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			var width = View.Frame.Width;
 			var height = View.Frame.Height;
 			var masterWidth = MasterWidthPercentage * width;
-			var detailWidth = width - masterWidth;
-			MasterDetailPage.Master.Layout(new Rectangle(0, 0, masterWidth, height));
-			MasterDetailPage.Detail.Layout(new Rectangle(0, 0, detailWidth, height));
+			if (SplitViewItems.Length > 0)
+				SplitViewItems[0].MaximumThickness = SplitViewItems[0].MinimumThickness = (nfloat)masterWidth;
 		}
 
 		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -139,10 +136,10 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			ClearControllers();
 
-			UpdateChildrenLayout();
-
 			AddSplitViewItem(new NSSplitViewItem { ViewController = new ViewControllerWrapper(Platform.GetRenderer(MasterDetailPage.Master)) });
 			AddSplitViewItem(new NSSplitViewItem { ViewController = new ViewControllerWrapper(Platform.GetRenderer(MasterDetailPage.Detail)) });
+
+			UpdateChildrenLayout();
 		}
 
 		void ClearControllers()
@@ -164,11 +161,19 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		class ViewControllerWrapper : NSViewController
 		{
+			readonly IVisualElementRenderer _renderer;
 			public ViewControllerWrapper(IVisualElementRenderer renderer)
 			{
-				View = new FormsNSView { BackgroundColor = NSColor.Clear };
+				_renderer = renderer;
+				View = new FormsNSView { BackgroundColor = NSColor.Orange };
 				AddChildViewController(renderer.ViewController);
 				View.AddSubview(renderer.NativeView);
+			}
+
+			public override void ViewWillLayout()
+			{
+				_renderer.Element.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Bounds.Height));
+				base.ViewWillLayout();
 			}
 		}
 	}
