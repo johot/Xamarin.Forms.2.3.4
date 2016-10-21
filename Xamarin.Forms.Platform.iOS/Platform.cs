@@ -55,8 +55,12 @@ namespace Xamarin.Forms.Platform.iOS
 					if (arguments.Accept != null)
 						alert.AddAction(UIAlertAction.Create(arguments.Accept, UIAlertActionStyle.Default, a => arguments.SetResult(true)));
 					var page = _modals.Any() ? _modals.Last() : Page;
-					var vc = GetRenderer(page).ViewController;
-					vc.PresentViewController(alert, true, null);
+
+					var window = new UIWindow { BackgroundColor = Color.Transparent.ToUIColor() };
+					window.RootViewController = new UIViewController();
+					window.RootViewController.View.BackgroundColor = Color.Transparent.ToUIColor();
+					window.MakeKeyAndVisible();
+					window.RootViewController.PresentViewController(alert, true, null);
 				}
 				else
 				{
