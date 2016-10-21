@@ -171,6 +171,7 @@
     <Compile Include="Renderers\TableViewRenderer.cs" />
     <Compile Include="Extensions\NSTableViewExtensions.cs" />
     <Compile Include="Renderers\TableViewDataSource.cs" />
+    <Compile Include="NativeToolbarTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">

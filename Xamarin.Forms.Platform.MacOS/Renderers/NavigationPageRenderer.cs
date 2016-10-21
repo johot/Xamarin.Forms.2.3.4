@@ -20,10 +20,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		VisualElementTracker _tracker;
 		Stack<PageWrapper> _currentStack = new Stack<PageWrapper>();
 
-		internal ToolbarTracker _toolbarTracker;
-
-		NSToolbar _toolbar;
-
 		IPageController PageController => Element as IPageController;
 
 		IElementController ElementController => Element as IElementController;
@@ -52,6 +48,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			return NativeView.GetSizeRequest(widthConstraint, heightConstraint);
 		}
 
+		public NSViewController ViewController => this;
+
 		public NSView NativeView => View;
 
 		public void SetElement(VisualElement element)
@@ -69,11 +67,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		public void SetElementSize(Size size)
 		{
 			Element.Layout(new Rectangle(Element.X, Element.Y, size.Width, size.Height));
-		}
-
-		public NSViewController ViewController
-		{
-			get { return this; }
 		}
 
 		public Task<bool> PopToRootAsync(Page page, bool animated = true)
@@ -109,32 +102,15 @@ namespace Xamarin.Forms.Platform.MacOS
 				_events?.Dispose();
 				_events = null;
 
-				if (_toolbarTracker != null)
-				{
-					_toolbarTracker.CollectionChanged -= ToolbarTrackerOnCollectionChanged;
-				}
 				_disposed = true;
 			}
 			base.Dispose(disposing);
 		}
 
-		public override void ViewWillDisappear()
-		{
-			if (_toolbar != null)
-			{
-				_toolbar.Visible = false;
-				_toolbar.Dispose();
-				_toolbar = null;
-			}
-
-			System.Diagnostics.Debug.WriteLine("ViewWillDisappear");
-			base.ViewWillDisappear();
-		}
-
 		public override void ViewDidDisappear()
 		{
 			base.ViewDidDisappear();
-
+			Platform.NativeToolbarTracker.Navigation = null;
 			if (!_appeared)
 				return;
 
@@ -145,17 +121,12 @@ namespace Xamarin.Forms.Platform.MacOS
 		public override void ViewDidAppear()
 		{
 			base.ViewDidAppear();
-			UpdateToolBarVisible();
+			Platform.NativeToolbarTracker.Navigation = (NavigationPage)Element;
 			if (_appeared)
 				return;
 
 			_appeared = true;
 			PageController?.SendAppearing();
-		}
-
-		public override void ViewWillAppear()
-		{
-			base.ViewWillAppear();
 		}
 
 		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
@@ -167,17 +138,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				e.NewElement.PropertyChanged += HandlePropertyChanged;
 
 			ElementChanged?.Invoke(this, e);
-		}
-
-		protected virtual NSToolbar ConfigureToolbar()
-		{
-			var toolbar = new NSToolbar("MainToolbar")
-			{
-				Delegate = new MainToolBarDelegate(GetCurrentPageTitle, GetPreviousPageTitle, GetToolbarItems, NavigateBackFrombackButton)
-			};
-			toolbar.DisplayMode = NSToolbarDisplayMode.Icon;
-
-			return toolbar;
 		}
 
 		protected virtual void ConfigurePageRenderer()
@@ -194,21 +154,21 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var success = false;
 
-			UpdateToolBarVisible();
+			Platform.NativeToolbarTracker.UpdateToolbarItems();
 			return success;
 		}
 
 		protected virtual async Task<bool> OnPop(Page page, bool animated)
 		{
 			var removed = await RemovePageAsync(page, animated);
-			UpdateToolBarVisible();
+			Platform.NativeToolbarTracker.UpdateToolbarItems();
 			return removed;
 		}
 
 		protected virtual async Task<bool> OnPush(Page page, bool animated)
 		{
 			var shown = await AddPage(page, animated);
-			UpdateToolBarVisible();
+			Platform.NativeToolbarTracker.UpdateToolbarItems();
 			return shown;
 		}
 
@@ -221,13 +181,13 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (navPage.CurrentPage == null)
 				throw new InvalidOperationException("NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.");
 
-			var navController = ((INavigationPageController)navPage);
+			Platform.NativeToolbarTracker.Navigation = navPage;
 
-			navController.PushRequested += OnPushRequested;
-			navController.PopRequested += OnPopRequested;
-			navController.PopToRootRequested += OnPopToRootRequested;
-			navController.RemovePageRequested += OnRemovedPageRequested;
-			navController.InsertPageBeforeRequested += OnInsertPageBeforeRequested;
+			NavigationController.PushRequested += OnPushRequested;
+			NavigationController.PopRequested += OnPopRequested;
+			NavigationController.PopToRootRequested += OnPopToRootRequested;
+			NavigationController.RemovePageRequested += OnRemovedPageRequested;
+			NavigationController.InsertPageBeforeRequested += OnInsertPageBeforeRequested;
 
 			UpdateBarBackgroundColor();
 			UpdateBarTextColor();
@@ -236,8 +196,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			_events.LoadEvents(NativeView);
 			_tracker = new VisualElementTracker(this);
 
-			_toolbarTracker = new ToolbarTracker();
-			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
 
 			((INavigationPageController)navPage).StackCopy.Reverse().ForEach(async p => await PushPageAsync(p, false));
 
@@ -301,8 +259,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var target = Platform.GetRenderer(page);
 			var previousPage = _currentStack.Peek().Page;
-			_toolbarTracker.Target = previousPage;
-			UpdateTitles(previousPage);
 
 			if (animated)
 			{
@@ -316,7 +272,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			return true;
 		}
 
-
 		async Task<bool> AddPage(Page page, bool animated)
 		{
 			if (page == null)
@@ -326,14 +281,10 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (_currentStack.Count >= 1)
 				oldPage = _currentStack.Peek().Page;
 
-			var wrapper = new PageWrapper(page);
-			_currentStack.Push(wrapper);
-			_toolbarTracker.Target = page;
-
+			_currentStack.Push(new PageWrapper(page));
 
 			var vc = CreateViewControllerForPage(page);
 			page.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Frame.Height));
-			UpdateTitles(page);
 
 			if (_currentStack.Count == 1 || !animated)
 			{
@@ -347,85 +298,12 @@ namespace Xamarin.Forms.Platform.MacOS
 			return await this.HandleAsyncAnimation(vco.ViewController, vc.ViewController, NSViewControllerTransitionOptions.SlideForward, () => (page as IPageController)?.SendAppearing(), true);
 		}
 
-		void UpdateTitles(Page page)
-		{
-			_currentTitle = page.Title;
-			if (_currentStack.Count <= 1)
-				_previousTitle = "";
-			else
-				_previousTitle = NavigationPage.GetHasBackButton(page) ? NavigationPage.GetBackButtonTitle(_currentStack.ElementAt(_currentStack.Count - 2).Page) ?? _currentStack.ElementAt(_currentStack.Count - 1).Page.Title : "";
-		}
-
 		void UpdateBackgroundColor()
 		{
 			if (!(View is FormsNSView))
 				return;
 			var color = Element.BackgroundColor == Color.Default ? Color.White : Element.BackgroundColor;
 			(View as FormsNSView).BackgroundColor = color.ToNSColor();
-		}
-
-		void UpdateToolBarVisible()
-		{
-			if (!_currentStack.Any())
-				return;
-
-			if (NavigationPage.GetHasNavigationBar(_currentStack.Peek().Page))
-			{
-				if (_toolbar == null)
-				{
-					_toolbar = ConfigureToolbar();
-					//	_toolbar.Visible = false;
-				}
-				if (NSApplication.SharedApplication.MainWindow != null)
-					NSApplication.SharedApplication.MainWindow.Toolbar = _toolbar;
-				UpdateToolbarItems();
-			}
-			else
-			{
-				if (_toolbar != null && _toolbar.Visible)
-				{
-					NSApplication.SharedApplication.MainWindow.ToggleToolbarShown(this);
-				}
-			}
-		}
-		void UpdateToolbarItems()
-		{
-			if (_toolbar == null || !_currentStack.Any())
-				return;
-
-			var nItems = _toolbar.Items.Length;
-			if (nItems > 0)
-			{
-				for (int i = nItems - 1; i >= 0; i--)
-				{
-					_toolbar.RemoveItem(i);
-				}
-			}
-			_toolbar.InsertItem(MainToolBarDelegate.BackButtonIdentifier, 0);
-			_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
-			_toolbar.InsertItem(MainToolBarDelegate.TitleIdentifier, 2);
-			_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 3);
-			_toolbar.InsertItem(MainToolBarDelegate.ToolbarItemsIdentifier, 4);
-		}
-
-		async void NavigateBackFrombackButton()
-		{
-			await NavigationController?.PopAsyncInner(true, true);
-		}
-
-		string GetCurrentPageTitle()
-		{
-			return _currentTitle ?? "";
-		}
-
-		string GetPreviousPageTitle()
-		{
-			return _previousTitle ?? "";
-		}
-
-		List<ToolbarItem> GetToolbarItems()
-		{
-			return _toolbarTracker.ToolbarItems.ToList();
 		}
 
 		//TODO: Implement
@@ -438,11 +316,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		void UpdateBarTextColor()
 		{
 
-		}
-
-		void ToolbarTrackerOnCollectionChanged(object sender, EventArgs eventArgs)
-		{
-			UpdateToolbarItems();
 		}
 
 		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
