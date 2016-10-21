@@ -50,6 +50,11 @@ namespace Xamarin.Forms.Controls.Issues
 			{
 				await DisplayAlert("Title 2", "Message", "Accept", "Cancel");
 			});
+
+			Device.BeginInvokeOnMainThread(async () =>
+			{
+				await DisplayActionSheet("ActionSheet Title", "Cancel", "Close", new string[] { "Test", "Test 2" });
+			});
 		}
 
 #if UITEST
@@ -58,6 +63,8 @@ namespace Xamarin.Forms.Controls.Issues
 		[Test]
 		public void Bugzilla45743Test()
 		{
+			RunningApp.WaitForElement(q => q.Marked("ActionSheet Title"));
+			RunningApp.Tap("Close");
 			RunningApp.WaitForElement(q => q.Marked("Title 2"));
 			RunningApp.Tap("Accept");
 			RunningApp.WaitForElement(q => q.Marked("Title"));
