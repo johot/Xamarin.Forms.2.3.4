@@ -8,10 +8,10 @@ namespace Xamarin.Forms
 		}
 
 		public WebNavigationResult Result { get; private set; }
-	}
-    
-    internal static void Fake()
-    {
+		
+		internal static void Fake()
+		{
             
-    }
+		}
+	}
 }
