@@ -42,6 +42,14 @@ namespace Xamarin.Forms.Platform.MacOS
 			}
 		}
 
+		public void TryHide(NavigationPage navPage)
+		{
+			if (navPage == _navigation)
+			{
+				Navigation = null;
+			}
+		}
+
 		protected virtual NSToolbar ConfigureToolbar()
 		{
 			var toolbar = new NSToolbar("MainToolbar")

@@ -107,10 +107,16 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.Dispose(disposing);
 		}
 
+		public override void RemoveFromParentViewController()
+		{
+			Platform.NativeToolbarTracker.TryHide(Element as NavigationPage);
+
+			base.RemoveFromParentViewController();
+		}
+
 		public override void ViewDidDisappear()
 		{
 			base.ViewDidDisappear();
-			Platform.NativeToolbarTracker.Navigation = null;
 			if (!_appeared)
 				return;
 
