@@ -88,14 +88,13 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (itemIdentifier == TitleIdentifier)
 			{
-				tb.View = _titleTextField = NSTextField.CreateLabel(_getPageTitle());
+				tb.View = _titleTextField = NSTextFieldExtensions.CreateLabel(_getPageTitle());
 			}
 			if (itemIdentifier == BackButtonIdentifier)
 			{
 				var title = _getPreviousPageTitle();
 				tb.MinSize = tb.MaxSize = new CoreGraphics.CGSize(_buttonsMaxWidth, _buttonsMaxHeight);
-				_backButton = NSButton.CreateButton(title, NSImage.ImageNamed(NSImageName.GoLeftTemplate), _goBackAction);
-				_backButton.BezelStyle = NSBezelStyle.TexturedRounded;
+				_backButton = NSButtonExtensions.CreateButton(title, NSImage.ImageNamed(NSImageName.GoLeftTemplate), _goBackAction);
 				UpdateBackButtonTitle(title);
 				tb.View = _backButton;
 			}

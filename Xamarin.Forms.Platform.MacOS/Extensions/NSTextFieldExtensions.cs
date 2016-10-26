@@ -6,6 +6,20 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	internal static class NSTextFieldExtensions
 	{
+		public static NSTextField CreateLabel(string text)
+		{
+			var textField = new NSTextField();
+			textField.StringValue = text;
+			textField.DrawsBackground = false;
+			textField.Editable = false;
+			textField.Bezeled = false;
+			textField.Selectable = false;
+			textField.SizeToFit();
+			textField.CenterTextVertically();
+			return textField;
+		}
+
+
 		public static void CenterTextVertically(this NSTextField self)
 		{
 			self.CenterTextVertically(self.Frame);

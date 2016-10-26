@@ -69,7 +69,7 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 			sl?.Children.Add(uilabel);
 
 			// Create and add a native Button 
-			var uibutton = NSButton.CreateButton("Toggle Text Amount", () =>
+			var uibutton = NSButtonExtensions.CreateButton("Toggle Text Amount", () =>
 			{
 				uilabel.StringValue = uilabel.StringValue == originalText ? longerText : originalText;
 				uilabel.SizeToFit();
@@ -164,7 +164,7 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 				StringValue = "DefaultText"
 			};
 
-			var uibuttonColor = NSButton.CreateButton("Toggle Text Color Binding", () => uilabel.TextColor = NSColor.Blue);
+			var uibuttonColor = NSButtonExtensions.CreateButton("Toggle Text Color Binding", () => uilabel.TextColor = NSColor.Blue);
 			uibuttonColor.Font = NSFont.FromFontName("Helvetica", 14f);
 
 			uilabel.SetBinding("StringValue", new Binding("NativeLabel"));
@@ -195,7 +195,7 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 		public void StartPressed40911()
 		{
 			var loginViewController = new NSViewController { View = { } };
-			var button = NSButton.CreateButton("Login", () =>
+			var button = NSButtonExtensions.CreateButton("Login", () =>
 			{
 				Xamarin.Forms.Application.Current.MainPage = new ContentPage { Content = new Label { Text = "40911 Success" } };
 				//loginViewController.DismissViewController()true, null);
