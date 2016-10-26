@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 using System.Text;
-
+using Xamarin.Forms.Core.UITests;
 #if UITEST
 using Xamarin.UITest;
 using NUnit.Framework;
@@ -14,6 +14,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve(AllMembers = true)]
+	[Category(UITestCategories.ListView)]
 	[Issue(IssueTracker.Bugzilla, 40704, "Strange duplication of listview headers when collapsing/expanding sections")]
 	public class Bugzilla40704 : TestContentPage // or TestMasterDetailPage, etc ...
 	{

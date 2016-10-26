@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 #if UITEST
@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.LifeCycle)]
 	[Issue (IssueTracker.Bugzilla, 29453, "Navigation.PopAsync(false) in Entry.Completed handler => System.ArgumentException", PlatformAffected.Android)]
 	public class Bugzilla29453 : TestContentPage // or TestMasterDetailPage, etc ...
 	{

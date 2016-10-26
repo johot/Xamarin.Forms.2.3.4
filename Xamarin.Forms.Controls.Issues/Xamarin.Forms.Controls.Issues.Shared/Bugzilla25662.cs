@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.Core.UITests;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 #if UITEST
 using Xamarin.UITest;
@@ -8,6 +9,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls.Issues
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.Cells)]
 	[Issue (IssueTracker.Bugzilla, 25662, "Setting IsEnabled does not disable SwitchCell")]
     public class Bugzilla25662 : TestContentPage
     {

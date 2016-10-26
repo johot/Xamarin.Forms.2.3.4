@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 #if UITEST
@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.ListView)]
 	[Issue (IssueTracker.Bugzilla, 26233, "Windows phone crashing when going back to page containing listview with Frame inside ViewCell")]
 	public class Bugzilla26233 : TestContentPage 
 	{

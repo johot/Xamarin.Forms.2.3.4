@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 #if UITEST
@@ -11,6 +12,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.LifeCycle)]
 	[Issue (IssueTracker.Bugzilla, 29363, "PushModal followed immediate by PopModal crashes")]
     public class Bugzilla29363 : TestContentPage
     {

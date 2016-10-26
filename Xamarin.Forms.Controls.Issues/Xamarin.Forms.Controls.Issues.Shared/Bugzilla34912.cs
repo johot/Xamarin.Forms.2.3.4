@@ -3,6 +3,7 @@
 using Xamarin.Forms.CustomAttributes;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -13,6 +14,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.ListView)]
 	[Issue (IssueTracker.Bugzilla, 34912, "ListView.IsEnabled has no effect on iOS")]
 	public class Bugzilla34912 : TestContentPage // or TestMasterDetailPage, etc ...
 	{

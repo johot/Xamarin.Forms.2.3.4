@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.CustomAttributes;
 
@@ -11,7 +12,8 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls.Issues
 {
     [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 42832, "Scrolling a ListView with active ContextAction Items causes NRE", PlatformAffected.Android)]
+	[Category(UITestCategories.ListView)]
+	[Issue(IssueTracker.Bugzilla, 42832, "Scrolling a ListView with active ContextAction Items causes NRE", PlatformAffected.Android)]
     public class Bugzilla42832 : TestContentPage
 	{
         ListView listview;

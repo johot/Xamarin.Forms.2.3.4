@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.Cells)]
 	[Issue (IssueTracker.Bugzilla, 32040, "EntryCell.Tapped or SwitchCell.Tapped does not fire when within a TableView ")]
 	public class Bugzilla32040 : TestContentPage // or TestMasterDetailPage, etc ...
 	{

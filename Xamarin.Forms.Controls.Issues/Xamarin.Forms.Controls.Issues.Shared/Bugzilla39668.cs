@@ -2,6 +2,7 @@
 
 using Xamarin.Forms.CustomAttributes;
 using System.Linq;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.Internals;
 #if UITEST
 using Xamarin.UITest;
@@ -11,6 +12,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.ListView)]
 	[Issue (IssueTracker.Bugzilla, 39668, "Overriding ListView.CreateDefault Does Not Work on Windows", PlatformAffected.WinRT)]
 	public class Bugzilla39668 : TestContentPage
 	{

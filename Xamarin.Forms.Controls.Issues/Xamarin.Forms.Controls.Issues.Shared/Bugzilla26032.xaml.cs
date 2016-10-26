@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 #if UITEST
@@ -12,6 +13,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
+	[Category(UITestCategories.ListView)]
 	[Issue (IssueTracker.Bugzilla, 26032, " ListView ItemTapped doesn't get called for the selected item ", PlatformAffected.iOS)]
 	public partial class Bugzilla26032 : TestContentPage
 	{

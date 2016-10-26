@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls.Issues
 {
 	[Preserve(AllMembers = true)]
+	[Category(UITestCategories.ListView)]
 	[Issue(IssueTracker.Bugzilla, 40858, "Long clicking a text entry in a ListView header/footer cause a crash", PlatformAffected.Android)]
 	public class Bugzilla40858 : TestContentPage
 	{

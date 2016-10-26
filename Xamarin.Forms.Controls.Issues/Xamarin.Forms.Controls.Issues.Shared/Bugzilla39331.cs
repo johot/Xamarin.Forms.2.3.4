@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -12,6 +12,7 @@ namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers = true)]
 	[Issue (IssueTracker.Bugzilla, 39331, "[Android] BoxView Is InputTransparent Even When Set to False")]
+	[Category(UITestCategories.BoxView)]
 	public class Bugzilla39331 : TestContentPage
 	{
 		View _busyBackground;

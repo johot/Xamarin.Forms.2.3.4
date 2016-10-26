@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.Core.UITests;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -9,7 +10,8 @@ namespace Xamarin.Forms.Controls
 {
     [Preserve(AllMembers = true)]
     [Issue(IssueTracker.Bugzilla, 40173, "Android BoxView/Frame not clickthrough in ListView")]
-    public class Bugzilla40173 : TestContentPage // or TestMasterDetailPage, etc ...
+	[Category(UITestCategories.BoxView)]
+	public class Bugzilla40173 : TestContentPage // or TestMasterDetailPage, etc ...
     {
         const string CantTouchButtonId = "CantTouchButtonId";
         const string CanTouchButtonId = "CanTouchButtonId";

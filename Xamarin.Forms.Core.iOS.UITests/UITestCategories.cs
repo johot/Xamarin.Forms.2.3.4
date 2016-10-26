@@ -15,7 +15,9 @@
 		public const string Frame = "Frame";
 		public const string Image = "Image";
 		public const string Label = "Label";
+		public const string ListView = "ListView";
 		public const string LifeCycle = "Lifecycle";
+		public const string MasterDetailPage = "MasterDetailPage";
 		public const string Picker = "Picker";
 		public const string ProgressBar = "ProgressBar";
 		public const string RootGallery = "RootGallery";

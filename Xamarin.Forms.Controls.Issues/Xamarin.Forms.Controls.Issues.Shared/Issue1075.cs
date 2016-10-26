@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-
+using NUnit.Framework;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
 	[Preserve (AllMembers=true)]
+	[Category(UITestCategories.BoxView)]
 	[Issue (IssueTracker.Github, 1075, "Does not update Color", PlatformAffected.Android | PlatformAffected.WinPhone)]
 	public class Issue1075 : ContentPage
 	{
