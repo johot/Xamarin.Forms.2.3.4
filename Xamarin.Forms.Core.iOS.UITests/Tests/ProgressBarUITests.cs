@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("ProgressBar")]
+	[Category(Categories.CoreUITest)]
 	internal class ProgressBarUITests : _ViewUITests
 	{
 		public ProgressBarUITests ()

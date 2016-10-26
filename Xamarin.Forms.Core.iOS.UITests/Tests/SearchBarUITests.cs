@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("SearchBar")]
+	[Category(Categories.CoreUITest)]
 	internal class SearchBarUITests : _ViewUITests
 	{
 		public SearchBarUITests ()

@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("Slider")]
+	[Category(Categories.CoreUITest)]
 	internal class SliderUITests : _ViewUITests
 	{
 		public SliderUITests ()

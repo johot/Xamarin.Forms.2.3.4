@@ -8,6 +8,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("AutomationID")]
+	[Category(Categories.CoreUITest)]
 	internal class AutomationIDUITests : BaseTestFixture
 	{
 		protected override void NavigateToGallery ()

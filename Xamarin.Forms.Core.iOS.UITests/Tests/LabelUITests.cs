@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("Label")]
+	[Category(Categories.CoreUITest)]
 	internal class LabelUITests : _ViewUITests
 	{
 		public LabelUITests ()

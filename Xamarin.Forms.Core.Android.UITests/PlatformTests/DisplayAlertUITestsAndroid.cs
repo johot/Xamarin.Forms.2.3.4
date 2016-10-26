@@ -5,6 +5,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("DisplayAlert")]
+	[Category(Categories.CoreUITest)]
 	internal class DisplayAlertUITestsAndroid : BaseTestFixture
 	{
 

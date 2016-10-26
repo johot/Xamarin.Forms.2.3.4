@@ -5,6 +5,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("ScrollView")]
+	[Category(Categories.CoreUITest)]
 	internal class ScrollViewGalleryTests : BaseTestFixture
 	{
 		public ScrollViewGalleryTests ()

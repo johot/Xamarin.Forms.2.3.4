@@ -14,6 +14,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category("Cells")]
+	[Category(Categories.CoreUITest)]
 	internal class CellsGalleryTests : BaseTestFixture
 	{
 		// TODO find a way to test individula elements of cells

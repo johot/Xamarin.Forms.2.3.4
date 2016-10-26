@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("Entry")]
+	[Category(Categories.CoreUITest)]
 	internal class EntryUITests : _ViewUITests
 	{
 		public EntryUITests ()

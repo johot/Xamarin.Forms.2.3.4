@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("Editor")]
+	[Category(Categories.CoreUITest)]
 	internal class EditorUITests : _ViewUITests
 	{
 		public EditorUITests ()

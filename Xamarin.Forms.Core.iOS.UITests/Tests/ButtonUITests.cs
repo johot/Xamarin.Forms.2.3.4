@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("Button")]
+	[Category(Categories.CoreUITest)]
 	internal class ButtonUITests : _ViewUITests
 	{
 		public ButtonUITests ()

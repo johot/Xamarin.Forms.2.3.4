@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("BoxView")]
+	[Category(Categories.CoreUITest)]
 	internal class BoxViewUITests : _ViewUITests
 	{
 		public BoxViewUITests ()

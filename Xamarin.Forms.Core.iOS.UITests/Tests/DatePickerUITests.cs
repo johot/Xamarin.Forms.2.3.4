@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("DatePicker")]
+	[Category(Categories.CoreUITest)]
 	internal class DatePickerUITests : _ViewUITests
 	{
 		public DatePickerUITests ()

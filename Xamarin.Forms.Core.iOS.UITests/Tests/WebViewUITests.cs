@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("WebView")]
+	[Category(Categories.CoreUITest)]
 	internal class WebViewUITests : _ViewUITests
 	{
 		public WebViewUITests ()

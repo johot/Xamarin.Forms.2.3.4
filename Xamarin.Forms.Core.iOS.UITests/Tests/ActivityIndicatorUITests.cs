@@ -11,6 +11,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("ActivityIndicator")]
+	[Category(Categories.CoreUITest)]
 	internal class ActivityIndicatorUITests : _ViewUITests
 	{
 		public ActivityIndicatorUITests ()

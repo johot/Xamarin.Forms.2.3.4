@@ -4,6 +4,7 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Core.UITests
 {
 	[Category ("Lifecycle")]
+	[Category(Categories.CoreUITest)]
 	internal class AppearingUITests : BaseTestFixture
 	{
 

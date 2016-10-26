@@ -8,6 +8,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("ToolbarItem")]
+	[Category(Categories.CoreUITest)]
 	internal class ToolbarItemTests : BaseTestFixture
 	{
 		string btn1Id = "tb1";

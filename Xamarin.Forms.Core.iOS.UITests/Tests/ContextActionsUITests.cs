@@ -11,6 +11,7 @@ namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
 	[Category ("Cells")]
+	[Category(Categories.CoreUITest)]
 	internal class ContextActionsListUITests : BaseTestFixture
 	{
 
@@ -85,6 +86,7 @@ namespace Xamarin.Forms.Core.UITests
 
 	[TestFixture]
 	[Category ("Cells")]
+	[Category(Categories.CoreUITest)]
 	internal class ContextActionsTableUITests : BaseTestFixture
 	{
 		public ContextActionsTableUITests ()
