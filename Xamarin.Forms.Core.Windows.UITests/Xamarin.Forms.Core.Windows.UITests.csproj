@@ -54,6 +54,9 @@
     <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\BaseTestFixture.cs">
       <Link>BaseTestFixture.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\Categories.cs">
+      <Link>Categories.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\Queries.cs">
       <Link>Queries.cs</Link>
     </Compile>
