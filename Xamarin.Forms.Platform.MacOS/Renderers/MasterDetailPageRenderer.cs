@@ -165,14 +165,14 @@ namespace Xamarin.Forms.Platform.MacOS
 			public ViewControllerWrapper(IVisualElementRenderer renderer)
 			{
 				_renderer = renderer;
-				View = new FormsNSView { BackgroundColor = NSColor.Orange };
+				View = new FormsNSView { };
 				AddChildViewController(renderer.ViewController);
 				View.AddSubview(renderer.NativeView);
 			}
 
 			public override void ViewWillLayout()
 			{
-				_renderer.Element.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Bounds.Height));
+				_renderer?.Element?.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Bounds.Height));
 				base.ViewWillLayout();
 			}
 		}
