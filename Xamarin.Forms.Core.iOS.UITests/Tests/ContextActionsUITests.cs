@@ -10,8 +10,7 @@ using Xamarin.UITest.Queries;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("Cells")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.Cells)]
 	internal class ContextActionsListUITests : BaseTestFixture
 	{
 
@@ -85,8 +84,7 @@ namespace Xamarin.Forms.Core.UITests
 	}
 
 	[TestFixture]
-	[Category ("Cells")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.Cells)]
 	internal class ContextActionsTableUITests : BaseTestFixture
 	{
 		public ContextActionsTableUITests ()

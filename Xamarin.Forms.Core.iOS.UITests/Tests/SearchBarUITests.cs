@@ -17,8 +17,7 @@ using Xamarin.UITest.iOS;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("SearchBar")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.SearchBar)]
 	internal class SearchBarUITests : _ViewUITests
 	{
 		public SearchBarUITests ()

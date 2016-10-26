@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.Core.UITests;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -29,7 +30,7 @@ namespace Xamarin.Forms.Controls
 
 #if UITEST
 		[Test]
-		[Category ("ManualReview")]
+		[Category(UITestCategories.ManualReview)]
 		public void Issue488TestsLongTextRotation ()
 		{
 			RunningApp.WaitForElement (q => q.Marked ("I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text."));

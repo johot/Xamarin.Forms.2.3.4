@@ -65,9 +65,6 @@
     <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\BaseTestFixture.cs">
       <Link>BaseTestFixture.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\Categories.cs">
-      <Link>Categories.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\Queries.cs">
       <Link>Queries.cs</Link>
     </Compile>
@@ -145,6 +142,9 @@
     </Compile>
     <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\Tests\WebViewUITests.cs">
       <Link>Tests\WebViewUITests.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Core.iOS.UITests\UITestCategories.cs">
+      <Link>UITestCategories.cs</Link>
     </Compile>
     <Compile Include="PlatformQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

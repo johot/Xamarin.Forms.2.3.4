@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.Core.UITests;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -35,7 +36,7 @@ namespace Xamarin.Forms.Controls
 
 #if UITEST
 		[Test]
-		[Category ("ManualReview")]
+		[Category(UITestCategories.ManualReview)]
 		[UiTest (typeof(Label), "TextColor")]
 		public void Issue181TestsLabelShouldHaveRedText ()
 		{

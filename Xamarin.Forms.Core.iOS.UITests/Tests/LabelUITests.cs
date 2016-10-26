@@ -17,8 +17,7 @@ using Xamarin.UITest.iOS;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("Label")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.Label)]
 	internal class LabelUITests : _ViewUITests
 	{
 		public LabelUITests ()

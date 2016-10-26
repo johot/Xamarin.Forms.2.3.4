@@ -17,8 +17,8 @@ using Xamarin.UITest.iOS;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("Stepper")]
-	[Category(Categories.CoreUITest)]
+	
+	[Category(UITestCategories.Stepper)]
 	internal class StepperUITests : _ViewUITests
 	{
 		public StepperUITests ()

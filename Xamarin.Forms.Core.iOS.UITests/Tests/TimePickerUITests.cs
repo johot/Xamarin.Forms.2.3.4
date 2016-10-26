@@ -17,8 +17,7 @@ using Xamarin.UITest.iOS;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("TimePicker")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.TimePicker)]
 	internal class TimePickerUITests : _ViewUITests
 	{
 		public TimePickerUITests ()

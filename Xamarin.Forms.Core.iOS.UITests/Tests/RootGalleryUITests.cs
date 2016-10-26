@@ -25,8 +25,7 @@ namespace Xamarin.Forms.Core.UITests
 	}
 
 	[TestFixture]
-	[Category ("RootGallery")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.RootGallery)]
 	internal class RootGalleryUITests : BaseTestFixture
 	{
 		IEnumerable<RootPageModel> rootPages;

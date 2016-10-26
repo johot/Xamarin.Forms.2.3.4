@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-
+using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -75,7 +75,7 @@ namespace Xamarin.Forms.Controls
 
 #if UITEST
 		[Test]
-		[Category ("ManualReview")]
+		[Category(UITestCategories.ManualReview)]
 		public void Issue342DelayedLoadTestsImageLoads ()
 		{
 			RunningApp.Screenshot ("Should not crash");

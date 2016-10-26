@@ -17,8 +17,7 @@ using Xamarin.UITest.iOS;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("Slider")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.Slider)]
 	internal class SliderUITests : _ViewUITests
 	{
 		public SliderUITests ()

@@ -10,8 +10,7 @@ using Xamarin.UITest.Queries;
 namespace Xamarin.Forms.Core.UITests
 {
 	[TestFixture]
-	[Category ("ActivityIndicator")]
-	[Category(Categories.CoreUITest)]
+	[Category(UITestCategories.ActivityIndicator)]
 	internal class ActivityIndicatorUITests : _ViewUITests
 	{
 		public ActivityIndicatorUITests ()
