@@ -21,7 +21,7 @@ namespace Xamarin.Forms
 
 		internal static void Fake()
 		{
-			System.Diagnostics.Debug.WriteLine("Verify branch filter");
+			System.Diagnostics.Debug.WriteLine("Verify branch filter in trigger");
 		}
 		
 		protected internal View()
