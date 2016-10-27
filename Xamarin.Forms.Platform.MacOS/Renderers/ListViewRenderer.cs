@@ -282,7 +282,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			var rowHeight = Element.RowHeight;
 			if (Element.HasUnevenRows && rowHeight == -1)
 			{
-				_table.RowHeight = NoIntrinsicMetric;
+				//	_table.RowHeight = NoIntrinsicMetric;
 			}
 			else
 				_table.RowHeight = rowHeight <= 0 ? DefaultRowHeight : rowHeight;
