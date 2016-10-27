@@ -7,6 +7,7 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class PageRenderer : NSViewController, IVisualElementRenderer, IEffectControlProvider
 	{
+		bool _init;
 		bool _appeared;
 		bool _disposed;
 		EventTracker _events;
@@ -167,7 +168,10 @@ namespace Xamarin.Forms.Platform.MacOS
 			//	uiTapGestureRecognizer.DelaysTouchesEnded = uiTapGestureRecognizer.CancelsTouchesInView = false;
 			//View.AddGestureRecognizer(uiTapGestureRecognizer);
 
+			if (_init)
+				return;
 			UpdateBackground();
+
 
 			_packager = new VisualElementPackager(this);
 			_packager.Load();
@@ -177,6 +181,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			_events = new EventTracker(this);
 			_events.LoadEvents(View);
+			_init = true;
 		}
 
 		void OnHandlePropertyChanged(object sender, PropertyChangedEventArgs e)
