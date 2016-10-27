@@ -205,6 +205,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		internal nfloat CalculateHeightForCell(NSTableView tableView, Cell cell)
 		{
 			var viewCell = cell as ViewCell;
+			double renderHeight = -1;
 			if (viewCell != null && viewCell.View != null)
 			{
 				var target = viewCell.View;
@@ -225,9 +226,13 @@ namespace Xamarin.Forms.Platform.MacOS
 				foreach (var descendant in target.Descendants())
 					descendant.ClearValue(Platform.RendererProperty);
 
-				return (nfloat)req.Request.Height;
+				renderHeight = req.Request.Height;
 			}
-			var renderHeight = cell.RenderHeight;
+			else
+			{
+				renderHeight = cell.RenderHeight;
+			}
+
 			return renderHeight > 0 ? (nfloat)renderHeight : ListViewRenderer.DefaultRowHeight;
 		}
 	}
