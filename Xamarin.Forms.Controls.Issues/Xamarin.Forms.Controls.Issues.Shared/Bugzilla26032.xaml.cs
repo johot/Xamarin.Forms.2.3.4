@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
+
 #if UITEST
 using Xamarin.UITest;
+using Xamarin.Forms.Core.UITests;
 using NUnit.Framework;
 #endif
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers = true)]
+#if UITEST
 	[Category(UITestCategories.ListView)]
+#endif
+
+	[Preserve (AllMembers = true)]
 	[Issue (IssueTracker.Bugzilla, 26032, " ListView ItemTapped doesn't get called for the selected item ", PlatformAffected.iOS)]
 	public partial class Bugzilla26032 : TestContentPage
 	{

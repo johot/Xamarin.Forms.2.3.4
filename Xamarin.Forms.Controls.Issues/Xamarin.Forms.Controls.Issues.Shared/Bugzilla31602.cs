@@ -1,22 +1,23 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Xamarin.Forms.Core.UITests;
 using Xamarin.Forms.Internals;
 
 #if UITEST
-using Xamarin.UITest;
+using Xamarin.Forms.Core.UITests;
 using Xamarin.UITest.iOS;
 using NUnit.Framework;
 #endif
 
 namespace Xamarin.Forms.Controls
 {
+#if UITEST
+	[NUnit.Framework.Category(UITestCategories.MasterDetailPage)]
+#endif
+
 	[Preserve (AllMembers = true)]
-	[Category(UITestCategories.MasterDetailPage)]
 	[Issue (IssueTracker.Bugzilla, 31602, "not possible to programmatically open master page after iPad landscape -> portrait rotation, also tests 31664")]
 	public class Bugzilla31602 : TestMasterDetailPage
 	{
