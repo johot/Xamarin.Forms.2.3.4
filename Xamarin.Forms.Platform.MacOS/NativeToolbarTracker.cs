@@ -86,6 +86,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		internal void UpdateToolBar()
 		{
+			if (NSApplication.SharedApplication.MainWindow == null)
+				return;
+
 			if (NavigationController == null)
 			{
 				if (_toolbar != null)
