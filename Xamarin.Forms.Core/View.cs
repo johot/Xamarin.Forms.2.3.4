@@ -21,7 +21,7 @@ namespace Xamarin.Forms
 
 		internal static void Fake()
 		{
-			System.Diagnostics.Debug.WriteLine("Does nothing");
+			System.Diagnostics.Debug.WriteLine("Does not do anything");
 		}
 		
 		protected internal View()
