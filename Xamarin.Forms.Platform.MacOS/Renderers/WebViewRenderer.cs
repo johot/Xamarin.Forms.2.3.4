@@ -88,6 +88,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateCanGoBackForward()
 		{
+			if (Element == null)
+				return;
 			Element.CanGoBack = Control.CanGoBack();
 			Element.CanGoForward = Control.CanGoForward();
 		}
