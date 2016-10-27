@@ -194,6 +194,14 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 		}
 
+
+		public override nfloat GetRowHeight(NSTableView tableView, nint row)
+		{
+			var indexPath = NSIndexPath.FromItemSection(row, 1);
+			var cell = GetCellForPath(indexPath);
+			return CalculateHeightForCell(tableView, cell);
+		}
+
 		internal nfloat CalculateHeightForCell(NSTableView tableView, Cell cell)
 		{
 			var viewCell = cell as ViewCell;
