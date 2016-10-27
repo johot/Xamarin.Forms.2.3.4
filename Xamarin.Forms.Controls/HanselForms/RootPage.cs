@@ -92,7 +92,12 @@ namespace Xamarin.Forms.Controls
 		{
 			Title = "Master";
 			mdp = page;
-			ListViewMenu = new ListView { ItemTemplate = new DataTemplate(typeof(MenuViewCell)) };
+			ListViewMenu = new ListView(ListViewCachingStrategy.RecycleElement)
+			{
+				HasUnevenRows = true,
+				SeparatorColor = Color.Transparent,
+				ItemTemplate = new DataTemplate(typeof(MenuViewCell))
+			};
 			ListViewMenu.ItemsSource = menuItems = new List<HomeMenuItem>
 				{
 					new HomeMenuItem { Title = "About", MenuType = HMenuType.About, Icon ="about.png" },
@@ -102,6 +107,8 @@ namespace Xamarin.Forms.Controls
 					new HomeMenuItem { Title = "Ratchet", MenuType = HMenuType.Ratchet, Icon = "ratchet.png" },
 					new HomeMenuItem { Title = "Developers Life", MenuType = HMenuType.DeveloperLife, Icon = "tdl.png"},
 				};
+
+			ListViewMenu.Header = GetHeader();
 
 			ListViewMenu.SelectedItem = menuItems[0];
 
@@ -113,6 +120,44 @@ namespace Xamarin.Forms.Controls
 				   mdp.Navigate(((HomeMenuItem)e.SelectedItem).MenuType);
 			   };
 			Content = ListViewMenu;
+		}
+
+		static Grid GetHeader()
+		{
+			var grd = new Grid { Padding = new Thickness() };
+			grd.ColumnDefinitions.Add(new ColumnDefinition { Width = 10 });
+			grd.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+			grd.ColumnDefinitions.Add(new ColumnDefinition { Width = 10 });
+
+			grd.RowDefinitions.Add(new RowDefinition { Height = 30 });
+			grd.RowDefinitions.Add(new RowDefinition { Height = 80 });
+			grd.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+			grd.RowDefinitions.Add(new RowDefinition { Height = 5 });
+
+			var boxView = new BoxView { BackgroundColor = Color.FromHex("#03A9F4") };
+			Grid.SetRowSpan(boxView, 4);
+			Grid.SetColumnSpan(boxView, 3);
+
+			var image = new Image
+			{
+				Source = "scott159.png",
+				WidthRequest = 75,
+				HeightRequest = 75,
+				VerticalOptions = LayoutOptions.End,
+				HorizontalOptions = LayoutOptions.Start
+			};
+
+			Grid.SetRow(image, 1);
+			Grid.SetColumn(image, 1);
+
+			var lbl = new Label { Text = "Hanselman.Forms" };
+			Grid.SetRow(lbl, 2);
+			Grid.SetColumn(lbl, 1);
+
+			grd.Children.Add(boxView);
+			grd.Children.Add(image);
+			grd.Children.Add(lbl);
+			return grd;
 		}
 	}
 
