@@ -206,7 +206,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			var viewCell = cell as ViewCell;
 			double renderHeight = -1;
-			if (viewCell != null && viewCell.View != null)
+			if (List.RowHeight == -1 && viewCell != null && viewCell.View != null)
 			{
 				var target = viewCell.View;
 				if (_prototype == null)
