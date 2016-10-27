@@ -68,26 +68,12 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (disposing)
 			{
-				if (_headerRenderer != null)
-				{
-					Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
-					_headerRenderer = null;
-				}
+				ClearHeader();
 				if (_footerRenderer != null)
 				{
 					Platform.DisposeModelAndChildrenRenderers(_footerRenderer.Element);
 					_footerRenderer = null;
 				}
-
-				var headerView = Controller?.HeaderElement as VisualElement;
-				if (headerView != null)
-					headerView.MeasureInvalidated -= OnHeaderMeasureInvalidated;
-				_table?.HeaderView?.Dispose();
-
-				var footerView = Controller?.FooterElement as VisualElement;
-				if (footerView != null)
-					footerView.MeasureInvalidated -= OnFooterMeasureInvalidated;
-
 			}
 
 			base.Dispose(disposing);
@@ -109,13 +95,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (e.OldElement != null)
 			{
 				var controller = (IListViewController)e.OldElement;
-				var headerView = (VisualElement)controller.HeaderElement;
-				if (headerView != null)
-					headerView.MeasureInvalidated -= OnHeaderMeasureInvalidated;
-
-				var footerView = (VisualElement)controller.FooterElement;
-				if (footerView != null)
-					footerView.MeasureInvalidated -= OnFooterMeasureInvalidated;
 
 				controller.ScrollToRequested -= OnScrollToRequested;
 				var templatedItems = ((ITemplatedItemsView<Cell>)e.OldElement).TemplatedItems;
@@ -191,19 +170,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			UpdateItems(e, 0, true);
 		}
 
-		void OnFooterMeasureInvalidated(object sender, EventArgs eventArgs)
-		{
-			double width = Bounds.Width;
-			if (width == 0)
-				return;
-
-			var footerView = (VisualElement)sender;
-			var request = footerView.Measure(width, double.PositiveInfinity, MeasureFlags.IncludeMargins);
-			Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(footerView, new Rectangle(0, 0, width, request.Request.Height));
-
-			//Control.TableFooterView = _footerRenderer.NativeView;
-		}
-
 		void OnGroupedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			var til = (TemplatedItemsList<ItemsView<Cell>, Cell>)sender;
@@ -211,19 +177,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			var templatedItems = TemplatedItemsView.TemplatedItems;
 			var groupIndex = templatedItems.IndexOf(til.HeaderContent);
 			UpdateItems(e, groupIndex, false);
-		}
-
-		void OnHeaderMeasureInvalidated(object sender, EventArgs eventArgs)
-		{
-			double width = Bounds.Width;
-			if (width == 0)
-				return;
-
-			var headerView = (VisualElement)sender;
-			var request = headerView.Measure(width, double.PositiveInfinity, MeasureFlags.IncludeMargins);
-			Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(headerView, new Rectangle(0, 0, width, request.Request.Height));
-
-			_table.HeaderView = (NSTableHeaderView)_headerRenderer.NativeView;
 		}
 
 		void UpdateHeader()
@@ -235,34 +188,35 @@ namespace Xamarin.Forms.Platform.MacOS
 			{
 				if (_headerRenderer != null)
 				{
-					_headerRenderer.Element.MeasureInvalidated -= OnHeaderMeasureInvalidated;
+
 					if (header != null && _headerRenderer.GetType() == Registrar.Registered.GetHandlerType(header.GetType()))
 					{
 						_headerRenderer.SetElement(headerView);
+						(_table.HeaderView as CustomNSTableHeaderView).Update(Bounds.Width, _headerRenderer);
 						return;
 					}
-					_table.HeaderView = null;
-					Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
-					_headerRenderer = null;
+					ClearHeader();
 				}
 
 				_headerRenderer = Platform.CreateRenderer(headerView);
 				Platform.SetRenderer(headerView, _headerRenderer);
 
-				var request = headerView.Measure(double.PositiveInfinity, double.PositiveInfinity, MeasureFlags.IncludeMargins);
-				Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(headerView, new Rectangle(0, 0, _table.Bounds.Width, request.Request.Height));
-
-				_table.HeaderView = new CustomNSTableHeaderView(new CoreGraphics.CGRect(0, 0, Math.Max(Bounds.Width, headerView.Width), headerView.Height), _headerRenderer);
-
-				headerView.MeasureInvalidated += OnHeaderMeasureInvalidated;
+				////var column = _table.HeaderView.GetColumn(new CoreGraphics.CGPoint(0, 0));
+				_table.HeaderView = new CustomNSTableHeaderView(Bounds.Width, _headerRenderer);
 			}
 			else if (_headerRenderer != null)
 			{
-				_table.HeaderView = null;
-				Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
-				_headerRenderer.Dispose();
-				_headerRenderer = null;
+				ClearHeader();
 			}
+		}
+
+		void ClearHeader()
+		{
+			_table.HeaderView = null;
+			if (_headerRenderer == null)
+				return;
+			Platform.DisposeModelAndChildrenRenderers(_headerRenderer.Element);
+			_headerRenderer = null;
 		}
 
 		void UpdateItems(NotifyCollectionChangedEventArgs e, int section, bool resetWhenGrouped)
