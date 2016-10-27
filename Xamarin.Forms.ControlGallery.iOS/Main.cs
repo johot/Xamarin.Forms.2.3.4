@@ -15,7 +15,7 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		
 		internal static void Fake()
 		{
-			System.Diagnostics.Debug.WriteLine("Verify branch filter in trigger");
+			System.Diagnostics.Debug.WriteLine("");
 		}
 	}
 }
