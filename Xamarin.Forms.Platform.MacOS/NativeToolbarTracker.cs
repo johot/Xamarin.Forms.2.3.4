@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppKit;
+using CoreGraphics;
+using Foundation;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
 	internal class NativeToolbarTracker
 	{
+		const string ToolBarId = "AwesomeBarToolbar";
+		const string AwesomeBarId = "AwesomeBarToolbarItem";
+
 		INavigationPageController NavigationController => _navigation as INavigationPageController;
 
-		internal ToolbarTracker _toolbarTracker;
-
+		ToolbarTracker _toolbarTracker;
 		NSToolbar _toolbar;
-
+		AwesomeBar _awesomeBar;
 		NavigationPage _navigation;
 		MainToolBarDelegate ToolbarDelegate => _toolbar.Delegate as MainToolBarDelegate;
 
@@ -22,12 +26,11 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			_toolbarTracker = new ToolbarTracker();
 			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
+			_awesomeBar = new AwesomeBar(GetBackgroundColor, GetPreviousPageTitle, GetCurrentPageTitle, GetTitleColor, GetToolbarItems);
+			_awesomeBar.BackButtonPressed += async (sender, e) => await NavigateBackFrombackButton();
 		}
 
-		void ToolbarTrackerOnCollectionChanged(object sender, EventArgs eventArgs)
-		{
-			UpdateToolbarItems();
-		}
+		public static bool IsFullscreen { get; private set; }
 
 		public NavigationPage Navigation
 		{
@@ -52,13 +55,63 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual NSToolbar ConfigureToolbar()
 		{
-			var toolbar = new NSToolbar("MainToolbar")
+			var toolbar = new NSToolbar(ToolBarId)
 			{
-				Delegate = new MainToolBarDelegate(GetCurrentPageTitle, GetPreviousPageTitle, GetToolbarItems, async () => await NavigateBackFrombackButton())
+				DisplayMode = NSToolbarDisplayMode.Icon
 			};
-			toolbar.DisplayMode = NSToolbarDisplayMode.Icon;
+
+			toolbar.WillInsertItem = (tool, id, send) =>
+			{
+				switch (id)
+				{
+					case AwesomeBarId:
+						return new NSToolbarItem(AwesomeBarId)
+						{
+							View = _awesomeBar,
+							MinSize = new CGSize(1024, AwesomeBar.ToolbarWidgetHeight),
+							MaxSize = new CGSize(float.PositiveInfinity, AwesomeBar.ToolbarWidgetHeight)
+						};
+
+					default:
+						throw new NotImplementedException();
+				}
+			};
+
+			Action<NSNotification> resizeAction = notif =>
+			{
+				var win = _awesomeBar.Window;
+				if (win == null)
+				{
+					return;
+				}
+
+				var item = _toolbar.Items[0];
+
+				var abFrameInWindow = _awesomeBar.ConvertRectToView(_awesomeBar.Frame, null);
+				var awesomebarHeight = AwesomeBar.ToolbarWidgetHeight;
+				var size = new CGSize(win.Frame.Width - abFrameInWindow.X - 4, awesomebarHeight);
+
+				if (item.MinSize != size)
+				{
+					item.MinSize = size;
+				}
+			};
+
+			// We can't use the events that Xamarin.Mac adds for delegate methods as they will overwrite
+			// the delegate that Gtk has added
+			NSWindow nswin = NSApplication.SharedApplication.MainWindow;
+			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.DidResizeNotification, resizeAction, nswin);
+			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.DidEndLiveResizeNotification, resizeAction, nswin);
+
+			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.WillEnterFullScreenNotification, (note) => IsFullscreen = true, nswin);
+			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.WillExitFullScreenNotification, (note) => IsFullscreen = false, nswin);
 
 			return toolbar;
+		}
+
+		void ToolbarTrackerOnCollectionChanged(object sender, EventArgs eventArgs)
+		{
+			UpdateToolbarItems();
 		}
 
 		async Task NavigateBackFrombackButton()
@@ -66,17 +119,29 @@ namespace Xamarin.Forms.Platform.MacOS
 			await NavigationController?.PopAsyncInner(true, true);
 		}
 
+		NSColor GetBackgroundColor()
+		{
+			return Navigation?.BarBackgroundColor.ToNSColor() ?? NSColor.Clear;
+		}
+
+		NSColor GetTitleColor()
+		{
+			return Navigation?.BarTextColor.ToNSColor() ?? NSColor.Black;
+		}
+
 		string GetCurrentPageTitle()
 		{
+			if (NavigationController == null)
+				return string.Empty;
 			return NavigationController.StackCopy.Peek().Title ?? "";
 		}
 
 		string GetPreviousPageTitle()
 		{
-			if (NavigationController.StackDepth <= 1)
-				return "";
-			else
-				return NavigationController.StackCopy.ElementAt(NavigationController.StackDepth - 1).Title;
+			if (NavigationController == null || NavigationController.StackDepth <= 1)
+				return string.Empty;
+
+			return NavigationController.StackCopy.ElementAt(NavigationController.StackDepth - 1).Title;
 		}
 
 		List<ToolbarItem> GetToolbarItems()
@@ -84,7 +149,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			return _toolbarTracker.ToolbarItems.ToList();
 		}
 
-		internal void UpdateToolBar()
+		void UpdateToolBar()
 		{
 			if (NSApplication.SharedApplication.MainWindow == null)
 				return;
@@ -117,6 +182,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				}
 			}
 		}
+
 		internal void UpdateToolbarItems()
 		{
 			if (_toolbar == null || _navigation == null)
@@ -125,15 +191,12 @@ namespace Xamarin.Forms.Platform.MacOS
 			var nItems = _toolbar.Items.Length;
 			if (nItems == 0)
 			{
-				_toolbar.InsertItem(MainToolBarDelegate.BackButtonIdentifier, 0);
-				_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
-				_toolbar.InsertItem(MainToolBarDelegate.TitleIdentifier, 2);
-				_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 3);
-				_toolbar.InsertItem(MainToolBarDelegate.ToolbarItemsIdentifier, 4);
+				_toolbar.InsertItem(AwesomeBarId, 0);
+
 			}
 			else
 			{
-				ToolbarDelegate?.UpdateItems();
+				_awesomeBar?.UpdateItems();
 			}
 		}
 	}
