@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		const float maxStatusBarWidth = 700.0f;
 		const float minStatusBarWidth = 220.0f;
 		const float runButtonWidth = 60.0f;
-		static float s_toolbarHeight => 24.0f;
+		internal static float ToolbarHeight => 24.0f;
 
 		NSButton _backButton;
 		NSTextField _titleField;
@@ -158,7 +158,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				_superviewFrameChangeObserver = NSNotificationCenter.DefaultCenter.AddObserver(NSView.FrameChangedNotification, (note) =>
 				{
 					// Centre vertically in superview frame
-					Frame = new CGRect(0, Superview.Frame.Y + (Superview.Frame.Height - s_toolbarHeight) / 2, Superview.Frame.Width, s_toolbarHeight);
+					Frame = new CGRect(0, Superview.Frame.Y + (Superview.Frame.Height - ToolbarHeight) / 2, Superview.Frame.Width, ToolbarHeight);
 				}, Superview);
 			}
 		}
@@ -178,7 +178,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateLayout()
 		{
-			_backButton.Frame = new CGRect(toolbarPadding, 0, runButtonWidth, s_toolbarHeight);
+			_backButton.Frame = new CGRect(toolbarPadding, 0, runButtonWidth, ToolbarHeight);
 
 			var statusbarWidth = Math.Max(Math.Min(Math.Round(Frame.Width * 0.3), maxStatusBarWidth), minStatusBarWidth);
 			var searchbarWidth = maxSearchBarWidth;
@@ -192,7 +192,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			var spaceLeft = (Frame.Width / 2) - (toolbarPadding + runButtonWidth + toolbarPadding + toolbarPadding + (statusbarWidth / 2));
 
 			_titleField.SetNeedsDisplay();
-			_titleField.Frame = new CGRect(Math.Round((Frame.Width - statusbarWidth) / 2), 0, statusbarWidth - 2, s_toolbarHeight);
+			_titleField.Frame = new CGRect(Math.Round((Frame.Width - statusbarWidth) / 2), 0, statusbarWidth - 2, ToolbarHeight);
 
 			nfloat elcapYOffset = 0;
 			nfloat elcapHOffset = 0;
@@ -205,7 +205,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			}
 			elcapYOffset = scaleFactor == 2 ? -0.5f : -1;
 			elcapHOffset = 1.0f;
-			_toolbarItemsContainer.Frame = new CGRect(Frame.Width - searchbarWidth, 0 + elcapYOffset, searchbarWidth, s_toolbarHeight + elcapHOffset);
+			_toolbarItemsContainer.Frame = new CGRect(Frame.Width - searchbarWidth, 0 + elcapYOffset, searchbarWidth, ToolbarHeight + elcapHOffset);
 		}
 
 		NSView GenerateToolbarItems()

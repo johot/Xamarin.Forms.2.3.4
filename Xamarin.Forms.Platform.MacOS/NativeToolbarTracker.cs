@@ -68,8 +68,8 @@ namespace Xamarin.Forms.Platform.MacOS
 						return new NSToolbarItem(AwesomeBarId)
 						{
 							View = _awesomeBar,
-							MinSize = new CGSize(1024, AwesomeBar.ToolbarWidgetHeight),
-							MaxSize = new CGSize(float.PositiveInfinity, AwesomeBar.ToolbarWidgetHeight)
+							MinSize = new CGSize(1024, AwesomeBar.ToolbarHeight),
+							MaxSize = new CGSize(float.PositiveInfinity, AwesomeBar.ToolbarHeight)
 						};
 
 					default:
@@ -88,7 +88,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				var item = _toolbar.Items[0];
 
 				var abFrameInWindow = _awesomeBar.ConvertRectToView(_awesomeBar.Frame, null);
-				var awesomebarHeight = AwesomeBar.ToolbarWidgetHeight;
+				var awesomebarHeight = AwesomeBar.ToolbarHeight;
 				var size = new CGSize(win.Frame.Width - abFrameInWindow.X - 4, awesomebarHeight);
 
 				if (item.MinSize != size)
