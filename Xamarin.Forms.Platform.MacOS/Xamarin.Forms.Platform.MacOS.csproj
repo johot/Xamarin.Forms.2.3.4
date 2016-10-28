@@ -95,7 +95,6 @@
     <Compile Include="Extensions\NSViewExtensions.cs" />
     <Compile Include="MacOSTimer.cs" />
     <Compile Include="MacOSIsolatedStorageFile.cs" />
-    <Compile Include="FormsNSView.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\DrawingExtensions.cs" />
     <Compile Include="Renderers\DefaultRenderer.cs" />
@@ -150,7 +149,6 @@
     <Compile Include="Controls\FormsPageControllerDelegate.cs" />
     <Compile Include="Controls\PageWrapper.cs" />
     <Compile Include="MacOSExpressionSearch.cs" />
-    <Compile Include="MainToolBarDelegate.cs" />
     <Compile Include="NativeViewWrapper.cs" />
     <Compile Include="Extensions\LayoutExtensions.cs" />
     <Compile Include="NativeViewWrapperRenderer.cs" />
@@ -173,7 +171,9 @@
     <Compile Include="Renderers\TableViewDataSource.cs" />
     <Compile Include="NativeToolbarTracker.cs" />
     <Compile Include="Extensions\NSButtonExtensions.cs" />
-    <Compile Include="AwesomeBar.cs" />
+    <Compile Include="Controls\FormsVerticallyCenteredTextFieldCell.cs" />
+    <Compile Include="Controls\FormsAwesomeBar.cs" />
+    <Compile Include="Controls\FormsNSView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">

@@ -8,7 +8,7 @@ using Foundation;
 namespace Xamarin.Forms.Platform.MacOS
 {
 	//Ported from Xamarin Studio
-	public class AwesomeBar : NSView
+	public class FormsAwesomeBar : NSView
 	{
 		const float _buttonsMaxWidth = 120.0f;
 		const float _buttonsMaxHeight = 50.0f;
@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public event EventHandler BackButtonPressed;
 
-		public AwesomeBar(Func<NSColor> getBackgroundColor, Func<string> getBackText, Func<string> getTitle, Func<NSColor> getTitleColor, Func<List<ToolbarItem>> getToolbarItems)
+		public FormsAwesomeBar(Func<NSColor> getBackgroundColor, Func<string> getBackText, Func<string> getTitle, Func<NSColor> getTitleColor, Func<List<ToolbarItem>> getToolbarItems)
 		{
 			_getBackgroundColor = getBackgroundColor;
 			_getBackText = getBackText;
@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				Bezeled = false,
 				Editable = false,
 				Selectable = false,
-				Cell = new VerticallyCenteredTextFieldCell(0f)
+				Cell = new FormsVerticallyCenteredTextFieldCell(0f, NSFont.TitleBarFontOfSize(18))
 			};
 
 			AddSubview(_titleField);
@@ -80,6 +80,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_titleField.SetNeedsDisplay();
 
 			_toolbarItemsContainer = GenerateToolbarItems();
+			UpdateLayout();
 		}
 
 		public override void ViewDidMoveToWindow()
@@ -191,8 +192,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			//// Gap + RunButton.Width + Gap + ButtonBar.Width + Gap + Half of StatusBar.Width
 			var spaceLeft = (Frame.Width / 2) - (toolbarPadding + runButtonWidth + toolbarPadding + toolbarPadding + (statusbarWidth / 2));
 
-			_titleField.SetNeedsDisplay();
-			_titleField.Frame = new CGRect(Math.Round((Frame.Width - statusbarWidth) / 2), 0, statusbarWidth - 2, ToolbarHeight);
+			var realTitleBarWidth = Math.Min(_titleField.FittingSize.Width, statusbarWidth - 2);
+			_titleField.Frame = new CGRect(Math.Round((Frame.Width - realTitleBarWidth) / 2), 0, realTitleBarWidth, ToolbarHeight);
 
 			nfloat elcapYOffset = 0;
 			nfloat elcapHOffset = 0;
