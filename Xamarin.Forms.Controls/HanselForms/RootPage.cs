@@ -55,22 +55,22 @@ namespace Xamarin.Forms.Controls
 				switch (id)
 				{
 					case HMenuType.About:
-						Pages.Add(id, new NavigationPage(new MyAbout()));
+						Pages.Add(id, new HanselmanNavigationPage(new MyAbout()));
 						break;
 					case HMenuType.Blog:
-						Pages.Add(id, new NavigationPage(new BlogPage()));
+						Pages.Add(id, new HanselmanNavigationPage(new BlogPage()));
 						break;
 					case HMenuType.DeveloperLife:
-						Pages.Add(id, new NavigationPage(new AboutPage() { Title = "Page 3" }));
+						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 3" }));
 						break;
 					case HMenuType.Hanselminutes:
-						Pages.Add(id, new NavigationPage(new AboutPage() { Title = "Page 4" }));
+						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 4" }));
 						break;
 					case HMenuType.Ratchet:
-						Pages.Add(id, new NavigationPage(new AboutPage() { Title = "Page 5" }));
+						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 5" }));
 						break;
 					case HMenuType.Twitter:
-						Pages.Add(id, new NavigationPage(new AboutPage() { Title = "Page 6" }));
+						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 6" }));
 						break;
 				}
 			}
