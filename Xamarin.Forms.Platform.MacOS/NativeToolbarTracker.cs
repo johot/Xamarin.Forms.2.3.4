@@ -43,7 +43,8 @@ namespace Xamarin.Forms.Platform.MacOS
 					_navigation.PropertyChanged -= NavigationPagePropertyChanged;
 
 				_navigation = value;
-				_navigation.PropertyChanged += NavigationPagePropertyChanged;
+				if (_navigation != null)
+					_navigation.PropertyChanged += NavigationPagePropertyChanged;
 				UpdateToolBar();
 			}
 		}
