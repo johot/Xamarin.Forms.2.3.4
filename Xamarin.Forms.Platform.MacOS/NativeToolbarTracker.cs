@@ -39,7 +39,11 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (_navigation == value)
 					return;
 
+				if (_navigation != null)
+					_navigation.PropertyChanged -= NavigationPagePropertyChanged;
+
 				_navigation = value;
+				_navigation.PropertyChanged += NavigationPagePropertyChanged;
 				UpdateToolBar();
 			}
 		}
@@ -108,6 +112,12 @@ namespace Xamarin.Forms.Platform.MacOS
 			return toolbar;
 		}
 
+		void NavigationPagePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName.Equals(NavigationPage.BarTextColorProperty.PropertyName) || e.PropertyName.Equals(NavigationPage.BarBackgroundColorProperty.PropertyName))
+				UpdateToolBar();
+		}
+
 		void ToolbarTrackerOnCollectionChanged(object sender, EventArgs eventArgs)
 		{
 			UpdateToolbarItems();
@@ -120,12 +130,19 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		NSColor GetBackgroundColor()
 		{
-			return Navigation?.BarBackgroundColor.ToNSColor() ?? NSColor.Clear;
+			var backgroundNSColor = NSColor.Clear;
+			if (Navigation != null && Navigation.BarBackgroundColor != Color.Default)
+				backgroundNSColor = Navigation.BarBackgroundColor.ToNSColor();
+			return backgroundNSColor;
 		}
 
 		NSColor GetTitleColor()
 		{
-			return Navigation?.BarTextColor.ToNSColor() ?? NSColor.Black;
+			var titleNSColor = NSColor.Black;
+			if (Navigation != null && Navigation?.BarTextColor != Color.Default)
+				titleNSColor = Navigation.BarTextColor.ToNSColor();
+
+			return titleNSColor;
 		}
 
 		string GetCurrentPageTitle()
