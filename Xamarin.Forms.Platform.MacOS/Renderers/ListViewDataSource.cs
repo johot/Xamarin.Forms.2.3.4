@@ -9,17 +9,23 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	internal class ListViewDataSource : NSTableViewSource
 	{
+		IVisualElementRenderer _prototype;
+		const string GroupHeaderCellKey = "GroupHeaderCell";
 		const int DefaultItemTemplateId = 1;
 		static int s_dataTemplateIncrementer = 2; // lets start at not 0 because
+		static int s_sectionCount;
+		static int s_totalCount;
 		readonly nfloat _defaultSectionHeight;
 		readonly Dictionary<DataTemplate, int> _templateToId = new Dictionary<DataTemplate, int>();
 		readonly NSTableView _nsTableView;
 		protected readonly ListView List;
 		IListViewController Controller => List;
 		ITemplatedItemsView<Cell> TemplatedItemsView => List;
-		bool _isDragging;
 		bool _selectionFromNative;
 		bool _selectionFromForms;
+
+		public virtual bool IsGroupingEnabled => List.IsGroupingEnabled;
+		public Dictionary<int, int> Counts { get; set; }
 
 		public ListViewDataSource(ListViewDataSource source)
 		{
@@ -27,23 +33,21 @@ namespace Xamarin.Forms.Platform.MacOS
 			_nsTableView = source._nsTableView;
 			_defaultSectionHeight = source._defaultSectionHeight;
 			_selectionFromNative = source._selectionFromNative;
-
 			Counts = new Dictionary<int, int>();
 		}
 
 		public ListViewDataSource(ListView list, NSTableView tableView)
 		{
-			_nsTableView = tableView;
-
 			List = list;
 			List.ItemSelected += OnItemSelected;
-			UpdateShortNameListener();
-
+			_nsTableView = tableView;
 			Counts = new Dictionary<int, int>();
 		}
 
-		public Dictionary<int, int> Counts { get; set; }
-
+		public void Update()
+		{
+			_nsTableView.ReloadData();
+		}
 
 		public void OnItemSelected(object sender, SelectedItemChangedEventArgs eventArg)
 		{
@@ -59,8 +63,8 @@ namespace Xamarin.Forms.Platform.MacOS
 				var row = _nsTableView.SelectedRow;
 				int groupIndex = 1;
 				var selectedIndexPath = NSIndexPath.FromItemSection(row, groupIndex);
-				//if (selectedIndexPath != null)
-				//	_nsTableView.DeselectRow(selectedIndexPath.Item);
+				if (selectedIndexPath != null)
+					_nsTableView.DeselectRow(selectedIndexPath.Item);
 				return;
 			}
 			_selectionFromForms = true;
@@ -77,68 +81,103 @@ namespace Xamarin.Forms.Platform.MacOS
 				_selectionFromForms = false;
 				return;
 			}
-			int groupIndex = 1;
 
-			var row = _nsTableView.SelectedRow;
-			var indexPath = NSIndexPath.FromItemSection(row, groupIndex);
-			var formsCell = GetCellForPath(indexPath);
-			if (formsCell == null)
+			var selectedRow = _nsTableView.SelectedRow;
+			if (selectedRow == -1)
+				return;
+
+			NSIndexPath indexPath = null;
+			Cell cell = null;
+			indexPath = GetPathFromRow(selectedRow, ref cell);
+
+			if (cell == null)
 				return;
 
 			_selectionFromNative = true;
-			Controller.NotifyRowTapped((int)indexPath.Section, (int)indexPath.Item, formsCell);
+			Controller.NotifyRowTapped((int)indexPath.Section, (int)indexPath.Item, cell);
+		}
+
+		public override bool IsGroupRow(NSTableView tableView, nint row)
+		{
+			if (!IsGroupingEnabled)
+				return false;
+
+			var sectionIndex = 0;
+			var isGroupHeader = false;
+			var itemIndexInSection = 0;
+
+			GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isGroupHeader);
+			return isGroupHeader;
+		}
+
+		public override bool ShouldSelectRow(NSTableView tableView, nint row)
+		{
+			return !IsGroupRow(tableView, row);
+		}
+
+		public override nfloat GetRowHeight(NSTableView tableView, nint row)
+		{
+			if (!List.HasUnevenRows)
+				return List.RowHeight == -1 ? ListViewRenderer.DefaultRowHeight : List.RowHeight;
+
+			NSIndexPath indexPath = null;
+			Cell cell = null;
+			indexPath = GetPathFromRow(row, ref cell);
+
+			return CalculateHeightForCell(tableView, cell);
 		}
 
 		public override nint GetRowCount(NSTableView tableView)
 		{
-			int section = 1;
-			int countOverride;
-			if (Counts.TryGetValue((int)section, out countOverride))
-			{
-				Counts.Remove((int)section);
-				return countOverride;
-			}
-
 			var templatedItems = TemplatedItemsView.TemplatedItems;
-			if (List.IsGroupingEnabled)
-			{
-				var group = (IList)((IList)templatedItems)[(int)section];
-				return group.Count;
-			}
+			nint count = 0;
 
-			return templatedItems.Count;
+			if (!IsGroupingEnabled)
+			{
+				count = templatedItems.Count;
+			}
+			else
+			{
+				var sections = templatedItems.Count;
+				for (int i = 0; i < sections; i++)
+				{
+					var group = (IList)((IList)templatedItems)[i];
+					count += group.Count + 1;
+				}
+				s_sectionCount = sections;
+
+			}
+			s_totalCount = (int)count;
+			return count;
 		}
 
 		public override NSView GetViewForItem(NSTableView tableView, NSTableColumn tableColumn, nint row)
 		{
-			var indexPath = NSIndexPath.FromItemSection(row, 1);
-			var id = TemplateIdForPath(indexPath);
-			var cell = GetCellForPath(indexPath);
+			var sectionIndex = 0;
+			var itemIndexInSection = (int)row;
+			var id = string.Empty;
+			Cell cell = null;
 
-			var nativeCell = CellNSView.GetNativeCell(tableView, cell, id.ToString());
+			var isHeader = false;
+
+			if (IsGroupingEnabled)
+				GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isHeader);
+
+			var indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
+			id = isHeader ? "headerCell" : TemplateIdForPath(indexPath).ToString();
+			cell = GetCellForPath(indexPath, isHeader);
+			var nativeCell = CellNSView.GetNativeCell(tableView, cell, id);
 			return nativeCell;
 		}
 
-
-		public void UpdateGrouping()
-		{
-			UpdateShortNameListener();
-			_nsTableView.ReloadData();
-		}
-
-		protected Cell GetCellForPath(NSIndexPath indexPath)
+		protected virtual Cell GetCellForPath(NSIndexPath indexPath, bool isGroupHeader)
 		{
 			var templatedItems = TemplatedItemsView.TemplatedItems;
-			if (List.IsGroupingEnabled)
+			if (IsGroupingEnabled)
 				templatedItems = (TemplatedItemsList<ItemsView<Cell>, Cell>)((IList)templatedItems)[(int)indexPath.Section];
 
-			var cell = templatedItems[(int)indexPath.Item];
+			var cell = isGroupHeader ? templatedItems.HeaderContent : templatedItems[(int)indexPath.Item];
 			return cell;
-		}
-
-		void OnShortNamesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			_nsTableView.ReloadData();
 		}
 
 		int TemplateIdForPath(NSIndexPath indexPath)
@@ -165,44 +204,28 @@ namespace Xamarin.Forms.Platform.MacOS
 			return key;
 		}
 
-		void UpdateShortNameListener()
+		NSIndexPath GetPathFromRow(nint row, ref Cell cell)
 		{
-			var templatedList = TemplatedItemsView.TemplatedItems;
-			if (List.IsGroupingEnabled)
+			NSIndexPath indexPath;
+			if (IsGroupingEnabled)
 			{
-				if (templatedList.ShortNames != null)
-					((INotifyCollectionChanged)templatedList.ShortNames).CollectionChanged += OnShortNamesCollectionChanged;
+				var sectionIndex = 0;
+				var isGroupHeader = false;
+				var itemIndexInSection = 0;
+
+				GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isGroupHeader);
+				indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
 			}
 			else
 			{
-				if (templatedList.ShortNames != null)
-					((INotifyCollectionChanged)templatedList.ShortNames).CollectionChanged -= OnShortNamesCollectionChanged;
+				indexPath = NSIndexPath.FromItemSection(row, 0);
+				cell = GetCellForPath(indexPath, false);
 			}
-		}
-	}
 
-	internal class UnevenListViewDataSource : ListViewDataSource
-	{
-		IVisualElementRenderer _prototype;
-
-
-		public UnevenListViewDataSource(ListView list, NSTableView tableView) : base(list, tableView)
-		{
+			return indexPath;
 		}
 
-		public UnevenListViewDataSource(ListViewDataSource source) : base(source)
-		{
-		}
-
-
-		public override nfloat GetRowHeight(NSTableView tableView, nint row)
-		{
-			var indexPath = NSIndexPath.FromItemSection(row, 1);
-			var cell = GetCellForPath(indexPath);
-			return CalculateHeightForCell(tableView, cell);
-		}
-
-		internal nfloat CalculateHeightForCell(NSTableView tableView, Cell cell)
+		nfloat CalculateHeightForCell(NSTableView tableView, Cell cell)
 		{
 			var viewCell = cell as ViewCell;
 			double renderHeight = -1;
@@ -234,6 +257,30 @@ namespace Xamarin.Forms.Platform.MacOS
 			}
 
 			return renderHeight > 0 ? (nfloat)renderHeight : ListViewRenderer.DefaultRowHeight;
+		}
+
+		void GetComputedIndexes(nint row, out int sectionIndex, out int itemIndexInSection, out bool isHeader)
+		{
+			var templatedItems = TemplatedItemsView.TemplatedItems;
+			var totalItems = 1;
+			isHeader = false;
+			sectionIndex = 0;
+			itemIndexInSection = 0;
+
+			for (int i = 0; i < s_sectionCount; i++)
+			{
+				var group = (IList)((IList)templatedItems)[i];
+				var itemsInSection = group.Count + i;
+
+				if (row < totalItems + itemsInSection)
+				{
+					sectionIndex = i;
+					itemIndexInSection = (int)row - totalItems;
+					isHeader = itemIndexInSection == -1;
+					break;
+				}
+				totalItems += itemsInSection;
+			}
 		}
 	}
 }

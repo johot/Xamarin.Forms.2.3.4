@@ -33,8 +33,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual NSTableView CreateNSTableView(ListView list)
 		{
-			var table = new NSTableView().AsListViewLook();
-			table.Source = _dataSource = list.HasUnevenRows ? new UnevenListViewDataSource(list, table) : new ListViewDataSource(list, table);
+			NSTableView table;
+			table = new NSTableView().AsListViewLook();
+			table.Source = _dataSource = new ListViewDataSource(list, table);
 			return table;
 		}
 
@@ -95,10 +96,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (e.OldElement != null)
 			{
 				var controller = (IListViewController)e.OldElement;
-
 				controller.ScrollToRequested -= OnScrollToRequested;
-				var templatedItems = ((ITemplatedItemsView<Cell>)e.OldElement).TemplatedItems;
 
+				var templatedItems = ((ITemplatedItemsView<Cell>)e.OldElement).TemplatedItems;
 				templatedItems.CollectionChanged -= OnCollectionChanged;
 				templatedItems.GroupedCollectionChanged -= OnGroupedCollectionChanged;
 			}
@@ -116,10 +116,9 @@ namespace Xamarin.Forms.Platform.MacOS
 				}
 
 				var controller = (IListViewController)e.NewElement;
-
 				controller.ScrollToRequested += OnScrollToRequested;
-				var templatedItems = ((ITemplatedItemsView<Cell>)e.NewElement).TemplatedItems;
 
+				var templatedItems = ((ITemplatedItemsView<Cell>)e.NewElement).TemplatedItems;
 				templatedItems.CollectionChanged += OnCollectionChanged;
 				templatedItems.GroupedCollectionChanged += OnGroupedCollectionChanged;
 
@@ -145,10 +144,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.OnElementPropertyChanged(sender, e);
 			if (e.PropertyName == ListView.RowHeightProperty.PropertyName)
 				UpdateRowHeight();
-			else if (e.PropertyName == ListView.IsGroupingEnabledProperty.PropertyName)
-				_dataSource.UpdateGrouping();
-			else if (e.PropertyName == ListView.HasUnevenRowsProperty.PropertyName)
-				_table.Source = _dataSource = Element.HasUnevenRows ? new UnevenListViewDataSource(_dataSource) : new ListViewDataSource(_dataSource);
+			else if (e.PropertyName == ListView.IsGroupingEnabledProperty.PropertyName || (e.PropertyName == ListView.HasUnevenRowsProperty.PropertyName))
+				_dataSource.Update();
 			else if (e.PropertyName == ListView.IsPullToRefreshEnabledProperty.PropertyName)
 				UpdatePullToRefreshEnabled();
 			else if (e.PropertyName == ListView.IsRefreshingProperty.PropertyName)
@@ -201,7 +198,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				_headerRenderer = Platform.CreateRenderer(headerView);
 				Platform.SetRenderer(headerView, _headerRenderer);
 
-				////var column = _table.HeaderView.GetColumn(new CoreGraphics.CGPoint(0, 0));
 				_table.HeaderView = new CustomNSTableHeaderView(Bounds.Width, _headerRenderer);
 			}
 			else if (_headerRenderer != null)
