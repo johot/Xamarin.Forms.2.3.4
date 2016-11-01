@@ -56,6 +56,29 @@ namespace Xamarin.Forms.Controls
 				cellName = typeIssueAttribute.Description;
 			}
 
+			try
+			{
+				// Attempt the direct way of navigating to the test page
+#if __ANDROID__
+
+				if (bool.Parse((string)app.Invoke("NavigateToTest", cellName)))
+				{
+					return;
+				}
+#endif
+#if __IOS__
+				if (bool.Parse((string)app.Invoke("navigateToTest:", cellName)))
+				{
+					return;
+				}
+#endif
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine($"Could not directly invoke test, using UI navigation. {ex}");
+			}
+			
+			// Fall back to the "manual" navigation method
 			app.Tap (q => q.Button ("Go to Test Cases"));
 			app.WaitForElement (q => q.Raw ("* marked:'TestCasesIssueList'"));
 
@@ -82,7 +105,7 @@ namespace Xamarin.Forms.Controls
 	}
 #endif
 
-	public abstract class TestPage : Page
+		public abstract class TestPage : Page
 	{
 #if UITEST
 		public IApp RunningApp { get; private set; }
