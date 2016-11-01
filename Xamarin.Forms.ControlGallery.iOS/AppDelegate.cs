@@ -132,6 +132,7 @@ namespace Xamarin.Forms.ControlGallery.iOS
 	[Register("AppDelegate")]
 	public partial class AppDelegate : FormsApplicationDelegate
 	{
+		App _app;
 
 		public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
 		{
@@ -150,6 +151,7 @@ namespace Xamarin.Forms.ControlGallery.iOS
 			};
 
 			var app = new App();
+			_app = app;
 
 			// When the native control gallery loads up, it'll let us know so we can add the nested native controls
 			MessagingCenter.Subscribe<NestedNativeControlGalleryPage>(this, NestedNativeControlGalleryPage.ReadyForNativeControlsMessage, AddNativeControls);
@@ -352,6 +354,17 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		}
 
 		#endregion
+
+		[Export("navigateToTest:")]
+		public string NavigateToTest(string test)
+		{
+			var result = _app.NavigateToTestPage(test);
+
+			Console.WriteLine($">>>>>>>> navigateToTest result is {result}");
+			System.Diagnostics.Debug.WriteLine($">>>>>>>> navigateToTest result is {result}");
+
+			return result.ToString();
+		}
 	}
 
 	[Register("KVOUISlider")]

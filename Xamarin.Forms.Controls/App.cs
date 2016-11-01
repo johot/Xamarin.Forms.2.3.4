@@ -154,5 +154,12 @@ namespace Xamarin.Forms.Controls
 				text = await reader.ReadToEndAsync();
 			return text;
 		}
+
+		public bool NavigateToTestPage(string test)
+		{
+			SetMainPage(TestCases.GetTestCases());
+			TestCases.TestCaseScreen.PageToAction[test]();
+			return true;
+		}
 	}
 }
