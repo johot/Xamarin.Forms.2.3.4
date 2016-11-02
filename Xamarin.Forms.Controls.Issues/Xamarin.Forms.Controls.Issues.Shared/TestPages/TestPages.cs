@@ -33,9 +33,6 @@ namespace Xamarin.Forms.Controls
 #elif __IOS__ 
 			app = ConfigureApp.iOS.InstalledApp (AppPaths.BundleId).Debug ()
 				//Uncomment to run from a specific iOS SIM, get the ID from XCode -> Devices
-.DeviceIdentifier("d8e74947b18cedd091a8ee3c23243e874f1aebbb")
-//          .CodesignIdentity("iPhone Developer: E.Z.Hart(SR9R53YEUX)")
-          //.CodesignIdentity("iPhone Developer")
 				.StartApp ();
 #endif
 			if (app == null)
