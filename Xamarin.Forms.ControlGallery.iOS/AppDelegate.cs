@@ -356,9 +356,9 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		#endregion
 
 		[Export("navigateToTest:")]
-		public bool NavigateToTest(string test)
+		public string NavigateToTest(string test)
 		{
-			return _app.NavigateToTestPage(test);
+			return _app.NavigateToTestPage(test).ToString();
 		}
 	}
 
