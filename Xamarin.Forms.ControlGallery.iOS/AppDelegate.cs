@@ -358,7 +358,12 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		[Export("navigateToTest:")]
 		public string NavigateToTest(string test)
 		{
-			return _app.NavigateToTestPage(test).ToString();
+			var result = _app.NavigateToTestPage(test);
+
+			Console.WriteLine($">>>>>>>> navigateToTest result is {result}");
+			System.Diagnostics.Debug.WriteLine($">>>>>>>> navigateToTest result is {result}");
+
+			return result.ToString();
 		}
 	}
 
