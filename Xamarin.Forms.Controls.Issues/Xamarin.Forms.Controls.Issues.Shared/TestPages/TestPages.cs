@@ -31,9 +31,19 @@ namespace Xamarin.Forms.Controls
 #if __ANDROID__
 			app = ConfigureApp.Android.ApkFile (AppPaths.ApkPath).Debug ().StartApp ();
 #elif __IOS__ 
-			app = ConfigureApp.iOS.InstalledApp (AppPaths.BundleId).Debug ()
+
+			// TODO EZH Change this back to device 
+			// Running on a device
+			//app = ConfigureApp.iOS.InstalledApp(AppPaths.BundleId).Debug()
 				//Uncomment to run from a specific iOS SIM, get the ID from XCode -> Devices
-				.StartApp ();
+			//	.StartApp();
+
+			// Running on the simulator
+			app = ConfigureApp.iOS
+			                  .PreferIdeSettings()
+			                  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
+			                  .Debug ()
+			                  .StartApp ();
 #endif
 			if (app == null)
 				throw new NullReferenceException ("App was not initialized.");
@@ -66,8 +76,10 @@ namespace Xamarin.Forms.Controls
 				}
 #endif
 #if __IOS__
-				app.Invoke("navigateToTest:", cellName);
-				return;
+				if (bool.Parse(app.Invoke("navigateToTest:", cellName).ToString()))
+				{
+					return;
+				}
 #endif
 			}
 			catch (Exception ex)

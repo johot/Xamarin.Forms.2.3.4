@@ -157,8 +157,19 @@ namespace Xamarin.Forms.Controls
 
 		public bool NavigateToTestPage(string test)
 		{
-			SetMainPage(TestCases.GetTestCases());
-			TestCases.TestCaseScreen.PageToAction[test]();
+			try
+			{
+				SetMainPage(TestCases.GetTestCases());
+				TestCases.TestCaseScreen.PageToAction[test]();
+				return true;
+			}
+			catch (Exception ex) 
+			{
+				Log.Warning("UITests", $"Error attempting to navigate directly to {test}: {ex}");
+			}
+
+			// TODO EZH Forcing this to true for now so we can figure out which tests fail using direct nav
+			// once we've fixed them, we can have this properly return false
 			return true;
 		}
 	}

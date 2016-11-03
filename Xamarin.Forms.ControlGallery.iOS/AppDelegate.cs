@@ -358,12 +358,9 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		[Export("navigateToTest:")]
 		public string NavigateToTest(string test)
 		{
-			var result = _app.NavigateToTestPage(test);
-
-			Console.WriteLine($">>>>>>>> navigateToTest result is {result}");
-			System.Diagnostics.Debug.WriteLine($">>>>>>>> navigateToTest result is {result}");
-
-			return result.ToString();
+			// According to https://developer.xamarin.com/guides/testcloud/uitest/working-with/backdoors/
+			// this method has to return a string
+			return _app.NavigateToTestPage(test).ToString();
 		}
 	}
 
