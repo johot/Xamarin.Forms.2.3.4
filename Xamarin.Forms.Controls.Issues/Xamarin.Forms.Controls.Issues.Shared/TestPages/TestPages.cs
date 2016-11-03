@@ -31,7 +31,12 @@ namespace Xamarin.Forms.Controls
 #if __ANDROID__
 			app = ConfigureApp.Android.ApkFile (AppPaths.ApkPath).Debug ().StartApp ();
 #elif __IOS__ 
-			app = ConfigureApp.iOS.InstalledApp (AppPaths.BundleId).Debug ()
+			app = ConfigureApp.iOS
+			                  .PreferIdeSettings()
+			                  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
+			                  //.InstalledApp (AppPaths.BundleId)
+			                  .Debug ()
+
 				//Uncomment to run from a specific iOS SIM, get the ID from XCode -> Devices
 				.StartApp ();
 #endif
@@ -66,8 +71,10 @@ namespace Xamarin.Forms.Controls
 				}
 #endif
 #if __IOS__
-				app.Invoke("navigateToTest:", cellName);
-				return;
+				if (bool.Parse(app.Invoke("navigateToTest:", cellName).ToString()))
+				{
+					return;
+				}
 #endif
 			}
 			catch (Exception ex)
