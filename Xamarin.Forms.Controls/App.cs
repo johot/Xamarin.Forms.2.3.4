@@ -159,12 +159,14 @@ namespace Xamarin.Forms.Controls
 		{
 			try
 			{
-				SetMainPage(TestCases.GetTestCases());
+				((MasterDetailPage)Current.MainPage).Detail.Navigation.PushAsync(TestCases.GetTestCases());
+
 				TestCases.TestCaseScreen.PageToAction[test]();
 				return true;
 			}
 			catch (Exception ex) 
 			{
+				Application.Current.MainPage.DisplayAlert("doh", ex.ToString(), "ok");
 				Log.Warning("UITests", $"Error attempting to navigate directly to {test}: {ex}");
 			}
 
