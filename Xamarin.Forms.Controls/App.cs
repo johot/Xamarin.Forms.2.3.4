@@ -159,7 +159,7 @@ namespace Xamarin.Forms.Controls
 		{
 			try
 			{
-				((MasterDetailPage)Current.MainPage).Detail.Navigation.PushAsync(TestCases.GetTestCases());
+				Current.MainPage.Navigation.PushModalAsync(TestCases.GetTestCases());
 
 				TestCases.TestCaseScreen.PageToAction[test]();
 				return true;
