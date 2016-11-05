@@ -25,11 +25,13 @@ namespace Xamarin.Forms.Controls
 #if UITEST
 	internal static class AppSetup
 	{
-		static IApp InitializeApp ()
+		static IApp InitializeApp (bool isolate = false)
 		{
 			IApp app = null;
 #if __ANDROID__
-			app = ConfigureApp.Android.ApkFile (AppPaths.ApkPath).Debug ().StartApp ();
+
+			app = isolate ? InitializeAndroidApp() : ConnectToAndroidApp();
+
 #elif __IOS__ 
 
 			// TODO EZH Change this back to device 
@@ -51,6 +53,31 @@ namespace Xamarin.Forms.Controls
 			// Wrap the app in ScreenshotConditional so it only takes screenshots if the SCREENSHOTS symbol is specified
 			return new ScreenshotConditionalApp(app);
 		}
+
+#if __ANDROID__
+		static IApp InitializeAndroidApp()
+		{
+			return ConfigureApp.Android.ApkFile(AppPaths.ApkPath).Debug().StartApp();
+		}
+
+		static IApp ConnectToAndroidApp()
+		{
+			try
+			{
+				var app = ConfigureApp.Android.ApkFile(AppPaths.ApkPath).Debug().ConnectToApp();
+				// Attempt to talk to the app server; if the app isn't running, this will throw an exception
+				app.TestServer.Get("");
+
+				return app;
+			}
+			catch (Exception)
+			{
+				// The app either wasn't already running or we couldn't connect to it; start a new instance
+			}
+
+			return InitializeAndroidApp();
+		}
+#endif
 
 		static void NavigateToIssue (Type type, IApp app)
 		{
@@ -97,11 +124,11 @@ namespace Xamarin.Forms.Controls
 			app.Tap (q => q.Raw ("* marked:'SearchButton'"));
 		}
 
-		public static IApp Setup (Type pageType = null)
+		public static IApp Setup (Type pageType = null, bool isolate = false)
 		{
 			IApp runningApp = null;
 			try {
-				runningApp = InitializeApp ();
+				runningApp = InitializeApp (isolate);
 			} catch (Exception e) {
 				Assert.Inconclusive ($"App did not start for some reason: {e}");
 			}
@@ -114,7 +141,7 @@ namespace Xamarin.Forms.Controls
 	}
 #endif
 
-		public abstract class TestPage : Page
+	public abstract class TestPage : Page
 	{
 #if UITEST
 		public IApp RunningApp { get; private set; }

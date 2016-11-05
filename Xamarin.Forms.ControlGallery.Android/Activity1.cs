@@ -462,6 +462,12 @@ namespace Xamarin.Forms.ControlGallery.Android
 		{
 			return _app.NavigateToTestPage(test);
 		}
+
+		[Export("Reset")]
+		public void Reset()
+		{
+			_app.Reset();
+		}
 	}
 #endif
 }
