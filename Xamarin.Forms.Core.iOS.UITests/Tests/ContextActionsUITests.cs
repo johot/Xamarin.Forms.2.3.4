@@ -16,7 +16,6 @@ namespace Xamarin.Forms.Core.UITests
 
 		public ContextActionsListUITests ()
 		{
-			ShouldResetPerFixture = false;
 		}
 
 		protected override void NavigateToGallery ()
@@ -89,7 +88,6 @@ namespace Xamarin.Forms.Core.UITests
 	{
 		public ContextActionsTableUITests ()
 		{
-			ShouldResetPerFixture = false;
 		}
 
 		protected override void NavigateToGallery ()

@@ -8,7 +8,6 @@ namespace Xamarin.Forms.Core.UITests
 	{
 		public AppearingUITests ()
 		{
-			ShouldResetPerFixture = false;
 		}
 
 		protected override void NavigateToGallery ()

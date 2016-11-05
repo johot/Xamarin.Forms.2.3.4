@@ -362,6 +362,13 @@ namespace Xamarin.Forms.ControlGallery.iOS
 			// this method has to return a string
 			return _app.NavigateToTestPage(test).ToString();
 		}
+
+		[Export("reset:")]
+		public string Reset(string str)
+		{
+			_app.Reset();
+			return String.Empty;
+		}
 	}
 
 	[Register("KVOUISlider")]

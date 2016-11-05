@@ -22,6 +22,7 @@ using System.IO.IsolatedStorage;
 using Droid = Android;
 using System.Globalization;
 using Java.Interop;
+using Xamarin.Forms.Controls.Issues;
 using Debug = System.Diagnostics.Debug;
 
 [assembly: Dependency (typeof (CacheService))]
@@ -461,6 +462,12 @@ namespace Xamarin.Forms.ControlGallery.Android
 		public bool NavigateToTest(string test)
 		{
 			return _app.NavigateToTestPage(test);
+		}
+
+		[Export("Reset")]
+		public void Reset()
+		{
+			_app.Reset();
 		}
 	}
 #endif
