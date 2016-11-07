@@ -32,20 +32,9 @@ namespace Xamarin.Forms.Controls
 
 			app = isolate ? InitializeAndroidApp() : ConnectToAndroidApp();
 
-#elif __IOS__ 
-
-			// TODO EZH Change this back to device 
-			// Running on a device
-			//app = ConfigureApp.iOS.InstalledApp(AppPaths.BundleId).Debug()
-				//Uncomment to run from a specific iOS SIM, get the ID from XCode -> Devices
-			//	.StartApp();
-
-			// Running on the simulator
-			app = ConfigureApp.iOS
-			                  .PreferIdeSettings()
-			                  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
-			                  .Debug ()
-			                  .StartApp ();
+#elif __IOS__
+			//app = InitializeiOSApp();
+			app = isolate ? InitializeiOSApp() : ConnectToiOSApp();
 #endif
 			if (app == null)
 				throw new NullReferenceException ("App was not initialized.");
@@ -76,6 +65,50 @@ namespace Xamarin.Forms.Controls
 			}
 
 			return InitializeAndroidApp();
+		}
+#endif
+
+#if __IOS__
+		static IApp InitializeiOSApp() 
+		{ 
+			// Running on a device
+			var app = ConfigureApp.iOS.InstalledApp(AppPaths.BundleId).Debug()
+				//Uncomment to run from a specific iOS SIM, get the ID from XCode -> Devices
+				.StartApp();
+
+			// Running on the simulator
+			//var app = ConfigureApp.iOS
+			//				  .PreferIdeSettings()
+			//				  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
+			//				  .Debug()
+			//				  .StartApp();
+
+			return app;
+		}
+
+		static IApp ConnectToiOSApp() 
+		{
+			try
+			{
+				// TODO EZH Change this back to device 
+				// Running on a device
+				var app = ConfigureApp.iOS.InstalledApp(AppPaths.BundleId).Debug()
+					.ConnectToApp();
+
+				// Running on the simulator
+				//var app = ConfigureApp.iOS
+				//				  .PreferIdeSettings()
+				//				  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
+				//				  .Debug()
+				//				  .ConnectToApp();
+
+				return app;
+			}
+			catch (Exception) 
+			{ 
+			}
+
+			return InitializeiOSApp();
 		}
 #endif
 

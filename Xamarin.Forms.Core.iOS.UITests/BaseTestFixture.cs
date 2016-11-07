@@ -77,15 +77,15 @@ namespace Xamarin.Forms.Core.UITests
 			App = null;
 			App = AppSetup.Setup(isolate: Isolate);
 
-#if __IOS__
-			App.Invoke("reset:", string.Empty);
-#endif
-#if __ANDROID__
 			if (!Isolate)
 			{
-				App.Invoke("Reset");
-			}
+#if __IOS__
+				App.Invoke("reset:", string.Empty);
 #endif
+#if __ANDROID__
+				App.Invoke("Reset");
+#endif
+			}
 
 			App.SetOrientationPortrait();
 			ScreenBounds = App.RootViewRect();
