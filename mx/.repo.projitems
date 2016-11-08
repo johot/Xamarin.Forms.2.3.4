@@ -46,9 +46,14 @@
     <None Include="$(MSBuildThisFileDirectory).lfx\tools\touch.exe" />
     <None Include="$(MSBuildThisFileDirectory).pre.props" />
     <None Include="$(MSBuildThisFileDirectory).props" />
+    <None Include="$(MSBuildThisFileDirectory).targets" />
     <None Include="$(MSBuildThisFileDirectory).version" />
+    <None Include="$(MSBuildThisFileDirectory)cpy\excludeProperties.txt" />
+    <None Include="$(MSBuildThisFileDirectory)cpy\copySrc.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
+    <None Include="$(MSBuildThisFileDirectory)src\.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\git" />

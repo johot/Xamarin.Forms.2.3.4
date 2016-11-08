@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
+    <!--<ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
+    <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
+    <MetaProjectGuid>{63DFE391-2B58-4C43-B6EC-4D376EB60592}</MetaProjectGuid>
+  </PropertyGroup>
+  <!--
+  
+    Properties
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
+    <!--TODO: Was not present in orig .csproj-->
+    <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="nuspec.props" />
+  </ItemGroup>
+  <!--
+  
+    Nuget Pack
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
+  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
+  <Import Project="nuspec.props" Condition=" '$(Plat)' == '$(PackPlatformId)' " />
+  <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
+    <SelfReference Include="$(DotNetLibraryPlatformId)" />
+    <!--
+      content
+    -->
+    <None Include="$(ExtPackDir)Package.nuspec">
+      <CopyTargetName>$(NuspecName)</CopyTargetName>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Type>xml</Type>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Package.nuspec</Link>
+    </None>
+  </ItemGroup>
+  <!--
+  
+    Library
+  -->
+  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+    <Compile Include="$(ExtPackDir)PackageInfo.cs">
+      <DependentUpon>PackageInfo.t.cs</DependentUpon>
+      <Link>Properties\PackageInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtPackDir)PackageInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\PackageInfo.t.cs</Link>
+      <CompileOutput>PackageInfo.cs</CompileOutput>
+    </None>
+  </ItemGroup>
+  <!--
+  
+    Portable
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
+    <!--This assembly is only referenced and never executed so there is no need for symbols-->
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(IsPartPlatform)' != 'true' ">
+    <Compile Include="portable\AbsoluteLayout.cs" />
+    <Compile Include="portable\AbsoluteLayoutFlags.cs" />
+    <Compile Include="portable\ActionSheetArguments.cs" />
+    <Compile Include="portable\ActivityIndicator.cs" />
+    <Compile Include="portable\AlertArguments.cs" />
+    <Compile Include="portable\AnimatableKey.cs" />
+    <Compile Include="portable\Animation.cs" />
+    <Compile Include="portable\AnimationExtensions.cs" />
+    <Compile Include="portable\Application.cs" />
+    <Compile Include="portable\AppLinkEntry.cs" />
+    <Compile Include="portable\Aspect.cs" />
+    <Compile Include="portable\BackButtonPressedEventArgs.cs" />
+    <Compile Include="portable\BaseMenuItem.cs" />
+    <Compile Include="portable\BindableObject.cs" />
+    <Compile Include="portable\BindableObjectExtensions.cs" />
+    <Compile Include="portable\BindableProperty.cs" />
+    <Compile Include="portable\BindablePropertyConverter.cs" />
+    <Compile Include="portable\BindablePropertyKey.cs" />
+    <Compile Include="portable\Binding.cs" />
+    <Compile Include="portable\BindingBase.cs" />
+    <Compile Include="portable\BindingBaseExtensions.cs" />
+    <Compile Include="portable\BindingExpression.cs" />
+    <Compile Include="portable\BindingMode.cs" />
+    <Compile Include="portable\BindingTypeConverter.cs" />
+    <Compile Include="portable\BoundsConstraint.cs" />
+    <Compile Include="portable\BoundsTypeConverter.cs" />
+    <Compile Include="portable\BoxView.cs" />
+    <Compile Include="portable\Button.cs" />
+    <Compile Include="portable\CarouselPage.cs" />
+    <Compile Include="portable\CastingEnumerator.cs" />
+    <Compile Include="portable\Cells\Cell.cs" />
+    <Compile Include="portable\Cells\EntryCell.cs" />
+    <Compile Include="portable\Cells\ICellController.cs" />
+    <Compile Include="portable\Cells\IEntryCellController.cs" />
+    <Compile Include="portable\Cells\ImageCell.cs" />
+    <Compile Include="portable\Cells\INativeElementView.cs" />
+    <Compile Include="portable\Cells\SwitchCell.cs" />
+    <Compile Include="portable\Cells\TextCell.cs" />
+    <Compile Include="portable\Cells\ViewCell.cs" />
+    <Compile Include="portable\ChatKeyboard.cs" />
+    <Compile Include="portable\ChildCollectionChangedEventArgs.cs" />
+    <Compile Include="portable\CollectionSynchronizationCallback.cs" />
+    <Compile Include="portable\CollectionSynchronizationContext.cs" />
+    <Compile Include="portable\Color.cs" />
+    <Compile Include="portable\ColorTypeConverter.cs" />
+    <Compile Include="portable\ColumnDefinition.cs" />
+    <Compile Include="portable\ColumnDefinitionCollection.cs" />
+    <Compile Include="portable\Command.cs" />
+    <Compile Include="portable\ConcurrentDictionary.cs" />
+    <Compile Include="portable\Configuration.cs" />
+    <Compile Include="portable\Constraint.cs" />
+    <Compile Include="portable\ConstraintExpression.cs" />
+    <Compile Include="portable\ConstraintType.cs" />
+    <Compile Include="portable\ConstraintTypeConverter.cs" />
+    <Compile Include="portable\ContentPage.cs" />
+    <Compile Include="portable\ContentPresenter.cs" />
+    <Compile Include="portable\ContentPropertyAttribute.cs" />
+    <Compile Include="portable\ContentView.cs" />
+    <Compile Include="portable\ControlTemplate.cs" />
+    <Compile Include="portable\CustomKeyboard.cs" />
+    <Compile Include="portable\DataTemplate.cs" />
+    <Compile Include="portable\DataTemplateExtensions.cs" />
+    <Compile Include="portable\DataTemplateSelector.cs" />
+    <Compile Include="portable\DateChangedEventArgs.cs" />
+    <Compile Include="portable\DatePicker.cs" />
+    <Compile Include="portable\DefinitionCollection.cs" />
+    <Compile Include="portable\DelegateLogListener.cs" />
+    <Compile Include="portable\DependencyAttribute.cs" />
+    <Compile Include="portable\DependencyFetchTarget.cs" />
+    <Compile Include="portable\DependencyService.cs" />
+    <Compile Include="portable\Device.cs" />
+    <Compile Include="portable\DeviceInfo.cs" />
+    <Compile Include="portable\DeviceOrientation.cs" />
+    <Compile Include="portable\DeviceOrientationExtensions.cs" />
+    <Compile Include="portable\Easing.cs" />
+    <Compile Include="portable\Editor.cs" />
+    <Compile Include="portable\Effect.cs" />
+    <Compile Include="portable\Element.cs" />
+    <Compile Include="portable\ElementCollection.cs" />
+    <Compile Include="portable\ElementEventArgs.cs" />
+    <Compile Include="portable\ElementTemplate.cs" />
+    <Compile Include="portable\EmailKeyboard.cs" />
+    <Compile Include="portable\Entry.cs" />
+    <Compile Include="portable\EnumerableExtensions.cs" />
+    <Compile Include="portable\EventArg.cs" />
+    <Compile Include="portable\ExportEffectAttribute.cs" />
+    <Compile Include="portable\ExpressionSearch.cs" />
+    <Compile Include="portable\FileAccess.cs" />
+    <Compile Include="portable\FileImageSource.cs" />
+    <Compile Include="portable\FileImageSourceConverter.cs" />
+    <Compile Include="portable\FileMode.cs" />
+    <Compile Include="portable\FileShare.cs" />
+    <Compile Include="portable\FocusEventArgs.cs" />
+    <Compile Include="portable\Font.cs" />
+    <Compile Include="portable\FontAttributes.cs" />
+    <Compile Include="portable\FontSizeConverter.cs" />
+    <Compile Include="portable\FontTypeConverter.cs" />
+    <Compile Include="portable\FormattedString.cs" />
+    <Compile Include="portable\Frame.cs" />
+    <Compile Include="portable\GestureRecognizer.cs" />
+    <Compile Include="portable\GestureState.cs" />
+    <Compile Include="portable\GestureStatus.cs" />
+    <Compile Include="portable\Grid.cs" />
+    <Compile Include="portable\GridCalc.cs" />
+    <Compile Include="portable\GridLength.cs" />
+    <Compile Include="portable\GridLengthTypeConverter.cs" />
+    <Compile Include="portable\GridUnitType.cs" />
+    <Compile Include="portable\HandlerAttribute.cs" />
+    <Compile Include="portable\HtmlWebViewSource.cs" />
+    <Compile Include="portable\IAnimatable.cs" />
+    <Compile Include="portable\IAppIndexingProvider.cs" />
+    <Compile Include="portable\IApplicationController.cs" />
+    <Compile Include="portable\IAppLinkEntry.cs" />
+    <Compile Include="portable\IAppLinks.cs" />
+    <Compile Include="portable\IButtonController.cs" />
+    <Compile Include="portable\IConfigElement.cs" />
+    <Compile Include="portable\IConfigPlatform.cs" />
+    <Compile Include="portable\IControlTemplated.cs" />
+    <Compile Include="portable\IDefinition.cs" />
+    <Compile Include="portable\IDeserializer.cs" />
+    <Compile Include="portable\IEffectControlProvider.cs" />
+    <Compile Include="portable\IElement.cs" />
+    <Compile Include="portable\IElementConfiguration.cs" />
+    <Compile Include="portable\IElementController.cs" />
+    <Compile Include="portable\IEntryController.cs" />
+    <Compile Include="portable\IExpressionSearch.cs" />
+    <Compile Include="portable\IExtendedTypeConverter.cs" />
+    <Compile Include="portable\IFontElement.cs" />
+    <Compile Include="portable\IGestureRecognizer.cs" />
+    <Compile Include="portable\IImageController.cs" />
+    <Compile Include="portable\IIsolatedStorageFile.cs" />
+    <Compile Include="portable\IItemsView.cs" />
+    <Compile Include="portable\IItemViewController.cs" />
+    <Compile Include="portable\ILayout.cs" />
+    <Compile Include="portable\ILayoutController.cs" />
+    <Compile Include="portable\IListProxy.cs" />
+    <Compile Include="portable\IListViewController.cs" />
+    <Compile Include="portable\Image.cs" />
+    <Compile Include="portable\ImageSource.cs" />
+    <Compile Include="portable\ImageSourceConverter.cs" />
+    <Compile Include="portable\IMarkupExtension.cs" />
+    <Compile Include="portable\IMasterDetailPageController.cs" />
+    <Compile Include="portable\IMenuItemController.cs" />
+    <Compile Include="portable\INativeBindingService.cs" />
+    <Compile Include="portable\INativeValueConverterService.cs" />
+    <Compile Include="portable\INavigation.cs" />
+    <Compile Include="portable\INavigationPageController.cs" />
+    <Compile Include="portable\InputView.cs" />
+    <Compile Include="portable\Interactivity\AttachedCollection.cs" />
+    <Compile Include="portable\Interactivity\Behavior.cs" />
+    <Compile Include="portable\Interactivity\BindingCondition.cs" />
+    <Compile Include="portable\Interactivity\Condition.cs" />
+    <Compile Include="portable\Interactivity\DataTrigger.cs" />
+    <Compile Include="portable\Interactivity\EventTrigger.cs" />
+    <Compile Include="portable\Interactivity\IAttachedObject.cs" />
+    <Compile Include="portable\Interactivity\MultiCondition.cs" />
+    <Compile Include="portable\Interactivity\MultiTrigger.cs" />
+    <Compile Include="portable\Interactivity\PropertyCondition.cs" />
+    <Compile Include="portable\Interactivity\Trigger.cs" />
+    <Compile Include="portable\Interactivity\TriggerAction.cs" />
+    <Compile Include="portable\Interactivity\TriggerBase.cs" />
+    <Compile Include="portable\Internals\CellExtensions.cs" />
+    <Compile Include="portable\Internals\DynamicResource.cs" />
+    <Compile Include="portable\Internals\EvalRequested.cs" />
+    <Compile Include="portable\Internals\IDataTemplate.cs" />
+    <Compile Include="portable\Internals\IDynamicResourceHandler.cs" />
+    <Compile Include="portable\Internals\INameScope.cs" />
+    <Compile Include="portable\Internals\InvalidationTrigger.cs" />
+    <Compile Include="portable\Internals\NameScope.cs" />
+    <Compile Include="portable\Internals\NavigationRequestedEventArgs.cs" />
+    <Compile Include="portable\Internals\NotifyCollectionChangedEventArgsEx.cs" />
+    <Compile Include="portable\Internals\NotifyCollectionChangedEventArgsExtensions.cs" />
+    <Compile Include="portable\Internals\PreserveAttribute.cs" />
+    <Compile Include="portable\Internals\Ticker.cs" />
+    <Compile Include="portable\Internals\ToolbarTracker.cs" />
+    <Compile Include="portable\InvalidationEventArgs.cs" />
+    <Compile Include="portable\InvalidNavigationException.cs" />
+    <Compile Include="portable\IOpenGlViewController.cs" />
+    <Compile Include="portable\IPageContainer.cs" />
+    <Compile Include="portable\IPageController.cs" />
+    <Compile Include="portable\IPanGestureController.cs" />
+    <Compile Include="portable\IPinchGestureController.cs" />
+    <Compile Include="portable\IPlatform.cs" />
+    <Compile Include="portable\IPlatformElementConfiguration.cs" />
+    <Compile Include="portable\IPlatformServices.cs" />
+    <Compile Include="portable\IProvideParentValues.cs" />
+    <Compile Include="portable\IProvideValueTarget.cs" />
+    <Compile Include="portable\IRegisterable.cs" />
+    <Compile Include="portable\IResourceDictionary.cs" />
+    <Compile Include="portable\IResourcesProvider.cs" />
+    <Compile Include="portable\IRootObjectProvider.cs" />
+    <Compile Include="portable\IScrollViewController.cs" />
+    <Compile Include="portable\ISearchBarController.cs" />
+    <Compile Include="portable\IStreamImageSource.cs" />
+    <Compile Include="portable\IStyle.cs" />
+    <Compile Include="portable\ISystemResourcesProvider.cs" />
+    <Compile Include="portable\ITableModel.cs" />
+    <Compile Include="portable\ITableViewController.cs" />
+    <Compile Include="portable\ITemplatedItemsList.cs" />
+    <Compile Include="portable\ITemplatedItemsListScrollToRequestedEventArgs.cs" />
+    <Compile Include="portable\ITemplatedItemsView.cs" />
+    <Compile Include="portable\ItemsView.cs" />
+    <Compile Include="portable\ItemTappedEventArgs.cs" />
+    <Compile Include="portable\ItemVisibilityEventArgs.cs" />
+    <Compile Include="portable\ITimer.cs" />
+    <Compile Include="portable\IValueConverter.cs" />
+    <Compile Include="portable\IValueConverterProvider.cs" />
+    <Compile Include="portable\IValueProvider.cs" />
+    <Compile Include="portable\IViewContainer.cs" />
+    <Compile Include="portable\IViewController.cs" />
+    <Compile Include="portable\IVisualElementController.cs" />
+    <Compile Include="portable\IWebViewDelegate.cs" />
+    <Compile Include="portable\IXamlTypeResolver.cs" />
+    <Compile Include="portable\IXmlLineInfoProvider.cs" />
+    <Compile Include="portable\Keyboard.cs" />
+    <Compile Include="portable\KeyboardFlags.cs" />
+    <Compile Include="portable\KeyboardTypeConverter.cs" />
+    <Compile Include="portable\Label.cs" />
+    <Compile Include="portable\Layout.cs" />
+    <Compile Include="portable\LayoutAlignment.cs" />
+    <Compile Include="portable\LayoutAlignmentExtensions.cs" />
+    <Compile Include="portable\LayoutConstraint.cs" />
+    <Compile Include="portable\LayoutExpandFlag.cs" />
+    <Compile Include="portable\LayoutOptions.cs" />
+    <Compile Include="portable\LayoutOptionsConverter.cs" />
+    <Compile Include="portable\LineBreakMode.cs" />
+    <Compile Include="portable\ListProxy.cs" />
+    <Compile Include="portable\ListStringTypeConverter.cs" />
+    <Compile Include="portable\ListView.cs" />
+    <Compile Include="portable\ListViewCachingStrategy.cs" />
+    <Compile Include="portable\LockingSemaphore.cs" />
+    <Compile Include="portable\Log.cs" />
+    <Compile Include="portable\LogListener.cs" />
+    <Compile Include="portable\MasterBehavior.cs" />
+    <Compile Include="portable\MasterDetailPage.cs" />
+    <Compile Include="portable\MeasureFlags.cs" />
+    <Compile Include="portable\MenuItem.cs" />
+    <Compile Include="portable\MergedStyle.cs" />
+    <Compile Include="portable\MessagingCenter.cs" />
+    <Compile Include="portable\ModalEventArgs.cs" />
+    <Compile Include="portable\ModalPoppedEventArgs.cs" />
+    <Compile Include="portable\ModalPoppingEventArgs.cs" />
+    <Compile Include="portable\ModalPushedEventArgs.cs" />
+    <Compile Include="portable\ModalPushingEventArgs.cs" />
+    <Compile Include="portable\MultiPage.cs" />
+    <Compile Include="portable\NamedSize.cs" />
+    <Compile Include="portable\NameScopeExtensions.cs" />
+    <Compile Include="portable\NativeBindingHelpers.cs" />
+    <Compile Include="portable\NavigationEventArgs.cs" />
+    <Compile Include="portable\NavigationMenu.cs" />
+    <Compile Include="portable\NavigationModel.cs" />
+    <Compile Include="portable\NavigationPage.cs" />
+    <Compile Include="portable\NavigationProxy.cs" />
+    <Compile Include="portable\NullEffect.cs" />
+    <Compile Include="portable\NumericExtensions.cs" />
+    <Compile Include="portable\NumericKeyboard.cs" />
+    <Compile Include="portable\ObservableList.cs" />
+    <Compile Include="portable\ObservableWrapper.cs" />
+    <Compile Include="portable\OnIdiom.cs" />
+    <Compile Include="portable\OnPlatform.cs" />
+    <Compile Include="portable\OpenGLView.cs" />
+    <Compile Include="portable\OrderedDictionary.cs" />
+    <Compile Include="portable\Page.cs" />
+    <Compile Include="portable\PanGestureRecognizer.cs" />
+    <Compile Include="portable\PanUpdatedEventArgs.cs" />
+    <Compile Include="portable\ParameterAttribute.cs" />
+    <Compile Include="portable\Performance.cs" />
+    <Compile Include="portable\Picker.cs" />
+    <Compile Include="portable\PinchGestureRecognizer.cs" />
+    <Compile Include="portable\PinchGestureUpdatedEventArgs.cs" />
+    <Compile Include="portable\PlatformConfigurationRegistry.cs" />
+    <Compile Include="portable\PlatformConfiguration\AndroidSpecific\AppCompat\Application.cs" />
+    <Compile Include="portable\PlatformConfiguration\AndroidSpecific\Application.cs" />
+    <Compile Include="portable\PlatformConfiguration\AndroidSpecific\TabbedPage.cs" />
+    <Compile Include="portable\PlatformConfiguration\ExtensionPoints.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\BlurEffectStyle.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\Entry.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\NavigationPage.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\VisualElement.cs" />
+    <Compile Include="portable\PlatformConfiguration\WindowsSpecific\CollapseStyle.cs" />
+    <Compile Include="portable\PlatformConfiguration\WindowsSpecific\MasterDetailPage.cs" />
+    <Compile Include="portable\PlatformConfiguration\WindowsSpecific\Page.cs" />
+    <Compile Include="portable\PlatformConfiguration\WindowsSpecific\ToolbarPlacement.cs" />
+    <Compile Include="portable\PlatformEffect.cs" />
+    <Compile Include="portable\Point.cs" />
+    <Compile Include="portable\PointTypeConverter.cs" />
+    <Compile Include="portable\PoppedToRootEventArgs.cs" />
+    <Compile Include="portable\ProgressBar.cs" />
+    <Compile Include="portable\Properties\AssemblyInfo.cs" />
+    <Compile Include="portable\Properties\GlobalAssemblyInfo.cs" />
+    <Compile Include="portable\PropertyChangingEventArgs.cs" />
+    <Compile Include="portable\PropertyChangingEventHandler.cs" />
+    <Compile Include="portable\ProvideCompiledAttribute.cs" />
+    <Compile Include="portable\ReadOnlyCastingList.cs" />
+    <Compile Include="portable\ReadOnlyListAdapter.cs" />
+    <Compile Include="portable\Rectangle.cs" />
+    <Compile Include="portable\RectangleTypeConverter.cs" />
+    <Compile Include="portable\ReflectionExtensions.cs" />
+    <Compile Include="portable\Registrar.cs" />
+    <Compile Include="portable\RelativeLayout.cs" />
+    <Compile Include="portable\RenderWithAttribute.cs" />
+    <Compile Include="portable\ResolutionGroupNameAttribute.cs" />
+    <Compile Include="portable\ResourceDictionary.cs" />
+    <Compile Include="portable\ResourcesChangedEventArgs.cs" />
+    <Compile Include="portable\ResourcesExtensions.cs" />
+    <Compile Include="portable\RoutingEffect.cs" />
+    <Compile Include="portable\RowDefinition.cs" />
+    <Compile Include="portable\RowDefinitionCollection.cs" />
+    <Compile Include="portable\ScrolledEventArgs.cs" />
+    <Compile Include="portable\ScrollOrientation.cs" />
+    <Compile Include="portable\ScrollToMode.cs" />
+    <Compile Include="portable\ScrollToPosition.cs" />
+    <Compile Include="portable\ScrollToRequestedEventArgs.cs" />
+    <Compile Include="portable\ScrollView.cs" />
+    <Compile Include="portable\SearchBar.cs" />
+    <Compile Include="portable\SelectedItemChangedEventArgs.cs" />
+    <Compile Include="portable\SelectedPositionChangedEventArgs.cs" />
+    <Compile Include="portable\SeparatorMenuItem.cs" />
+    <Compile Include="portable\SeparatorVisibility.cs" />
+    <Compile Include="portable\Setter.cs" />
+    <Compile Include="portable\SettersExtensions.cs" />
+    <Compile Include="portable\Size.cs" />
+    <Compile Include="portable\SizeRequest.cs" />
+    <Compile Include="portable\Slider.cs" />
+    <Compile Include="portable\Span.cs" />
+    <Compile Include="portable\SplitOrderedList.cs" />
+    <Compile Include="portable\StackLayout.cs" />
+    <Compile Include="portable\StackOrientation.cs" />
+    <Compile Include="portable\Stepper.cs" />
+    <Compile Include="portable\StreamImageSource.cs" />
+    <Compile Include="portable\StreamWrapper.cs" />
+    <Compile Include="portable\Style.cs" />
+    <Compile Include="portable\Switch.cs" />
+    <Compile Include="portable\SynchronizedList.cs" />
+    <Compile Include="portable\TabbedPage.cs" />
+    <Compile Include="portable\TableIntent.cs" />
+    <Compile Include="portable\TableModel.cs" />
+    <Compile Include="portable\TableRoot.cs" />
+    <Compile Include="portable\TableSection.cs" />
+    <Compile Include="portable\TableSectionBase.cs" />
+    <Compile Include="portable\TableView.cs" />
+    <Compile Include="portable\TapGestureRecognizer.cs" />
+    <Compile Include="portable\TappedEventArgs.cs" />
+    <Compile Include="portable\TargetIdiom.cs" />
+    <Compile Include="portable\TargetPlatform.cs" />
+    <Compile Include="portable\TelephoneKeyboard.cs" />
+    <Compile Include="portable\TemplateBinding.cs" />
+    <Compile Include="portable\TemplatedItemsList.cs" />
+    <Compile Include="portable\TemplatedPage.cs" />
+    <Compile Include="portable\TemplatedView.cs" />
+    <Compile Include="portable\TemplateExtensions.cs" />
+    <Compile Include="portable\TemplateUtilities.cs" />
+    <Compile Include="portable\TextAlignment.cs" />
+    <Compile Include="portable\TextChangedEventArgs.cs" />
+    <Compile Include="portable\TextKeyboard.cs" />
+    <Compile Include="portable\Thickness.cs" />
+    <Compile Include="portable\ThicknessTypeConverter.cs" />
+    <Compile Include="portable\TimePicker.cs" />
+    <Compile Include="portable\ToggledEventArgs.cs" />
+    <Compile Include="portable\ToolbarItem.cs" />
+    <Compile Include="portable\ToolbarItemEventArgs.cs" />
+    <Compile Include="portable\ToolbarItemOrder.cs" />
+    <Compile Include="portable\TrackableCollection.cs" />
+    <Compile Include="portable\Tweener.cs" />
+    <Compile Include="portable\TypeConverter.cs" />
+    <Compile Include="portable\TypeConverterAttribute.cs" />
+    <Compile Include="portable\TypeTypeConverter.cs" />
+    <Compile Include="portable\UnsolvableConstraintsException.cs" />
+    <Compile Include="portable\UriImageSource.cs" />
+    <Compile Include="portable\UriTypeConverter.cs" />
+    <Compile Include="portable\UrlKeyboard.cs" />
+    <Compile Include="portable\UrlWebViewSource.cs" />
+    <Compile Include="portable\ValueChangedEventArgs.cs" />
+    <Compile Include="portable\Vec2.cs" />
+    <Compile Include="portable\View.cs" />
+    <Compile Include="portable\ViewExtensions.cs" />
+    <Compile Include="portable\ViewState.cs" />
+    <Compile Include="portable\VisualElement.cs" />
+    <Compile Include="portable\WeakEventManager.cs" />
+    <Compile Include="portable\WeakReferenceExtensions.cs" />
+    <Compile Include="portable\WebNavigatedEventArgs.cs" />
+    <Compile Include="portable\WebNavigatingEventArgs.cs" />
+    <Compile Include="portable\WebNavigationEvent.cs" />
+    <Compile Include="portable\WebNavigationEventArgs.cs" />
+    <Compile Include="portable\WebNavigationResult.cs" />
+    <Compile Include="portable\WebView.cs" />
+    <Compile Include="portable\WebViewSource.cs" />
+    <Compile Include="portable\WebViewSourceTypeConverter.cs" />
+    <Compile Include="portable\XamlParseException.cs" />
+    <Compile Include="portable\XmlLineInfo.cs" />
+    <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
+  </ItemGroup>
+  <!--
+
+    Targets
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+</Project>

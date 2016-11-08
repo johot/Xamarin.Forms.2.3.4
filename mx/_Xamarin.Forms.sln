@@ -5,11 +5,34 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = ".repo", ".repo.shproj", "{31D1E28A-0EAE-4AC4-A023-B02E7A58A8FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{453F471B-9F4F-4431-85F8-FB7BA2035659}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Core", "src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		.repo.projitems*{31d1e28a-0eae-4ac4-a023-b02e7a58a8fc}*SharedItemsImports = 13
 	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|[none] = debug|[none]
+		debug|dotnet = debug|dotnet
+		release|[none] = release|[none]
+		release|dotnet = release|dotnet
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|[none].ActiveCfg = debug|[none]
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|[none].Build.0 = debug|[none]
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|dotnet.ActiveCfg = debug|dotnet
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|dotnet.Build.0 = debug|dotnet
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|[none].ActiveCfg = release|[none]
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|[none].Build.0 = release|[none]
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|dotnet.ActiveCfg = release|dotnet
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|dotnet.Build.0 = release|dotnet
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 	EndGlobalSection
 EndGlobal

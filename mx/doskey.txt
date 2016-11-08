@@ -1,2 +1,6 @@
 ;= tools
 ts=touch %SrcDir%*.sln
+
+;= aliases
+cpy=pushd %RootDir%cpy
+cor=pushd %SrcDir%Xamarin.Forms.Core
