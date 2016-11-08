@@ -1,0 +1,6 @@
+[submodule "mx/sub/mxbuild"]
+	path = mx/sub/mxbuild
+	url = https://github.com/kingces95/mxbuild.git
+[submodule "mx/sub/lfx.shim"]
+	path = mx/sub/lfx.shim
+	url = https://github.com/kingces95/lfx.shim.git

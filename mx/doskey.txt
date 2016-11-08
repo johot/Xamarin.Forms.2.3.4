@@ -1,0 +1,2 @@
+;= tools
+ts=touch %SrcDir%*.sln

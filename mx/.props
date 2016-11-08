@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project 
+  ToolsVersion="12.0" 
+  DefaultTargets="Build" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+>
+  <Import Project="$(MxbuildDir)root.props"/>
+
+  <!--version-->
+  <PropertyGroup>
+    <!--major/minor version number kept in .version-->
+    <!--patch version number is computed as number of checkins since .version changed-->
+    <!--
+        "-pre" pre-release suffix appeneded iff there exists a pre-release nuget dependency
+        or the version number is 0.0.0 (e.g. builds w/o shim; msbuild /p:platform=pack /v:m)
+    -->
+    <!--
+        All builds of master produce packages published to MyGet. If, after testing, a package 
+        passes a quality bar then it is promoted to a new nuget feed (e.g. alpha, beta, rc). 
+        When the highest bar is passed then the package is promoted to nuget.com. In this way
+        package quality is communicated via membership in a nuget feed instead of version suffix.
+    -->
+  </PropertyGroup>
+
+  <!--shim-->
+  <PropertyGroup>
+    <ShimInclude>$(ShimDir)**\*.csproj</ShimInclude>
+    <IsBuildTargetBuild Condition="'$(BuildTarget)'=='build' OR '$(BuildTarget)'=='rebuild'">true</IsBuildTargetBuild>
+    <IsBuildingFromRoot Condition="'$(StartupDir)'=='$(RootDir)'">true</IsBuildingFromRoot>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsBuildTargetBuild)'=='true' AND '$(IsBuildingFromRoot)'=='true'">
+    <ShimInitialProject>$(IdProj)</ShimInitialProject>
+    <ShimFinalProject>$(PublishProj)</ShimFinalProject>
+  </PropertyGroup>
+
+</Project>

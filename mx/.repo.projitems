@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>31d1e28a-0eae-4ac4-a023-b02e7a58a8fc</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SharedProject1</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory).gitignore" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Mono.Cecil.0.9.5.4" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.GooglePlayServices.AppIndexing.29.0.0.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\WPtoolkit.4.2013.08.16" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Forms.Design.1.0.14-pre" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.TestCloud.Agent.0.20.3" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Insights.1.12.3" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.GooglePlayServices.Maps.29.0.0.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.GooglePlayServices.Basement.29.0.0.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.GooglePlayServices.Base.29.0.0.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\PCLStorage.1.0.2" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Forms.2.0.0.6482" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Newtonsoft.Json.6.0.4" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Microsoft.Azure.Mobile.Client.2.0.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Microsoft.Net.Http.2.2.29" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Microsoft.Bcl.Build.1.0.21" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Microsoft.Bcl.1.1.10" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\ICSharpCode.NRefactory.5.5.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\DiffLib.1.0.0.55" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Mono.Cecil.0.9.6.1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\NUnit.Runners.2.6.3" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.Animated.Vector.Drawable.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.Design.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.v4.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.v7.AppCompat.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.v7.CardView.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.v7.MediaRouter.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.v7.RecyclerView.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.Forms.2.3.1.110-pre1" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.UITest.1.3.7" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\Xamarin.UITest.2.0.0-beta05" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\packages\NUnit.2.6.4" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\tools\sysinternals" />
+    <None Include="$(MSBuildThisFileDirectory).lfx\tools\touch.exe" />
+    <None Include="$(MSBuildThisFileDirectory).pre.props" />
+    <None Include="$(MSBuildThisFileDirectory).props" />
+    <None Include="$(MSBuildThisFileDirectory).version" />
+    <None Include="$(MSBuildThisFileDirectory)env.bat" />
+    <None Include="$(MSBuildThisFileDirectory)env.lnk" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\git" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\nuget.exe" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\clean\clean.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\clean\clean.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\common.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\common.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\common.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\debug.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\empty.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\gen\gen.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\gen\gen.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.git.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.proj" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.post.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\msbuild.nuspec" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\mxbuild.projitems" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\mxbuild.shproj" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\mxbuild.shproj.user" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\Mxbuild.sln" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\node\node.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\node\node.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\node\node.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\copyShims.bat" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.post.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\shim.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\shim.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.build.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.post.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\package.nuspec" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\part\part.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\part\part.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\part\part.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\proxy.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\publish\publish.git.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\publish\publish.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\publish\publish.proj" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\publish\publish.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\renames.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\root.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\root.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\root.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\env.bat" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\shell.proj" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\vcvarsallShim.bat" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shim\shim.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shim\shim.proj" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shim\shim.targets" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\tasks.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.post.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\BuildInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\BuildInfo.t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\PackageInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\PackageInfo.t.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)doskey.txt" />
+    <Content Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\doskey.txt" />
+  </ItemGroup>
+</Project>
