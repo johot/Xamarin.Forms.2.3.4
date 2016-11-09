@@ -53,5 +53,19 @@
     <!--misc from Xamarin.Forms.Platform-->
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
+  
+  <!--android-->
+  <Choose>
+    <When Condition="'$(LibraryPlatform)' == '$(AndroidLibraryPlatformId)'">
+      <PropertyGroup>
+        <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+        <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+        <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+        <!--<AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>-->
+        <ProductVersion>8.0.30703</ProductVersion>
+        <SchemaVersion>2.0</SchemaVersion>
+      </PropertyGroup>
+    </When>
+  </Choose>
 
 </Project>

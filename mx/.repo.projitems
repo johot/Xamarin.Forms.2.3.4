@@ -52,6 +52,7 @@
     <None Include="$(MSBuildThisFileDirectory)cpy\copySrc.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
+    <None Include="$(MSBuildThisFileDirectory)ref\Xamarin.Android.Support.props" />
     <None Include="$(MSBuildThisFileDirectory)src\.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />

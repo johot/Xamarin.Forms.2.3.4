@@ -59,7 +59,7 @@ namespace Xamarin.Forms
 							var classStyleProperty = BindableProperty.Create ("ClassStyle", typeof(IList<Style>), typeof(VisualElement), default(IList<Style>),
 								propertyChanged: (bindable, oldvalue, newvalue) => ((VisualElement)bindable)._mergedStyle.OnClassStyleChanged());
 							_classStyleProperties.Add (classStyleProperty);
-							Target.OnSetDynamicResource (classStyleProperty, Forms.Style.StyleClassPrefix + styleClass);
+							Target.OnSetDynamicResource (classStyleProperty, Xamarin.Forms.Style.StyleClassPrefix + styleClass);
 						}
 					}
 				}

@@ -36,6 +36,7 @@
   <Import Project="nuspec.props" Condition=" '$(Plat)' == '$(PackPlatformId)' " />
   <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
     <SelfReference Include="$(DotNetLibraryPlatformId)" />
+    <SelfReference Include="$(AndroidMobilePlatformId)" />
     <!--
       content
     -->
@@ -82,6 +83,80 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
   </PropertyGroup>
+  <ItemGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
+    <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
+  </ItemGroup>
+  <!--
+  
+    Part ([platform].part)
+  -->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <AssemblyName>$(PortableAssemblyName)</AssemblyName>
+  </PropertyGroup>
+  <!--This assembly is only referenced and never executed so there is no need for symbols-->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <!--hide build output-->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <!--TODO: if CopyBuildOutputToOutputDirectory why is the following necessary?-->
+    <OutDir>$(IntermediateOutputPath)portable\bin\</OutDir>
+    <OutputPath>$(OutDir)</OutputPath>
+    <AppxPackageDir>$(OutputPath)</AppxPackageDir>
+    <IntermediateOutputPath>$(IntermediateOutputPath)portable\obj\</IntermediateOutputPath>
+  </PropertyGroup>
+  <!--self reference portable library-->
+  <ItemGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' == 'true' ">
+    <SelfReference Include="$(DotNetLibraryPlatformId)" />
+  </ItemGroup>
+  <!--
+  
+    Mobile
+  -->
+  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)'=='true'">
+    <!--<IsCompositePlatform>true</IsCompositePlatform>-->
+    <DefineConstants>$(DefineConstants)COMPOSITE;</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(IsMobileLibraryPlatform)' == 'true' ">
+    <Compile Include="Xamarin.Forms.Platform.cs" />
+  </ItemGroup>
+  <!--
+  
+    Android
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid' " />
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+  </PropertyGroup>
+  <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Import Project="$(RefDir)Xamarin.Android.Support.props" />
+  </ImportGroup>
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="FormsViewGroup" >
+      <HintPath>F:\git\xam\forms\Xamarin.Forms.Platform.Android.FormsViewGroup\bin\Debug\FormsViewGroup.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <!--
+  
+    Portable
+  -->
   <ItemGroup Condition=" '$(IsPartPlatform)' != 'true' ">
     <Compile Include="portable\AbsoluteLayout.cs" />
     <Compile Include="portable\AbsoluteLayoutFlags.cs" />
@@ -473,7 +548,157 @@
     <Compile Include="portable\WebViewSourceTypeConverter.cs" />
     <Compile Include="portable\XamlParseException.cs" />
     <Compile Include="portable\XmlLineInfo.cs" />
-    <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
+  </ItemGroup>
+  <!--
+  
+    Android
+  -->
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Compile Include="android\AndroidActivity.cs" />
+    <Compile Include="android\AndroidAppIndexProvider.cs" />
+    <Compile Include="android\AndroidApplicationLifecycleState.cs" />
+    <Compile Include="android\AndroidTicker.cs" />
+    <Compile Include="android\AndroidTitleBarVisibility.cs" />
+    <Compile Include="android\AppCompat\ButtonRenderer.cs" />
+    <Compile Include="android\AppCompat\CarouselPageRenderer.cs" />
+    <Compile Include="android\AppCompat\FormsAppCompatActivity.cs" />
+    <Compile Include="android\AppCompat\FormsFragmentPagerAdapter.cs" />
+    <Compile Include="android\AppCompat\FormsViewPager.cs" />
+    <Compile Include="android\AppCompat\FragmentContainer.cs" />
+    <Compile Include="android\AppCompat\FrameRenderer.cs" />
+    <Compile Include="android\AppCompat\IManageFragments.cs" />
+    <Compile Include="android\AppCompat\MasterDetailContainer.cs" />
+    <Compile Include="android\AppCompat\MasterDetailPageRenderer.cs" />
+    <Compile Include="android\AppCompat\NavigationPageRenderer.cs" />
+    <Compile Include="android\AppCompat\PickerRenderer.cs" />
+    <Compile Include="android\AppCompat\Platform.cs" />
+    <Compile Include="android\AppCompat\Resource.cs" />
+    <Compile Include="android\AppCompat\SwitchRenderer.cs" />
+    <Compile Include="android\AppCompat\TabbedPageRenderer.cs" />
+    <Compile Include="android\AppCompat\ViewRenderer.cs" />
+    <Compile Include="android\CellAdapter.cs" />
+    <Compile Include="android\Cells\BaseCellView.cs" />
+    <Compile Include="android\Cells\CellFactory.cs" />
+    <Compile Include="android\Cells\CellRenderer.cs" />
+    <Compile Include="android\Cells\EntryCellEditText.cs" />
+    <Compile Include="android\Cells\EntryCellRenderer.cs" />
+    <Compile Include="android\Cells\EntryCellView.cs" />
+    <Compile Include="android\Cells\ImageCellRenderer.cs" />
+    <Compile Include="android\Cells\SwitchCellRenderer.cs" />
+    <Compile Include="android\Cells\SwitchCellView.cs" />
+    <Compile Include="android\Cells\TextCellRenderer.cs" />
+    <Compile Include="android\Cells\ViewCellRenderer.cs" />
+    <Compile Include="android\ColorExtensions.cs" />
+    <Compile Include="android\ContextExtensions.cs" />
+    <Compile Include="android\Deserializer.cs" />
+    <Compile Include="android\ElementChangedEventArgs.cs" />
+    <Compile Include="android\ExportCellAttribute.cs" />
+    <Compile Include="android\ExportImageSourceHandlerAttribute.cs" />
+    <Compile Include="android\ExportRendererAttribute.cs" />
+    <Compile Include="android\Extensions.cs" />
+    <Compile Include="android\Extensions\NativeBindingExtensions.cs" />
+    <Compile Include="android\Forms.cs" />
+    <Compile Include="android\FormsApplicationActivity.cs" />
+    <Compile Include="android\GenericMenuClickListener.cs" />
+    <Compile Include="android\GetDesiredSizeDelegate.cs" />
+    <Compile Include="android\IDeviceInfoProvider.cs" />
+    <Compile Include="android\InnerGestureListener.cs" />
+    <Compile Include="android\InnerScaleListener.cs" />
+    <Compile Include="android\IPlatformLayout.cs" />
+    <Compile Include="android\IStartActivityForResult.cs" />
+    <Compile Include="android\IVisualElementRenderer.cs" />
+    <Compile Include="android\KeyboardManager.cs" />
+    <Compile Include="android\LayoutExtensions.cs" />
+    <Compile Include="android\MeasureSpecFactory.cs" />
+    <Compile Include="android\NativeBindingservice.cs" />
+    <Compile Include="android\NativeValueConverterService.cs" />
+    <Compile Include="android\NativeViewWrapper.cs" />
+    <Compile Include="android\NativeViewWrapperRenderer.cs" />
+    <Compile Include="android\OnLayoutDelegate.cs" />
+    <Compile Include="android\OnMeasureDelegate.cs" />
+    <Compile Include="android\PanGestureHandler.cs" />
+    <Compile Include="android\PinchGestureHandler.cs" />
+    <Compile Include="android\Platform.cs" />
+    <Compile Include="android\PlatformConfigurationExtensions.cs" />
+    <Compile Include="android\PlatformEffect.cs" />
+    <Compile Include="android\PlatformRenderer.cs" />
+    <Compile Include="android\RendererFactory.cs" />
+    <Compile Include="android\RendererPool.cs" />
+    <Compile Include="android\Renderers\ActionSheetRenderer.cs" />
+    <Compile Include="android\Renderers\ActivityIndicatorRenderer.cs" />
+    <Compile Include="android\Renderers\AHorizontalScrollView.cs" />
+    <Compile Include="android\Renderers\AlignmentExtensions.cs" />
+    <Compile Include="android\Renderers\BoxRenderer.cs" />
+    <Compile Include="android\Renderers\ButtonDrawable.cs" />
+    <Compile Include="android\Renderers\ButtonRenderer.cs" />
+    <Compile Include="android\Renderers\CarouselPageAdapter.cs" />
+    <Compile Include="android\Renderers\CarouselPageRenderer.cs" />
+    <Compile Include="android\Renderers\ConditionalFocusLayout.cs" />
+    <Compile Include="android\Renderers\DatePickerRenderer.cs" />
+    <Compile Include="android\Renderers\DescendantFocusToggler.cs" />
+    <Compile Include="android\Renderers\EditorEditText.cs" />
+    <Compile Include="android\Renderers\EditorRenderer.cs" />
+    <Compile Include="android\Renderers\EntryEditText.cs" />
+    <Compile Include="android\Renderers\EntryRenderer.cs" />
+    <Compile Include="android\Renderers\FileImageSourceHandler.cs" />
+    <Compile Include="android\Renderers\FontExtensions.cs" />
+    <Compile Include="android\Renderers\FormattedStringExtensions.cs" />
+    <Compile Include="android\Renderers\FormsImageView.cs" />
+    <Compile Include="android\Renderers\FormsSeekBar.cs" />
+    <Compile Include="android\Renderers\FormsTextView.cs" />
+    <Compile Include="android\Renderers\FormsWebChromeClient.cs" />
+    <Compile Include="android\Renderers\FrameRenderer.cs" />
+    <Compile Include="android\Renderers\GenericAnimatorListener.cs" />
+    <Compile Include="android\Renderers\IDescendantFocusToggler.cs" />
+    <Compile Include="android\Renderers\IImageSourceHandler.cs" />
+    <Compile Include="android\Renderers\ImageExtensions.cs" />
+    <Compile Include="android\Renderers\ImageLoaderSourceHandler.cs" />
+    <Compile Include="android\Renderers\ImageRenderer.cs" />
+    <Compile Include="android\Renderers\IToolbarButton.cs" />
+    <Compile Include="android\Renderers\KeyboardExtensions.cs" />
+    <Compile Include="android\Renderers\LabelRenderer.cs" />
+    <Compile Include="android\Renderers\ListViewAdapter.cs" />
+    <Compile Include="android\Renderers\ListViewRenderer.cs" />
+    <Compile Include="android\Renderers\MasterDetailContainer.cs" />
+    <Compile Include="android\Renderers\MasterDetailRenderer.cs" />
+    <Compile Include="android\Renderers\NavigationMenuRenderer.cs" />
+    <Compile Include="android\Renderers\NavigationRenderer.cs" />
+    <Compile Include="android\Renderers\ObjectJavaBox.cs" />
+    <Compile Include="android\Renderers\OpenGLViewRenderer.cs" />
+    <Compile Include="android\Renderers\PageContainer.cs" />
+    <Compile Include="android\Renderers\PageRenderer.cs" />
+    <Compile Include="android\Renderers\PickerRenderer.cs" />
+    <Compile Include="android\Renderers\ProgressBarRenderer.cs" />
+    <Compile Include="android\Renderers\ScrollViewContainer.cs" />
+    <Compile Include="android\Renderers\ScrollViewRenderer.cs" />
+    <Compile Include="android\Renderers\SearchBarRenderer.cs" />
+    <Compile Include="android\Renderers\SliderRenderer.cs" />
+    <Compile Include="android\Renderers\StepperRenderer.cs" />
+    <Compile Include="android\Renderers\StreamImagesourceHandler.cs" />
+    <Compile Include="android\Renderers\SwitchRenderer.cs" />
+    <Compile Include="android\Renderers\TabbedRenderer.cs" />
+    <Compile Include="android\Renderers\TableViewModelRenderer.cs" />
+    <Compile Include="android\Renderers\TableViewRenderer.cs" />
+    <Compile Include="android\Renderers\TimePickerRenderer.cs" />
+    <Compile Include="android\Renderers\ToolbarButton.cs" />
+    <Compile Include="android\Renderers\ToolbarImageButton.cs" />
+    <Compile Include="android\Renderers\ViewGroupExtensions.cs" />
+    <Compile Include="android\Renderers\WebViewRenderer.cs" />
+    <Compile Include="android\ResourceManager.cs" />
+    <Compile Include="android\ResourcesProvider.cs" />
+    <Compile Include="android\TapGestureHandler.cs" />
+    <Compile Include="android\TextColorSwitcher.cs" />
+    <Compile Include="android\TextViewExtensions.cs" />
+    <Compile Include="android\ViewExtensions.cs" />
+    <Compile Include="android\ViewInitializedEventArgs.cs" />
+    <Compile Include="android\ViewPool.cs" />
+    <Compile Include="android\ViewRenderer.cs" />
+    <Compile Include="android\VisualElementChangedEventArgs.cs" />
+    <Compile Include="android\VisualElementExtensions.cs" />
+    <Compile Include="android\VisualElementPackager.cs" />
+    <Compile Include="android\VisualElementRenderer.cs" />
+    <Compile Include="android\VisualElementRendererFlags.cs" />
+    <Compile Include="android\VisualElementTracker.cs" />
   </ItemGroup>
   <!--
 

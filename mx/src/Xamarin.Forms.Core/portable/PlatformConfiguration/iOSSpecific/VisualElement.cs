@@ -1,7 +1,7 @@
 
 namespace Xamarin.Forms.PlatformConfiguration.iOSSpecific
 {
-	using FormsElement = Forms.VisualElement;
+	using FormsElement = Xamarin.Forms.VisualElement;
 
 	public static class VisualElement
 	{

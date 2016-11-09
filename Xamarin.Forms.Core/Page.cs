@@ -175,9 +175,13 @@ namespace Xamarin.Forms
 					continue;
 				var page = child as Page;
 				if (page != null && ((IPageController)page).IgnoresContainerArea)
-					Forms.Layout.LayoutChildIntoBoundingRegion(child, originalArea);
+				{
+					Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(child, originalArea);
+				}
 				else
-					Forms.Layout.LayoutChildIntoBoundingRegion(child, area);
+				{
+					Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(child, area);
+				}
 			}
 		}
 
