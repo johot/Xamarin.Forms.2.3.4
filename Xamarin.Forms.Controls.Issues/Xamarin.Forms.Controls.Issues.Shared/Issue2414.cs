@@ -60,9 +60,11 @@ namespace Xamarin.Forms.Controls.Issues
 		[Test]
 		public void TestDoesntCrashShowingContextMenu ()
 		{
+			RunningApp.WaitForElement(c => c.Marked("Swipe ME"));
+
 			var screenBounds = RunningApp.Query (q => q.Raw ("* index:0"))[0].Rect;
 
-			var cell = RunningApp.Query (c => c.Marked ("Swipe ME")) [0];
+			var cell = RunningApp.Query(c => c.Marked("Swipe ME")) [0];
 #if __IOS__
 			RunningApp.DragCoordinates (screenBounds.Width - 10, cell.Rect.CenterY, 0, cell.Rect.CenterY);
 			//TODO: fix this when context menu bug is fixed
@@ -73,11 +75,18 @@ namespace Xamarin.Forms.Controls.Issues
 #endif
 			RunningApp.Screenshot ("Didn't crash");
 			RunningApp.TapCoordinates (screenBounds.CenterX, screenBounds.CenterY);
+
+#if __ANDROID__
+			RunningApp.Tap(c => c.Marked("Text0"));
+#endif
+
 		}
 
 		[Test]
 		public void TestShowContextMenuItemsInTheRightOrder ()
 		{
+			RunningApp.WaitForElement(c => c.Marked("Swipe ME"));
+
 			var screenBounds = RunningApp.Query (q => q.Raw ("* index:0"))[0].Rect;
 
 			var cell = RunningApp.Query (c => c.Marked ("Swipe ME")) [0];
@@ -89,10 +98,14 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (c => c.Marked ("Text0"));
 			RunningApp.Screenshot ("Are the menuitems in the right order?");
 
-		}
+#if __ANDROID__
+			RunningApp.Tap(c => c.Marked("Text0"));
 #endif
 
 		}
+#endif
+
+	}
 }
 
 
