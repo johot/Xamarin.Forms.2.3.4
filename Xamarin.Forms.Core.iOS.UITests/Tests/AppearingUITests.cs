@@ -6,13 +6,20 @@ namespace Xamarin.Forms.Core.UITests
 	[Category(UITestCategories.LifeCycle)]
 	internal class AppearingUITests : BaseTestFixture
 	{
-		public AppearingUITests ()
+		public AppearingUITests()
 		{
 		}
 
 		protected override void NavigateToGallery ()
 		{
 			App.NavigateToGallery (GalleryQueries.AppearingGallery);
+		}
+
+		protected override void TestTearDown()
+		{
+			base.TestTearDown();
+			ResetApp();
+			NavigateToGallery();
 		}
 
 		[Test]

@@ -46,7 +46,7 @@ namespace Xamarin.Forms.Core.UITests
 			NavigateToGallery();
 		}
 
-		void ResetApp()
+		protected void ResetApp()
 		{
 #if __IOS__
 			App.Invoke("reset:", string.Empty);
