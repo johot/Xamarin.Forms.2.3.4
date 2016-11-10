@@ -44,7 +44,7 @@ namespace Xamarin.Forms.Controls
 			//});
 		}
 
-		Page CreateDefaultMainPage()
+		public Page CreateDefaultMainPage()
 		{
 			return new MasterDetailPage
 			{
@@ -167,22 +167,37 @@ namespace Xamarin.Forms.Controls
 		{
 			try
 			{
-				SetMainPage(CreateDefaultMainPage());
-				
-				Current.MainPage.Navigation.PushModalAsync(TestCases.GetTestCases());
+				var root = CreateDefaultMainPage();
 
-				TestCases.TestCaseScreen.PageToAction[test]();
+				EventHandler toTestPage = null;
+
+				toTestPage = delegate(object sender, EventArgs e) 
+				{
+					Current.MainPage.Navigation.PushModalAsync(TestCases.GetTestCases());
+					TestCases.TestCaseScreen.PageToAction[test]();
+					Current.MainPage.Appearing -= toTestPage;
+				};
+
+				root.Appearing += toTestPage;
+
+				SetMainPage(root);
+
 				return true;
 			}
 			catch (Exception ex) 
 			{
 				Log.Warning("UITests", $"Error attempting to navigate directly to {test}: {ex}");
+
 			}
 
-			// TODO EZH Forcing this to true for now so we can figure out which tests fail using direct nav
-			// once we've fixed them, we can have this properly return false
 			return true;
 		}
+
+		void Root_Appearing(object sender, EventArgs e)
+		{
+
+		}
+
 
 		public void Reset()
 		{
