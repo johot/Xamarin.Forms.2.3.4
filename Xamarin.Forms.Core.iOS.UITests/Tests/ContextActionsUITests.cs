@@ -45,12 +45,12 @@ namespace Xamarin.Forms.Core.UITests
 		public void ContextActionsDelete ()
 		{
 			// mark is an icon on android
-			App.TouchAndHold (q => q.Marked (cell0));
+			App.TouchAndHold (q => q.Marked (cell1));
 			App.WaitForElement (q => q.Marked (delete));
 			App.Screenshot ("I have actions!");
 
 			App.Tap (q => q.Marked (delete));
-			App.WaitForNoElement (q => q.Marked (cell0));
+			App.WaitForNoElement (q => q.Marked (cell1));
 			App.Screenshot ("Deleted cell 0");
 		}
 #endif
