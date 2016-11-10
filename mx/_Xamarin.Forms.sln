@@ -16,9 +16,11 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		debug|[none] = debug|[none]
 		debug|Android = debug|Android
+		debug|IOS = debug|IOS
 		debug|Portable = debug|Portable
 		release|[none] = release|[none]
 		release|Android = release|Android
+		release|IOS = release|IOS
 		release|Portable = release|Portable
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -26,12 +28,16 @@ Global
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|[none].Build.0 = debug|[none]
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|Android.ActiveCfg = debug|monoDroid
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|Android.Build.0 = debug|monoDroid
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|IOS.ActiveCfg = debug|xamarin.ios
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|IOS.Build.0 = debug|xamarin.ios
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|Portable.ActiveCfg = debug|dotnet
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.debug|Portable.Build.0 = debug|dotnet
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|[none].ActiveCfg = release|[none]
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|[none].Build.0 = release|[none]
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|Android.ActiveCfg = release|monoDroid
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|Android.Build.0 = release|monoDroid
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|IOS.ActiveCfg = release|xamarin.ios
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|IOS.Build.0 = release|xamarin.ios
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|Portable.ActiveCfg = release|dotnet
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.release|Portable.Build.0 = release|dotnet
 	EndGlobalSection

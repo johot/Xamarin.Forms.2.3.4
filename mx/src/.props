@@ -67,5 +67,55 @@
       </PropertyGroup>
     </When>
   </Choose>
+  
+  <!--ios-->
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(AndroidMobilePlatformId)'">
+  </PropertyGroup>
+
+  <!--ios app-->
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosMobilePlatformId)' AND '$(IsMobileAppProject)'=='true'">
+    <OutputType>Exe</OutputType>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <MtouchSdkVersion>10.0</MtouchSdkVersion>
+    <ConsolePause>false</ConsolePause>
+    <OptimizePNGs>True</OptimizePNGs>
+    <MtouchFloat32>False</MtouchFloat32>
+    <MtouchProfiling>False</MtouchProfiling>
+    <MtouchFastDev>False</MtouchFastDev>
+    <MtouchUseLlvm>False</MtouchUseLlvm>
+    <MtouchUseThumb>False</MtouchUseThumb>
+    <MtouchUseSGen>False</MtouchUseSGen>
+    <MtouchUseRefCounting>False</MtouchUseRefCounting>
+    <MtouchI18n />
+  </PropertyGroup>
+
+  <!--ios unified-->
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosUnifiedMobileSubPlatformId)'">
+  </PropertyGroup>
+
+  <!--ios classic-->
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(IosClassicMobileSubPlatformId)'">
+  </PropertyGroup>
+
+  <!--windows universal-->
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'">
+    <UseDotNetNativeToolchain Condition="'$(Configuration)' == 'Release'">true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+
+  <!--windows phone-->
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)'">
+  </PropertyGroup>
+
+  <!--windows tablet-->
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)'">
+  </PropertyGroup>
+
+  <!--windows platform-->
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(WindowsMobilePlatformId)'">
+    <!--TODO: Remove setting platform; find better/newer way to set platform-->
+    <Platform Condition="'$(Plat)'=='AnyCPU' AND '$(IsMobileAppProject)'=='true'">x86</Platform>
+    <PlatformTarget>$(Plat)</PlatformTarget>
+    <Prefer32Bit Condition="'$(IsMobileAppProject)'=='true'">true</Prefer32Bit>
+  </PropertyGroup>
 
 </Project>

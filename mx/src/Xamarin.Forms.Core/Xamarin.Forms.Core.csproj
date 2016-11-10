@@ -2,7 +2,6 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
-    <!--<ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
     <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
     <MetaProjectGuid>{63DFE391-2B58-4C43-B6EC-4D376EB60592}</MetaProjectGuid>
   </PropertyGroup>
@@ -21,10 +20,16 @@
     <OutputType>Library</OutputType>
     <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
     <!--TODO: Was not present in orig .csproj-->
-    <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
+    <!--<TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>-->
   </PropertyGroup>
   <ItemGroup>
     <None Include="nuspec.props" />
+    <!--references-->
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <!--
   
@@ -37,6 +42,7 @@
   <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
     <SelfReference Include="$(DotNetLibraryPlatformId)" />
     <SelfReference Include="$(AndroidMobilePlatformId)" />
+    <SelfReference Include="$(IosUnifiedMobileSubPlatformId)" />
     <!--
       content
     -->
@@ -138,15 +144,19 @@
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="FormsViewGroup" >
+    <Reference Include="FormsViewGroup">
       <HintPath>F:\git\xam\forms\Xamarin.Forms.Platform.Android.FormsViewGroup\bin\Debug\FormsViewGroup.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <!--
+  
+    iOS Universal
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|xamarin.ios' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <!--
     ======
@@ -699,6 +709,97 @@
     <Compile Include="android\VisualElementRenderer.cs" />
     <Compile Include="android\VisualElementRendererFlags.cs" />
     <Compile Include="android\VisualElementTracker.cs" />
+  </ItemGroup>
+  <!--
+  
+    iOS
+  -->
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(IosMobilePlatformId)' ">
+    <Compile Include="ios\CADisplayLinkTicker.cs" />
+    <Compile Include="ios\Cells\CellRenderer.cs" />
+    <Compile Include="ios\Cells\CellTableViewCell.cs" />
+    <Compile Include="ios\Cells\EntryCellRenderer.cs" />
+    <Compile Include="ios\Cells\ImageCellRenderer.cs" />
+    <Compile Include="ios\Cells\SwitchCellRenderer.cs" />
+    <Compile Include="ios\Cells\TextCellRenderer.cs" />
+    <Compile Include="ios\Cells\ViewCellRenderer.cs" />
+    <Compile Include="ios\ContextActionCell.cs" />
+    <Compile Include="ios\ContextScrollViewDelegate.cs" />
+    <Compile Include="ios\Deserializer.cs" />
+    <Compile Include="ios\EffectUtilities.cs" />
+    <Compile Include="ios\ElementChangedEventArgs.cs" />
+    <Compile Include="ios\EventTracker.cs" />
+    <Compile Include="ios\ExportCellAttribute.cs" />
+    <Compile Include="ios\ExportImageSourceHandlerAttribute.cs" />
+    <Compile Include="ios\ExportRendererAttribute.cs" />
+    <Compile Include="ios\Extensions\ArrayExtensions.cs" />
+    <Compile Include="ios\Extensions\CellExtensions.cs" />
+    <Compile Include="ios\Extensions\ColorExtensions.cs" />
+    <Compile Include="ios\Extensions\DateExtensions.cs" />
+    <Compile Include="ios\Extensions\Extensions.cs" />
+    <Compile Include="ios\Extensions\LayoutExtensions.cs" />
+    <Compile Include="ios\Extensions\PlatformConfigurationExtensions.cs" />
+    <Compile Include="ios\Extensions\ToolbarItemExtensions.cs" />
+    <Compile Include="ios\Extensions\UIViewExtensions.cs" />
+    <Compile Include="ios\Extensions\ViewExtensions.cs" />
+    <Compile Include="ios\Forms.cs" />
+    <Compile Include="ios\FormsApplicationDelegate.cs" />
+    <Compile Include="ios\GlobalCloseContextGestureRecognizer.cs" />
+    <Compile Include="ios\iOSAppIndexingProvider.cs" />
+    <Compile Include="ios\iOSAppLinks.cs" />
+    <Compile Include="ios\IVisualElementRenderer.cs" />
+    <Compile Include="ios\NativeBindingService.cs" />
+    <Compile Include="ios\NativeValueConverterService.cs" />
+    <Compile Include="ios\NativeViewPropertyListener.cs" />
+    <Compile Include="ios\NativeViewWrapper.cs" />
+    <Compile Include="ios\NativeViewWrapperRenderer.cs" />
+    <Compile Include="ios\PageExtensions.cs" />
+    <Compile Include="ios\Platform.cs" />
+    <Compile Include="ios\PlatformEffect.cs" />
+    <Compile Include="ios\PlatformRenderer.cs" />
+    <Compile Include="ios\RendererFactory.cs" />
+    <Compile Include="ios\RendererPool.cs" />
+    <Compile Include="ios\Renderers\ActivityIndicatorRenderer.cs" />
+    <Compile Include="ios\Renderers\AlignmentExtensions.cs" />
+    <Compile Include="ios\Renderers\BoxRenderer.cs" />
+    <Compile Include="ios\Renderers\ButtonRenderer.cs" />
+    <Compile Include="ios\Renderers\CarouselPageRenderer.cs" />
+    <Compile Include="ios\Renderers\DatePickerRenderer.cs" />
+    <Compile Include="ios\Renderers\EditorRenderer.cs" />
+    <Compile Include="ios\Renderers\EntryRenderer.cs" />
+    <Compile Include="ios\Renderers\FontExtensions.cs" />
+    <Compile Include="ios\Renderers\FormattedStringExtensions.cs" />
+    <Compile Include="ios\Renderers\FrameRenderer.cs" />
+    <Compile Include="ios\Renderers\ImageRenderer.cs" />
+    <Compile Include="ios\Renderers\KeyboardInsetTracker.cs" />
+    <Compile Include="ios\Renderers\KeyboardObserver.cs" />
+    <Compile Include="ios\Renderers\LabelRenderer.cs" />
+    <Compile Include="ios\Renderers\ListViewRenderer.cs" />
+    <Compile Include="ios\Renderers\NavigationMenuRenderer.cs" />
+    <Compile Include="ios\Renderers\NavigationRenderer.cs" />
+    <Compile Include="ios\Renderers\OpenGLViewRenderer.cs" />
+    <Compile Include="ios\Renderers\PageRenderer.cs" />
+    <Compile Include="ios\Renderers\PhoneMasterDetailRenderer.cs" />
+    <Compile Include="ios\Renderers\PickerRenderer.cs" />
+    <Compile Include="ios\Renderers\ProgressBarRenderer.cs" />
+    <Compile Include="ios\Renderers\ScrollViewRenderer.cs" />
+    <Compile Include="ios\Renderers\SearchBarRenderer.cs" />
+    <Compile Include="ios\Renderers\SliderRenderer.cs" />
+    <Compile Include="ios\Renderers\StepperRenderer.cs" />
+    <Compile Include="ios\Renderers\SwitchRenderer.cs" />
+    <Compile Include="ios\Renderers\TabbedRenderer.cs" />
+    <Compile Include="ios\Renderers\TabletMasterDetailRenderer.cs" />
+    <Compile Include="ios\Renderers\TableViewModelRenderer.cs" />
+    <Compile Include="ios\Renderers\TableViewRenderer.cs" />
+    <Compile Include="ios\Renderers\TimePickerRenderer.cs" />
+    <Compile Include="ios\Renderers\WebViewRenderer.cs" />
+    <Compile Include="ios\ResourcesProvider.cs" />
+    <Compile Include="ios\Resources\StringResources.Designer.cs" />
+    <Compile Include="ios\ViewInitializedEventArgs.cs" />
+    <Compile Include="ios\ViewRenderer.cs" />
+    <Compile Include="ios\VisualElementPackager.cs" />
+    <Compile Include="ios\VisualElementRenderer.cs" />
+    <Compile Include="ios\VisualElementTracker.cs" />
   </ItemGroup>
   <!--
 

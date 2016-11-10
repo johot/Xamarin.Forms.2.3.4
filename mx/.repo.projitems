@@ -130,6 +130,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\PackageInfo.t.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)issues.txt" />
     <Content Include="$(MSBuildThisFileDirectory)doskey.txt" />
     <Content Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\doskey.txt" />
   </ItemGroup>
