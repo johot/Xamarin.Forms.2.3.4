@@ -61,7 +61,7 @@ namespace Xamarin.Forms.Controls
 			// Running on the simulator
 			//var app = ConfigureApp.iOS
 			//				  .PreferIdeSettings()
-			//				  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
+			//		  		  .AppBundle("../../../Xamarin.Forms.ControlGallery.iOS/bin/iPhoneSimulator/Debug/XamarinFormsControlGalleryiOS.app")
 			//				  .Debug()
 			//				  .StartApp();
 
@@ -135,7 +135,7 @@ namespace Xamarin.Forms.Controls
 			{
 				try
 				{
-					RunningApp.TestServer.Get("");
+					RunningApp.TestServer.Get("version");
 					return;
 				}
 				catch (Exception ex)
