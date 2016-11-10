@@ -54,6 +54,7 @@ namespace Xamarin.Forms.Controls.Issues
 					RunningApp.WaitForNoElement (q => q.Marked ("Destroy"));
 				else
 					RunningApp.WaitForNoElement (q => q.Marked ("Dismiss"));
+
 				RunningApp.Screenshot ("Dismiss ActionSheet");
 
 //				App.SetOrientationPortrait ();
@@ -71,6 +72,16 @@ namespace Xamarin.Forms.Controls.Issues
 //					App.WaitForNoElement (q => q.Marked ("Dismiss"));
 			
 			} 
+			else
+			{
+				RunningApp.Tap(q => q.Marked("Dismiss"));
+			}
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			RunningApp.SetOrientationPortrait();
 		}
 #endif
 
