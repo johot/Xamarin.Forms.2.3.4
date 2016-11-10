@@ -9,6 +9,7 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.ControlGallery.iOS;
 using Xamarin.Forms.Controls;
+using Xamarin.Forms.Controls.Issues;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: Dependency(typeof(TestCloudService))]
