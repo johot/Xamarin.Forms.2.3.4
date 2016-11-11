@@ -217,6 +217,12 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 
+		[TearDown]
+		public void TestTearDown()
+		{
+			RunningApp.SetOrientationPortrait();
+		}
+
 		public bool ShouldRunTest() {
 			var isMasterVisible = RunningApp.Query (q => q.Marked ("Leads")).Length > 0;
 			return !isMasterVisible;
