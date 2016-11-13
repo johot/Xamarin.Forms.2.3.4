@@ -11,7 +11,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-  <!--
+<!--
   
     Universal
   -->
@@ -19,11 +19,16 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
+    <AssemblyName>Xamarin.Forms.Core</AssemblyName>
+    <PortableAssemblyName>Xamarin.Forms.Core.Portable</PortableAssemblyName>
+    <RootNamespace>Xamarin.Forms</RootNamespace>
     <!--TODO: Was not present in orig .csproj-->
     <!--<TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>-->
   </PropertyGroup>
   <ItemGroup>
     <None Include="nuspec.props" />
+    <None Include="winrt\uap\project.json" />
+    <None Include="winrt\uap\project.lock.json" />
     <!--references-->
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
@@ -43,6 +48,9 @@
     <SelfReference Include="$(DotNetLibraryPlatformId)" />
     <SelfReference Include="$(AndroidMobilePlatformId)" />
     <SelfReference Include="$(IosUnifiedMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
     <!--
       content
     -->
@@ -157,6 +165,58 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
     <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <!--
+  
+    Windows
+  -->
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <!--<AppxPrependPriInitialPath>false</AppxPrependPriInitialPath>-->
+    <!--<AppxPriInitialPath>bar</AppxPriInitialPath>-->
+    <!--force all windows output to OutDir-->
+    <AppxPackageDir>$(OutDir)</AppxPackageDir>
+  </PropertyGroup>
+  <!--
+  
+    Windows Phone
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
+  </PropertyGroup>
+  <!--
+
+    Windows Tablet
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <!--
+
+    Windows Universal
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <UseProjectJson>true</UseProjectJson>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <ProjectLockFile>winrt\uap\project.lock.json</ProjectLockFile>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <!--
     ======
@@ -800,6 +860,218 @@
     <Compile Include="ios\VisualElementPackager.cs" />
     <Compile Include="ios\VisualElementRenderer.cs" />
     <Compile Include="ios\VisualElementTracker.cs" />
+  </ItemGroup>
+  <!--
+  
+    Windows
+  -->
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
+    <Compile Include="winrt\ActivityIndicatorRenderer.cs" />
+    <Compile Include="winrt\AlignmentExtensions.cs" />
+    <Compile Include="winrt\AsyncValue.cs" />
+    <Compile Include="winrt\BackgroundTracker.cs" />
+    <Compile Include="winrt\BoolToVisibilityConverter.cs" />
+    <Compile Include="winrt\BoxViewRenderer.cs" />
+    <Compile Include="winrt\BrushHelpers.cs" />
+    <Compile Include="winrt\ButtonRenderer.cs" />
+    <Compile Include="winrt\CarouselPageRenderer.cs" />
+    <Compile Include="winrt\CaseConverter.cs" />
+    <Compile Include="winrt\CellControl.cs" />
+    <Compile Include="winrt\CollapseWhenEmptyConverter.cs" />
+    <Compile Include="winrt\ColorConverter.cs" />
+    <Compile Include="winrt\ConvertExtensions.cs" />
+    <Compile Include="winrt\DatePickerRenderer.cs" />
+    <Compile Include="winrt\DefaultRenderer.cs" />
+    <Compile Include="winrt\EditorRenderer.cs" />
+    <Compile Include="winrt\EntryCellTextBox.cs" />
+    <Compile Include="winrt\EntryRenderer.cs" />
+    <Compile Include="winrt\ExportRendererAttribute.cs" />
+    <Compile Include="winrt\Extensions.cs" />
+    <Compile Include="winrt\FileImageSourceHandler.cs" />
+    <Compile Include="winrt\FileImageSourcePathConverter.cs" />
+    <Compile Include="winrt\FontExtensions.cs" />
+    <Compile Include="winrt\FormsButton.cs" />
+    <Compile Include="winrt\FormsComboBox.cs" />
+    <Compile Include="winrt\FormsDatePicker.cs" />
+    <Compile Include="winrt\FormsTextBox.cs" />
+    <Compile Include="winrt\FormsTimePicker.cs" />
+    <Compile Include="winrt\FrameRenderer.cs" />
+    <Compile Include="winrt\FrameworkElementExtensions.cs" />
+    <Compile Include="winrt\HeightConverter.cs" />
+    <Compile Include="winrt\HorizontalTextAlignmentConverter.cs" />
+    <Compile Include="winrt\ICellRenderer.cs" />
+    <Compile Include="winrt\IImageSourceHandler.cs" />
+    <Compile Include="winrt\ImageConverter.cs" />
+    <Compile Include="winrt\ImageRenderer.cs" />
+    <Compile Include="winrt\ITitleProvider.cs" />
+    <Compile Include="winrt\IToolbarProvider.cs" />
+    <Compile Include="winrt\IVisualElementRenderer.cs" />
+    <Compile Include="winrt\IWrapperAware.cs" />
+    <Compile Include="winrt\KeyboardConverter.cs" />
+    <Compile Include="winrt\KeyboardExtensions.cs" />
+    <Compile Include="winrt\LabelRenderer.cs" />
+    <Compile Include="winrt\LayoutExtensions.cs" />
+    <Compile Include="winrt\LayoutRenderer.cs" />
+    <Compile Include="winrt\ListGroupHeaderPresenter.cs" />
+    <Compile Include="winrt\ListViewGroupStyleSelector.cs" />
+    <Compile Include="winrt\ListViewRenderer.cs" />
+    <Compile Include="winrt\MasterBackgroundConverter.cs" />
+    <Compile Include="winrt\MasterDetailControl.cs" />
+    <Compile Include="winrt\MasterDetailPageRenderer.cs" />
+    <Compile Include="winrt\MenuItemCommand.cs" />
+    <Compile Include="winrt\NativeBindingExtensions.cs" />
+    <Compile Include="winrt\NativeBindingService.cs" />
+    <Compile Include="winrt\NativeEventWrapper.cs" />
+    <Compile Include="winrt\NativePropertyListener.cs" />
+    <Compile Include="winrt\NativeValueConverterService.cs" />
+    <Compile Include="winrt\NativeViewWrapper.cs" />
+    <Compile Include="winrt\NativeViewWrapperRenderer.cs" />
+    <Compile Include="winrt\NavigationPageRenderer.cs" />
+    <Compile Include="winrt\PageControl.xaml.cs">
+      <DependentUpon>PageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="winrt\PageRenderer.cs" />
+    <Compile Include="winrt\PageToRenderedElementConverter.cs" />
+    <Compile Include="winrt\PickerRenderer.cs" />
+    <Compile Include="winrt\Platform.cs" />
+    <Compile Include="winrt\PlatformConfigurationExtensions.cs" />
+    <Compile Include="winrt\PlatformEffect.cs" />
+    <Compile Include="winrt\ProgressBarRenderer.cs" />
+    <Compile Include="winrt\RendererFactory.cs" />
+    <Compile Include="winrt\ScrollViewRenderer.cs" />
+    <Compile Include="winrt\SliderRenderer.cs" />
+    <Compile Include="winrt\StepperControl.xaml.cs">
+      <DependentUpon>StepperControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="winrt\StepperRenderer.cs" />
+    <Compile Include="winrt\StreamImagesourceHandler.cs" />
+    <Compile Include="winrt\SwitchRenderer.cs" />
+    <Compile Include="winrt\TableViewRenderer.cs" />
+    <Compile Include="winrt\TaskExtensions.cs" />
+    <Compile Include="winrt\TextAlignmentToHorizontalAlignmentConverter.cs" />
+    <Compile Include="winrt\TextCellRenderer.cs" />
+    <Compile Include="winrt\TimePickerRenderer.cs" />
+    <Compile Include="winrt\UriImageSourceHandler.cs" />
+    <Compile Include="winrt\ViewExtensions.cs" />
+    <Compile Include="winrt\ViewRenderer.cs" />
+    <Compile Include="winrt\ViewToRendererConverter.cs" />
+    <Compile Include="winrt\VisualElementChangedEventArgs.cs" />
+    <Compile Include="winrt\VisualElementExtensions.cs" />
+    <Compile Include="winrt\VisualElementPackager.cs" />
+    <Compile Include="winrt\VisualElementRenderer.cs" />
+    <Compile Include="winrt\VisualElementTracker.cs" />
+    <Compile Include="winrt\WebViewRenderer.cs" />
+    <Compile Include="winrt\WindowsBasePage.cs" />
+    <Compile Include="winrt\WindowsBasePlatformServices.cs" />
+    <Compile Include="winrt\WindowsDeviceInfo.cs" />
+    <Compile Include="winrt\WindowsExpressionSearch.cs" />
+    <Compile Include="winrt\WindowsIsolatedStorage.cs" />
+    <Compile Include="winrt\WindowsSerializer.cs" />
+    <Compile Include="winrt\WindowsTicker.cs" />
+    <Page Include="winrt\PageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="winrt\StepperControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
+    <Compile Include="winrt\phone\Forms.cs" />
+    <Compile Include="winrt\phone\FormsPivot.cs" />
+    <Compile Include="winrt\phone\SearchBarRenderer.cs" />
+    <Compile Include="winrt\phone\SearchBox.xaml.cs">
+      <DependentUpon>SearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="winrt\phone\TabbedPageRenderer.cs" />
+    <Compile Include="winrt\phone\WindowsPhonePage.cs" />
+    <Compile Include="winrt\phone\WindowsPhonePlatform.cs" />
+    <Compile Include="winrt\phone\WindowsPhonePlatformServices.cs" />
+    <Compile Include="winrt\phone\WindowsPhoneResourcesProvider.cs" />
+    <Page Include="winrt\Resources.xaml">
+      <Link>winrt\phone\Resources.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\phone\FormsTextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\phone\PhoneResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\phone\SearchBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
+    <Compile Include="winrt\tablet\Forms.cs" />
+    <Compile Include="winrt\tablet\FormsListViewItemPresenter.cs" />
+    <Compile Include="winrt\tablet\FormsSearchBox.cs" />
+    <Compile Include="winrt\tablet\SearchBarRenderer.cs" />
+    <Compile Include="winrt\tablet\TabbedPageRenderer.cs" />
+    <Compile Include="winrt\tablet\TabsControl.cs" />
+    <Compile Include="winrt\tablet\WindowsPage.cs" />
+    <Compile Include="winrt\tablet\WindowsPlatform.cs" />
+    <Compile Include="winrt\tablet\WindowsPlatformServices.cs" />
+    <Compile Include="winrt\tablet\WindowsResourcesProvider.cs" />
+    <Page Include="winrt\Resources.xaml">
+      <Link>winrt\tablet\Resources.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\tablet\FormsTextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\tablet\TabletResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'">
+    <Compile Include="winrt\uap\FormsCommandBar.cs" />
+    <Compile Include="winrt\uap\IToolBarForegroundBinder.cs" />
+    <Compile Include="winrt\uap\MasterDetailControl.cs" />
+    <Compile Include="winrt\uap\MasterDetailPageRenderer.cs" />
+    <Compile Include="winrt\uap\SearchBarRenderer.cs" />
+    <Compile Include="winrt\uap\StepperControl.cs" />
+    <Compile Include="winrt\uap\TabbedPageRenderer.cs" />
+    <Compile Include="winrt\uap\ToolbarPlacementHelper.cs" />
+    <Compile Include="winrt\phone\FormsPivot.cs">
+      <Link>winrt\uap\FormsPivot.cs</Link>
+    </Compile>
+    <Page Include="winrt\uap\AutoSuggestStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\FormsTextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\MasterDetailControlStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\PageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\PageControlStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\Resources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\TabbedPageStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <!--
 

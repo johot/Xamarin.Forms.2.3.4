@@ -161,11 +161,17 @@
     <Compile Include="..\Xamarin.Forms.Platform.WinRT\NativeBindingExtensions.cs">
       <Link>NativeBindingExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\NativeBindingService.cs">
+      <Link>NativeBindingService.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Forms.Platform.WinRT\NativeEventWrapper.cs">
       <Link>NativeEventWrapper.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Forms.Platform.WinRT\NativePropertyListener.cs">
       <Link>NativePropertyListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\NativeValueConverterService.cs">
+      <Link>NativeValueConverterService.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Forms.Platform.WinRT\NativeViewWrapper.cs">
       <Link>NativeViewWrapper.cs</Link>
@@ -190,8 +196,6 @@
     </Compile>
     <Compile Include="FormsPresenter.cs" />
     <Compile Include="IToolBarForegroundBinder.cs" />
-    <Compile Include="NativeBindingService.cs" />
-    <Compile Include="NativeValueConverterService.cs" />
     <Compile Include="SearchBarRenderer.cs" />
     <Compile Include="..\Xamarin.Forms.Platform.WinRT\TextAlignmentToHorizontalAlignmentConverter.cs">
       <Link>TextAlignmentToHorizontalAlignmentConverter.cs</Link>

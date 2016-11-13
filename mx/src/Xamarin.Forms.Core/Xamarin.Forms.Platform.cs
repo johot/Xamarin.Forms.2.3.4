@@ -7,22 +7,22 @@ using Xamarin.Forms;
 
 #if __ANDROID__
 using Xamarin.Forms.Platform.Android;
-#elif WINDOWS_PHONE || WINDOWS_PHONE_APP
-using Xamarin.Forms.Platform.WinPhone;
+#elif WINDOWS_PHONE || WINDOWS_PHONE_APP || WINDOWS_APP
+using Xamarin.Forms.Platform.WinRT;
+#elif WINDOWS_UWP
+using Xamarin.Forms.Platform.UWP;
 #elif __IOS__
 using Xamarin.Forms.Platform.iOS;
 #endif
 
-namespace Xamarin.Forms.Platform
-{
-	internal static class Loader
-	{
-		internal static void Load ()
+namespace Xamarin.Forms.Platform {
+	internal static class Loader {
+		internal static void Load() 
 		{
 		}
 	}
 
-#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
+#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP && !WINDOWS_APP && !WINDOWS_UWP
 	[RenderWith(typeof(BoxRenderer))]
 #else
 	[RenderWith (typeof(BoxViewRenderer))]
@@ -49,7 +49,7 @@ namespace Xamarin.Forms.Platform
 
 	[RenderWith (typeof (ListViewRenderer))]
 	internal class _ListViewRenderer { }
-	
+
 	[RenderWith (typeof (SliderRenderer))]
 	internal class _SliderRenderer { }
 
@@ -86,40 +86,41 @@ namespace Xamarin.Forms.Platform
 	[RenderWith (typeof (FrameRenderer))]
 	internal class _FrameRenderer { }
 
-#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
+#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP && !WINDOWS_APP&& !WINDOWS_UWP
 	[RenderWith (typeof (NavigationMenuRenderer))]
+#endif
 	internal class _NavigationMenuRenderer { }
 
+#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP && !WINDOWS_APP&& !WINDOWS_UWP
 	[RenderWith (typeof (OpenGLViewRenderer))]
 #else
 	[RenderWith (null)]
 #endif
-	
 	internal class _OpenGLViewRenderer { }
 
-#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
+#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP && !WINDOWS_APP&& !WINDOWS_UWP
 	[RenderWith (typeof (TabbedRenderer))]
 #else
 	[RenderWith (typeof (TabbedPageRenderer))]
 #endif
 	internal class _TabbedPageRenderer { }
 
-#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP
+#if !WINDOWS_PHONE && !WINDOWS_PHONE_APP && !WINDOWS_APP&& !WINDOWS_UWP
 	[RenderWith (typeof (NavigationRenderer))]
 #else
 	[RenderWith (typeof (NavigationPageRenderer))]
 #endif
 	internal class _NavigationPageRenderer { }
 
-	[RenderWith (typeof (CarouselPageRenderer))]
+	[RenderWith( typeof( CarouselPageRenderer))]
 	internal class _CarouselPageRenderer { }
 
-	[RenderWith (typeof (PageRenderer))]
+	[RenderWith( typeof( PageRenderer))]
 	internal class _PageRenderer { }
 
-#if !__IOS__
+#if __ANDROID__
 	[RenderWith (typeof (MasterDetailRenderer))]
-#else
+#elif __IOS__
 	[RenderWith (typeof (PhoneMasterDetailRenderer))]
 #endif
 	internal class _MasterDetailPageRenderer { }
