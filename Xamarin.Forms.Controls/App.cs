@@ -167,8 +167,10 @@ namespace Xamarin.Forms.Controls
 		{
 			try
 			{
+				// Create an instance of the main page
 				var root = CreateDefaultMainPage();
 
+				// Set up a delegate to handle the navigation to the test page
 				EventHandler toTestPage = null;
 
 				toTestPage = delegate(object sender, EventArgs e) 
@@ -178,6 +180,7 @@ namespace Xamarin.Forms.Controls
 					Current.MainPage.Appearing -= toTestPage;
 				};
 
+				// And set that delegate to run once the main page appears
 				root.Appearing += toTestPage;
 
 				SetMainPage(root);
@@ -190,15 +193,10 @@ namespace Xamarin.Forms.Controls
 
 			}
 
-			return true;
+			return false;
 		}
 
-		void Root_Appearing(object sender, EventArgs e)
-		{
-
-		}
-
-
+		
 		public void Reset()
 		{
 			SetMainPage(CreateDefaultMainPage());

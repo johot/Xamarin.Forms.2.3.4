@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Controls
 			app = InitializeAndroidApp();
 
 #elif __IOS__
-			//app = InitializeiOSApp();
+
 			app = InitializeiOSApp();
 #endif
 			if (app == null)
@@ -129,6 +129,8 @@ namespace Xamarin.Forms.Controls
 			return runningApp;
 		}
 
+		// Make sure the server on the device is still up and running;
+		// if not, restart the app
 		public static void EnsureConnection()
 		{
 			if (RunningApp != null)
@@ -147,8 +149,10 @@ namespace Xamarin.Forms.Controls
 		}
 
 		static int s_testsrun;
-		const int ConsecutiveTestLimit = 30;
+		const int ConsecutiveTestLimit = 40;
 
+		// Until we get more of our memory leak issues worked out, restart the app 
+		// after a specified number of tests so we don't get bogged down in GC
 		public static void EnsureMemory()
 		{
 			if (RunningApp != null)
@@ -163,6 +167,8 @@ namespace Xamarin.Forms.Controls
 			}
 		}
 
+		// For tests which just don't play well with others, we can ensure
+		// that they run in their own instance of the application
 		public static void BeginIsolate()
 		{
 			if (RunningApp != null && s_testsrun > 0)
@@ -459,6 +465,8 @@ namespace Xamarin.Forms.Controls.Issues
 	using System;
 	using NUnit.Framework;
 
+	// Run setup once for all tests in the Xamarin.Forms.Controls.Issues namespace
+	// (instead of once for each test)
 	[SetUpFixture]
 	public class IssuesSetup
 	{

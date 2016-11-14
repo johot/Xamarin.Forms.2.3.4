@@ -23,7 +23,6 @@ using Droid = Android;
 using System.Globalization;
 using Java.Interop;
 using Xamarin.Forms.Controls.Issues;
-using Debug = System.Diagnostics.Debug;
 
 [assembly: Dependency (typeof (CacheService))]
 [assembly: Dependency (typeof (TestCloudService))]
