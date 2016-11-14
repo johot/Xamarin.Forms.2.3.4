@@ -3,15 +3,4 @@
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
   ToolsVersion="12.0"
 >
-  <PropertyGroup>
-    <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
-  </PropertyGroup>
-  <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-  <Import Project="$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\package.props"/>
-  <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-  <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-  <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-  <!--<Import Project="$(PkgDir)Xamarin.Android.Support.v7.MediaRouter.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>-->
-  <Import Project="$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-  <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
 </Project>

@@ -36,10 +36,12 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Android.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.WP8.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml")]
+#if !MXBUILD
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.iOS")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.iOS.Classic")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.Android")]
+#endif
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.UITests")]
 //[assembly:InternalsVisibleTo("Xamarin.Forms.Core.UITests")]

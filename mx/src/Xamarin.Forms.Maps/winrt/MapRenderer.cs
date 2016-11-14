@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -87,9 +86,6 @@ namespace Xamarin.Forms.Maps.WinRT
 			{
 				_disposed = true;
 
-				_timer?.Stop();
-				_timer = null;
-
 				MessagingCenter.Unsubscribe<Map, MapSpan>(this, "MapMoveToRegion");
 
 				if (Element != null)
@@ -101,7 +97,6 @@ namespace Xamarin.Forms.Maps.WinRT
 		bool _disposed;
 		bool _firstZoomLevelChangeFired;
 		Ellipse _userPositionCircle;
-		DispatcherTimer _timer;
 
 		void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
@@ -161,9 +156,8 @@ namespace Xamarin.Forms.Maps.WinRT
 			Control.Children.Add(new PushPin(pin));
 		}
 
-		async Task UpdateIsShowingUser(bool moveToLocation = true)
+		async Task UpdateIsShowingUser()
 		{
-			
 			if (Element.IsShowingUser)
 			{
 				var myGeolocator = new Geolocator();
@@ -172,24 +166,11 @@ namespace Xamarin.Forms.Maps.WinRT
 				{
 					var userPosition = await myGeolocator.GetGeopositionAsync();
 					if (userPosition?.Coordinate != null)
-						LoadUserPosition(userPosition.Coordinate, moveToLocation);
+						LoadUserPosition(userPosition.Coordinate, true);
 				}
-
-				if (_timer == null)
-				{
-					_timer = new DispatcherTimer();
-					_timer.Tick += async (s, o) => await UpdateIsShowingUser(moveToLocation: false);
-					_timer.Interval = TimeSpan.FromSeconds(15);
-				}
-				
-				if (!_timer.IsEnabled)
-					_timer.Start();
 			}
 			else if (_userPositionCircle != null && Control.Children.Contains(_userPositionCircle))
-			{
-				_timer?.Stop();
 				Control.Children.Remove(_userPositionCircle);
-			}
 		}
 
 		async Task MoveToRegion(MapSpan span, MapAnimationKind animation = MapAnimationKind.Bow)

@@ -54,7 +54,10 @@
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
     <None Include="$(MSBuildThisFileDirectory)ref\Xamarin.Android.Support.props" />
     <None Include="$(MSBuildThisFileDirectory)src\.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\git" />

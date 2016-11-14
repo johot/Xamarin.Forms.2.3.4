@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
+    <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
+    <MetaProjectGuid>{63DFE391-2B58-4C43-B6EC-4D376EB60592}</MetaProjectGuid>
+  </PropertyGroup>
+  <!--
+  
+    Properties
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{7D13BAC2-C6A4-416A-B07E-C169B199E52B}</ProjectGuid>
+    <AssemblyName>Xamarin.Forms.Maps</AssemblyName>
+    <PortableAssemblyName>Xamarin.Forms.Maps.Portable</PortableAssemblyName>
+    <RootNamespace>Xamarin.Forms.Maps</RootNamespace>
+    <!--TODO: Was not present in orig .csproj-->
+    <!--<TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>-->
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Plat)' != '$(PackPlatformId)' ">
+    <None Include="nuspec.props" />
+    <None Include="winrt\uap\project.json" />
+    <None Include="winrt\uap\project.lock.json" />
+    <!--<None Include="winrt\uap\project.lock.json" />-->
+    <!--references-->
+    <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+    </ProjectReference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <NugetDependency Include="Xamarin.Forms.Core" >
+      <Version>$(BuildVersion)</Version>
+    </NugetDependency>
+  </ItemGroup>
+  <!--
+  
+    Nuget Pack
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
+  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
+  <Import Project="nuspec.props" Condition=" '$(Plat)' == '$(PackPlatformId)' " />
+  <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
+    <SelfReference Include="$(DotNetLibraryPlatformId)" />
+    <SelfReference Include="$(AndroidMobilePlatformId)" />
+    <SelfReference Include="$(IosUnifiedMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
+    <!--<SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />-->
+    <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
+    <!--
+      content
+    -->
+    <None Include="$(ExtPackDir)Package.nuspec">
+      <CopyTargetName>$(NuspecName)</CopyTargetName>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Type>xml</Type>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Package.nuspec</Link>
+    </None>
+  </ItemGroup>
+  <!--
+  
+    Library
+  -->
+  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+    <Compile Include="$(ExtPackDir)PackageInfo.cs">
+      <DependentUpon>PackageInfo.t.cs</DependentUpon>
+      <Link>Properties\PackageInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtPackDir)PackageInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\PackageInfo.t.cs</Link>
+      <CompileOutput>PackageInfo.cs</CompileOutput>
+    </None>
+  </ItemGroup>
+  <!--
+  
+    Portable
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
+    <!--This assembly is only referenced and never executed so there is no need for symbols-->
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <!--
+  
+    Part ([platform].part)
+  -->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <AssemblyName>$(PortableAssemblyName)</AssemblyName>
+  </PropertyGroup>
+  <!--This assembly is only referenced and never executed so there is no need for symbols-->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <!--hide build output-->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <!--TODO: if CopyBuildOutputToOutputDirectory why is the following necessary?-->
+    <OutDir>$(IntermediateOutputPath)portable\bin\</OutDir>
+    <OutputPath>$(OutDir)</OutputPath>
+    <AppxPackageDir>$(OutputPath)</AppxPackageDir>
+    <IntermediateOutputPath>$(IntermediateOutputPath)portable\obj\</IntermediateOutputPath>
+  </PropertyGroup>
+  <!--self reference portable library-->
+  <ItemGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' == 'true' ">
+    <SelfReference Include="$(DotNetLibraryPlatformId)" />
+  </ItemGroup>
+  <!--
+  
+    Mobile
+  -->
+  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)'=='true'">
+    <!--<IsCompositePlatform>true</IsCompositePlatform>-->
+    <DefineConstants>$(DefineConstants)COMPOSITE;</DefineConstants>
+  </PropertyGroup>
+  <!--
+  
+    Android
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid' " />
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+  </PropertyGroup>
+  <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.MediaRouter.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Maps.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\package.props"/>
+  </ImportGroup>
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="FormsViewGroup">
+      <HintPath>F:\git\xam\forms\Xamarin.Forms.Platform.Android.FormsViewGroup\bin\Debug\FormsViewGroup.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!--
+  
+    iOS Universal
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|xamarin.ios' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <!--
+  
+    Windows
+  -->
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <!--<AppxPrependPriInitialPath>false</AppxPrependPriInitialPath>-->
+    <!--<AppxPriInitialPath>bar</AppxPriInitialPath>-->
+    <!--force all windows output to OutDir-->
+    <AppxPackageDir>$(OutDir)</AppxPackageDir>
+  </PropertyGroup>
+  <!--
+  
+    Windows Phone
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
+  </PropertyGroup>
+  <!--
+
+    Windows Tablet
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
+    <SDKReference Include="Bing.Maps.Xaml, Version=1.313.0825.0">
+      <Name>Bing Maps for C#, C++, or Visual Basic</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows</Name>
+    </SDKReference>
+  </ItemGroup>
+  <!--
+
+    Windows Universal
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <UseProjectJson>true</UseProjectJson>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <ProjectLockFile>winrt\uap\project.lock.json</ProjectLockFile>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <!--
+  
+    Portable
+  -->
+  <ItemGroup Condition=" '$(IsPartPlatform)' != 'true' ">
+    <Compile Include="portable\Distance.cs" />
+    <Compile Include="portable\Geocoder.cs" />
+    <Compile Include="portable\Map.cs" />
+    <Compile Include="portable\MapSpan.cs" />
+    <Compile Include="portable\MapType.cs" />
+    <Compile Include="portable\Pin.cs" />
+    <Compile Include="portable\PinType.cs" />
+    <Compile Include="portable\Position.cs" />
+  </ItemGroup>
+  <!--
+  
+    Android
+  -->
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Compile Include="android\FormsMaps.cs" />
+    <Compile Include="android\GeocoderBackend.cs" />
+    <Compile Include="android\MapRenderer.cs" />
+  </ItemGroup>
+  <!--
+  
+    iOS
+  -->
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <Compile Include="ios\FormsMaps.cs" />
+    <Compile Include="ios\GeocoderBackend.cs" />
+    <Compile Include="ios\MapRenderer.cs" />
+  </ItemGroup>
+  <!--
+  
+    Windows
+  -->
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
+    <Compile Include="winrt\FormsMaps.cs" />
+    <Compile Include="winrt\GeocoderBackend.cs" />
+    <Compile Include="winrt\MapRenderer.cs" />
+    <Compile Include="winrt\PushPin.cs" />
+  </ItemGroup>
+  <!--
+  
+    Windows Tablet
+  -->
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
+    <Compile Include="winrt\tablet\GeocoderBackend.cs" />
+    <Compile Include="winrt\tablet\MapRenderer.cs" />
+  </ItemGroup>
+  <!--
+
+    Targets
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+</Project>

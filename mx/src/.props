@@ -4,6 +4,12 @@
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., .props))\.props" />
+  
+  <!--nuget versions-->
+  <PropertyGroup>
+    <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
+    <NugetGooglePlayServicesVersion>29.0.0.1</NugetGooglePlayServicesVersion>
+  </PropertyGroup>
 
   <!--msbuild (remove if\when mxbuild adopted)-->
   <PropertyGroup>
