@@ -160,7 +160,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net.Http" />
     <Reference Include="FormsViewGroup">
-      <HintPath>F:\git\xam\forms\Xamarin.Forms.Platform.Android.FormsViewGroup\bin\Debug\FormsViewGroup.dll</HintPath>
+      <HintPath>..\Xamarin.Forms.Platform.Android.FormsViewGroup\bin\$(Configuration)\FormsViewGroup.dll</HintPath>
     </Reference>
   </ItemGroup>
   <!--

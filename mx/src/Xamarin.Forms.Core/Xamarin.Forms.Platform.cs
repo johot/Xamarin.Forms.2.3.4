@@ -7,8 +7,10 @@ using Xamarin.Forms;
 
 #if __ANDROID__
 using Xamarin.Forms.Platform.Android;
-#elif WINDOWS_PHONE || WINDOWS_PHONE_APP || WINDOWS_APP
+#elif WINDOWS_PHONE_APP || WINDOWS_APP
 using Xamarin.Forms.Platform.WinRT;
+#elif WINDOWS_PHONE
+using Xamarin.Forms.Platform.WinPhone;
 #elif WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 #elif __IOS__
