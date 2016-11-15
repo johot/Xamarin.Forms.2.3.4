@@ -383,8 +383,13 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 					continue;
 
 				TabLayout.Tab tab = tabs.GetTabAt(i);
-				tab.SetIcon(ResourceManager.IdFromTitle(icon, ResourceManager.DrawableClass));
+				SetTabIcon(tab, icon);
 			}
+		}
+
+		protected virtual void SetTabIcon(TabLayout.Tab tab, FileImageSource icon)
+		{
+			tab.SetIcon(ResourceManager.IdFromTitle(icon, ResourceManager.DrawableClass));
 		}
 
 		void UpdateBarBackgroundColor()
