@@ -48,7 +48,7 @@
     <None Include="$(MSBuildThisFileDirectory).props" />
     <None Include="$(MSBuildThisFileDirectory).targets" />
     <None Include="$(MSBuildThisFileDirectory).version" />
-    <None Include="$(MSBuildThisFileDirectory)cpy\excludeProperties.txt" />
+    <None Include="$(MSBuildThisFileDirectory)cpy\excludeObjBin.txt" />
     <None Include="$(MSBuildThisFileDirectory)cpy\copySrc.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />

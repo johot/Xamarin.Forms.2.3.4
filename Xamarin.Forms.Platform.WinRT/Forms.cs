@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !WINDOWS_PHONE_APP
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -117,3 +118,4 @@ namespace Xamarin.Forms
 #endif
 	}
 }
+#endif

@@ -1,4 +1,4 @@
-﻿
+﻿#if !WINDOWS_PHONE_APP
 #if WINDOWS_UWP
 
 namespace Xamarin.Forms.Platform.UWP
@@ -14,3 +14,4 @@ namespace Xamarin.Forms.Platform.WinRT
 		}
 	}
 }
+#endif

@@ -11,7 +11,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-<!--
+  <!--
   
     Universal
   -->
@@ -146,13 +146,13 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
   </PropertyGroup>
   <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\package.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
   </ImportGroup>
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <Reference Include="Mono.Android" />
@@ -631,6 +631,7 @@
     Android
   -->
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Compile Include="android\Properties\AssemblyInfo.cs" />
     <Compile Include="android\AndroidActivity.cs" />
     <Compile Include="android\AndroidAppIndexProvider.cs" />
     <Compile Include="android\AndroidApplicationLifecycleState.cs" />
@@ -782,6 +783,7 @@
     iOS
   -->
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(IosMobilePlatformId)' ">
+    <Compile Include="ios\Properties\AssemblyInfo.cs" />
     <Compile Include="ios\CADisplayLinkTicker.cs" />
     <Compile Include="ios\Cells\CellRenderer.cs" />
     <Compile Include="ios\Cells\CellTableViewCell.cs" />
@@ -873,6 +875,7 @@
     Windows
   -->
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
+    <Compile Include="winrt\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\ActivityIndicatorRenderer.cs" />
     <Compile Include="winrt\AlignmentExtensions.cs" />
     <Compile Include="winrt\AsyncValue.cs" />
@@ -975,6 +978,11 @@
     <Compile Include="winrt\WindowsIsolatedStorage.cs" />
     <Compile Include="winrt\WindowsSerializer.cs" />
     <Compile Include="winrt\WindowsTicker.cs" />
+    <Compile Include="winrt\Forms.cs" />
+    <Compile Include="winrt\WindowsPage.cs" />
+    <Compile Include="winrt\WindowsPlatform.cs" />
+    <Compile Include="winrt\WindowsPlatformServices.cs" />
+    <Compile Include="winrt\WindowsResourcesProvider.cs" />
     <Page Include="winrt\PageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -985,6 +993,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
+    <Compile Include="winrt\phone\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\phone\Forms.cs" />
     <Compile Include="winrt\phone\FormsPivot.cs" />
     <Compile Include="winrt\phone\SearchBarRenderer.cs" />
@@ -1015,16 +1024,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
-    <Compile Include="winrt\tablet\Forms.cs" />
+    <Compile Include="winrt\tablet\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\tablet\FormsListViewItemPresenter.cs" />
     <Compile Include="winrt\tablet\FormsSearchBox.cs" />
     <Compile Include="winrt\tablet\SearchBarRenderer.cs" />
     <Compile Include="winrt\tablet\TabbedPageRenderer.cs" />
     <Compile Include="winrt\tablet\TabsControl.cs" />
-    <Compile Include="winrt\tablet\WindowsPage.cs" />
-    <Compile Include="winrt\tablet\WindowsPlatform.cs" />
-    <Compile Include="winrt\tablet\WindowsPlatformServices.cs" />
-    <Compile Include="winrt\tablet\WindowsResourcesProvider.cs" />
     <Page Include="winrt\Resources.xaml">
       <Link>winrt\tablet\Resources.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
@@ -1040,6 +1045,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'">
+    <Compile Include="winrt\uap\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\uap\FormsCommandBar.cs" />
     <Compile Include="winrt\uap\IToolBarForegroundBinder.cs" />
     <Compile Include="winrt\uap\MasterDetailControl.cs" />

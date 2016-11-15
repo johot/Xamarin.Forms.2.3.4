@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !WINDOWS_PHONE_APP
+using System;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -88,3 +89,4 @@ namespace Xamarin.Forms.Platform.WinRT
 		}
 	}
 }
+#endif

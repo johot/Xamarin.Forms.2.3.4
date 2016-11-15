@@ -207,19 +207,19 @@
     <Compile Include="..\Xamarin.Forms.Core\Properties\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Forms.Platform.WinRT.Tablet\Forms.cs">
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\Forms.cs">
       <Link>Forms.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Forms.Platform.WinRT.Tablet\WindowsPage.cs">
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\WindowsPage.cs">
       <Link>WindowsPage.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Forms.Platform.WinRT.Tablet\WindowsPlatform.cs">
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\WindowsPlatform.cs">
       <Link>WindowsPlatform.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Forms.Platform.WinRT.Tablet\WindowsPlatformServices.cs">
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\WindowsPlatformServices.cs">
       <Link>WindowsPlatformServices.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Forms.Platform.WinRT.Tablet\WindowsResourcesProvider.cs">
+    <Compile Include="..\Xamarin.Forms.Platform.WinRT\WindowsResourcesProvider.cs">
       <Link>WindowsResourcesProvider.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Forms.Platform.WinRT\ActivityIndicatorRenderer.cs">
