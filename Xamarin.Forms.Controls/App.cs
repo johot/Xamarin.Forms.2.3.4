@@ -195,7 +195,6 @@ namespace Xamarin.Forms.Controls
 
 			return false;
 		}
-
 		
 		public void Reset()
 		{

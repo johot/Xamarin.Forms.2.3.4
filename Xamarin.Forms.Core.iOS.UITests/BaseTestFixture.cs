@@ -43,6 +43,8 @@ namespace Xamarin.Forms.Core.UITests
 		protected virtual void FixtureSetup()
 		{
 			ResetApp();
+			// We need to wait for the main page to appear before we navigate to this fixture's gallery
+			App.WaitForElement(q => q.Marked("iOS Core Gallery"));
 			NavigateToGallery();
 		}
 
@@ -52,7 +54,7 @@ namespace Xamarin.Forms.Core.UITests
 			App.Invoke("reset:", string.Empty);
 #endif
 #if __ANDROID__
-				App.Invoke("Reset");
+			App.Invoke("Reset");
 #endif
 		}
 	}
