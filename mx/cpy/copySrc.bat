@@ -32,3 +32,9 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Maps.WinRT.Tablet\*.xaml                    %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.xml       %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.jar       %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.cs        %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
+
+xcopy /S/Y %repoDir%Xamarin.Forms.Xaml\*                                      %srcDir%Xaml\Xamarin.Forms.Xaml\                              /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.Design\*                               %srcDir%Xaml\Xamarin.Forms.Xaml.Design\                       /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.UnitTests\*                            %srcDir%Xaml\Xamarin.Forms.Xaml.UnitTests\                    /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.Xamlc\*                                %srcDir%Xaml\Xamarin.Forms.Xaml.Xamlc\                        /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.Xamlg\*                                %srcDir%Xaml\Xamarin.Forms.Xaml.Xamlg\                        /EXCLUDE:%~dp0excludeObjBin.txt

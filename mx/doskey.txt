@@ -6,3 +6,6 @@ cor=pushd %SrcDir%Xamarin.Forms.Core
 
 ;= bat files
 cpy=call %RootDir%cpy\copySrc
+
+;= scorch
+scorch=git clean -fdXq -e !lfx -e !packages

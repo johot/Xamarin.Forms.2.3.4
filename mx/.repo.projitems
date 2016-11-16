@@ -58,6 +58,11 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Design\Xamarin.Forms.Xaml.Design.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.UnitTests\Xamarin.Forms.Xaml.UnitTests.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlc\Xamarin.Forms.Xaml.Xamlc.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlg\Xamarin.Forms.Xaml.Xamlg.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\git" />
