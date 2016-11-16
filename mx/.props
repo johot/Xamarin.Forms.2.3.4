@@ -25,6 +25,9 @@
   <!--shim-->
   <PropertyGroup>
     <ShimInclude>$(ShimDir)**\*.csproj</ShimInclude>
+    <ShimExclude>$(ShimDir)**\*Decompiler*.csproj</ShimExclude>
+    <ShimExclude>$(ShimDir)**\*Build*.csproj</ShimExclude>
+    <ShimExclude>$(ShimDir)**\*Xaml*.csproj</ShimExclude>
     <ShimExclude>$(ShimDir)**\*FormsViewGroup.csproj</ShimExclude>
     <IsBuildTargetBuild Condition="'$(BuildTarget)'=='build' OR '$(BuildTarget)'=='rebuild'">true</IsBuildTargetBuild>
     <IsBuildingFromRoot Condition="'$(StartupDir)'=='$(RootDir)'">true</IsBuildingFromRoot>
