@@ -58,4 +58,6 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Pages")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Pages.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.CarouselView")]
+#if !MXBUILD
 [assembly: Preserve]
+#endif
