@@ -62,7 +62,6 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\ICSharpCode.Decompiler\ICSharpCode.Decompiler.sln" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Build.Tasks\Xamarin.Forms.Build.Tasks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Design\Xamarin.Forms.Xaml.Design.csproj" />
-    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.UnitTests\Xamarin.Forms.Xaml.UnitTests.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlc\Xamarin.Forms.Xaml.Xamlc.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlg\Xamarin.Forms.Xaml.Xamlg.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
@@ -97,12 +96,10 @@
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\node\node.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\node\node.targets" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\copyShims.bat" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.targets" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.post.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.pre.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.props" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.targets" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\shim.props" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\shim.targets" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.build.targets" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.post.props" />

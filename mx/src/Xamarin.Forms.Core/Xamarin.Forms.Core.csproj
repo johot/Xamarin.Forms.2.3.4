@@ -25,6 +25,9 @@
     <!--TODO: Was not present in orig .csproj-->
     <!--<TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>-->
   </PropertyGroup>
+  <ImportGroup>
+    <Import Project="nuspec.props" />
+  </ImportGroup>
   <ItemGroup>
     <None Include="nuspec.props" />
     <None Include="winrt\uap\project.json" />
@@ -42,7 +45,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
   <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
-  <Import Project="nuspec.props" Condition=" '$(Plat)' == '$(PackPlatformId)' " />
   <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
     <SelfReference Include="$(DotNetLibraryPlatformId)" />
     <SelfReference Include="$(AndroidMobilePlatformId)" />

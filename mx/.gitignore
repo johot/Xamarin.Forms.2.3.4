@@ -1,2 +1,7 @@
 lfx
 drp
+packages
+build.txt
+build.log
+build.pp
+!project.lock.json

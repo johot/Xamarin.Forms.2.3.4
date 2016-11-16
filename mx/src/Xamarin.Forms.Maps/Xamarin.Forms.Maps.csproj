@@ -38,9 +38,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
-    <NugetDependency Include="Xamarin.Forms.Core" >
-      <Version>$(BuildVersion)</Version>
-    </NugetDependency>
   </ItemGroup>
   <!--
   
