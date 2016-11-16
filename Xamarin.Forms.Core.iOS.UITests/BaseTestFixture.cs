@@ -25,9 +25,29 @@ namespace Xamarin.Forms.Core.UITests
 		{
 		}
 
+		static int s_testsrun;
+		const int ConsecutiveTestLimit = 40;
+
+		// Until we get more of our memory leak issues worked out, restart the app 
+		// after a specified number of tests so we don't get bogged down in GC
+		public void EnsureMemory()
+		{
+			s_testsrun += 1;
+
+			if (s_testsrun >= ConsecutiveTestLimit)
+			{
+				s_testsrun = 0;
+
+				CoreUITestsSetup.LaunchApp();
+
+				FixtureSetup();
+			}
+		}
+
 		[SetUp]
 		protected virtual void TestSetup()
 		{
+			EnsureMemory();
 		}
 
 		[TearDown]
@@ -43,8 +63,6 @@ namespace Xamarin.Forms.Core.UITests
 		protected virtual void FixtureSetup()
 		{
 			ResetApp();
-			// We need to wait for the main page to appear before we navigate to this fixture's gallery
-			App.WaitForElement(q => q.Marked("iOS Core Gallery"));
 			NavigateToGallery();
 		}
 
@@ -74,7 +92,7 @@ namespace Xamarin.Forms.Core.UITests
 			LaunchApp();
 		}
 
-		void LaunchApp()
+		public static void LaunchApp()
 		{
 			BaseTestFixture.App = null;
 			BaseTestFixture.App = AppSetup.Setup();
