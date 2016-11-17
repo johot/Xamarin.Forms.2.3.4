@@ -4,6 +4,7 @@ using AppKit;
 using CoreGraphics;
 using Foundation;
 using Xamarin.Forms.Controls;
+using Xamarin.Forms.Controls.Issues;
 using Xamarin.Forms.Platform.MacOS;
 
 namespace Xamarin.Forms.ControlGallery.MacOS

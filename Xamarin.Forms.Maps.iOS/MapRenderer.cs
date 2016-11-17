@@ -8,18 +8,27 @@ using CoreLocation;
 using Foundation;
 using MapKit;
 using ObjCRuntime;
-using UIKit;
-using Xamarin.Forms.Platform.iOS;
 using RectangleF = CoreGraphics.CGRect;
 
+#if __MOBILE__
+using UIKit;
+using Xamarin.Forms.Platform.iOS;
+#else
+using Xamarin.Forms.Platform.MacOS;
+#endif
+
+#if __MOBILE__
 namespace Xamarin.Forms.Maps.iOS
+#else
+namespace Xamarin.Forms.Maps.MacOS
+#endif
 {
 	internal class MapDelegate : MKMapViewDelegate
 	{
 		// keep references alive, removing this will cause a segfault
 		static readonly List<object> List = new List<object>();
 		readonly Map _map;
-		UIView _lastTouchedView;
+		object _lastTouchedView;
 
 		internal MapDelegate(Map map)
 		{
@@ -51,6 +60,7 @@ namespace Xamarin.Forms.Maps.iOS
 
 		void AttachGestureToPin(MKPinAnnotationView mapPin, IMKAnnotation annotation)
 		{
+#if __MOBILE__
 			UIGestureRecognizer[] recognizers = mapPin.GestureRecognizers;
 
 			if (recognizers != null)
@@ -62,16 +72,22 @@ namespace Xamarin.Forms.Maps.iOS
 			}
 
 			Action<UITapGestureRecognizer> action = g => OnClick(annotation, g);
-			var recognizer = new UITapGestureRecognizer(action) { ShouldReceiveTouch = (gestureRecognizer, touch) =>
+			var recognizer = new UITapGestureRecognizer(action)
 			{
-				_lastTouchedView = touch.View;
-				return true;
-			} };
+				ShouldReceiveTouch = (gestureRecognizer, touch) =>
+{
+_lastTouchedView = touch.View;
+return true;
+}
+			};
 			List.Add(action);
 			List.Add(recognizer);
 			mapPin.AddGestureRecognizer(recognizer);
-		}
+#else
 
+#endif
+		}
+#if __MOBILE__
 		void OnClick(object annotationObject, UITapGestureRecognizer recognizer)
 		{
 			// https://bugzilla.xamarin.com/show_bug.cgi?id=26416
@@ -103,11 +119,14 @@ namespace Xamarin.Forms.Maps.iOS
 
 			targetPin.SendTap();
 		}
+#else
+
+#endif
 	}
 
 	public class MapRenderer : ViewRenderer
 	{
-	    CLLocationManager _locationManager;
+		CLLocationManager _locationManager;
 		bool _shouldUpdateRegion;
 
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
@@ -194,15 +213,27 @@ namespace Xamarin.Forms.Maps.iOS
 				_shouldUpdateRegion = true;
 		}
 
+#if __MOBILE__
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
+			UpdateRegion();
+		}
+#else
+		public override void Layout()
+		{
+			base.Layout();
+			UpdateRegion();
+		}
+#endif
+
+		void UpdateRegion()
+		{
 			if (_shouldUpdateRegion)
 			{
 				MoveToRegion(((Map)Element).LastMoveToRegion, false);
 				_shouldUpdateRegion = false;
 			}
-
 		}
 
 		void AddPins(IList pins)
@@ -278,12 +309,13 @@ namespace Xamarin.Forms.Maps.iOS
 
 		void UpdateIsShowingUser()
 		{
+#if __MOBILE__
 			if (FormsMaps.IsiOs8OrNewer && ((Map)Element).IsShowingUser)
 			{
 				_locationManager = new CLLocationManager();
 				_locationManager.RequestWhenInUseAuthorization();
 			}
-
+#endif
 			((MKMapView)Control).ShowsUserLocation = ((Map)Element).IsShowingUser;
 		}
 

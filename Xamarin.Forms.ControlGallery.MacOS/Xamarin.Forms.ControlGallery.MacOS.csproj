@@ -110,6 +110,10 @@
       <Project>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</Project>
       <Name>Xamarin.Forms.Xaml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Forms.Maps.MacOS\Xamarin.Forms.Maps.MacOS.csproj">
+      <Project>{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}</Project>
+      <Name>Xamarin.Forms.Maps.MacOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\bank.png" />

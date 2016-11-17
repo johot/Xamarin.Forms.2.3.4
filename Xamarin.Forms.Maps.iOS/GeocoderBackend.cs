@@ -1,10 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AddressBookUI;
 using CoreLocation;
 
+#if __MOBILE__
+using AddressBookUI;
+#endif
+
+#if __MOBILE__
 namespace Xamarin.Forms.Maps.iOS
+#else
+namespace Xamarin.Forms.Maps.MacOS
+#endif
 {
 	internal class GeocoderBackend
 	{
@@ -23,8 +30,13 @@ namespace Xamarin.Forms.Maps.iOS
 			{
 				if (placemarks == null)
 					placemarks = new CLPlacemark[0];
+#if __MOBILE__
 				IEnumerable<string> addresses = placemarks.Select(p => ABAddressFormatting.ToString(p.AddressDictionary, false));
 				source.SetResult(addresses);
+#else
+				source.SetResult(null);
+#endif
+
 			});
 			return source.Task;
 		}

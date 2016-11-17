@@ -61,16 +61,16 @@ namespace Xamarin.Forms.Controls
 						Pages.Add(id, new HanselmanNavigationPage(new BlogPage()));
 						break;
 					case HMenuType.DeveloperLife:
-						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 3" }));
+						Pages.Add(id, new HanselmanNavigationPage(new ContentPage() { Title = "Page 3" }));
 						break;
 					case HMenuType.Hanselminutes:
-						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 4" }));
+						Pages.Add(id, new HanselmanNavigationPage(new ContentPage() { Title = "Page 4" }));
 						break;
 					case HMenuType.Ratchet:
-						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 5" }));
+						Pages.Add(id, new HanselmanNavigationPage(new ContentPage() { Title = "Page 5" }));
 						break;
 					case HMenuType.Twitter:
-						Pages.Add(id, new HanselmanNavigationPage(new AboutPage() { Title = "Page 6" }));
+						Pages.Add(id, new HanselmanNavigationPage(new ContentPage() { Title = "Page 6" }));
 						break;
 				}
 			}
