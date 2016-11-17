@@ -6,6 +6,8 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		public static NSImage ResizeTo(this NSImage self, CoreGraphics.CGSize newSize)
 		{
+			if (self == null)
+				return self;
 			self.ResizingMode = NSImageResizingMode.Stretch;
 			var smallImage = new NSImage(newSize);
 			smallImage.LockFocus();
