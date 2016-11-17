@@ -32,6 +32,7 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 		public override void DidFinishLaunching(NSNotification notification)
 		{
 			Forms.Init();
+			FormsMaps.Init();
 
 			var app = new App();
 			// When the native control gallery loads up, it'll let us know so we can add the nested native controls
