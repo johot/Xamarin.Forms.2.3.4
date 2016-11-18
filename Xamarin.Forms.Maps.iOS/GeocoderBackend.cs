@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contacts;
 using CoreLocation;
 
 #if __MOBILE__
@@ -30,12 +31,22 @@ namespace Xamarin.Forms.Maps.MacOS
 			{
 				if (placemarks == null)
 					placemarks = new CLPlacemark[0];
+				List<string> addresses = new List<string>();
 #if __MOBILE__
-				IEnumerable<string> addresses = placemarks.Select(p => ABAddressFormatting.ToString(p.AddressDictionary, false));
-				source.SetResult(addresses);
+				addresses = placemarks.Select(p => ABAddressFormatting.ToString(p.AddressDictionary, false)).ToList();
 #else
-				source.SetResult(null);
+				foreach (var item in placemarks)
+				{
+					var address = new CNMutablePostalAddress();
+					address.Street = item.AddressDictionary["Street"] == null ? "" : item.AddressDictionary["Street"].ToString();
+					address.State = item.AddressDictionary["State"] == null ? "" : item.AddressDictionary["State"].ToString();
+					address.City = item.AddressDictionary["City"] == null ? "" : item.AddressDictionary["City"].ToString();
+					address.Country = item.AddressDictionary["Country"] == null ? "" : item.AddressDictionary["Country"].ToString();
+					address.PostalCode = item.AddressDictionary["ZIP"] == null ? "" : item.AddressDictionary["ZIP"].ToString();
+					addresses.Add(CNPostalAddressFormatter.GetStringFrom(address, CNPostalAddressFormatterStyle.MailingAddress));
+				}
 #endif
+				source.SetResult(addresses);
 
 			});
 			return source.Task;

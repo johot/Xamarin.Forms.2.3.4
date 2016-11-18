@@ -5,21 +5,18 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using CoreLocation;
-using Foundation;
 using MapKit;
 using ObjCRuntime;
 using RectangleF = CoreGraphics.CGRect;
+using Foundation;
 
 #if __MOBILE__
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
-#else
-using Xamarin.Forms.Platform.MacOS;
-#endif
-
-#if __MOBILE__
 namespace Xamarin.Forms.Maps.iOS
 #else
+using AppKit;
+using Xamarin.Forms.Platform.MacOS;
 namespace Xamarin.Forms.Maps.MacOS
 #endif
 {
@@ -84,11 +81,28 @@ return true;
 			List.Add(recognizer);
 			mapPin.AddGestureRecognizer(recognizer);
 #else
+			NSGestureRecognizer[] recognizers = mapPin.GestureRecognizers;
 
+			if (recognizers != null)
+			{
+				foreach (NSGestureRecognizer r in recognizers)
+				{
+					mapPin.RemoveGestureRecognizer(r);
+				}
+			}
+
+			Action<NSClickGestureRecognizer> action = g => OnClick(annotation, g);
+			var recognizer = new NSClickGestureRecognizer(action);
+			List.Add(action);
+			List.Add(recognizer);
+			mapPin.AddGestureRecognizer(recognizer);
 #endif
 		}
 #if __MOBILE__
 		void OnClick(object annotationObject, UITapGestureRecognizer recognizer)
+#else
+		void OnClick(object annotationObject, NSClickGestureRecognizer recognizer)
+#endif
 		{
 			// https://bugzilla.xamarin.com/show_bug.cgi?id=26416
 			NSObject annotation = Runtime.GetNSObject(((IMKAnnotation)annotationObject).Handle);
@@ -119,9 +133,6 @@ return true;
 
 			targetPin.SendTap();
 		}
-#else
-
-#endif
 	}
 
 	public class MapRenderer : ViewRenderer
