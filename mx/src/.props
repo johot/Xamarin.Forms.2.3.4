@@ -30,6 +30,9 @@
   <PropertyGroup>
     <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
     <NugetGooglePlayServicesVersion>29.0.0.1</NugetGooglePlayServicesVersion>
+    <NugetNewtonsoftJsonVersion>6.0.4</NugetNewtonsoftJsonVersion>
+    <NugetMicrosoftSystemVersion>2.2.29</NugetMicrosoftSystemVersion>
+    <NugetMicrosoftAzureVersion>2.0.1</NugetMicrosoftAzureVersion>
   </PropertyGroup>
 
   <!--msbuild (remove if\when mxbuild adopted)-->

@@ -57,6 +57,10 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\Xamarin.Forms.Pages.Azure.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\Xamarin.Forms.Pages.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\Xamarin.Forms.Platform.Android.AppLinks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Jars\formsviewgroup.jar" />

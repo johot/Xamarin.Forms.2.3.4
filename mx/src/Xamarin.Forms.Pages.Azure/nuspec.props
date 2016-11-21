@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+
+    Nuspec
+  -->
+  <PropertyGroup>
+    <NuspecId>Xamarin.Forms.Pages.Azure</NuspecId>
+    <NuspecTags>$(NuspecTags) pages</NuspecTags>
+    <NuspecDescription>Pre-built themeable pages for Xamarin.Forms</NuspecDescription>
+  </PropertyGroup>
+  <!--
+
+    Release Notes
+  -->
+  <PropertyGroup>
+    <NuspecReleaseNotes>
+      <![CDATA[]]>
+    </NuspecReleaseNotes>
+  </PropertyGroup>
+</Project>
