@@ -3,7 +3,6 @@
   <PropertyGroup>
     <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
     <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
-    <MetaProjectGuid>{63DFE391-2B58-4C43-B6EC-4D376EB60592}</MetaProjectGuid>
   </PropertyGroup>
   <!--
   
@@ -11,6 +10,52 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+  <!--
+  
+    Hierarchy
+  -->
+  <ItemGroup>
+    <!--all E { pack }-->
+    <PlatformGroup Include="$(AllPlatformId)" >
+      <Platforms>$(PackPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--mobile E { portable, android, ios, windows }-->
+    <PlatformGroup Include="$(MobilePlatformId)" >
+      <Platforms>$(PortablePlatformId);$(AndroidMobilePlatformId);$(IosMobilePlatformId);$(WindowsMobilePlatformId)</Platforms>
+    </PlatformGroup>
+    <!--portable E { dotnet }-->
+    <PlatformGroup Include="$(PortablePlatformId)" >
+      <Platforms>$(DotNetLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--android E { monodroid }-->
+    <PlatformGroup Include="$(AndroidMobilePlatformId)" >
+      <Platforms>$(AndroidLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--ios E { ios.unified }-->
+    <PlatformGroup Include="$(IosMobilePlatformId)" >
+      <Platforms>$(IosUnifiedMobileSubPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--ios.unified E { xamarin.ios }-->
+    <PlatformGroup Include="$(IosUnifiedMobileSubPlatformId)" >
+      <Platforms>$(IosUnifiedLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--windows E { windows.universal, windows.phone, windows.tablet }-->
+    <PlatformGroup Include="$(WindowsMobilePlatformId)" >
+      <Platforms>$(WindowsUniversalMobileSubPlatformId);$(WindowsPhoneMobileSubPlatformId);$(WindowsTabletMobileSubPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--windows.universal E { uap }-->
+    <PlatformGroup Include="$(WindowsUniversalMobileSubPlatformId)" >
+      <Platforms>$(WindowsUniversalLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--windows.phone E { wpa }-->
+    <PlatformGroup Include="$(WindowsPhoneMobileSubPlatformId)" >
+      <Platforms>$(WindowsPhoneLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--windows.tablet E { win }-->
+    <PlatformGroup Include="$(WindowsTabletMobileSubPlatformId)" >
+      <!--<Platforms>$(WindowsTabletLibraryPlatformId)</Platforms>-->
+    </PlatformGroup>
+  </ItemGroup>
   <!--
   
     Universal
@@ -70,6 +115,10 @@
     Library
   -->
   <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs" >
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
     <Compile Include="$(ExtIdDir)BuildInfo.cs">
       <DependentUpon>BuildInfo.t.cs</DependentUpon>
       <Link>Properties\BuildInfo.cs</Link>
@@ -80,14 +129,8 @@
       <CompileOutput>BuildInfo.cs</CompileOutput>
     </None>
     <Compile Include="$(ExtPackDir)PackageInfo.cs">
-      <DependentUpon>PackageInfo.t.cs</DependentUpon>
       <Link>Properties\PackageInfo.cs</Link>
     </Compile>
-    <None Include="$(ExtPackDir)PackageInfo.t.cs">
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-      <Link>Properties\PackageInfo.t.cs</Link>
-      <CompileOutput>PackageInfo.cs</CompileOutput>
-    </None>
   </ItemGroup>
   <!--
   

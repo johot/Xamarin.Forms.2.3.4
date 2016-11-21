@@ -5,9 +5,9 @@
     Nuspec
   -->
   <PropertyGroup>
-    <NuspecId>Xamarin.Forms</NuspecId>
-    <NuspecTags>$(NuspecTags)</NuspecTags>
-    <NuspecDescription>Build native UIs for iOS, Android, and Windows Phone from a single, shared C# codebase</NuspecDescription>
+    <NuspecId>Xamarin.Forms.AppLinks</NuspecId>
+    <NuspecTags>$(NuspecTags) applinks</NuspecTags>
+    <NuspecDescription>Add support for deep linking and indexing app content using Xamarin.Forms on the Android Platform</NuspecDescription>
   </PropertyGroup>
   <!--
 

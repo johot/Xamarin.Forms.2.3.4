@@ -8,8 +8,8 @@ using Xamarin.Forms.Platform.UWP;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
-#endif
 [assembly: ComVisible(false)]
+#endif
 [assembly: Dependency(typeof(WindowsSerializer))]
 
 // Views

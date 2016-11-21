@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 //
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Build.Tasks")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -13,7 +14,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("Xamarin Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
+#endif
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The Page "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.

@@ -57,6 +57,9 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\Xamarin.Forms.Platform.Android.AppLinks.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Jars\formsviewgroup.jar" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\ICSharpCode.Decompiler\ICSharpCode.Decompiler.sln" />
@@ -64,6 +67,7 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Design\Xamarin.Forms.Xaml.Design.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlc\Xamarin.Forms.Xaml.Xamlc.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlg\Xamarin.Forms.Xaml.Xamlg.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
@@ -83,7 +87,6 @@
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.proj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\id.targets" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.post.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.pre.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\meta\meta.targets" />
@@ -102,7 +105,6 @@
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuget\nuget.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.build.targets" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.post.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.pre.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\pack.targets" />
@@ -126,19 +128,46 @@
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shim\shim.proj" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\shim\shim.targets" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\tasks.props" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.post.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\ids.platform.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\meta.platform.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\mobile.platform.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\platform.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\primitive.platform.pre.props" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\shim.platform.pre.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.pre.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.props" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\xf\xf.targets" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)src\GlobalAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\android\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\ios\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\portable\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\phone\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\tablet\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\uap\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\android\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\ios\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\portable\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\phone\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\tablet\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\BuildInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\BuildInfo.t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\PackageInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\pack\PackageInfo.t.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)doskey.txt" />
+    <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\uap\project.json" />
+    <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Transforms\Metadata.xml" />
     <Content Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\doskey.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)plt\" />
   </ItemGroup>
 </Project>

@@ -5,9 +5,9 @@
     Nuspec
   -->
   <PropertyGroup>
-    <NuspecId>Xamarin.Forms</NuspecId>
-    <NuspecTags>$(NuspecTags)</NuspecTags>
-    <NuspecDescription>Build native UIs for iOS, Android, and Windows Phone from a single, shared C# codebase</NuspecDescription>
+    <NuspecId>Xamarin.Forms.Xaml</NuspecId>
+    <NuspecTags>$(NuspecTags) xamarin.forms xaml</NuspecTags>
+    <NuspecDescription>Xaml compilation for Xamarin forms</NuspecDescription>
   </PropertyGroup>
   <!--
 

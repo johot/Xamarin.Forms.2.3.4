@@ -1,5 +1,5 @@
 erase /s %srcDir%Xamarin.Forms.Core\*.cs
-erase /s %srcDir%Xamarin.Forms.Core\*.json
+erase /s %srcDir%Xamarin.Forms.Core\project.json
 erase /s %srcDir%Xamarin.Forms.Core\*.xaml
 erase /s %srcDir%Xamarin.Forms.Core\*.txt
 erase /s %srcDir%Xamarin.Forms.Core\*.jar
@@ -46,6 +46,7 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.Design\*.cs                            %s
 
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.cs              %srcDir%Xamarin.Forms.Platform.Android.AppLinks\              /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.txt             %srcDir%Xamarin.Forms.Platform.Android.AppLinks\              /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.xml             %srcDir%Xamarin.Forms.Platform.Android.AppLinks\              /EXCLUDE:%~dp0excludeObjBin.txt
 
 xcopy /S/Y %repoDir%Xamarin.Forms.Pages\*.cs                                  %srcDir%Xamarin.Forms.Pages\                                  /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Pages.Azure\*.cs                            %srcDir%Xamarin.Forms.Pages.Azure\                            /EXCLUDE:%~dp0excludeObjBin.txt

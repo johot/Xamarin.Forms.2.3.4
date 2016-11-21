@@ -3,10 +3,12 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
+#endif
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The Page "{Major}.{Minor}.*" will automatically update the build and revision,

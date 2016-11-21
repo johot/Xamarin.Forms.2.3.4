@@ -4,7 +4,28 @@
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., .props))\.props" />
-  
+
+  <!--product-->
+  <PropertyGroup>
+    <ProductCopyright>Copyright © Xamarin Inc. 2013-2016</ProductCopyright>
+    <ProductLicenseUrl>http://download.xamarin.com/content/licenses/Xamarin.Forms.rtf</ProductLicenseUrl>
+    <ProductIconUrl>http://xamarin.com/content/images/nuget/xamarin.png</ProductIconUrl>
+    <ProductProjectUrl>https://github.com/xamarin/Xamarin.Forms</ProductProjectUrl>
+    <ProductCompany>Xamarin, Inc.</ProductCompany>
+  </PropertyGroup>
+
+  <!--Nuspec-->
+  <PropertyGroup>
+    <NuspecAuthors>$(ProductCompany)</NuspecAuthors>
+    <NuspecOwners>$(ProductCompany)</NuspecOwners>
+    <NuspecRequireLicenseAcceptance>false</NuspecRequireLicenseAcceptance>
+    <NuspecCopyright>$(ProductCopyright)</NuspecCopyright>
+    <NuspecLicenseUrl>$(ProductLicenseUrl)</NuspecLicenseUrl>
+    <NuspecIconUrl>$(ProductIconUrl)</NuspecIconUrl>
+    <NuspecProjectUrl>$(ProductProjectUrl)</NuspecProjectUrl>
+    <NuspecTags>xamarin forms xamarinforms xamarin.forms </NuspecTags>
+  </PropertyGroup>
+
   <!--nuget versions-->
   <PropertyGroup>
     <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
@@ -49,51 +70,35 @@
   
   <!--portable-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)'">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProductVersion>12.0.0</ProductVersion>
+
     <!--misc from Xamarin.Forms.Platform-->
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
-  
+
   <!--android-->
-  <Choose>
-    <When Condition="'$(LibraryPlatform)' == '$(AndroidLibraryPlatformId)'">
-      <PropertyGroup>
-        <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-        <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
-        <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-        <!--<AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>-->
-        <ProductVersion>8.0.30703</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-      </PropertyGroup>
-    </When>
-  </Choose>
-  
-  <!--ios-->
   <PropertyGroup Condition="'$(MobilePlatform)' == '$(AndroidMobilePlatformId)'">
+    <FileAlignment>512</FileAlignment>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </PropertyGroup>
+  
+  <!--android library-->
+  <PropertyGroup Condition="'$(LibraryPlatform)' == '$(AndroidLibraryPlatformId)'">
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
-  <!--ios app-->
-  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosMobilePlatformId)' AND '$(IsMobileAppProject)'=='true'">
-    <OutputType>Exe</OutputType>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <MtouchSdkVersion>10.0</MtouchSdkVersion>
-    <ConsolePause>false</ConsolePause>
-    <OptimizePNGs>True</OptimizePNGs>
-    <MtouchFloat32>False</MtouchFloat32>
-    <MtouchProfiling>False</MtouchProfiling>
-    <MtouchFastDev>False</MtouchFastDev>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
-    <MtouchI18n />
+  <!--ios-->
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosMobilePlatformId)'">
   </PropertyGroup>
 
   <!--ios unified-->
-  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosUnifiedMobileSubPlatformId)'">
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)'">
   </PropertyGroup>
 
   <!--ios classic-->

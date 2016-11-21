@@ -26,6 +26,9 @@
   <PropertyGroup>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Core.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Maps.csproj</ShimInclude>
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj</ShimInclude>
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Xaml.csproj</ShimInclude>
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Platform.Android.AppLinks.csproj</ShimInclude>
     <IsBuildTargetBuild Condition="'$(BuildTarget)'=='build' OR '$(BuildTarget)'=='rebuild'">true</IsBuildTargetBuild>
     <IsBuildingFromRoot Condition="'$(StartupDir)'=='$(RootDir)'">true</IsBuildingFromRoot>
   </PropertyGroup>
