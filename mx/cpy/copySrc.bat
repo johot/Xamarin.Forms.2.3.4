@@ -4,6 +4,9 @@ erase /s %srcDir%Xamarin.Forms.Core\*.xaml
 erase /s %srcDir%Xamarin.Forms.Core\*.txt
 erase /s %srcDir%Xamarin.Forms.Core\*.jar
 
+rmdir /s/q %srcDir%AndroidNative\
+xcopy /S/Y %repoDir%AndroidNative\*                                           %srcDir%AndroidNative\
+
 copy /Y    %repoDir%stubs\Xamarin.Forms.Platform.cs                           %srcDir%Xamarin.Forms.Core\
 
 xcopy /S/Y %repoDir%Xamarin.Forms.Core\*.cs                                   %srcDir%Xamarin.Forms.Core\portable\

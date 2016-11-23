@@ -83,9 +83,9 @@
     <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
   </PropertyGroup>
   <ImportGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <Import Project="$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\package.props" />
-    <Import Project="$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\package.props" />
-    <Import Project="$(PkgDir)Microsoft.Azure.Mobile.Client.$(NugetMicrosoftAzureVersion)\lib\portable-win+net45+wp8+wpa81+monotouch+monoandroid\package.props" />
+    <Import Project="$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\shim.props" />
+    <Import Project="$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\shim.props" />
+    <Import Project="$(PkgDir)Microsoft.Azure.Mobile.Client.$(NugetMicrosoftAzureVersion)\lib\portable-win+net45+wp8+wpa81+monotouch+monoandroid\shim.props" />
   </ImportGroup>
   <ItemGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
     <!--compile-->

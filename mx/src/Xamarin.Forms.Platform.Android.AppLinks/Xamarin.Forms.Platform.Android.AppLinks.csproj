@@ -92,10 +92,10 @@
     <ProjectGuid>{A3F22767-213E-46F4-B639-5565668AE2FF}</ProjectGuid>
   </PropertyGroup>
   <ImportGroup Condition=" '$(MetaPlatform)' == '$(AndroidLibraryPlatformId)' ">
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\package.props" />
-    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\package.props" />
-    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\package.props" />
-    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.AppIndexing.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\package.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.AppIndexing.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
   </ImportGroup>
   <ItemGroup Condition=" '$(MetaPlatform)' == '$(AndroidLibraryPlatformId)' ">
     <!--compile-->

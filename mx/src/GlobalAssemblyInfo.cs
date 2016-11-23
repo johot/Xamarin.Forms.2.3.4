@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion(BuildVersion.MajorVersion + "." + BuildVersion.MinorVersion + "." + BuildVersion.Number)]
 [assembly: NugetPackage("$(NuspecId)", "$(NuspecVersion)")]
 
-[assembly: NugetDependency("%(NugetDependency.Identity)", "%(Version)")]
+[assembly: NugetDependency("%(NugetDependency.Name)", "%(Version)")]
 [assembly: NugetTargetFramework("$(NugetTargetFrameworkMoniker)", Version = "$(NugetTargetFrameworkVersion)")]
 
 [assembly: EnlistmentUrl("$(EnlistmentUrl)")]

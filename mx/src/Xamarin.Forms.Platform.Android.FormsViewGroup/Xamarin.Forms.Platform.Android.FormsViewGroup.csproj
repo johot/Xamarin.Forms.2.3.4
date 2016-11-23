@@ -16,7 +16,7 @@
   -->
   <ItemGroup>
     <!--all E { monodroid.bindings }-->
-    <PlatformGroup Include="$(AllPlatformId)" >
+    <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(AndroidBindingsLibraryPlatformId)</Platforms>
     </PlatformGroup>
   </ItemGroup>
@@ -31,12 +31,18 @@
     <AssemblyName>FormsViewGroup</AssemblyName>
     <RootNamespace>FormsViewGroup</RootNamespace>
   </PropertyGroup>
+  <ImportGroup>
+    <Import Project="nuspec.props" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="nuspec.props" />
+  </ItemGroup>
   <!--
   
     Library
   -->
   <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
-    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs" >
+    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
     </Compile>

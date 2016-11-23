@@ -53,6 +53,12 @@
     <None Include="$(MSBuildThisFileDirectory)env.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
     <None Include="$(MSBuildThisFileDirectory)src\.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.classpath" />
+    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.project" />
+    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.settings\org.eclipse.jdt.core.prefs" />
+    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\libs\android-support-v4.jar" />
+    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\project.properties" />
+    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\src\com\xamarin\forms\platform\android\FormsViewGroup.java" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
@@ -167,6 +173,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)doskey.txt" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\AndroidManifest.xml" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\proguard-project.txt" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\drawable-hdpi\ic_launcher.png" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\drawable-mdpi\ic_launcher.png" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\drawable-xhdpi\ic_launcher.png" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values-v11\styles.xml" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values-v14\styles.xml" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values\strings.xml" />
+    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values\styles.xml" />
     <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\uap\project.json" />
     <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Transforms\Metadata.xml" />
     <Content Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\doskey.txt" />

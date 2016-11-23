@@ -83,8 +83,8 @@
     <ProjectGuid>{D6133DBD-6C60-4BD5-BEA2-07E0A3927C31}</ProjectGuid>
   </PropertyGroup>
   <ImportGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <Import Project="$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\package.props" />
-    <Import Project="$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\package.props" />
+    <Import Project="$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\shim.props" />
+    <Import Project="$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\shim.props" />
   </ImportGroup>
   <ItemGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
     <!--compile-->
