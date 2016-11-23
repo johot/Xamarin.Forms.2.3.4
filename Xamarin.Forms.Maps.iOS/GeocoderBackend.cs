@@ -6,6 +6,8 @@ using CoreLocation;
 
 #if __MOBILE__
 using AddressBookUI;
+#else
+using Xamarin.Forms.Maps.MacOS.Extra;
 #endif
 
 #if __MOBILE__
