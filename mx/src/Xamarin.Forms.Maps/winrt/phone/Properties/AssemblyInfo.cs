@@ -8,6 +8,7 @@ using Xamarin.Forms.Platform.WinRT;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Maps.WinRT.Phone")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -26,4 +27,5 @@ using Xamarin.Forms.Platform.WinRT;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: ComVisible(false)]
+#endif
 [assembly: ExportRenderer(typeof (Map), typeof (MapRenderer))]

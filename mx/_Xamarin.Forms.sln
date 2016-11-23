@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml.Xamlc", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml.Xamlg", "src\Xaml\Xamarin.Forms.Xaml.Xamlg\Xamarin.Forms.Xaml.Xamlg.csproj", "{D597E3C6-1A50-4042-99FA-3E7CE28E4819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.Android.AppLinks", "src\Xamarin.Forms.Platform.Android.AppLinks\Xamarin.Forms.Platform.Android.AppLinks.csproj", "{A3F22767-213E-46F4-B639-5565668AE2FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.AppLinks", "src\Xamarin.Forms.AppLinks\Xamarin.Forms.AppLinks.csproj", "{A3F22767-213E-46F4-B639-5565668AE2FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Pages", "src\Xamarin.Forms.Pages\Xamarin.Forms.Pages.csproj", "{EDAFAA1D-61F5-4DDA-B6B4-3E94AAD2C3EE}"
 EndProject

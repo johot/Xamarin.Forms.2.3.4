@@ -59,6 +59,7 @@
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\libs\android-support-v4.jar" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\project.properties" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\src\com\xamarin\forms\platform\android\FormsViewGroup.java" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.AppLinks\Xamarin.Forms.AppLinks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
@@ -67,8 +68,6 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\Xamarin.Forms.Pages.Azure.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\Xamarin.Forms.Pages.csproj" />
-    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\nuspec.props" />
-    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\Xamarin.Forms.Platform.Android.AppLinks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Jars\formsviewgroup.jar" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj" />
@@ -150,7 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)src\GlobalAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.AppLinks\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\android\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\design\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\ios\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\portable\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\phone\Properties\AssemblyInfo.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\tablet\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\winrt\uap\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\android\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\design\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\ios\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\portable\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\phone\Properties\AssemblyInfo.cs" />
@@ -165,7 +167,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\tablet\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\Properties\AssemblyInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.AppLinks\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\BuildInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sub\mxbuild\id\BuildInfo.t.cs" />

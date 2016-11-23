@@ -8,6 +8,7 @@ using Xamarin.Forms.Maps.iOS;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Maps.iOS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -18,7 +19,7 @@ using Xamarin.Forms.Maps.iOS;
 // COM, set the ComVisible attribute to true on that type.
 
 [assembly: ComVisible(false)]
-
+#endif
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("4a5d02cd-7350-46b6-bbd5-204b727c67c9")]

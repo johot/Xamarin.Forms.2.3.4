@@ -28,6 +28,7 @@
 
   <!--nuget versions-->
   <PropertyGroup>
+    <NugetXamarinFormsDesignSupportVersion>1.0.14-pre</NugetXamarinFormsDesignSupportVersion>
     <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
     <NugetGooglePlayServicesVersion>29.0.0.1</NugetGooglePlayServicesVersion>
     <NugetNewtonsoftJsonVersion>6.0.4</NugetNewtonsoftJsonVersion>

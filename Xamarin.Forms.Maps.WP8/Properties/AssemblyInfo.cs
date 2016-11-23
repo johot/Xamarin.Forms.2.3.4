@@ -8,6 +8,7 @@ using Xamarin.Forms.Maps.WP8;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Maps.WP8")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -18,7 +19,7 @@ using Xamarin.Forms.Maps.WP8;
 // COM, set the ComVisible attribute to true on that type.
 
 [assembly: ComVisible(false)]
-
+#endif
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("9222d2b8-63a4-4a36-a80e-bc34f27e0951")]

@@ -10,12 +10,13 @@ using Xamarin.Forms.Maps.Android;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Maps.Android")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-
+#endif
 // Add some common permissions, these can be removed if not needed
 
 [assembly: UsesPermission(Manifest.Permission.Internet)]

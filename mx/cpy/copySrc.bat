@@ -9,7 +9,8 @@ xcopy /S/Y %repoDir%AndroidNative\*                                           %s
 
 copy /Y    %repoDir%stubs\Xamarin.Forms.Platform.cs                           %srcDir%Xamarin.Forms.Core\
 
-xcopy /S/Y %repoDir%Xamarin.Forms.Core\*.cs                                   %srcDir%Xamarin.Forms.Core\portable\
+xcopy /S/Y %repoDir%Xamarin.Forms.Core\*.cs                                   %srcDir%Xamarin.Forms.Core\portable\                          /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Core.Design\*.cs                            %srcDir%Xamarin.Forms.Core\design\                            /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform\*.cs                               %srcDir%Xamarin.Forms.Core\portable\Platform\                 /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android\*.cs                       %srcDir%Xamarin.Forms.Core\android\                           /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.iOS\*.cs                           %srcDir%Xamarin.Forms.Core\ios\                               /EXCLUDE:%~dp0excludeObjBin.txt
@@ -33,6 +34,7 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Maps.WinRT.Phone\*.cs                       %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Maps.WinRT.Phone\*.xaml                     %srcDir%Xamarin.Forms.Maps\winrt\phone\                       /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Maps.WinRT.Tablet\*.cs                      %srcDir%Xamarin.Forms.Maps\winrt\tablet\                      /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Maps.WinRT.Tablet\*.xaml                    %srcDir%Xamarin.Forms.Maps\winrt\tablet\                      /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Maps.Design\*.cs                            %srcDir%Xamarin.Forms.Maps\design\                            /EXCLUDE:%~dp0excludeObjBin.txt
 
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.xml       %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.jar       %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
@@ -45,11 +47,9 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.Xamlg\*.cs                             %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Build.Tasks\*.cs                            %srcDir%Xaml\Xamarin.Forms.Build.Tasks\                       /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%ICSharpCode.Decompiler\*.cs                               %srcDir%Xaml\ICSharpCode.Decompiler\                          /EXCLUDE:%~dp0excludeObjBin.txt
 
-xcopy /S/Y %repoDir%Xamarin.Forms.Xaml.Design\*.cs                            %srcDir%Xamarin.Forms.Xaml.Design\                            /EXCLUDE:%~dp0excludeObjBin.txt
-
-xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.cs              %srcDir%Xamarin.Forms.Platform.Android.AppLinks\              /EXCLUDE:%~dp0excludeObjBin.txt
-xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.txt             %srcDir%Xamarin.Forms.Platform.Android.AppLinks\              /EXCLUDE:%~dp0excludeObjBin.txt
-xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.xml             %srcDir%Xamarin.Forms.Platform.Android.AppLinks\              /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.cs              %srcDir%Xamarin.Forms.AppLinks\                               /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.txt             %srcDir%Xamarin.Forms.AppLinks\                               /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.xml             %srcDir%Xamarin.Forms.AppLinks\                               /EXCLUDE:%~dp0excludeObjBin.txt
 
 xcopy /S/Y %repoDir%Xamarin.Forms.Pages\*.cs                                  %srcDir%Xamarin.Forms.Pages\                                  /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Pages.Azure\*.cs                            %srcDir%Xamarin.Forms.Pages.Azure\                            /EXCLUDE:%~dp0excludeObjBin.txt

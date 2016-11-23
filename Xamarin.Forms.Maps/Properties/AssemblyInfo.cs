@@ -8,10 +8,12 @@ using Xamarin.Forms.Internals;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
+#if !MXBUILD
 [assembly: AssemblyTitle("Xamarin.Forms.Maps")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
+#endif
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.iOS")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.iOS.Classic")]
