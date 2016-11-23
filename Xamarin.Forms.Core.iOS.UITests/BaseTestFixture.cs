@@ -26,10 +26,11 @@ namespace Xamarin.Forms.Core.UITests
 		}
 
 		static int s_testsrun;
-		const int ConsecutiveTestLimit = 40;
+		const int ConsecutiveTestLimit = 10;
 
 		// Until we get more of our memory leak issues worked out, restart the app 
-		// after a specified number of tests so we don't get bogged down in GC
+		// after a specified number of tests so we don't get bogged down in GC 
+		// (or booted by jetsam)
 		public void EnsureMemory()
 		{
 			s_testsrun += 1;
@@ -63,7 +64,40 @@ namespace Xamarin.Forms.Core.UITests
 		protected virtual void FixtureSetup()
 		{
 			ResetApp();
-			NavigateToGallery();
+
+			int maxAttempts = 2;
+			int attempts = 0;
+
+			while (attempts < maxAttempts)
+			{
+				attempts += 1;
+				try
+				{
+					NavigateToGallery();
+					return;
+				}
+				catch (Exception ex)
+				{
+					var debugMessage = $"NavigateToGallery failed: {ex}";
+
+					Debug.WriteLine(debugMessage);
+					Console.WriteLine(debugMessage);
+
+					if (attempts < maxAttempts)
+					{
+						// Something has failed and we're stuck in a place where we can't navigate
+						// to the test. Usually this is because we're getting network/HTTP errors 
+						// communicating with the server on the device. So we'll try restarting the app.
+						CoreUITestsSetup.LaunchApp();
+					}
+					else
+					{
+						// But if it's still not working after [maxAttempts], we've got assume this is a legit
+						// problem that restarting won't fix
+						throw;
+					}
+				}
+			}
 		}
 
 		protected void ResetApp()
