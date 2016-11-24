@@ -22,4 +22,6 @@ using Xamarin.Forms.Maps.Android;
 [assembly: UsesPermission(Manifest.Permission.Internet)]
 [assembly: UsesPermission(Manifest.Permission.WriteExternalStorage)]
 [assembly: ExportRenderer(typeof (Map), typeof (MapRenderer))]
+#if !MXBUILD
 [assembly: Preserve]
+#endif

@@ -173,8 +173,8 @@
   
     Mobile
   -->
-  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)'=='true'">
-    <!--<IsCompositePlatform>true</IsCompositePlatform>-->
+  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)' == 'true'">
+    <IsCompositePlatform>true</IsCompositePlatform>
     <DefineConstants>$(DefineConstants)COMPOSITE;</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition=" '$(IsMobileLibraryPlatform)' == 'true' ">

@@ -15,6 +15,7 @@ using Xamarin.Forms.Internals;
 [assembly: AssemblyCulture("")]
 #endif
 [assembly: NeutralResourcesLanguage("en")]
+#if !MXBUILD
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.iOS")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.iOS.Classic")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.Android")]
@@ -22,6 +23,9 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.UWP")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.WinRT.Phone")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.WinRT.Tablet")]
+#else
+[assembly: InternalsVisibleTo("Xamarin.Forms.Maps.Portable")]
+#endif
 [assembly: InternalsVisibleTo("iOSUnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Android.UnitTests")]
@@ -29,4 +33,6 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.Design")]
+#if !MXBUILD
 [assembly: Preserve]
+#endif

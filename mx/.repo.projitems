@@ -78,6 +78,7 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml.Xamlg\Xamarin.Forms.Xaml.Xamlg.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)sub\lfx.shim\Lfx.exe" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\git" />

@@ -22,6 +22,7 @@ using Xamarin.Forms.Internals;
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
 
+#if !MXBUILD
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.iOS")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.iOS.Classic")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.Android")]
@@ -31,6 +32,9 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.WinRT.Phone")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.WP8")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.MacOS")]
+#else
+[assembly: InternalsVisibleTo("Xamarin.Forms.Core.Portable")]
+#endif
 [assembly: InternalsVisibleTo("iOSUnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Controls")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Design")]

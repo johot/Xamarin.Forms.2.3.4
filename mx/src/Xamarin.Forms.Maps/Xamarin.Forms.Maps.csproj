@@ -16,43 +16,43 @@
   -->
   <ItemGroup>
     <!--all E { pack }-->
-    <PlatformGroup Include="$(AllPlatformId)" >
+    <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(PackPlatformId)</Platforms>
     </PlatformGroup>
     <!--mobile E { portable, android, ios, windows }-->
-    <PlatformGroup Include="$(MobilePlatformId)" >
+    <PlatformGroup Include="$(MobilePlatformId)">
       <Platforms>$(PortablePlatformId);$(AndroidMobilePlatformId);$(IosMobilePlatformId);$(WindowsMobilePlatformId)</Platforms>
     </PlatformGroup>
     <!--portable E { dotnet }-->
-    <PlatformGroup Include="$(PortablePlatformId)" >
+    <PlatformGroup Include="$(PortablePlatformId)">
       <Platforms>$(DotNetLibraryPlatformId)</Platforms>
     </PlatformGroup>
     <!--android E { monodroid }-->
-    <PlatformGroup Include="$(AndroidMobilePlatformId)" >
+    <PlatformGroup Include="$(AndroidMobilePlatformId)">
       <Platforms>$(AndroidLibraryPlatformId)</Platforms>
     </PlatformGroup>
     <!--ios E { ios.unified }-->
-    <PlatformGroup Include="$(IosMobilePlatformId)" >
+    <PlatformGroup Include="$(IosMobilePlatformId)">
       <Platforms>$(IosUnifiedMobileSubPlatformId)</Platforms>
     </PlatformGroup>
     <!--ios.unified E { xamarin.ios }-->
-    <PlatformGroup Include="$(IosUnifiedMobileSubPlatformId)" >
+    <PlatformGroup Include="$(IosUnifiedMobileSubPlatformId)">
       <Platforms>$(IosUnifiedLibraryPlatformId)</Platforms>
     </PlatformGroup>
     <!--windows E { windows.universal, windows.phone, windows.tablet }-->
-    <PlatformGroup Include="$(WindowsMobilePlatformId)" >
+    <PlatformGroup Include="$(WindowsMobilePlatformId)">
       <Platforms>$(WindowsUniversalMobileSubPlatformId);$(WindowsPhoneMobileSubPlatformId);$(WindowsTabletMobileSubPlatformId)</Platforms>
     </PlatformGroup>
     <!--windows.universal E { uap }-->
-    <PlatformGroup Include="$(WindowsUniversalMobileSubPlatformId)" >
+    <PlatformGroup Include="$(WindowsUniversalMobileSubPlatformId)">
       <Platforms>$(WindowsUniversalLibraryPlatformId)</Platforms>
     </PlatformGroup>
     <!--windows.phone E { wpa }-->
-    <PlatformGroup Include="$(WindowsPhoneMobileSubPlatformId)" >
+    <PlatformGroup Include="$(WindowsPhoneMobileSubPlatformId)">
       <Platforms>$(WindowsPhoneLibraryPlatformId)</Platforms>
     </PlatformGroup>
     <!--windows.tablet E { win }-->
-    <PlatformGroup Include="$(WindowsTabletMobileSubPlatformId)" >
+    <PlatformGroup Include="$(WindowsTabletMobileSubPlatformId)">
       <!--<Platforms>$(WindowsTabletLibraryPlatformId)</Platforms>-->
     </PlatformGroup>
   </ItemGroup>
@@ -99,6 +99,7 @@
     <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
     <!--<SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />-->
     <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
+    <!--<SelfReference Include="$(XamarinFormsDesign)" />-->
     <!--
       content
     -->
@@ -115,7 +116,7 @@
     Library
   -->
   <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
-    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs" >
+    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
     </Compile>
@@ -172,8 +173,8 @@
   
     Mobile
   -->
-  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)'=='true'">
-    <!--<IsCompositePlatform>true</IsCompositePlatform>-->
+  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)' == 'true'">
+    <IsCompositePlatform>true</IsCompositePlatform>
     <DefineConstants>$(DefineConstants)COMPOSITE;</DefineConstants>
   </PropertyGroup>
   <!--
@@ -187,23 +188,25 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
   </PropertyGroup>
   <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.MediaRouter.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props"/>
-    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Maps.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props"/>
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.MediaRouter.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Maps.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
   </ImportGroup>
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="FormsViewGroup">
-      <HintPath>..\Xamarin.Forms.Platform.Android.FormsViewGroup\bin\$(Configuration)\FormsViewGroup.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Xamarin.Forms.Platform.Android.FormsViewGroup\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj">
+      <Project>{3B72465B-ACAE-43AE-9327-10F372FE5F80}</Project>
+      <Platform>$(AndroidBindingsLibraryPlatformId)</Platform>
+      <Name>Xamarin.Forms.Platform.Android.FormsViewGroup</Name>
+    </ProjectReference>
   </ItemGroup>
   <!--
   
@@ -284,6 +287,7 @@
     Portable
   -->
   <ItemGroup Condition=" '$(IsPartPlatform)' != 'true' ">
+    <Compile Include="portable\Properties\AssemblyInfo.cs" />
     <Compile Include="portable\Distance.cs" />
     <Compile Include="portable\Geocoder.cs" />
     <Compile Include="portable\Map.cs" />
@@ -298,6 +302,7 @@
     Android
   -->
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Compile Include="android\Properties\AssemblyInfo.cs" />
     <Compile Include="android\FormsMaps.cs" />
     <Compile Include="android\GeocoderBackend.cs" />
     <Compile Include="android\MapRenderer.cs" />
@@ -307,6 +312,7 @@
     iOS
   -->
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <Compile Include="ios\Properties\AssemblyInfo.cs" />
     <Compile Include="ios\FormsMaps.cs" />
     <Compile Include="ios\GeocoderBackend.cs" />
     <Compile Include="ios\MapRenderer.cs" />
@@ -323,11 +329,33 @@
   </ItemGroup>
   <!--
   
+    Windows Phone
+  -->
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
+    <Compile Include="winrt\phone\Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <!--
+  
     Windows Tablet
   -->
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
+    <Compile Include="winrt\tablet\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\tablet\GeocoderBackend.cs" />
     <Compile Include="winrt\tablet\MapRenderer.cs" />
+  </ItemGroup>
+  <!--
+  
+    Windows Universal
+  -->
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <Compile Include="winrt\uap\Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <!--
+  
+    Xamarin Forms Design
+  -->
+  <ItemGroup Condition=" '$(MetaPlatform)' == '$(XamarinFormsDesign)' ">
+    <Compile Include="design\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <!--
 
