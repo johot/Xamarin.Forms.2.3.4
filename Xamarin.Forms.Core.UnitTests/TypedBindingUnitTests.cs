@@ -1386,7 +1386,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
-		[Ignore]
+		[Ignore("")]
 		public void SpeedTestApply()
 		{
 			
@@ -1456,7 +1456,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
-		[Ignore]
+		[Ignore("")]
 		public void SpeedTestSetBC()
 		{
 
