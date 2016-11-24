@@ -1257,7 +1257,8 @@ namespace Xamarin.Forms.Core.UnitTests
 
 		#if !WINDOWS_PHONE
 		[Test]
-		[SetUICulture ("pt-PT")]
+		[SetUICulture("pt-PT")]
+		[SetCulture("pt-PT")]
 		public void ValueConverterCulture ()
 		{
 			var converter = new TestConverterCulture ();
