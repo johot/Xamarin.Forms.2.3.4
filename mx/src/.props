@@ -28,6 +28,7 @@
 
   <!--nuget versions-->
   <PropertyGroup>
+    <NugetMonoCecilVersion>0.9.6.1</NugetMonoCecilVersion>
     <NugetXamarinFormsDesignSupportVersion>1.0.14-pre</NugetXamarinFormsDesignSupportVersion>
     <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
     <NugetGooglePlayServicesVersion>29.0.0.1</NugetGooglePlayServicesVersion>
@@ -72,7 +73,13 @@
     <DefineConstants>$(DefineConstants)TRACE;</DefineConstants>
   </PropertyGroup>
   
-  <!--portable-->
+  <!--netstandard-->
+  <PropertyGroup Condition="'$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)'">
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  
+  <!--dotnet-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)'">
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <PathToDesignExe Condition="'$(PathToDesignExe)' == ''">$(MSBuildThisFileDirectory)fdgen.exe</PathToDesignExe>
+    <DesignIntermediateDir Condition="'$(DesignIntermediateDir)' == ''">$(MSBuildProjectDirectory)\$(IntermediateOutputPath)Design</DesignIntermediateDir>
+    <DesignIntermediateDir Condition="HasTrailingSlash('$(DesignIntermediateDir)')">$(DesignIntermediateDir.TrimEnd('\'))</DesignIntermediateDir>
+    <DesignOutputDir Condition="'$(DesignOutputDir)' == ''">$(MSBuildProjectDirectory)\$(OutputPath)Design</DesignOutputDir>
+    <DesignOutputDir Condition="HasTrailingSlash('$(DesignOutputDir)')">$(DesignOutputDir.TrimEnd('\'))</DesignOutputDir>
+    <DesignOutputAssembly Condition="'$(DesignOutputAssembly)' == ''">$(TargetName).Design.dll</DesignOutputAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ResolveReferencesDependsOn>
+      AddXamlReference;
+      $(ResolveReferencesDependsOn)
+    </ResolveReferencesDependsOn>
+    <CompileDependsOn>
+      GenerateDesignSource;
+      $(CompileDependsOn)
+    </CompileDependsOn>
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      GenerateDesignAssembly
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(DevEnvDir)' == ''">
+    <VSCommToolsVar>VS$(VisualStudioVersion.Replace('.', ''))COMNTOOLS</VSCommToolsVar>
+    <DevEnvDir>$([System.Environment]::ExpandEnvironmentVariables('%$(VSCommToolsVar)%'))..\IDE\</DevEnvDir>
+  </PropertyGroup>
+
+  <!-- This would expose the DesignCompile build action in VS, so that custom code can also be added via the PCL -->
+  <!--
+  <ItemGroup>
+    <AvailableItemName Include="DesignCompile" />
+  </ItemGroup>
+  -->
+
+  <!-- If the package is installed in a project a reference to the XAML design extensibility, 
+       then the project is a standalone Design project with custom code, so we just add the generated 
+       code to its Compile list, for all project and assembly references.
+  -->
+  <Target Name="AddXamlReference">
+    <ItemGroup 
+      Condition="
+        '@(Reference->WithMetadataValue('Identity', 'Microsoft.Windows.Design.Extensibility'))' != '' And 
+        '@(Reference->WithMetadataValue('Identity', 'System.Xaml'))' == ''"
+     >
+      <Reference Include="System.Xaml" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GenerateDesignSource"
+    Condition="'@(ReferencePath->WithMetadataValue('Filename', 'Microsoft.Windows.Design.Extensibility'))' != ''">
+
+    <ItemGroup>
+      <!--<DesignReference Include="@(ReferencePath->WithMetadataValue('GenerateDesignMetadata', 'true'))" />-->
+      <!-- If we generate for all, wost thing is that there won't be anything to emit? -->
+      <DesignReference 
+        Include="%(ReferencePath.Identity)"
+        Condition="
+          '%(ResolvedFrom)' != 'ImplicitlyExpandDesignTimeFacades' And 
+          '%(ResolvedFrom)' != '{TargetFrameworkDirectory}' And
+          '%(Filename)' != 'Microsoft.Windows.Design.Extensibility' And 
+          '%(Filename)' != 'mscorlib' "
+        />
+    </ItemGroup>
+
+    <MakeDir Directories="$(DesignIntermediateDir)" Condition="!Exists('$(DesignIntermediateDir)')" />
+
+    <Exec Command='"$(PathToDesignExe)" "%(DesignReference.FullPath)" "$(DesignIntermediateDir)"' />
+
+    <ItemGroup>
+      <DesignCompile 
+        Include="$(DesignIntermediateDir)\$([System.IO.Path]::GetFileNameWithoutExtension(%(DesignReference.FullPath))).AttributeTableBuilder.cs"
+        Condition="Exists('$(DesignIntermediateDir)\$([System.IO.Path]::GetFileNameWithoutExtension(%(DesignReference.FullPath))).AttributeTableBuilder.cs')"
+      />
+      <DesignCompile 
+        Include="$(DesignIntermediateDir)\StructOptionsConverter.cs"
+        Condition="Exists('$(DesignIntermediateDir)\StructOptionsConverter.cs')"
+      />
+      
+      <Compile Include="@(DesignCompile)" />
+    </ItemGroup>
+
+    <!--<ItemGroup>
+      <FileWrites Include="@(DesignCompile)" />
+    </ItemGroup>-->
+
+    <WriteLinesToFile 
+      File="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)$(CleanFile)" 
+      Lines="@(DesignCompile)" 
+    />
+  </Target>
+
+  <Target 
+    Name="GenerateDesignAssembly" 
+    Inputs="$(TargetPath)" 
+    Outputs="$(DesignOutputDir)\$(DesignOutputAssembly)"
+    Condition="'@(ReferencePath->WithMetadataValue('Filename', 'Microsoft.Windows.Design.Extensibility'))' == ''"
+  >
+    <MakeDir Directories="$(DesignIntermediateDir)" Condition="!Exists('$(DesignIntermediateDir)')" />
+    <MakeDir Directories="$(DesignOutputDir)" Condition="!Exists('$(DesignOutputDir)')" />
+
+    <Exec Command='"$(PathToDesignExe)" "$(TargetPath)" "$(DesignIntermediateDir)"' />
+
+    <PropertyGroup>
+      <DesignFrameworkPath 
+        Condition="'$(DesignFrameworkPath)' == ''"
+        >$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPathToStandardLibraries('.NETFramework', 'v4.5', '', 'x86'))</DesignFrameworkPath>
+      <DesignDllFile>$(DevEnvDir)PublicAssemblies\Microsoft.Windows.Design.Extensibility.dll</DesignDllFile>
+      <SystemXamlPath>$(DesignFrameworkPath)\System.Xaml.dll</SystemXamlPath>
+      <DesignFacades>$(DesignFrameworkPath)\Facades\*.dll</DesignFacades>
+    </PropertyGroup>
+
+    <Error Condition="!Exists($(DesignDllFile))" Text="Failed to locate required assembly reference at $(DesignDllFile)" />
+
+    <ItemGroup>
+      <DesignCompile Include="$(DesignIntermediateDir)\$([System.IO.Path]::GetFileNameWithoutExtension($(TargetPath))).AttributeTableBuilder.cs" />
+      <DesignCompile Include="$(DesignIntermediateDir)\StructOptionsConverter.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <FormsCoreAssembly 
+        Include="%(ReferencePath.Identity)" 
+        Condition="'@(ReferencePath->EndsWith(Xamarin.Forms.Core.dll))' == 'true'"  
+      />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DesignReferences Include="@(FormsCoreAssembly)" />
+      <DesignReferences Include="$(TargetPath)" />
+      <DesignReferences Include="$(DesignDllFile)" />
+      <DesignReferences Include="$(SystemPath)" />
+      <DesignReferences Include="$(SystemXamlPath)" />
+      <DesignReferences Include="$(DesignFacades)" />
+    </ItemGroup>
+
+    <Csc 
+      References="@(DesignReferences)"
+      OutputAssembly="$(DesignOutputDir)\$(DesignOutputAssembly)"
+      TargetType="library"
+      Sources="@(DesignCompile)"
+    />
+
+    <ItemGroup>
+      <DesignFileWrites Include="$(DesignOutputDir)\$(DesignOutputAssembly)" />
+      <DesignFileWrites Include="@(DesignCompile)" />
+    </ItemGroup>
+
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)$(CleanFile)" Lines="@(DesignFileWrites)" />
+
+  </Target>
+</Project>

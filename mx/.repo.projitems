@@ -62,6 +62,8 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.AppLinks\Xamarin.Forms.AppLinks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Design\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Design\Xamarin.Forms.Design.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\nuspec.props" />
