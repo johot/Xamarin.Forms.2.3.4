@@ -19,6 +19,15 @@
     <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(PackPlatformId);$(AndroidLibraryPlatformId)</Platforms>
     </PlatformGroup>
+
+    <!--android E { monodroid }-->
+    <PlatformGroup Include="$(AndroidMobilePlatformId)">
+      <Platforms>$(AndroidLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--monodroid E { monodroid7.0 }-->
+    <PlatformGroup Include="$(AndroidLibraryPlatformId)">
+      <Platforms>$(AndroidLibraryPlatformId-7_0)</Platforms>
+    </PlatformGroup>
   </ItemGroup>
   <!--
   

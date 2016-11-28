@@ -19,6 +19,15 @@
     <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(PackPlatformId);$(DotNetLibraryPlatformId)</Platforms>
     </PlatformGroup>
+
+    <!--portable E { dotnet }-->
+    <PlatformGroup Include="$(PortablePlatformId)">
+      <Platforms>$(DotNetLibraryPlatformId)</Platforms>
+    </PlatformGroup>
+    <!--dotnet E { dotnet259 }-->
+    <PlatformGroup Include="$(DotNetLibraryPlatformId)">
+      <Platforms>$(DotNetLibraryPlatformId-259)</Platforms>
+    </PlatformGroup>
   </ItemGroup>
   <!--
   

@@ -56,6 +56,8 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ErrorReport>prompt</ErrorReport>
+    
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
 
   <!--debug-->
@@ -76,13 +78,11 @@
   <!--netstandard-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)'">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   
   <!--dotnet-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)'">
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
+    <NugetTargetFrameworkVersion>-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10</NugetTargetFrameworkVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProductVersion>12.0.0</ProductVersion>
 
@@ -92,7 +92,7 @@
 
   <!--android-->
   <PropertyGroup Condition="'$(MobilePlatform)' == '$(AndroidMobilePlatformId)'">
-    <FileAlignment>512</FileAlignment>
+    <NugetTargetFrameworkVersion>4.3</NugetTargetFrameworkVersion>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
@@ -100,12 +100,12 @@
   <!--android library-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(AndroidLibraryPlatformId)'">
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <!--ios-->
   <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosMobilePlatformId)'">
+    <NugetTargetFrameworkVersion>1.0</NugetTargetFrameworkVersion>
   </PropertyGroup>
 
   <!--ios unified-->
@@ -118,15 +118,23 @@
 
   <!--windows universal-->
   <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'">
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <NugetTargetFrameworkVersion>10.0</NugetTargetFrameworkVersion>
     <UseDotNetNativeToolchain Condition="'$(Configuration)' == 'Release'">true</UseDotNetNativeToolchain>
   </PropertyGroup>
 
   <!--windows phone-->
   <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)'">
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <NugetTargetFrameworkVersion>8.1</NugetTargetFrameworkVersion>
+    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
   </PropertyGroup>
 
   <!--windows tablet-->
   <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)'">
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <NugetTargetFrameworkVersion>8.1</NugetTargetFrameworkVersion>
   </PropertyGroup>
 
   <!--windows platform-->

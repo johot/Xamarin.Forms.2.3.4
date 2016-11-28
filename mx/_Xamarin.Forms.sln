@@ -7,6 +7,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = ".repo", ".repo.shproj", "{3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{453F471B-9F4F-4431-85F8-FB7BA2035659}"
 	ProjectSection(SolutionItems) = preProject
+		src\.hierarchy.props = src\.hierarchy.props
 		src\.props = src\.props
 		src\GlobalAssemblyInfo.cs = src\GlobalAssemblyInfo.cs
 	EndProjectSection

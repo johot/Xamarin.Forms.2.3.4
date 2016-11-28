@@ -53,6 +53,7 @@
     <None Include="$(MSBuildThisFileDirectory)env.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
     <None Include="$(MSBuildThisFileDirectory)src\.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\.hierarchy.props" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.classpath" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.project" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.settings\org.eclipse.jdt.core.prefs" />

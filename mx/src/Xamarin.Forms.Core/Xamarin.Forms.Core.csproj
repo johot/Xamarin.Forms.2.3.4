@@ -10,52 +10,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-  <!--
-  
-    Hierarchy
-  -->
-  <ItemGroup>
-    <!--all E { pack }-->
-    <PlatformGroup Include="$(AllPlatformId)">
-      <Platforms>$(PackPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--mobile E { portable, android, ios, windows }-->
-    <PlatformGroup Include="$(MobilePlatformId)">
-      <Platforms>$(PortablePlatformId);$(AndroidMobilePlatformId);$(IosMobilePlatformId);$(WindowsMobilePlatformId)</Platforms>
-    </PlatformGroup>
-    <!--portable E { dotnet }-->
-    <PlatformGroup Include="$(PortablePlatformId)">
-      <Platforms>$(DotNetLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--android E { monodroid }-->
-    <PlatformGroup Include="$(AndroidMobilePlatformId)">
-      <Platforms>$(AndroidLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--ios E { ios.unified }-->
-    <PlatformGroup Include="$(IosMobilePlatformId)">
-      <Platforms>$(IosUnifiedMobileSubPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--ios.unified E { xamarin.ios }-->
-    <PlatformGroup Include="$(IosUnifiedMobileSubPlatformId)">
-      <Platforms>$(IosUnifiedLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--windows E { windows.universal, windows.phone, windows.tablet }-->
-    <PlatformGroup Include="$(WindowsMobilePlatformId)">
-      <Platforms>$(WindowsUniversalMobileSubPlatformId);$(WindowsPhoneMobileSubPlatformId);$(WindowsTabletMobileSubPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--windows.universal E { uap }-->
-    <PlatformGroup Include="$(WindowsUniversalMobileSubPlatformId)">
-      <Platforms>$(WindowsUniversalLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--windows.phone E { wpa }-->
-    <PlatformGroup Include="$(WindowsPhoneMobileSubPlatformId)">
-      <Platforms>$(WindowsPhoneLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--windows.tablet E { win }-->
-    <PlatformGroup Include="$(WindowsTabletMobileSubPlatformId)">
-      <Platforms>$(WindowsTabletLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-  </ItemGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .hierarchy.props))\.hierarchy.props" />
   <!--
   
     Universal
@@ -238,21 +193,14 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
-  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' " />
   <!--
 
     Windows Tablet
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
-  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' "/>
   <!--
 
     Windows Universal
@@ -261,10 +209,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
     <UseProjectJson>true</UseProjectJson>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ProjectLockFile>winrt\uap\project.lock.json</ProjectLockFile>
   </PropertyGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">

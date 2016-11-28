@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !WINDOWS_APP
+using System;
 using System.ComponentModel;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml;
@@ -68,3 +69,4 @@ namespace Xamarin.Forms.Maps.WinRT
 		}
 	}
 }
+#endif

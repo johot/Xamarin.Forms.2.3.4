@@ -19,6 +19,10 @@
     <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(AndroidBindingsLibraryPlatformId)</Platforms>
     </PlatformGroup>
+    <!--monodroid.bindings E { monodroid.bindings4.0.3 }-->
+    <PlatformGroup Include="$(AndroidBindingsLibraryPlatformId)">
+      <Platforms>$(AndroidBindingsLibraryPlatformId-4_0_3)</Platforms>
+    </PlatformGroup>
   </ItemGroup>
   <!--
   
@@ -71,7 +75,7 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(MetaPlatform)' == '$(AndroidBindingsLibraryPlatformId)' ">
+  <ItemGroup Condition=" '$(MetaPlatformIdentifier)' == '$(AndroidBindingsLibraryPlatformId)' ">
     <EmbeddedJar Include="Jars\formsviewgroup.jar" />
     <TransformFile Include="Transforms\Metadata.xml" />
     <!--<Compile Include="Properties\AssemblyInfo.cs" />-->
