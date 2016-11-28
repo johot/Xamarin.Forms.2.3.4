@@ -24,7 +24,7 @@
     <PlatformGroup Include="$(PortablePlatformId)">
       <Platforms>$(DotNetLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--dotnet E { dotnet259 }-->
+    <!--dotnet E { dotnet-259 }-->
     <PlatformGroup Include="$(DotNetLibraryPlatformId)">
       <Platforms>$(DotNetLibraryPlatformId-259)</Platforms>
     </PlatformGroup>

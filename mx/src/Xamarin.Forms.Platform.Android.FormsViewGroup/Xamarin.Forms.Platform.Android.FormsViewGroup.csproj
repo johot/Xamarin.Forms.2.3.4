@@ -19,7 +19,7 @@
     <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(AndroidBindingsLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--monodroid.bindings E { monodroid.bindings4.0.3 }-->
+    <!--monodroid.bindings E { monodroid.bindings-4.0.3 }-->
     <PlatformGroup Include="$(AndroidBindingsLibraryPlatformId)">
       <Platforms>$(AndroidBindingsLibraryPlatformId-4_0_3)</Platforms>
     </PlatformGroup>

@@ -22,7 +22,7 @@
     <PlatformGroup Include="$(PortablePlatformId)">
       <Platforms>$(DotNetLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--dotnet E { dotnet259 }-->
+    <!--dotnet E { dotnet-259 }-->
     <PlatformGroup Include="$(DotNetLibraryPlatformId)">
       <Platforms>$(DotNetLibraryPlatformId-259)</Platforms>
     </PlatformGroup>
@@ -31,7 +31,7 @@
     <PlatformGroup Include="$(AndroidMobilePlatformId)">
       <Platforms>$(AndroidLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--monodroid E { monodroid7.0 }-->
+    <!--monodroid E { monodroid-7.0 }-->
     <PlatformGroup Include="$(AndroidLibraryPlatformId)">
       <Platforms>$(AndroidLibraryPlatformId-7_0)</Platforms>
     </PlatformGroup>
@@ -44,7 +44,7 @@
     <PlatformGroup Include="$(IosUnifiedMobileSubPlatformId)">
       <Platforms>$(IosUnifiedLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--xamarin.ios E { xamarin.ios1.0 }-->
+    <!--xamarin.ios E { xamarin.ios-1.0 }-->
     <PlatformGroup Include="$(IosUnifiedLibraryPlatformId)">
       <Platforms>$(IosUnifiedLibraryPlatformId-1_0)</Platforms>
     </PlatformGroup>
@@ -53,7 +53,7 @@
     <PlatformGroup Include="$(WindowsUniversalMobileSubPlatformId)">
       <Platforms>$(WindowsUniversalLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--uap E { uap10.0.10586.0 }-->
+    <!--uap E { uap-10.0.10586.0 }-->
     <PlatformGroup Include="$(WindowsUniversalLibraryPlatformId)">
       <Platforms>$(WindowsUniversalLibraryPlatformId-10_0_10586_0)</Platforms>
     </PlatformGroup>
@@ -62,7 +62,7 @@
     <PlatformGroup Include="$(WindowsPhoneMobileSubPlatformId)">
       <Platforms>$(WindowsPhoneLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--wpa E { wpa8.1 }-->
+    <!--wpa E { wpa-8.1 }-->
     <PlatformGroup Include="$(WindowsPhoneLibraryPlatformId)">
       <Platforms>$(WindowsPhoneLibraryPlatformId-8_1)</Platforms>
     </PlatformGroup>
@@ -71,7 +71,7 @@
     <PlatformGroup Include="$(WindowsTabletMobileSubPlatformId)">
       <Platforms>$(WindowsTabletLibraryPlatformId)</Platforms>
     </PlatformGroup>
-    <!--win E { win8.1 }-->
+    <!--win E { win-8.1 }-->
     <PlatformGroup Include="$(WindowsTabletLibraryPlatformId)">
       <Platforms>$(WindowsTabletLibraryPlatformId-8_1)</Platforms>
     </PlatformGroup>
