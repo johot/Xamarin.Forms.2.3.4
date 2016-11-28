@@ -31,6 +31,7 @@
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.AppLinks.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.Azure.csproj</ShimInclude>
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Design.csproj</ShimInclude>
     <IsBuildTargetBuild Condition="'$(BuildTarget)'=='build' OR '$(BuildTarget)'=='rebuild'">true</IsBuildTargetBuild>
     <IsBuildingFromRoot Condition="'$(StartupDir)'=='$(RootDir)'">true</IsBuildingFromRoot>
   </PropertyGroup>

@@ -44,11 +44,8 @@
   
   <!--shared-->
   <PropertyGroup>
-    <!--<MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>-->
-
-    <!--handled by lfx-->
-    <!--<RestorePackages>true</RestorePackages>-->
-    <!--<NuGetPackageImportStamp>9af32e5a</NuGetPackageImportStamp>-->
+    <FileAlignment>512</FileAlignment>
+    <CreateHardLinksForCopyLocalIfPossible>true</CreateHardLinksForCopyLocalIfPossible>
   </PropertyGroup>
 
   <!--shared platform|config-->
@@ -56,8 +53,6 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ErrorReport>prompt</ErrorReport>
-    
-    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
 
   <!--debug-->
@@ -77,7 +72,6 @@
   
   <!--netstandard-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)'">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   
   <!--dotnet-->

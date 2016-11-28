@@ -23,6 +23,10 @@
     <PlatformGroup Include="$(PortablePlatformId)">
       <Platforms>$(NetStandardLibraryPlatformId)</Platforms>
     </PlatformGroup>
+    <!--netstandard E { netstandard-4.5 }-->
+    <PlatformGroup Include="$(NetStandardLibraryPlatformId)">
+      <Platforms>$(NetStandardLibraryPlatformId-4_5)</Platforms>
+    </PlatformGroup>
   </ItemGroup>
   <!--
   
@@ -34,6 +38,8 @@
     <ProjectGuid>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</ProjectGuid>
     <AssemblyName>Xamarin.Forms.Design</AssemblyName>
     <RootNamespace>Xamarin.Forms.Design</RootNamespace>
+
+    <NuspecIsBuildPackage>true</NuspecIsBuildPackage>
   </PropertyGroup>
   <ImportGroup>
     <Import Project="nuspec.props" />
@@ -69,7 +75,8 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
-  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
+  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " >
+  </PropertyGroup>
   <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
     <SelfReference Include="$(NetStandardLibraryPlatformId)" />
     <!--
@@ -89,6 +96,11 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' " >
+    <!--smae build tool to be used by all nuget targets-->
+    <NugetTargetFrameworkMoniker/>
+    <NugetTargetFrameworkVersion/>
+  </PropertyGroup>
   <ImportGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
     <Import Project="$(PkgDir)Mono.Cecil.$(NugetMonoCecilVersion)\lib\Net45\shim.props" />
   </ImportGroup>
