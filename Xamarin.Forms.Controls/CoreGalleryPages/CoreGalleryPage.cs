@@ -17,6 +17,36 @@ namespace Xamarin.Forms.Controls
 		Picker _picker;
 		StackLayout _moveNextStack;
 
+		static List<Type> _typesAllocated = new List<Type>();
+
+		static void RegisterAllocation(Type type)
+		{
+			_typesAllocated.Add(type);
+		}
+
+		static void UnregisterAllocation(Type type)
+		{
+			_typesAllocated.Remove(type);
+		}
+
+		static void ListAllocations(Type exclude)
+		{
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			if (_typesAllocated.Count(t => t != exclude) > 0)
+			{
+				Log.Warning("UI Tests", $">>>>>>>> CoreGallery Pages Allocated:");
+				//System.Diagnostics.Debug.WriteLine($">>>>>>>> CoreGallery Pages Allocated:");
+			}
+
+			foreach (Type type in _typesAllocated.Where(t => t != exclude))
+			{
+				Log.Warning("UI Tests", $">>>>>>>> \t{type}");
+				//System.Diagnostics.Debug.WriteLine($">>>>>>>> {type}");
+			}
+		}
+
 		ViewContainer<T> _backgroundColorViewContainer;
 		ViewContainer<T> _opacityViewContainer;
 		ViewContainer<T> _rotationViewContainer;
@@ -56,6 +86,14 @@ namespace Xamarin.Forms.Controls
 
 			Content = new ScrollView { AutomationId = "GalleryScrollView", Content = Layout };
 
+			ListAllocations(GetType());
+			RegisterAllocation(GetType());
+		}
+
+		~CoreGalleryPage()
+		{
+			Log.Warning("UI Tests", $">>>>>>>> Destructor: {GetType()}");
+			UnregisterAllocation(GetType());
 		}
 
 		protected virtual void InitializeElement (T element) {}
