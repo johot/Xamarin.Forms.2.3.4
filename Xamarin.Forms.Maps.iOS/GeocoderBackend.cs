@@ -6,8 +6,10 @@ using CoreLocation;
 
 #if __MOBILE__
 using AddressBookUI;
+using CCLGeocoder = CoreLocation.CLGeocoder;
 #else
 using Xamarin.Forms.Maps.MacOS.Extra;
+using CCLGeocoder = Xamarin.Forms.Maps.MacOS.Extra.CLGeocoder;
 #endif
 
 #if __MOBILE__
@@ -27,7 +29,7 @@ namespace Xamarin.Forms.Maps.MacOS
 		static Task<IEnumerable<string>> GetAddressesForPositionAsync(Position position)
 		{
 			var location = new CLLocation(position.Latitude, position.Longitude);
-			var geocoder = new CLGeocoder();
+			var geocoder = new CCLGeocoder();
 			var source = new TaskCompletionSource<IEnumerable<string>>();
 			geocoder.ReverseGeocodeLocation(location, (placemarks, error) =>
 			{
@@ -56,7 +58,7 @@ namespace Xamarin.Forms.Maps.MacOS
 
 		static Task<IEnumerable<Position>> GetPositionsForAddressAsync(string address)
 		{
-			var geocoder = new CLGeocoder();
+			var geocoder = new CCLGeocoder();
 			var source = new TaskCompletionSource<IEnumerable<Position>>();
 			geocoder.GeocodeAddress(address, (placemarks, error) =>
 			{
