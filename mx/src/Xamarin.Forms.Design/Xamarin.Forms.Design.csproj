@@ -15,9 +15,9 @@
     Hierarchy
   -->
   <ItemGroup>
-    <!--all E { pack }-->
+    <!--all E { portable }-->
     <PlatformGroup Include="$(AllPlatformId)">
-      <Platforms>$(PackPlatformId)</Platforms>
+      <Platforms>$(PortablePlatformId)</Platforms>
     </PlatformGroup>
     <!--portable E { netstandard }-->
     <PlatformGroup Include="$(PortablePlatformId)">
@@ -38,8 +38,9 @@
     <ProjectGuid>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</ProjectGuid>
     <AssemblyName>Xamarin.Forms.Design</AssemblyName>
     <RootNamespace>Xamarin.Forms.Design</RootNamespace>
-
-    <NuspecIsBuildPackage>true</NuspecIsBuildPackage>
+    
+    <NugetIsBuildAssembly>true</NugetIsBuildAssembly>
+    <NugetBuildAssemblySubDirName>design</NugetBuildAssemblySubDirName>
   </PropertyGroup>
   <ImportGroup>
     <Import Project="nuspec.props" />
@@ -71,36 +72,10 @@
   </ItemGroup>
   <!--
   
-    Nuget Pack
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
-  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " >
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
-    <SelfReference Include="$(NetStandardLibraryPlatformId)" />
-    <!--
-      content
-    -->
-    <None Include="$(ExtPackDir)Package.nuspec">
-      <CopyTargetName>$(NuspecName)</CopyTargetName>
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-      <Type>xml</Type>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>Package.nuspec</Link>
-    </None>
-  </ItemGroup>
-  <!--
-  
     Portable
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
-  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' " >
-    <!--smae build tool to be used by all nuget targets-->
-    <NugetTargetFrameworkMoniker/>
-    <NugetTargetFrameworkVersion/>
-  </PropertyGroup>
   <ImportGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
     <Import Project="$(PkgDir)Mono.Cecil.$(NugetMonoCecilVersion)\lib\Net45\shim.props" />
   </ImportGroup>

@@ -83,7 +83,7 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xaml\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
     <None Include="$(MSBuildThisFileDirectory)sub\lfx.shim\Lfx.exe" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.gitignore" />
-    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.7" />
+    <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\packages\Mxbuild.Tasks.0.2.12" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\git" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\.lfx\tools\nuget.exe" />
     <None Include="$(MSBuildThisFileDirectory)sub\mxbuild\clean\clean.pre.props" />
@@ -190,8 +190,5 @@
     <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\uap\project.json" />
     <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Platform.Android.FormsViewGroup\Transforms\Metadata.xml" />
     <Content Include="$(MSBuildThisFileDirectory)sub\mxbuild\shell\doskey.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)plt\" />
   </ItemGroup>
 </Project>

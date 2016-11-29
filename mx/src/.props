@@ -72,6 +72,9 @@
   
   <!--netstandard-->
   <PropertyGroup Condition="'$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)'">
+    <!--Only Xamarin.Forms build tools are 'netstandard' are used for all TargetFrameworks-->
+    <NugetTargetFrameworkVersion/>
+    <NugetTargetFrameworkMoniker/>
   </PropertyGroup>
   
   <!--dotnet-->

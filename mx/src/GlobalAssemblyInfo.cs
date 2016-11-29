@@ -21,6 +21,10 @@ using System.Runtime.InteropServices;
 [assembly: EnlistmentUrl("$(EnlistmentUrl)")]
 [assembly: EnlistmentBranch("$(EnslitmentBranch)")]
 [assembly: EnlistmentRevision("$(EnlistmentRevision)")]
+
+#if NUGET_BUILD_ASSEMBLY
+[assembly: NugetBuildAssembly(Directory = "$(NugetBuildAssemblySubDirName)")]
+#endif
 #pragma warning restore 0436
 
 [assembly: ComVisible(false)]

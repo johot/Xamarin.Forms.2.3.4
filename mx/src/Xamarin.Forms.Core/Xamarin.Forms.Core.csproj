@@ -52,6 +52,11 @@
     <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
     <SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />
     <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
+    <ProjectReference Include="..\Xamarin.Forms.Design\Xamarin.Forms.Design.csproj">
+      <Project>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</Project>
+      <Platform>$(PortablePlatformId)</Platform>
+      <Name>Xamarin.Forms.Design</Name>
+    </ProjectReference>
     <!--
       content
     -->
