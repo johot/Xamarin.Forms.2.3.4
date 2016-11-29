@@ -38,6 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{7E12
 	ProjectSection(SolutionItems) = preProject
 		.nuspec\Xamarin.Forms.AppLinks.nuspec = .nuspec\Xamarin.Forms.AppLinks.nuspec
 		.nuspec\Xamarin.Forms.Debug.targets = .nuspec\Xamarin.Forms.Debug.targets
+		.nuspec\Xamarin.Forms.MacOS.nuspec = .nuspec\Xamarin.Forms.MacOS.nuspec
 		.nuspec\Xamarin.Forms.Maps.nuspec = .nuspec\Xamarin.Forms.Maps.nuspec
 		.nuspec\Xamarin.Forms.Maps.props = .nuspec\Xamarin.Forms.Maps.props
 		.nuspec\Xamarin.Forms.Maps.targets = .nuspec\Xamarin.Forms.Maps.targets
@@ -45,7 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{7E12
 		.nuspec\Xamarin.Forms.Pages.Azure.nuspec = .nuspec\Xamarin.Forms.Pages.Azure.nuspec
 		.nuspec\Xamarin.Forms.Pages.nuspec = .nuspec\Xamarin.Forms.Pages.nuspec
 		.nuspec\Xamarin.Forms.targets = .nuspec\Xamarin.Forms.targets
-		.nuspec\Xamarin.Forms.MacOS.nuspec = .nuspec\Xamarin.Forms.MacOS.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.WP8", "Xamarin.Forms.Platform.WP8\Xamarin.Forms.Platform.WP8.csproj", "{517B6AE0-792B-4665-9376-5CA33E539181}"
@@ -151,8 +151,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery.MacOS", "Xamarin.Forms.ControlGallery.MacOS\Xamarin.Forms.ControlGallery.MacOS.csproj", "{8D3DFCB7-DB10-40E5-ACFE-411AAA85520D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps.MacOS", "Xamarin.Forms.Maps.MacOS\Xamarin.Forms.Maps.MacOS.csproj", "{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps.MacOS.Extra", "Xamarin.Forms.Maps.MacOS.Extra\Xamarin.Forms.Maps.MacOS.Extra.csproj", "{6346D187-BA87-4F18-A165-F27C5B7F25D0}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -1617,34 +1615,6 @@ Global
 		{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}.Release|x64.Build.0 = Release|Any CPU
 		{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}.Release|x86.ActiveCfg = Release|Any CPU
 		{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}.Release|x86.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|ARM.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|Templates.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|Templates.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|x64.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Debug|x86.Build.0 = Debug|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|ARM.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|ARM.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|iPhone.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|Templates.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|Templates.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|x64.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|x64.Build.0 = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|x86.ActiveCfg = Release|Any CPU
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1706,6 +1676,5 @@ Global
 		{C0059C45-EA1E-42F3-8A0E-794BB547EC3C} = {29AC50BF-B4FB-450B-9386-0C5AD4B84226}
 		{8D3DFCB7-DB10-40E5-ACFE-411AAA85520D} = {4F5E2D21-17F6-4A42-B8FB-D03D82E24EC8}
 		{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884} = {132FB9A4-613F-44CE-95D5-758D32D231DD}
-		{6346D187-BA87-4F18-A165-F27C5B7F25D0} = {132FB9A4-613F-44CE-95D5-758D32D231DD}
 	EndGlobalSection
 EndGlobal
