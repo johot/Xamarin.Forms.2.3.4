@@ -19,7 +19,6 @@
     <PlatformGroup Include="$(AllPlatformId)">
       <Platforms>$(PackPlatformId)</Platforms>
     </PlatformGroup>
-
     <!--portable E { dotnet }-->
     <PlatformGroup Include="$(PortablePlatformId)">
       <Platforms>$(DotNetLibraryPlatformId)</Platforms>
@@ -77,6 +76,11 @@
   <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
   <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
     <SelfReference Include="$(DotNetLibraryPlatformId)" />
+    <ProjectReference Include="..\Xamarin.Forms.Xaml.BuildTasks\Xamarin.Forms.Xaml.BuildTasks.csproj">
+      <Project>{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}</Project>
+      <Platform>$(PortablePlatformId)</Platform>
+      <Name>Xamarin.Forms.Xaml.BuildTasks</Name>
+    </ProjectReference>
     <!--
       content
     -->

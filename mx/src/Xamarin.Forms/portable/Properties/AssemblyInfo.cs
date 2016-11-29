@@ -59,7 +59,11 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Android.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Loader")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.UITest.Validator")]
+#if !MXBUILD
 [assembly: InternalsVisibleTo("Xamarin.Forms.Build.Tasks")]
+#else
+[assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.BuildTasks")]
+#endif
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Pages")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Pages.UnitTests")]

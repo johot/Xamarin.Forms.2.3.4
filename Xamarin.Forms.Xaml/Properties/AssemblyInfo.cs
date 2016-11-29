@@ -25,7 +25,11 @@ using Xamarin.Forms.Internals;
 //[assembly: AssemblyKeyFile("")]
 
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.UnitTests")]
+#if !MXBUILD
 [assembly: InternalsVisibleTo("Xamarin.Forms.Build.Tasks")]
+#else
+[assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.BuildTasks")]
+#endif
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.Design")]
 
 [assembly: XmlnsDefinition("http://xamarin.com/schemas/2014/forms", "Xamarin.Forms.Xaml")]

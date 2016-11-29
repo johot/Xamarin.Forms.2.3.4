@@ -5,7 +5,7 @@
     Nuspec
   -->
   <PropertyGroup>
-    <NuspecId>Xamarin.Forms.BuildTasks</NuspecId>
-    <NuspecDescription>Generate Design dll to enable Intellisense in Visual Studio.</NuspecDescription>
+    <NuspecId>Xamarin.Forms.Xaml.BuildTasks</NuspecId>
+    <NuspecDescription>Generate Xaml.</NuspecDescription>
   </PropertyGroup>
 </Project>

@@ -45,12 +45,12 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.cs              %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.txt             %srcDir%Xamarin.Forms.AppLinks\                               /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.AppLinks\*.xml             %srcDir%Xamarin.Forms.AppLinks\                               /EXCLUDE:%~dp0excludeObjBin.txt
 
-erase /s %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.cs
-erase /s %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.jar
-erase /s %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.xml
-xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.cs        %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
-xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.xml       %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
-xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.jar       %srcDir%Xamarin.Forms.Platform.Android.FormsViewGroup\        /EXCLUDE:%~dp0excludeObjBin.txt
+erase /s %srcDir%Xamarin.Forms.Bindings\*.cs
+erase /s %srcDir%Xamarin.Forms.Bindings\*.jar
+erase /s %srcDir%Xamarin.Forms.Bindings\*.xml
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.cs        %srcDir%Xamarin.Forms.Bindings\                               /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.xml       %srcDir%Xamarin.Forms.Bindings\                               /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Platform.Android.FormsViewGroup\*.jar       %srcDir%Xamarin.Forms.Bindings\                               /EXCLUDE:%~dp0excludeObjBin.txt
 
 erase /s %srcDir%Xamarin.Forms.Xaml\*.cs
 erase /s %srcDir%Xamarin.Forms.Xaml.BuildTasks\*.cs

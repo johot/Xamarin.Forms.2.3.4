@@ -166,10 +166,10 @@
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Xml.Linq" />
-    <ProjectReference Include="..\Xamarin.Forms.Platform.Android.FormsViewGroup\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj">
+    <ProjectReference Include="..\Xamarin.Forms.Bindings\Xamarin.Forms.Bindings.csproj">
       <Project>{3B72465B-ACAE-43AE-9327-10F372FE5F80}</Project>
       <Platform>$(AndroidBindingsLibraryPlatformId)</Platform>
-      <Name>Xamarin.Forms.Platform.Android.FormsViewGroup</Name>
+      <Name>Xamarin.Forms.Bindings</Name>
     </ProjectReference>
   </ItemGroup>
   <!--
