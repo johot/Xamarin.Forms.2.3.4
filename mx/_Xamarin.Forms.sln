@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{453F471B-9F4
 		src\GlobalAssemblyInfo.cs = src\GlobalAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Core", "src\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms", "src\Xamarin.Forms\Xamarin.Forms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3B72465B-ACAE-43AE-9327-10F372FE5F80} = {3B72465B-ACAE-43AE-9327-10F372FE5F80}
 	EndProjectSection
@@ -21,11 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps", "src\X
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.Android.FormsViewGroup", "src\Xamarin.Forms.Platform.Android.FormsViewGroup\Xamarin.Forms.Platform.Android.FormsViewGroup.csproj", "{3B72465B-ACAE-43AE-9327-10F372FE5F80}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xaml", "xaml", "{8AE7217C-36ED-485A-BB41-7F99E3EA2424}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml", "src\Xaml\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj", "{9DB2F292-8034-4E06-89AD-98BBDA4306B9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml.Design", "src\Xaml\Xamarin.Forms.Xaml.Design\Xamarin.Forms.Xaml.Design.csproj", "{65BC4888-CC59-428A-9B75-540CF1C09480}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml", "src\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj", "{9DB2F292-8034-4E06-89AD-98BBDA4306B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.AppLinks", "src\Xamarin.Forms.AppLinks\Xamarin.Forms.AppLinks.csproj", "{A3F22767-213E-46F4-B639-5565668AE2FF}"
 EndProject
@@ -33,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Pages", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Pages.Azure", "src\Xamarin.Forms.Pages.Azure\Xamarin.Forms.Pages.Azure.csproj", "{5CC7C14B-C702-444A-9403-2DADF6BA8603}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Design", "src\Xamarin.Forms.Design\Xamarin.Forms.Design.csproj", "{80707FB3-8C08-4369-B4BB-4053559EF2EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.BuildTasks", "src\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj", "{80707FB3-8C08-4369-B4BB-4053559EF2EA}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -156,22 +152,6 @@ Global
 		{9DB2F292-8034-4E06-89AD-98BBDA4306B9}.Release|Win Tablet (x32).ActiveCfg = release|[none]
 		{9DB2F292-8034-4E06-89AD-98BBDA4306B9}.Release|Win Tablet (x64).ActiveCfg = release|[none]
 		{9DB2F292-8034-4E06-89AD-98BBDA4306B9}.Release|Win Universal.ActiveCfg = release|[none]
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Android.ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|IOS.ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Portable.ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Win Phone.ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Win Tablet (arm).ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Win Tablet (x32).ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Win Tablet (x64).ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Debug|Win Universal.ActiveCfg = Debug|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Android.ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|IOS.ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Portable.ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Win Phone.ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Win Tablet (arm).ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Win Tablet (x32).ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Win Tablet (x64).ActiveCfg = Release|Any CPU
-		{65BC4888-CC59-428A-9B75-540CF1C09480}.Release|Win Universal.ActiveCfg = Release|Any CPU
 		{A3F22767-213E-46F4-B639-5565668AE2FF}.Debug|Android.ActiveCfg = debug|[none]
 		{A3F22767-213E-46F4-B639-5565668AE2FF}.Debug|IOS.ActiveCfg = debug|[none]
 		{A3F22767-213E-46F4-B639-5565668AE2FF}.Debug|Portable.ActiveCfg = debug|[none]
@@ -250,9 +230,7 @@ Global
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{7D13BAC2-C6A4-416A-B07E-C169B199E52B} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{3B72465B-ACAE-43AE-9327-10F372FE5F80} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
-		{8AE7217C-36ED-485A-BB41-7F99E3EA2424} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
-		{9DB2F292-8034-4E06-89AD-98BBDA4306B9} = {8AE7217C-36ED-485A-BB41-7F99E3EA2424}
-		{65BC4888-CC59-428A-9B75-540CF1C09480} = {8AE7217C-36ED-485A-BB41-7F99E3EA2424}
+		{9DB2F292-8034-4E06-89AD-98BBDA4306B9} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{A3F22767-213E-46F4-B639-5565668AE2FF} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{EDAFAA1D-61F5-4DDA-B6B4-3E94AAD2C3EE} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{5CC7C14B-C702-444A-9403-2DADF6BA8603} = {453F471B-9F4F-4431-85F8-FB7BA2035659}

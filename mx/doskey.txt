@@ -8,4 +8,4 @@ cor=pushd %SrcDir%Xamarin.Forms.Core
 cpy=call %RootDir%cpy\copySrc
 
 ;= scorch
-scorch=git clean -fdXq -e !lfx -e !packages
+scorch=git clean -fdX -e !lfx -e !packages
