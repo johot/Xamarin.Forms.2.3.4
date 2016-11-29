@@ -37,13 +37,11 @@ namespace Xamarin.Forms.Controls
 			if (_typesAllocated.Count(t => t != exclude) > 0)
 			{
 				Log.Warning("UI Tests", $">>>>>>>> CoreGallery Pages Allocated:");
-				//System.Diagnostics.Debug.WriteLine($">>>>>>>> CoreGallery Pages Allocated:");
 			}
 
 			foreach (Type type in _typesAllocated.Where(t => t != exclude))
 			{
 				Log.Warning("UI Tests", $">>>>>>>> \t{type}");
-				//System.Diagnostics.Debug.WriteLine($">>>>>>>> {type}");
 			}
 		}
 
@@ -92,7 +90,6 @@ namespace Xamarin.Forms.Controls
 
 		~CoreGalleryPage()
 		{
-			Log.Warning("UI Tests", $">>>>>>>> Destructor: {GetType()}");
 			UnregisterAllocation(GetType());
 		}
 

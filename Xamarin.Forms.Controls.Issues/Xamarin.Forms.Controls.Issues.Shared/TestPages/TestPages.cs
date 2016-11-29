@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Reflection;
 
@@ -186,7 +187,7 @@ namespace Xamarin.Forms.Controls
 		}
 
 		static int s_testsrun;
-		const int ConsecutiveTestLimit = 10;
+		const int ConsecutiveTestLimit = 30;
 
 		// Until we get more of our memory leak issues worked out, restart the app 
 		// after a specified number of tests so we don't get bogged down in GC
@@ -195,6 +196,8 @@ namespace Xamarin.Forms.Controls
 		{
 			if (RunningApp != null)
 			{
+				ListAllocations();
+
 				s_testsrun += 1;
 
 				if (s_testsrun >= ConsecutiveTestLimit)
@@ -222,6 +225,44 @@ namespace Xamarin.Forms.Controls
 		}
 
 		public static IApp RunningApp { get; set; }
+
+		static readonly List<Type> s_typesAllocated = new List<Type>();
+
+		public static void RegisterAllocation(Type type)
+		{
+			s_typesAllocated.Add(type);
+			//Log.Warning("UI Tests", $">>>>>>>> Adding: {type}");
+		}
+
+		public static void UnregisterAllocation(Type type)
+		{
+			s_typesAllocated.Remove(type);
+			//Log.Warning("UI Tests", $">>>>>>>> Removing: {type}");
+		}
+
+		static long s_lastMemoryCheck = 0;
+
+		public static void ListAllocations()
+		{
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			long currentMemory = GC.GetTotalMemory(false);
+
+			Log.Warning("UI Tests", $">>>>>>>> Total memory: {currentMemory} (was: {s_lastMemoryCheck}, delta {currentMemory - s_lastMemoryCheck}");
+
+			s_lastMemoryCheck = currentMemory;
+
+			if (s_typesAllocated.Count > 0)
+			{
+				Log.Warning("UI Tests", $">>>>>>>> Test Pages Allocated:");
+			}
+
+			foreach (Type type in s_typesAllocated)
+			{
+				Log.Warning("UI Tests", $">>>>>>>> \t{type}");
+			}
+		}
 	}
 #endif
 
@@ -235,10 +276,20 @@ namespace Xamarin.Forms.Controls
 
 		protected TestPage ()
 		{
+#if UITEST
+			AppSetup.RegisterAllocation(GetType());
+#endif
 #if APP
 			Init ();
 #endif
 		}
+
+#if UITEST
+		~TestPage()
+		{
+			AppSetup.UnregisterAllocation(GetType());
+		}
+#endif
 
 #if UITEST
 		[SetUp]
@@ -281,10 +332,20 @@ namespace Xamarin.Forms.Controls
 
 		protected TestContentPage ()
 		{
+#if UITEST
+			AppSetup.RegisterAllocation(GetType());
+#endif
 #if APP
 			Init ();
 #endif
 		}
+
+#if UITEST
+		~TestContentPage()
+		{
+			AppSetup.UnregisterAllocation(GetType());
+		}
+#endif
 
 #if UITEST
 		[SetUp]
@@ -326,10 +387,20 @@ namespace Xamarin.Forms.Controls
 
 		protected TestCarouselPage ()
 		{
+#if UITEST
+			AppSetup.RegisterAllocation(GetType());
+#endif
 #if APP
 			Init ();
 #endif
 		}
+
+#if UITEST
+		~TestCarouselPage()
+		{
+			AppSetup.UnregisterAllocation(GetType());
+		}
+#endif
 
 #if UITEST
 		[SetUp]
@@ -371,10 +442,20 @@ namespace Xamarin.Forms.Controls
 
 		protected TestMasterDetailPage ()
 		{
+#if UITEST
+			AppSetup.RegisterAllocation(GetType());
+#endif
 #if APP
 			Init ();
 #endif
 		}
+
+#if UITEST
+		~TestMasterDetailPage()
+		{
+			AppSetup.UnregisterAllocation(GetType());
+		}
+#endif
 
 #if UITEST
 		[SetUp]
@@ -416,10 +497,20 @@ namespace Xamarin.Forms.Controls
 
 		protected TestNavigationPage ()
 		{
+#if UITEST
+			AppSetup.RegisterAllocation(GetType());
+#endif
 #if APP
 			Init ();
 #endif
 		}
+
+#if UITEST
+		~TestNavigationPage()
+		{
+			AppSetup.UnregisterAllocation(GetType());
+		}
+#endif
 
 #if UITEST
 		[SetUp]
@@ -461,10 +552,20 @@ namespace Xamarin.Forms.Controls
 
 		protected TestTabbedPage ()
 		{
+#if UITEST
+			AppSetup.RegisterAllocation(GetType());
+#endif
 #if APP
 			Init ();
 #endif
 		}
+
+#if UITEST
+		~TestTabbedPage()
+		{
+			AppSetup.UnregisterAllocation(GetType());
+		}
+#endif
 
 #if UITEST
 		[SetUp]
@@ -511,7 +612,15 @@ namespace Xamarin.Forms.Controls.Issues
 		[SetUp]
 		public void RunBeforeAnyTests()
 		{
+			Log.Listeners.Add(new DelegateLogListener((c, m) => Console.WriteLine($"[{c}] {m}")));
+			Log.Listeners.Add(new DelegateLogListener((c, m) => System.Diagnostics.Debug.WriteLine($"[{c}] {m}")));
 			AppSetup.RunningApp = AppSetup.Setup(null);
+		}
+
+		[TearDown]
+		public void RunAfterAllTests()
+		{
+			AppSetup.ListAllocations();
 		}
 	}
 }
