@@ -39,6 +39,9 @@ namespace Xamarin.Forms.Controls
 				Log.Warning("UI Tests", $">>>>>>>> CoreGallery Pages Allocated:");
 			}
 
+			Log.Warning("UI Tests", $">>>>>>>> CoreNavigation Pages Allocated: {CoreNavigationPage.Count}");
+			Log.Warning("UI Tests", $">>>>>>>> CoreRoot Pages Allocated: {CoreRootPage.Count}");
+
 			foreach (Type type in _typesAllocated.Where(t => t != exclude))
 			{
 				Log.Warning("UI Tests", $">>>>>>>> \t{type}");

@@ -262,6 +262,8 @@ namespace Xamarin.Forms.Controls
 			{
 				Log.Warning("UI Tests", $">>>>>>>> \t{type}");
 			}
+
+			
 		}
 	}
 #endif

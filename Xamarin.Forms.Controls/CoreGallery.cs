@@ -66,8 +66,17 @@ namespace Xamarin.Forms.Controls
 
 	internal class CoreNavigationPage : NavigationPage
 	{
+		public static int Count;
+
 		public CoreNavigationPage ()
 		{
+			Count += 1;
+
+			if (Count > 1)
+			{
+				Log.Warning("UI Tests", $">>>>>>>> CoreNavigation Pages Allocated: {CoreNavigationPage.Count}");
+			}
+
 			AutomationId = "NavigationPageRoot";
 
 			BarBackgroundColor = Color.Maroon;
@@ -81,6 +90,11 @@ namespace Xamarin.Forms.Controls
 			});
 
 			Navigation.PushAsync (new CoreRootPage (this));
+		}
+
+		~CoreNavigationPage()
+		{
+			Count -= 1;
 		}
 	}
 
@@ -387,8 +401,17 @@ namespace Xamarin.Forms.Controls
 
 	internal class CoreRootPage : ContentPage
 	{
+		public static int Count;
+
 		public CoreRootPage (Page rootPage, NavigationBehavior navigationBehavior = NavigationBehavior.PushAsync)
 		{
+			Count += 1;
+
+			if (Count > 1)
+			{
+				Log.Warning("UI Tests", $">>>>>>>> CoreRoot Pages Allocated: {CoreRootPage.Count}");
+			}
+
 			IStringProvider stringProvider = DependencyService.Get<IStringProvider> ();
 
 			Title = stringProvider.CoreGalleryTitle;
@@ -433,6 +456,11 @@ namespace Xamarin.Forms.Controls
 					{ corePageView, new Rectangle(0, 1.0, 1.0, 0.35), AbsoluteLayoutFlags.All },
 				}
 			};
+		}
+
+		~CoreRootPage()
+		{
+			Count -= 1;
 		}
 	}
 
