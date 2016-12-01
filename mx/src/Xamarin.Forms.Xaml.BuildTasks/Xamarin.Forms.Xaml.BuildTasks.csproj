@@ -10,24 +10,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-  <!--
-  
-    Hierarchy
-  -->
-  <ItemGroup>
-    <!--all E { portable }-->
-    <PlatformGroup Include="$(AllPlatformId)">
-      <Platforms>$(PortablePlatformId)</Platforms>
-    </PlatformGroup>
-    <!--portable E { netstandard }-->
-    <PlatformGroup Include="$(PortablePlatformId)">
-      <Platforms>$(NetStandardLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--netstandard E { netstandard-4.5 }-->
-    <PlatformGroup Include="$(NetStandardLibraryPlatformId)">
-      <Platforms>$(NetStandardLibraryPlatformId-4_5)</Platforms>
-    </PlatformGroup>
-  </ItemGroup>
+  <Import Project="$(ExtXfDir)\xf.netstd.hierarchy.props" />
   <!--
   
     Universal

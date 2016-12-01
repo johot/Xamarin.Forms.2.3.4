@@ -10,7 +10,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .hierarchy.props))\.hierarchy.props" />
+  <Import Project="$(ExtXfDir)\xf.lib.hierarchy.props" />
   <!--
   
     Hierarchy
@@ -103,43 +103,13 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
-  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <!--This assembly is only referenced and never executed so there is no need for symbols-->
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' "/>
   <!--
   
     Part ([platform].part)
   -->
   <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
     <AssemblyName>$(PortableAssemblyName)</AssemblyName>
-  </PropertyGroup>
-  <!--This assembly is only referenced and never executed so there is no need for symbols-->
-  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
-  </PropertyGroup>
-  <!--hide build output-->
-  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
-    <!--TODO: if CopyBuildOutputToOutputDirectory why is the following necessary?-->
-    <OutDir>$(IntermediateOutputPath)portable\bin\</OutDir>
-    <OutputPath>$(OutDir)</OutputPath>
-    <AppxPackageDir>$(OutputPath)</AppxPackageDir>
-    <IntermediateOutputPath>$(IntermediateOutputPath)portable\obj\</IntermediateOutputPath>
-  </PropertyGroup>
-  <!--self reference portable library-->
-  <ItemGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' == 'true' ">
-    <SelfReference Include="$(DotNetLibraryPlatformId)" />
-  </ItemGroup>
-  <!--
-  
-    Mobile
-  -->
-  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)' == 'true'">
-    <IsCompositePlatform>true</IsCompositePlatform>
-    <DefineConstants>$(DefineConstants)COMPOSITE;</DefineConstants>
   </PropertyGroup>
   <!--
   

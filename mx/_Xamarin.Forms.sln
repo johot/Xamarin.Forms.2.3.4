@@ -7,7 +7,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = ".repo", ".repo.shproj", "{3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{453F471B-9F4F-4431-85F8-FB7BA2035659}"
 	ProjectSection(SolutionItems) = preProject
-		src\.hierarchy.props = src\.hierarchy.props
 		src\.props = src\.props
 		src\GlobalAssemblyInfo.cs = src\GlobalAssemblyInfo.cs
 	EndProjectSection
@@ -33,8 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.BuildTasks", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml.BuildTasks", "src\Xamarin.Forms.Xaml.BuildTasks\Xamarin.Forms.Xaml.BuildTasks.csproj", "{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mxbuild", "sub\mxbuild\mxbuild.shproj", "{2FDD0418-FA09-4556-B6ED-10E07C1F6DB9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		sub\mxbuild\mxbuild.projitems*{2fdd0418-fa09-4556-b6ed-10e07c1f6db9}*SharedItemsImports = 13
 		.repo.projitems*{31d1e28a-0eae-4ac4-a023-b02e7a58a8fc}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

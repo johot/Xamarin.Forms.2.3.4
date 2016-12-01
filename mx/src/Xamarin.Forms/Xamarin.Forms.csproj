@@ -10,7 +10,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .hierarchy.props))\.hierarchy.props" />
+  <Import Project="$(ExtXfDir)\xf.lib.hierarchy.props" />
   <!--
   
     Universal
@@ -22,8 +22,6 @@
     <AssemblyName>Xamarin.Forms</AssemblyName>
     <PortableAssemblyName>Xamarin.Forms.Portable</PortableAssemblyName>
     <RootNamespace>Xamarin.Forms</RootNamespace>
-    <!--TODO: Was not present in orig .csproj-->
-    <!--<TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>-->
   </PropertyGroup>
   <ImportGroup>
     <Import Project="nuspec.props" />
@@ -96,11 +94,7 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
-  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <!--This assembly is only referenced and never executed so there is no need for symbols-->
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' "/>
   <ItemGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
     <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
   </ItemGroup>
@@ -111,32 +105,10 @@
   <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
     <AssemblyName>$(PortableAssemblyName)</AssemblyName>
   </PropertyGroup>
-  <!--This assembly is only referenced and never executed so there is no need for symbols-->
-  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
-  </PropertyGroup>
-  <!--hide build output-->
-  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
-    <!--TODO: if CopyBuildOutputToOutputDirectory why is the following necessary?-->
-    <OutDir>$(IntermediateOutputPath)portable\bin\</OutDir>
-    <OutputPath>$(OutDir)</OutputPath>
-    <AppxPackageDir>$(OutputPath)</AppxPackageDir>
-    <IntermediateOutputPath>$(IntermediateOutputPath)portable\obj\</IntermediateOutputPath>
-  </PropertyGroup>
-  <!--self reference portable library-->
-  <ItemGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' == 'true' ">
-    <SelfReference Include="$(DotNetLibraryPlatformId)" />
-  </ItemGroup>
   <!--
   
     Mobile
   -->
-  <PropertyGroup Condition="'$(IsMobileLibraryPlatform)' == 'true' AND '$(IsPartPlatform)' != 'true' AND '$(IsPrimitivePlatform)' == 'true'">
-    <IsCompositePlatform>true</IsCompositePlatform>
-    <DefineConstants>$(DefineConstants)COMPOSITE;</DefineConstants>
-  </PropertyGroup>
   <ItemGroup Condition=" '$(IsMobileLibraryPlatform)' == 'true' ">
     <Compile Include="Xamarin.Forms.Platform.cs" />
   </ItemGroup>
@@ -184,14 +156,7 @@
   
     Windows
   -->
-  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <!--<AppxPrependPriInitialPath>false</AppxPrependPriInitialPath>-->
-    <!--<AppxPriInitialPath>bar</AppxPriInitialPath>-->
-    <!--force all windows output to OutDir-->
-    <AppxPackageDir>$(OutDir)</AppxPackageDir>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' "/>
   <!--
   
     Windows Phone

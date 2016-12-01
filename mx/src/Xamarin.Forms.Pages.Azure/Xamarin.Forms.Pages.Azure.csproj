@@ -11,24 +11,7 @@
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
-  <!--
-  
-    Hierarchy
-  -->
-  <ItemGroup>
-    <!--all E { pack }-->
-    <PlatformGroup Include="$(AllPlatformId)">
-      <Platforms>$(PackPlatformId);$(DotNetLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--portable E { dotnet }-->
-    <PlatformGroup Include="$(PortablePlatformId)">
-      <Platforms>$(DotNetLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--dotnet E { dotnet-259 }-->
-    <PlatformGroup Include="$(DotNetLibraryPlatformId)">
-      <Platforms>$(DotNetLibraryPlatformId-259)</Platforms>
-    </PlatformGroup>
-  </ItemGroup>
+  <Import Project="$(ExtXfDir)\xf.dotnet.hierarchy.props" />
   <!--
   
     Universal

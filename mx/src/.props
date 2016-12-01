@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., .props))\.props" />
+  <Import Project="$(ExtXfDir)\xf.default.props" />
 
   <!--product-->
   <PropertyGroup>
@@ -41,105 +42,41 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants)MXBUILD;</DefineConstants>
   </PropertyGroup>
-  
-  <!--shared-->
-  <PropertyGroup>
-    <FileAlignment>512</FileAlignment>
-    <CreateHardLinksForCopyLocalIfPossible>true</CreateHardLinksForCopyLocalIfPossible>
-  </PropertyGroup>
 
   <!--shared platform|config-->
-  <PropertyGroup>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
+  <PropertyGroup/>
 
   <!--debug-->
-  <PropertyGroup Condition="'$(Configuration)'=='debug'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>$(DefineConstants)TRACE;DEBUG;</DefineConstants>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='debug'"/>
 
   <!--release-->
-  <PropertyGroup Condition="'$(Configuration)'=='release'">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>$(DefineConstants)TRACE;</DefineConstants>
-  </PropertyGroup>
-  
-  <!--netstandard-->
-  <PropertyGroup Condition="'$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)'">
-    <!--Only Xamarin.Forms build tools are 'netstandard' are used for all TargetFrameworks-->
-    <NugetTargetFrameworkVersion/>
-    <NugetTargetFrameworkMoniker/>
-  </PropertyGroup>
-  
-  <!--dotnet-->
-  <PropertyGroup Condition="'$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)'">
-    <NugetTargetFrameworkVersion>-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10</NugetTargetFrameworkVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProductVersion>12.0.0</ProductVersion>
+  <PropertyGroup Condition="'$(Configuration)'=='release'"/>
 
-    <!--misc from Xamarin.Forms.Platform-->
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-  </PropertyGroup>
+  <!--dotnet-->
+  <PropertyGroup Condition="'$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)'"/>
 
   <!--android-->
-  <PropertyGroup Condition="'$(MobilePlatform)' == '$(AndroidMobilePlatformId)'">
-    <NugetTargetFrameworkVersion>4.3</NugetTargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-  </PropertyGroup>
-  
-  <!--android library-->
-  <PropertyGroup Condition="'$(LibraryPlatform)' == '$(AndroidLibraryPlatformId)'">
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(AndroidMobilePlatformId)'" />
+
+  <!--android app-->
+  <PropertyGroup Condition="'$(AppPlatform)' == '$(AndroidAppPlatformId)'" />
 
   <!--ios-->
-  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosMobilePlatformId)'">
-    <NugetTargetFrameworkVersion>1.0</NugetTargetFrameworkVersion>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(IosMobilePlatformId)'" />
 
-  <!--ios unified-->
-  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)'">
-  </PropertyGroup>
+  <!--ios app-->
+  <PropertyGroup Condition="'$(AppPlatform)' == '$(IosAppPlatformId)'" />
 
-  <!--ios classic-->
-  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(IosClassicMobileSubPlatformId)'">
-  </PropertyGroup>
+  <!--windows-->
+  <PropertyGroup Condition="'$(MobilePlatform)' == '$(WindowsMobilePlatformId)' " />
 
   <!--windows universal-->
-  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'">
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <NugetTargetFrameworkVersion>10.0</NugetTargetFrameworkVersion>
-    <UseDotNetNativeToolchain Condition="'$(Configuration)' == 'Release'">true</UseDotNetNativeToolchain>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'" />
 
   <!--windows phone-->
-  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)'">
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <NugetTargetFrameworkVersion>8.1</NugetTargetFrameworkVersion>
-    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)'" />
 
   <!--windows tablet-->
-  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)'">
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <NugetTargetFrameworkVersion>8.1</NugetTargetFrameworkVersion>
-  </PropertyGroup>
-
-  <!--windows platform-->
-  <PropertyGroup Condition="'$(MobilePlatform)' == '$(WindowsMobilePlatformId)'">
-    <!--TODO: Remove setting platform; find better/newer way to set platform-->
-    <Platform Condition="'$(Plat)'=='AnyCPU' AND '$(IsMobileAppProject)'=='true'">x86</Platform>
-    <PlatformTarget>$(Plat)</PlatformTarget>
-    <Prefer32Bit Condition="'$(IsMobileAppProject)'=='true'">true</Prefer32Bit>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)'" />
 
 </Project>
