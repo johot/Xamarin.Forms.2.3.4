@@ -48,6 +48,15 @@ namespace Xamarin.Forms.Platform.UWP
 			// If we have a title (or some other content) inside this command bar
 			// and that content is not collapsed
 			var frameworkElement = Content as FrameworkElement;
+
+			// Temporarily tie the visibility of the toolbar to the visibility of the Title
+			// to be consistent with the old style / other platforms
+			if (frameworkElement != null && frameworkElement.Visibility == Visibility.Collapsed)
+			{
+				Visibility = Visibility.Collapsed;
+				return;
+			}
+
 			if (frameworkElement != null && frameworkElement.Visibility != Visibility.Collapsed)
 			{
 				Visibility = Visibility.Visible;
