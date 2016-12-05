@@ -65,12 +65,9 @@ namespace Xamarin.Forms.Build.Tasks
 			genericArguments = null;
 			var typeDef = typeRef.Resolve();
 			TypeReference iface;
-			if (
-				(iface =
-					typeDef.Interfaces.FirstOrDefault(
-						tr =>
-							tr.FullName.StartsWith(@interface) && tr.IsGenericInstance && (tr as GenericInstanceType).HasGenericArguments)) !=
-				null)
+			if ((iface = typeDef.Interfaces.FirstOrDefault(tr =>
+							tr.FullName.StartsWith(@interface, StringComparison.Ordinal) &&
+							tr.IsGenericInstance && (tr as GenericInstanceType).HasGenericArguments)) != null)
 			{
 				interfaceReference = iface as GenericInstanceType;
 				genericArguments = (iface as GenericInstanceType).GenericArguments;
@@ -84,21 +81,29 @@ namespace Xamarin.Forms.Build.Tasks
 
 		public static bool InheritsFromOrImplements(this TypeReference typeRef, TypeReference baseClass)
 		{
+			if (typeRef.FullName == baseClass.FullName)
+				return true;
+
 			var arrayInterfaces = new[]
 			{
-				"System.IEnumerable",
+				"System.Collections.IEnumerable",
 				"System.Collections.IList",
 				"System.Collections.Collection"
 			};
 
 			var arrayGenericInterfaces = new[]
 			{
-				"System.IEnumerable`1",
+				"System.Collections.IEnumerable`1",
 				"System.Collections.Generic.IList`1",
 				"System.Collections.Generic.IReadOnlyCollection<T>",
 				"System.Collections.Generic.IReadOnlyList<T>",
 				"System.Collections.Generic.Collection<T>"
 			};
+
+			if (typeRef.IsArray && baseClass.IsArray) {
+				typeRef = typeRef.Resolve();
+				baseClass = baseClass.Resolve();
+			}
 
 			if (typeRef.IsArray)
 			{
@@ -109,7 +114,9 @@ namespace Xamarin.Forms.Build.Tasks
 				    baseClass.IsGenericInstance &&
 				    (baseClass as GenericInstanceType).GenericArguments[0].FullName == arrayType.FullName)
 					return true;
+				return false;
 			}
+
 			var typeDef = typeRef.Resolve();
 			if (typeDef.FullName == baseClass.FullName)
 				return true;
@@ -201,9 +208,10 @@ namespace Xamarin.Forms.Build.Tasks
 		}
 
 		public static MethodReference GetImplicitOperatorTo(this TypeReference fromType, TypeReference toType, ModuleDefinition module)
-		{ 
-			var implicitOperators = fromType.GetMethods(md => md.IsPublic && md.IsStatic && md.IsSpecialName && md.Name == "op_Implicit",
-												module).ToList();
+		{
+			var implicitOperatorsOnFromType = fromType.GetMethods(md => md.IsPublic && md.IsStatic && md.IsSpecialName && md.Name == "op_Implicit", module);
+			var implicitOperatorsOnToType = toType.GetMethods(md => md.IsPublic && md.IsStatic && md.IsSpecialName && md.Name == "op_Implicit", module);
+			var implicitOperators = implicitOperatorsOnFromType.Concat(implicitOperatorsOnToType).ToList();
 			if (implicitOperators.Any()) {
 				foreach (var op in implicitOperators) {
 					var cast = op.Item1;
