@@ -21,6 +21,7 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Platform.WinRT.Tablet\*.xaml                %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.UAP\*.cs                           %srcDir%Xamarin.Forms\winrt\uap\                              /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.UAP\*.xaml                         %srcDir%Xamarin.Forms\winrt\uap\                              /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.UAP\*.json                         %srcDir%Xamarin.Forms\winrt\uap\                              /EXCLUDE:%~dp0excludeObjBin.txt
+move /y %srcDir%Xamarin.Forms\winrt\phone\FormsPivot.cs                          %srcDir%Xamarin.Forms\winrt\FormsPivot.cs
 
 erase /s %srcDir%Xamarin.Forms.Maps\*.cs
 erase /s %srcDir%Xamarin.Forms.Maps\project.json

@@ -12,6 +12,22 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <Import Project="$(ExtXfDir)\xf.netstd.hierarchy.props" />
   <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Compile Include="DesignGenerator.cs" />
+    <Compile Include="CecilExtensions.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <EmbeddedResource Include="StructOptionsConverter.cs" />
+    <None Include="Xamarin.Forms.Design.targets" />
+  </ItemGroup>
+  <!--
   
     Universal
   -->
@@ -35,7 +51,7 @@
   
     Library
   -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+  <ItemGroup>
     <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
@@ -62,17 +78,6 @@
   <ImportGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
     <Import Project="$(PkgDir)Mono.Cecil.$(NugetMonoCecilVersion)\lib\Net45\shim.props" />
   </ImportGroup>
-  <ItemGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Compile Include="DesignGenerator.cs" />
-    <Compile Include="CecilExtensions.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <EmbeddedResource Include="StructOptionsConverter.cs" />
-    <None Include="Xamarin.Forms.Design.targets" />
-  </ItemGroup>
   <!--
 
     Targets

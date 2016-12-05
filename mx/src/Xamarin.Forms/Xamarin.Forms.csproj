@@ -12,190 +12,12 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <Import Project="$(ExtXfDir)\xf.lib.hierarchy.props" />
   <!--
-  
-    Universal
-  -->
-  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms</AssemblyName>
-    <PortableAssemblyName>Xamarin.Forms.Portable</PortableAssemblyName>
-    <RootNamespace>Xamarin.Forms</RootNamespace>
-  </PropertyGroup>
-  <ImportGroup>
-    <Import Project="nuspec.props" />
-  </ImportGroup>
-  <ItemGroup>
-    <None Include="nuspec.props" />
-    <None Include="winrt\uap\project.json" />
-    <None Include="winrt\uap\project.lock.json" />
-    <!--references-->
-    <Reference Include="System" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
-  <!--
-  
-    Nuget Pack
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
-  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
-  <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
-    <SelfReference Include="$(DotNetLibraryPlatformId)" />
-    <SelfReference Include="$(AndroidMobilePlatformId)" />
-    <SelfReference Include="$(IosUnifiedMobileSubPlatformId)" />
-    <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
-    <SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />
-    <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
-    <ProjectReference Include="..\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj">
-      <Project>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</Project>
-      <Platform>$(PortablePlatformId)</Platform>
-      <Name>Xamarin.Forms.BuildTasks</Name>
-    </ProjectReference>
-    <!--
-      content
-    -->
-    <None Include="$(ExtPackDir)Package.nuspec">
-      <CopyTargetName>$(NuspecName)</CopyTargetName>
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-      <Type>xml</Type>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>Package.nuspec</Link>
-    </None>
-  </ItemGroup>
-  <!--
-  
-    Library
-  -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
-    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-    </Compile>
-    <Compile Include="$(ExtIdDir)BuildInfo.cs">
-      <DependentUpon>BuildInfo.t.cs</DependentUpon>
-      <Link>Properties\BuildInfo.cs</Link>
-    </Compile>
-    <None Include="$(ExtIdDir)BuildInfo.t.cs">
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-      <Link>Properties\BuildInfo.t.cs</Link>
-      <CompileOutput>BuildInfo.cs</CompileOutput>
-    </None>
-    <Compile Include="$(ExtPackDir)PackageInfo.cs">
-      <Link>Properties\PackageInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <!--
-  
-    Portable
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
-  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' "/>
-  <ItemGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
-  </ItemGroup>
-  <!--
-  
-    Part ([platform].part)
-  -->
-  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <AssemblyName>$(PortableAssemblyName)</AssemblyName>
-  </PropertyGroup>
-  <!--
-  
-    Mobile
-  -->
-  <ItemGroup Condition=" '$(IsMobileLibraryPlatform)' == 'true' ">
-    <Compile Include="Xamarin.Forms.Platform.cs" />
-  </ItemGroup>
-  <!--
-  
-    Android
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid' " />
-  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
-  </PropertyGroup>
-  <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-  </ImportGroup>
-  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <Reference Include="Mono.Android" />
-    <Reference Include="mscorlib" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Net.Http" />
-    <ProjectReference Include="..\Xamarin.Forms.Bindings\Xamarin.Forms.Bindings.csproj">
-      <Project>{3B72465B-ACAE-43AE-9327-10F372FE5F80}</Project>
-      <Platform>$(AndroidBindingsLibraryPlatformId)</Platform>
-      <Name>Xamarin.Forms.Bindings</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <!--
-  
-    iOS Universal
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|xamarin.ios' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-  <!--
-  
-    Windows
-  -->
-  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' "/>
-  <!--
-  
-    Windows Phone
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
-  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' " />
-  <!--
-
-    Windows Tablet
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
-  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' " />
-  <!--
-
-    Windows Universal
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
-  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
-    <UseProjectJson>true</UseProjectJson>
-    <ProjectLockFile>winrt\uap\project.lock.json</ProjectLockFile>
-  </PropertyGroup>
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
-    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <!--
     ======
     SOURCE
     ======
   -->
-  <!--
-  
-    Portable
-  -->
-  <ItemGroup Condition=" '$(IsPartPlatform)' != 'true' ">
+  <ItemGroup>
+    <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
     <Compile Include="portable\AbsoluteLayout.cs" />
     <Compile Include="portable\AbsoluteLayoutFlags.cs" />
     <Compile Include="portable\ActionSheetArguments.cs" />
@@ -586,12 +408,6 @@
     <Compile Include="portable\WebViewSourceTypeConverter.cs" />
     <Compile Include="portable\XamlParseException.cs" />
     <Compile Include="portable\XmlLineInfo.cs" />
-  </ItemGroup>
-  <!--
-  
-    Android
-  -->
-  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <Compile Include="android\Properties\AssemblyInfo.cs" />
     <Compile Include="android\AndroidActivity.cs" />
     <Compile Include="android\AndroidAppIndexProvider.cs" />
@@ -738,12 +554,6 @@
     <Compile Include="android\VisualElementRenderer.cs" />
     <Compile Include="android\VisualElementRendererFlags.cs" />
     <Compile Include="android\VisualElementTracker.cs" />
-  </ItemGroup>
-  <!--
-  
-    iOS
-  -->
-  <ItemGroup Condition=" '$(MobilePlatform)' == '$(IosMobilePlatformId)' ">
     <Compile Include="ios\Properties\AssemblyInfo.cs" />
     <Compile Include="ios\CADisplayLinkTicker.cs" />
     <Compile Include="ios\Cells\CellRenderer.cs" />
@@ -830,12 +640,6 @@
     <Compile Include="ios\VisualElementPackager.cs" />
     <Compile Include="ios\VisualElementRenderer.cs" />
     <Compile Include="ios\VisualElementTracker.cs" />
-  </ItemGroup>
-  <!--
-  
-    Windows
-  -->
-  <ItemGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
     <Compile Include="winrt\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\ActivityIndicatorRenderer.cs" />
     <Compile Include="winrt\AlignmentExtensions.cs" />
@@ -952,11 +756,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
     <Compile Include="winrt\phone\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\phone\Forms.cs" />
-    <Compile Include="winrt\phone\FormsPivot.cs" />
+    <Compile Include="winrt\FormsPivot.cs" />
     <Compile Include="winrt\phone\SearchBarRenderer.cs" />
     <Compile Include="winrt\phone\SearchBox.xaml.cs">
       <DependentUpon>SearchBox.xaml</DependentUpon>
@@ -966,8 +768,7 @@
     <Compile Include="winrt\phone\WindowsPhonePlatform.cs" />
     <Compile Include="winrt\phone\WindowsPhonePlatformServices.cs" />
     <Compile Include="winrt\phone\WindowsPhoneResourcesProvider.cs" />
-    <Page Include="winrt\Resources.xaml">
-      <Link>winrt\phone\Resources.xaml</Link>
+    <Page Include="winrt\Resources.xaml" Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' OR '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -983,19 +784,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
     <Compile Include="winrt\tablet\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\tablet\FormsListViewItemPresenter.cs" />
     <Compile Include="winrt\tablet\FormsSearchBox.cs" />
     <Compile Include="winrt\tablet\SearchBarRenderer.cs" />
     <Compile Include="winrt\tablet\TabbedPageRenderer.cs" />
     <Compile Include="winrt\tablet\TabsControl.cs" />
-    <Page Include="winrt\Resources.xaml">
-      <Link>winrt\tablet\Resources.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="winrt\tablet\FormsTextBoxStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1004,8 +798,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)'">
     <Compile Include="winrt\uap\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\uap\FormsCommandBar.cs" />
     <Compile Include="winrt\uap\IToolBarForegroundBinder.cs" />
@@ -1015,9 +807,6 @@
     <Compile Include="winrt\uap\StepperControl.cs" />
     <Compile Include="winrt\uap\TabbedPageRenderer.cs" />
     <Compile Include="winrt\uap\ToolbarPlacementHelper.cs" />
-    <Compile Include="winrt\phone\FormsPivot.cs">
-      <Link>winrt\uap\FormsPivot.cs</Link>
-    </Compile>
     <Page Include="winrt\uap\AutoSuggestStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1046,10 +835,191 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <None Include="android\.dir.props" />
+    <None Include="ios\.dir.props" />
+    <None Include="portable\.dir.props" />
+    <None Include="portable\Platform\.dir.props" />
+    <None Include="winrt\.dir.props" />
+    <None Include="winrt\phone\.dir.props" />
+    <None Include="winrt\tablet\.dir.props" />
+    <None Include="winrt\uap\.dir.props" />
+  </ItemGroup>
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
+    <AssemblyName>Xamarin.Forms</AssemblyName>
+    <PortableAssemblyName>Xamarin.Forms.Portable</PortableAssemblyName>
+    <RootNamespace>Xamarin.Forms</RootNamespace>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Project="nuspec.props" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="nuspec.props" />
+    <None Include="winrt\uap\project.json" />
+    <None Include="winrt\uap\project.lock.json" />
+    <!--references-->
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <!--
+  
+    Nuget Pack
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|pack' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|pack' " />
+  <PropertyGroup Condition=" '$(Plat)' == '$(PackPlatformId)' " />
+  <ItemGroup Condition="'$(Plat)' == '$(PackPlatformId)' ">
+    <SelfReference Include="$(DotNetLibraryPlatformId)" />
+    <SelfReference Include="$(AndroidMobilePlatformId)" />
+    <SelfReference Include="$(IosUnifiedMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />
+    <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
+    <ProjectReference Include="..\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj">
+      <Project>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</Project>
+      <Platform>$(PortablePlatformId)</Platform>
+      <Name>Xamarin.Forms.BuildTasks</Name>
+    </ProjectReference>
+    <!--
+      content
+    -->
+    <None Include="$(ExtPackDir)Package.nuspec">
+      <CopyTargetName>$(NuspecName)</CopyTargetName>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Type>xml</Type>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Package.nuspec</Link>
+    </None>
+  </ItemGroup>
+  <!--
+  
+    Library
+  -->
+  <ItemGroup>
+    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+    <Compile Include="$(ExtPackDir)PackageInfo.cs">
+      <Link>Properties\PackageInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <!--
+  
+    Portable
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' " />
+  <!--
+  
+    Part ([platform].part)
+  -->
+  <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
+    <AssemblyName>$(PortableAssemblyName)</AssemblyName>
+  </PropertyGroup>
+  <!--
+  
+    Mobile
+  -->
+  <ItemGroup Condition=" '$(IsMobileLibraryPlatform)' == 'true' ">
+    <Compile Include="Xamarin.Forms.Platform.cs" />
+  </ItemGroup>
+  <!--
+  
+    Android
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid' " />
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+  </PropertyGroup>
+  <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+  </ImportGroup>
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Net.Http" />
+    <ProjectReference Include="..\Xamarin.Forms.Bindings\Xamarin.Forms.Bindings.csproj">
+      <Project>{3B72465B-ACAE-43AE-9327-10F372FE5F80}</Project>
+      <Platform>$(AndroidBindingsLibraryPlatformId)</Platform>
+      <Name>Xamarin.Forms.Bindings</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <!--
+  
+    iOS Universal
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|xamarin.ios' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <!--
+  
+    Windows
+  -->
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' " />
+  <!--
+  
+    Windows Phone
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' " />
+  <!--
+
+    Windows Tablet
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' " />
+  <!--
+
+    Windows Universal
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <UseProjectJson>true</UseProjectJson>
+    <ProjectLockFile>winrt\uap\project.lock.json</ProjectLockFile>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <!--
 
     Targets
   -->
+  <Import Project="*\.dir.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
 </Project>

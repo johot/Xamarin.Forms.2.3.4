@@ -12,6 +12,47 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <Import Project="$(ExtXfDir)\xf.dotnet.hierarchy.props" />
   <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+    <Compile Include="MarkupExtensions\TemplateBindingExtension.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MarkupExpressionParser.cs" />
+    <Compile Include="ViewExtensions.cs" />
+    <Compile Include="XamlLoader.cs" />
+    <Compile Include="XamlNode.cs" />
+    <Compile Include="XamlServiceProvider.cs" />
+    <Compile Include="XmlnsHelper.cs" />
+    <Compile Include="IExpressionParser.cs" />
+    <Compile Include="MarkupExtensionParser.cs" />
+    <Compile Include="TypeConversionExtensions.cs" />
+    <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="MarkupExtensions\NullExtension.cs" />
+    <Compile Include="MarkupExtensions\ReferenceExtension.cs" />
+    <Compile Include="MarkupExtensions\StaticExtension.cs" />
+    <Compile Include="MarkupExtensions\TypeExtension.cs" />
+    <Compile Include="MarkupExtensions\ArrayExtension.cs" />
+    <Compile Include="XmlName.cs" />
+    <Compile Include="XamlNodeVisitor.cs" />
+    <Compile Include="NamescopingVisitor.cs" />
+    <Compile Include="CreateValuesVisitor.cs" />
+    <Compile Include="ApplyPropertiesVisitor.cs" />
+    <Compile Include="HydratationContext.cs" />
+    <Compile Include="RegisterXNamesVisitor.cs" />
+    <Compile Include="XamlParser.cs" />
+    <Compile Include="MarkupExtensions\BindingExtension.cs" />
+    <Compile Include="MarkupExtensions\StaticResourceExtension.cs" />
+    <Compile Include="MarkupExtensions\DynamicResourceExtension.cs" />
+    <Compile Include="ValueConverterProvider.cs" />
+    <Compile Include="FillResourceDictionariesVisitor.cs" />
+    <Compile Include="ExpandMarkupsVisitor.cs" />
+    <Compile Include="XamlCompilationAttribute.cs" />
+    <Compile Include="TypeArgumentsParser.cs" />
+    <Compile Include="PruneIgnoredNodesVisitor.cs" />
+  </ItemGroup>
+  <!--
   
     Universal
   -->
@@ -32,7 +73,7 @@
   
     Library
   -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+  <ItemGroup>
     <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
@@ -86,47 +127,6 @@
       <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
       <Name>Xamarin.Forms</Name>
     </ProjectReference>
-  </ItemGroup>
-  <!--
-    ======
-    SOURCE
-    ======
-  -->
-  <ItemGroup>
-    <Compile Include="MarkupExtensions\TemplateBindingExtension.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MarkupExpressionParser.cs" />
-    <Compile Include="ViewExtensions.cs" />
-    <Compile Include="XamlLoader.cs" />
-    <Compile Include="XamlNode.cs" />
-    <Compile Include="XamlServiceProvider.cs" />
-    <Compile Include="XmlnsHelper.cs" />
-    <Compile Include="IExpressionParser.cs" />
-    <Compile Include="MarkupExtensionParser.cs" />
-    <Compile Include="TypeConversionExtensions.cs" />
-    <Compile Include="IDictionaryExtensions.cs" />
-    <Compile Include="MarkupExtensions\NullExtension.cs" />
-    <Compile Include="MarkupExtensions\ReferenceExtension.cs" />
-    <Compile Include="MarkupExtensions\StaticExtension.cs" />
-    <Compile Include="MarkupExtensions\TypeExtension.cs" />
-    <Compile Include="MarkupExtensions\ArrayExtension.cs" />
-    <Compile Include="XmlName.cs" />
-    <Compile Include="XamlNodeVisitor.cs" />
-    <Compile Include="NamescopingVisitor.cs" />
-    <Compile Include="CreateValuesVisitor.cs" />
-    <Compile Include="ApplyPropertiesVisitor.cs" />
-    <Compile Include="HydratationContext.cs" />
-    <Compile Include="RegisterXNamesVisitor.cs" />
-    <Compile Include="XamlParser.cs" />
-    <Compile Include="MarkupExtensions\BindingExtension.cs" />
-    <Compile Include="MarkupExtensions\StaticResourceExtension.cs" />
-    <Compile Include="MarkupExtensions\DynamicResourceExtension.cs" />
-    <Compile Include="ValueConverterProvider.cs" />
-    <Compile Include="FillResourceDictionariesVisitor.cs" />
-    <Compile Include="ExpandMarkupsVisitor.cs" />
-    <Compile Include="XamlCompilationAttribute.cs" />
-    <Compile Include="TypeArgumentsParser.cs" />
-    <Compile Include="PruneIgnoredNodesVisitor.cs" />
   </ItemGroup>
   <!--
 

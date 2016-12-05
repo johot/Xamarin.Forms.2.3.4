@@ -52,6 +52,7 @@
     <None Include="$(MSBuildThisFileDirectory)cpy\copySrc.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.bat" />
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
+    <None Include="$(MSBuildThisFileDirectory)src\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\.props" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.classpath" />
     <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.project" />
@@ -67,7 +68,14 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.BuildTasks\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.BuildTasks\Xamarin.Forms.Design.targets" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\android\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\ios\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\portable\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\phone\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\tablet\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\winrt\uap\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\Xamarin.Forms.Pages.Azure.csproj" />
@@ -78,7 +86,15 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml.BuildTasks\Xamarin.Forms.Xaml.BuildTasks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\android\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\ios\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\nuspec.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\portable\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\portable\Platform\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\phone\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\tablet\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\uap\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\Xamarin.Forms.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +112,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml.BuildTasks\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\android\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\design\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\ios\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\portable\Platform\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\portable\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\portable\Properties\GlobalAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\phone\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\tablet\Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\winrt\uap\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\Xamarin.Forms.Platform.cs" />
   </ItemGroup>
   <ItemGroup>

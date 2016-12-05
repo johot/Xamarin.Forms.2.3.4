@@ -13,6 +13,37 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <Import Project="$(ExtXfDir)\xf.dotnet.hierarchy.props" />
   <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+    <Compile Include="BaseDataSource.cs" />
+    <Compile Include="CardView.cs" />
+    <Compile Include="CompoundCollection.cs" />
+    <Compile Include="DataItem.cs" />
+    <Compile Include="DataPage.cs" />
+    <Compile Include="DataSourceBinding.cs" />
+    <Compile Include="DataSourceBindingExtension.cs" />
+    <Compile Include="DataSourceList.cs" />
+    <Compile Include="DataView.cs" />
+    <Compile Include="DirectoryPage.cs" />
+    <Compile Include="HeroImage.cs" />
+    <Compile Include="IDataItem.cs" />
+    <Compile Include="IDataSource.cs" />
+    <Compile Include="IDataSourceProvider.cs" />
+    <Compile Include="JsonSource.cs" />
+    <Compile Include="JsonDataSource.cs" />
+    <Compile Include="JsonSourceConverter.cs" />
+    <Compile Include="ListDataPage.cs" />
+    <Compile Include="ListItemControl.cs" />
+    <Compile Include="PersonDetailPage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringJsonSource.cs" />
+    <Compile Include="UriJsonSource.cs" />
+    <None Include="nuspec.props" />
+  </ItemGroup>
+  <!--
   
     Universal
   -->
@@ -21,12 +52,13 @@
     <OutputType>Library</OutputType>
     <AssemblyName>Xamarin.Forms.Pages</AssemblyName>
     <RootNamespace>Xamarin.Forms.Pages</RootNamespace>
+    <ProjectGuid>{EDAFAA1D-61F5-4DDA-B6B4-3E94AAD2C3EE}</ProjectGuid>
   </PropertyGroup>
   <!--
   
     Library
   -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+  <ItemGroup>
     <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
@@ -71,46 +103,16 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
-  <PropertyGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <ProjectGuid>{EDAFAA1D-61F5-4DDA-B6B4-3E94AAD2C3EE}</ProjectGuid>
-  </PropertyGroup>
-  <ImportGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
+  <ImportGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
     <Import Project="$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\shim.props" />
     <Import Project="$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\shim.props" />
   </ImportGroup>
-  <ItemGroup Condition=" '$(MetaPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <!--compile-->
-    <Compile Include="BaseDataSource.cs" />
-    <Compile Include="CardView.cs" />
-    <Compile Include="CompoundCollection.cs" />
-    <Compile Include="DataItem.cs" />
-    <Compile Include="DataPage.cs" />
-    <Compile Include="DataSourceBinding.cs" />
-    <Compile Include="DataSourceBindingExtension.cs" />
-    <Compile Include="DataSourceList.cs" />
-    <Compile Include="DataView.cs" />
-    <Compile Include="DirectoryPage.cs" />
-    <Compile Include="HeroImage.cs" />
-    <Compile Include="IDataItem.cs" />
-    <Compile Include="IDataSource.cs" />
-    <Compile Include="IDataSourceProvider.cs" />
-    <Compile Include="JsonSource.cs" />
-    <Compile Include="JsonDataSource.cs" />
-    <Compile Include="JsonSourceConverter.cs" />
-    <Compile Include="ListDataPage.cs" />
-    <Compile Include="ListItemControl.cs" />
-    <Compile Include="PersonDetailPage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringJsonSource.cs" />
-    <Compile Include="UriJsonSource.cs" />
-    <!--none-->
-    <None Include="nuspec.props" />
-    <!--references-->
+  <ItemGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
     <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Xamarin.Forms</Name>
     </ProjectReference>
-  </ItemGroup>
+  </ItemGroup>  
   <!--
 
     Targets

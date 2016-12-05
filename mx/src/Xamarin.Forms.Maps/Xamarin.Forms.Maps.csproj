@@ -12,13 +12,44 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <Import Project="$(ExtXfDir)\xf.lib.hierarchy.props" />
   <!--
-  
-    Hierarchy
+    ======
+    SOURCE
+    ======
   -->
   <ItemGroup>
-    <!--<PlatformGroup Include="$(WindowsTabletMobileSubPlatformId)">
-      <Platforms>$(WindowsTabletLibraryPlatformId)</Platforms>
-    </PlatformGroup>-->
+    <Compile Include="portable\Properties\AssemblyInfo.cs" />
+    <Compile Include="portable\Distance.cs" />
+    <Compile Include="portable\Geocoder.cs" />
+    <Compile Include="portable\Map.cs" />
+    <Compile Include="portable\MapSpan.cs" />
+    <Compile Include="portable\MapType.cs" />
+    <Compile Include="portable\Pin.cs" />
+    <Compile Include="portable\PinType.cs" />
+    <Compile Include="portable\Position.cs" />
+    <Compile Include="android\Properties\AssemblyInfo.cs" />
+    <Compile Include="android\FormsMaps.cs" />
+    <Compile Include="android\GeocoderBackend.cs" />
+    <Compile Include="android\MapRenderer.cs" />
+    <Compile Include="ios\Properties\AssemblyInfo.cs" />
+    <Compile Include="ios\FormsMaps.cs" />
+    <Compile Include="ios\GeocoderBackend.cs" />
+    <Compile Include="ios\MapRenderer.cs" />
+    <Compile Include="winrt\FormsMaps.cs" />
+    <Compile Include="winrt\GeocoderBackend.cs" />
+    <Compile Include="winrt\MapRenderer.cs" />
+    <Compile Include="winrt\PushPin.cs" />
+    <Compile Include="winrt\phone\Properties\AssemblyInfo.cs" />
+    <Compile Include="winrt\tablet\Properties\AssemblyInfo.cs" />
+    <Compile Include="winrt\tablet\GeocoderBackend.cs" />
+    <Compile Include="winrt\tablet\MapRenderer.cs" />
+    <Compile Include="winrt\uap\Properties\AssemblyInfo.cs" />
+    <None Include="android\.dir.props" />
+    <None Include="ios\.dir.props" />
+    <None Include="portable\.dir.props" />
+    <None Include="winrt\.dir.props" />
+    <None Include="winrt\phone\.dir.props" />
+    <None Include="winrt\tablet\.dir.props" />
+    <None Include="winrt\uap\.dir.props" />
   </ItemGroup>
   <!--
   
@@ -79,7 +110,7 @@
   
     Library
   -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+  <ItemGroup>
     <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
@@ -103,7 +134,7 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
-  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' "/>
+  <PropertyGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' " />
   <!--
   
     Part ([platform].part)
@@ -169,7 +200,7 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
-  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' "/>
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' " />
   <!--
 
     Windows Tablet
@@ -203,88 +234,16 @@
     </SDKReference>
   </ItemGroup>
   <!--
-    ======
-    SOURCE
-    ======
-  -->
-  <!--
-  
-    Portable
-  -->
-  <ItemGroup Condition=" '$(IsPartPlatform)' != 'true' ">
-    <Compile Include="portable\Properties\AssemblyInfo.cs" />
-    <Compile Include="portable\Distance.cs" />
-    <Compile Include="portable\Geocoder.cs" />
-    <Compile Include="portable\Map.cs" />
-    <Compile Include="portable\MapSpan.cs" />
-    <Compile Include="portable\MapType.cs" />
-    <Compile Include="portable\Pin.cs" />
-    <Compile Include="portable\PinType.cs" />
-    <Compile Include="portable\Position.cs" />
-  </ItemGroup>
-  <!--
-  
-    Android
-  -->
-  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <Compile Include="android\Properties\AssemblyInfo.cs" />
-    <Compile Include="android\FormsMaps.cs" />
-    <Compile Include="android\GeocoderBackend.cs" />
-    <Compile Include="android\MapRenderer.cs" />
-  </ItemGroup>
-  <!--
-  
-    iOS
-  -->
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
-    <Compile Include="ios\Properties\AssemblyInfo.cs" />
-    <Compile Include="ios\FormsMaps.cs" />
-    <Compile Include="ios\GeocoderBackend.cs" />
-    <Compile Include="ios\MapRenderer.cs" />
-  </ItemGroup>
-  <!--
-  
-    Windows
-  -->
-  <ItemGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
-    <Compile Include="winrt\FormsMaps.cs" />
-    <Compile Include="winrt\GeocoderBackend.cs" />
-    <Compile Include="winrt\MapRenderer.cs" />
-    <Compile Include="winrt\PushPin.cs" />
-  </ItemGroup>
-  <!--
-  
-    Windows Phone
-  -->
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
-    <Compile Include="winrt\phone\Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <!--
-  
-    Windows Tablet
-  -->
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
-    <Compile Include="winrt\tablet\Properties\AssemblyInfo.cs" />
-    <Compile Include="winrt\tablet\GeocoderBackend.cs" />
-    <Compile Include="winrt\tablet\MapRenderer.cs" />
-  </ItemGroup>
-  <!--
-  
-    Windows Universal
-  -->
-  <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
-    <Compile Include="winrt\uap\Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <!--
   
     Xamarin Forms Design
   -->
-  <ItemGroup Condition=" '$(MetaPlatform)' == '$(XamarinFormsDesign)' ">
+  <!--<ItemGroup Condition=" '$(MetaPlatform)' == '$(XamarinFormsDesign)' ">
     <Compile Include="design\Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+  </ItemGroup>-->
   <!--
 
     Targets
   -->
+  <Import Project="*\.dir.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
 </Project>

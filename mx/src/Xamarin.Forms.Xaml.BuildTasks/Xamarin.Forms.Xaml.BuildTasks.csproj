@@ -12,75 +12,11 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <Import Project="$(ExtXfDir)\xf.netstd.hierarchy.props" />
   <!--
-  
-    Universal
+    ======
+    SOURCE
+    ======
   -->
-  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <ProjectGuid>{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}</ProjectGuid>
-    <RootNamespace>Xamarin.Forms.Xaml.BuildTasks</RootNamespace>
-    <AssemblyName>Xamarin.Forms.Xaml.BuildTasks</AssemblyName>
-
-    <NugetIsBuildAssembly>true</NugetIsBuildAssembly>
-    <NugetBuildAssemblySubDirName/>
-  </PropertyGroup>
-  <ImportGroup>
-    <Import Project="nuspec.props" />
-  </ImportGroup>
   <ItemGroup>
-    <None Include="nuspec.props" />
-  </ItemGroup>
-  <!--
-  
-    Library
-  -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
-    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-    </Compile>
-    <Compile Include="$(ExtIdDir)BuildInfo.cs">
-      <DependentUpon>BuildInfo.t.cs</DependentUpon>
-      <Link>Properties\BuildInfo.cs</Link>
-    </Compile>
-    <None Include="$(ExtIdDir)BuildInfo.t.cs">
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-      <Link>Properties\BuildInfo.t.cs</Link>
-      <CompileOutput>BuildInfo.cs</CompileOutput>
-    </None>
-    <Compile Include="$(ExtPackDir)PackageInfo.cs">
-      <Link>Properties\PackageInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <!--
-  
-    Portable
-  -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
-  <ImportGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
-    <Import Project="$(PkgDir)Mono.Cecil.$(NugetMonoCecilVersion)\lib\Net45\shim.props" />
-  </ImportGroup>
-  <ItemGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
-    <Reference Include="Microsoft.Build" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.Build.Tasks.v4.0" />
-    
-    <ProjectReference Include="..\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj">
-      <Project>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</Project>
-      <Name>Xamarin.Forms.Xaml</Name>
-      <Platform>dotnet</Platform>
-    </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
-      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
-      <Name>Xamarin.Forms</Name>
-      <Platform>dotnet</Platform>
-    </ProjectReference>
-
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XamlGTask.cs" />
     <Compile Include="ILContext.cs" />
@@ -114,6 +50,76 @@
     <Compile Include="CompiledConverters\ICompiledTypeConverter.cs" />
     <Compile Include="CompiledConverters\LayoutOptionsConverter.cs" />
     <Compile Include="CompiledConverters\RectangleTypeConverter.cs" />
+  </ItemGroup>
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}</ProjectGuid>
+    <RootNamespace>Xamarin.Forms.Xaml.BuildTasks</RootNamespace>
+    <AssemblyName>Xamarin.Forms.Xaml.BuildTasks</AssemblyName>
+
+    <NugetIsBuildAssembly>true</NugetIsBuildAssembly>
+    <NugetBuildAssemblySubDirName/>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Project="nuspec.props" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="nuspec.props" />
+  </ItemGroup>
+  <!--
+  
+    Library
+  -->
+  <ItemGroup>
+    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+    <Compile Include="$(ExtPackDir)PackageInfo.cs">
+      <Link>Properties\PackageInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <!--
+  
+    Portable
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
+  <ImportGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
+    <Import Project="$(PkgDir)Mono.Cecil.$(NugetMonoCecilVersion)\lib\Net45\shim.props" />
+  </ImportGroup>
+  <ItemGroup Condition=" '$(LibraryPlatform)' == '$(NetStandardLibraryPlatformId)' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+
+    <ProjectReference Include="..\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj">
+      <Project>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</Project>
+      <Name>Xamarin.Forms.Xaml</Name>
+      <Platform>dotnet</Platform>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms</Name>
+      <Platform>dotnet</Platform>
+    </ProjectReference>
   </ItemGroup>
   <!--
 

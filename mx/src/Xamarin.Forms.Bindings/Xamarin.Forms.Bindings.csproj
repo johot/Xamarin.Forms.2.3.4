@@ -11,6 +11,13 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+  </ItemGroup>
+  <!--
   
     Hierarchy
   -->
@@ -45,7 +52,7 @@
   
     Library
   -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+  <ItemGroup>
     <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>

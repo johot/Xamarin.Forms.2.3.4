@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#if WINDOWS_PHONE_APP || WINDOWS_UWP
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -98,3 +99,4 @@ namespace Xamarin.Forms.Platform.WinRT
 #endif
 	}
 }
+#endif

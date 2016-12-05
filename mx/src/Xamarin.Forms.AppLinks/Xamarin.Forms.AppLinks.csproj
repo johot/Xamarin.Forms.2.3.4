@@ -11,6 +11,20 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+    <!--compile-->
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AndroidAppLinks.cs" />
+    <!--none-->
+    <None Include="nuspec.props" />
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <!--
   
     Hierarchy
   -->
@@ -43,7 +57,7 @@
   
     Library
   -->
-  <ItemGroup Condition="'$(IsLibraryPlatform)'=='true'">
+  <ItemGroup>
     <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
@@ -88,7 +102,7 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid' " />
-  <PropertyGroup Condition=" '$(MetaPlatform)' == '$(AndroidLibraryPlatformId)' ">
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <AndroidCodeGenTarget>XAJavaInterop1</AndroidCodeGenTarget>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
@@ -99,21 +113,13 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <ProjectGuid>{A3F22767-213E-46F4-B639-5565668AE2FF}</ProjectGuid>
   </PropertyGroup>
-  <ImportGroup Condition=" '$(MetaPlatform)' == '$(AndroidLibraryPlatformId)' ">
+  <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
     <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
     <Import Project="$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
     <Import Project="$(PkgDir)Xamarin.GooglePlayServices.AppIndexing.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props" />
   </ImportGroup>
-  <ItemGroup Condition=" '$(MetaPlatform)' == '$(AndroidLibraryPlatformId)' ">
-    <!--compile-->
-    <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AndroidAppLinks.cs" />
-    <!--none-->
-    <None Include="nuspec.props" />
-    <None Include="Resources\AboutResources.txt" />
-    <!--misc-->
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <AndroidResource Include="Resources\values\Strings.xml" />
     <!--references-->
     <Reference Include="System" />
