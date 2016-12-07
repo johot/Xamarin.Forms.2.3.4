@@ -72,6 +72,7 @@ namespace Xamarin.Forms.Controls.Issues
 #endif
 	}
 
+	[Preserve(AllMembers = true)]
 	public class _45926SecondPage : ContentPage
 	{
 		public static int InstanceCounter = 0;
