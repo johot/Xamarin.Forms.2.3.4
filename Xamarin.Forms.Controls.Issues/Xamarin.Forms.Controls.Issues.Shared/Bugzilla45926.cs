@@ -54,14 +54,21 @@ namespace Xamarin.Forms.Controls.Issues
 			PushAsync(content);
 		}
 
-		#if UITEST
-		//		[Test]
-		//public void Issue1Test ()
-		//{
-		//	RunningApp.Screenshot ("I am at Issue 1");
-		//	RunningApp.WaitForElement (q => q.Marked ("IssuePageLabel"));
-		//	RunningApp.Screenshot ("I see the Label");
-		//}
+#if UITEST
+		[Test]
+		public void Issue1Test ()
+		{
+			RunningApp.WaitForElement (q => q.Marked ("New Page"));
+
+			RunningApp.Tap (q => q.Marked ("New Page"));
+			RunningApp.Back();
+			RunningApp.Tap(q => q.Marked("Do GC"));
+			RunningApp.Tap(q => q.Marked("Send Message"));
+			RunningApp.Tap(q => q.Marked("Do GC"));
+
+			RunningApp.WaitForElement (q => q.Marked ("Instances: 0"));
+			RunningApp.WaitForElement (q => q.Marked ("Messages: 0"));
+		}
 #endif
 	}
 
