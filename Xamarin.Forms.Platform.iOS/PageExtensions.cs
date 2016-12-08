@@ -10,13 +10,20 @@ namespace Xamarin.Forms
 			if (!Forms.IsInitialized)
 				throw new InvalidOperationException("call Forms.Init() before this");
 
+			Platform.iOS.Platform currentPlatform = null;
+
+			if (Application.Current.MainPage != null && Application.Current.MainPage.Platform != null)
+			{
+				currentPlatform = Application.Current.MainPage.Platform as Platform.iOS.Platform;
+			}
+
 			if (!(view.RealParent is Application))
 			{
 				Application app = new DefaultApplication();
 				app.MainPage = view;
 			}
 
-			var result = new Platform.iOS.Platform();
+			var result = currentPlatform ?? new Platform.iOS.Platform();
 			result.SetPage(view);
 			return result.ViewController;
 		}
