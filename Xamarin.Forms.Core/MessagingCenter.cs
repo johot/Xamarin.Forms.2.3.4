@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Xamarin.Forms
 {
@@ -11,28 +12,49 @@ namespace Xamarin.Forms
 			public Sender(string message, Type senderType, Type argType) : base(message, senderType, argType)
 			{
 			}
-
-			public string Message => Item1;
-			public Type SenderType => Item2;
-			public Type ArgType => Item3;
 		}
 
-		delegate void Callback(object sender, object args);
+		delegate bool Filter(object sender);
 
-		class Subscription : Tuple<WeakReference, WeakReference<Callback>>
+		class Subscription : Tuple<WeakReference, WeakReference, MethodInfo, Filter>
 		{
-			protected Subscription(WeakReference subscriber, WeakReference<Callback> callback) 
-				: base(subscriber, callback)
-			{
-			}
-
-			public Subscription(object subscriber, Callback callback) 
-				: this(new WeakReference(subscriber), new WeakReference<Callback>(callback))
+			public Subscription(object subscriber, object delegateSource, MethodInfo methodInfo, Filter filter)
+				: base(new WeakReference(subscriber), new WeakReference(delegateSource), methodInfo, filter)
 			{
 			}
 
 			public WeakReference Subscriber => Item1;
-			public WeakReference<Callback> Callback => Item2;
+			WeakReference DelegateSource => Item2;
+			MethodInfo MethodInfo => Item3;
+			Filter Filter => Item4;
+
+			public void InvokeCallback(object sender, object args)
+			{
+				if (!Filter(sender))
+				{
+					return;
+				}
+
+				if (MethodInfo.IsStatic)
+				{
+					MethodInfo.Invoke(null, MethodInfo.GetParameters().Length == 1 ? new[] { sender } : new[] { sender, args });
+					return;
+				}
+
+				var target = DelegateSource.Target;
+
+				if (target == null)
+				{
+					return; // Collected
+				}
+
+				MethodInfo.Invoke(target, MethodInfo.GetParameters().Length == 1 ? new[] { sender } : new[] { sender, args });
+			}
+
+			public bool CanBeRemoved()
+			{
+				return !Subscriber.IsAlive || !DelegateSource.IsAlive;
+			}
 		}
 
 		static readonly Dictionary<Sender, List<Subscription>> s_subscriptions =
@@ -59,14 +81,15 @@ namespace Xamarin.Forms
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Callback wrap = (sender, args) =>
+			var target = callback.Target;
+
+			Filter filter = sender =>
 			{
 				var send = (TSender)sender;
-				if (source == null || send == source)
-					callback((TSender)sender, (TArgs)args);
+				return (source == null || send == source);
 			};
 
-			InnerSubscribe(subscriber, message, typeof(TSender), typeof(TArgs), wrap);
+			InnerSubscribe(subscriber, message, typeof(TSender), typeof(TArgs), target, callback.GetMethodInfo(), filter);
 		}
 
 		public static void Subscribe<TSender>(object subscriber, string message, Action<TSender> callback, TSender source = null) where TSender : class
@@ -76,14 +99,15 @@ namespace Xamarin.Forms
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Callback wrap = (sender, args) =>
+			var target = callback.Target;
+
+			Filter filter = sender =>
 			{
 				var send = (TSender)sender;
-				if (source == null || send == source)
-					callback((TSender)sender);
+				return (source == null || send == source);
 			};
 
-			InnerSubscribe(subscriber, message, typeof(TSender), null, wrap);
+			InnerSubscribe(subscriber, message, typeof(TSender), null, target, callback.GetMethodInfo(), filter);
 		}
 
 		public static void Unsubscribe<TSender, TArgs>(object subscriber, string message) where TSender : class
@@ -122,21 +146,17 @@ namespace Xamarin.Forms
 			{
 				if (subscription.Subscriber.Target != null && subcriptions.Contains(subscription))
 				{
-					Callback callback;
-					if(subscription.Callback.TryGetTarget(out callback))
-					{
-						callback(sender, args);						
-					}
+					subscription.InvokeCallback(sender, args);
 				}
 			}
 		}
 
-		static void InnerSubscribe(object subscriber, string message, Type senderType, Type argType, Callback callback)
+		static void InnerSubscribe(object subscriber, string message, Type senderType, Type argType, object target, MethodInfo methodInfo, Filter filter)
 		{
 			if (message == null)
 				throw new ArgumentNullException(nameof(message));
 			var key = new Sender(message, senderType, argType);
-			var value = new Subscription(subscriber, callback);
+			var value = new Subscription(subscriber, target, methodInfo, filter);
 			if (s_subscriptions.ContainsKey(key))
 			{
 				s_subscriptions[key].Add(value);
@@ -158,7 +178,7 @@ namespace Xamarin.Forms
 			var key = new Sender(message, senderType, argType);
 			if (!s_subscriptions.ContainsKey(key))
 				return;
-			s_subscriptions[key].RemoveAll(tuple => !tuple.Subscriber.IsAlive || tuple.Subscriber.Target == subscriber);
+			s_subscriptions[key].RemoveAll(sub => !sub.CanBeRemoved() || sub.Subscriber.Target == subscriber);
 			if (!s_subscriptions[key].Any())
 				s_subscriptions.Remove(key);
 		}

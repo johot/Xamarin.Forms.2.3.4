@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Remoting;
 using NUnit.Framework;
 
 
@@ -186,6 +187,106 @@ namespace Xamarin.Forms.Core.UnitTests
 			MessagingCenter.Send (this, "SimpleTest");
 
 			Assert.AreEqual (1, messageCount);
+		}
+
+		[Test]
+		public void SubscriberShouldBeCollected()
+		{
+			new Action(() =>
+			{
+				var subscriber = new TestSubcriber();
+				MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => Assert.Fail());
+			})();
+
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			var pub = new TestPublisher();
+			pub.Test(); // Assert.Fail() shouldn't be called, because the TestSubcriber object should have ben GCed
+		}
+
+		[Test]
+		public void CallbackTargetShouldBeCollected()
+		{
+			var subscriber = new TestSubcriber();
+			new Action(() =>
+			{
+				var source = new MessagingCenterTestsCallbackSource();
+				MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => source.FailCallback());
+			})();
+
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			var pub = new TestPublisher();
+			pub.Test(); // source.FailCallback() shouldn't be called, because the TestCallbackSource object should have ben GCed
+		}
+
+		[Test]
+		public void StaticCallback()
+		{
+			int i = 4;
+
+			var subscriber = new TestSubcriber();
+
+			MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => MessagingCenterTestsCallbackSource.Increment(ref i));
+
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			var pub = new TestPublisher();
+			pub.Test();
+
+			Assert.IsTrue(i == 5, "The static method should have incremented 'i'"); 
+		}
+
+		[Test]
+		public void NothingShouldBeCollected()
+		{
+			var success = false;
+
+			var subscriber = new TestSubcriber();
+			
+			var source = new MessagingCenterTestsCallbackSource();
+			MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => source.SuccessCallback(ref success));
+			
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			var pub = new TestPublisher();
+			pub.Test(); 
+
+			Assert.True(success); // TestCallbackSource.SuccessCallback() should be invoked to make success == true
+		}
+
+		class TestSubcriber
+		{
+		}
+
+		class TestPublisher
+		{
+			public void Test()
+			{
+				MessagingCenter.Send(this, "test");
+			}
+		}
+
+		public class MessagingCenterTestsCallbackSource
+		{
+			public void FailCallback()
+			{
+				Assert.Fail();
+			}
+
+			public void SuccessCallback(ref bool success)
+			{
+				success = true;
+			}
+
+			public static void Increment(ref int i)
+			{
+				i = i + 1;
+			}
 		}
 	}
 }
