@@ -95,7 +95,7 @@ namespace Xamarin.Forms
 
 		protected override void OnPropertyChanged(string propertyName)
 		{
-			if (propertyName == "BindingContext")
+			if (propertyName == "foo")
 			{
 				WebViewSource source = Source;
 				if (source != null)
