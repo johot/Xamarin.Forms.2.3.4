@@ -87,7 +87,7 @@ namespace Xamarin.Forms
 			base.OnBindingContextChanged();
 
 			WebViewSource source = Source;
-			if (source != null)
+			if (source == null)
 			{
 				SetInheritedBindingContext(source, BindingContext);
 			}
