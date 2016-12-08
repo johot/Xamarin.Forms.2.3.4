@@ -84,7 +84,7 @@ namespace Xamarin.Forms
 
 		protected override void OnBindingContextChanged()
 		{
-			base.OnBindingContextChanged();
+			
 
 			WebViewSource source = Source;
 			if (source == null)
