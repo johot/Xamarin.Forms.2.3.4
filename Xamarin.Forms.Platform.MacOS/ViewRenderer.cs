@@ -83,8 +83,8 @@ namespace Xamarin.Forms.Platform.MacOS
 				base.SetAutomationId(id);
 			else
 			{
-				//AccessibilityIdentifier = id + "_Container";
-				//Control.AccessibilityIdentifier = id;
+				AccessibilityIdentifier = id + "_Container";
+				Control.AccessibilityIdentifier = id;
 			}
 		}
 

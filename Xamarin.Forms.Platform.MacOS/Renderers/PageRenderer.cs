@@ -151,8 +151,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual void SetAutomationId(string id)
 		{
-			//if (NativeView != null)
-			//	NativeView.AccessibilityIdentifier = id;
+			if (NativeView != null)
+				NativeView.AccessibilityIdentifier = id;
 		}
 
 		internal FormsNSView FormsNativeView => View as FormsNSView;
