@@ -1,27 +1,28 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
+using Xamarin.Forms.Controls;
 using Xamarin.UITest.Desktop;
 
 namespace Xamarin.Forms.Core.macOS.UITests
 {
+
 	public class Tests
 	{
 		[TestFixture]
 		public class Test
 		{
 
-			[OneTimeSetUp]
-			public void RunBeforeAnyTests()
-			{
-				TestAgent.Start();
-			}
+			//[OneTimeSetUp]
+			//public void RunBeforeAnyTests()
+			//{
+			//	TestAgent.Start();
+			//}
 
-			[OneTimeTearDown]
-			public void RunAfterAnyTests()
-			{
-				TestAgent.Stop();
-			}
+			//[OneTimeTearDown]
+			//public void RunAfterAnyTests()
+			//{
+			//	TestAgent.Stop();
+			//}
 			CocoaApp app;
 
 			[SetUp]
@@ -29,8 +30,9 @@ namespace Xamarin.Forms.Core.macOS.UITests
 			{
 				var configurator = new CocoaAppConfigurator();
 				app = configurator
-							.AppBundle("/Users/rmarinho/Xamarin/Xamarin.Forms/Xamarin.Forms.ControlGallery.MacOS/bin/Debug/Xamarin.Forms.ControlGallery.MacOS.app")
-							.BundleId("com.xamarin.xamarin-forms-controlgallery-macos")
+							//.AppBundle("/Users/rmarinho/Xamarin/Xamarin.Forms/Xamarin.Forms.ControlGallery.MacOS/bin/Debug/Xamarin.Forms.ControlGallery.MacOS.app")
+							.AppBundle(AppPaths.MacOSPath)
+							.BundleId(AppPaths.MacOSBundleId)
 							.StartApp();
 			}
 
