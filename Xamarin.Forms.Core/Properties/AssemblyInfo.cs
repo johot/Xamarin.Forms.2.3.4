@@ -47,6 +47,7 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.iOS.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Android.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Windows.UITests")]
+[assembly: InternalsVisibleTo("Xamarin.Forms.Core.macOS.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.iOS.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Android.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Loader")]
