@@ -34,7 +34,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				UpdatePicker();
 				UpdateTextColor();
 
-				((ObservableList<string>)e.NewElement.Items).CollectionChanged += RowsCollectionChanged;
+				//((ObservableList<string>)e.NewElement.Items).CollectionChanged += RowsCollectionChanged;
 			}
 
 			base.OnElementChanged(e);
