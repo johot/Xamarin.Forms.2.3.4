@@ -1,7 +1,5 @@
 using System;
-using System.Runtime.Remoting;
 using NUnit.Framework;
-
 
 namespace Xamarin.Forms.Core.UnitTests
 {
@@ -241,6 +239,36 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
+		public void CompilerGeneratedClosuresAreNotCollected()
+		{
+			var source = new MessagingCenterTestsCallbackSource();
+			source.SubscribeAnonymousDelegateWithClosure();
+
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			var pub = new TestPublisher();
+			pub.Test(); 
+
+			Assert.True(source.Successful); // the anonymous delegate should be invoked to make success == true
+		}
+
+		[Test]
+		public void LambdasAreNotCollected()
+		{
+			var source = new MessagingCenterTestsCallbackSource();
+			source.SubscribeAnonymousDelegateSansClosure();
+
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			var pub = new TestPublisher();
+			pub.Test();
+
+			Assert.True(source.Successful); // the anonymous delegate should be invoked to make success == true
+		}
+
+		[Test]
 		public void NothingShouldBeCollected()
 		{
 			var success = false;
@@ -286,6 +314,27 @@ namespace Xamarin.Forms.Core.UnitTests
 			public static void Increment(ref int i)
 			{
 				i = i + 1;
+			}
+
+			public bool Successful { get; private set; }
+
+			void SetToSuccessful(int x)
+			{
+				if (x > 10)
+				{
+					Successful = true;
+				}
+			}
+
+			public void SubscribeAnonymousDelegateWithClosure()
+			{
+				var x = 12; 
+				MessagingCenter.Subscribe<TestPublisher>(this, "test", p => SetToSuccessful(x));
+			}
+
+			public void SubscribeAnonymousDelegateSansClosure()
+			{
+				MessagingCenter.Subscribe<TestPublisher>(this, "test", p => SetToSuccessful(12));
 			}
 		}
 	}
