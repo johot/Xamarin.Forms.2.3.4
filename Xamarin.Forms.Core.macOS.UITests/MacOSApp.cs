@@ -25,7 +25,9 @@ namespace Xamarin.Forms.Core.macOS.UITests
 					X = result.Rect.X,
 					Y = result.Rect.Y,
 					Width = result.Rect.Width,
-					Height = result.Rect.Height
+					Height = result.Rect.Height,
+					CenterX = result.Rect.CenterX,
+					CenterY = result.Rect.CenterY
 				}
 			};
 		}
@@ -263,13 +265,45 @@ namespace Xamarin.Forms.Core.macOS.UITests
 				var result = allREsults[0].Children[0];
 				results.Add(result.ToUITestResult());
 			}
+			else if (queryStr.Contains("* index:7"))
+			{
+				var allREsults = _cocoaApp.Query();
+				var result = allREsults[0].Children[0].Children[0].Children[1];
+				results.Add(result.ToUITestResult());
+			}
 
 			return results.ToArray();
 		}
 
 		public T[] Query<T>(Func<UITest.Queries.AppQuery, UITest.Queries.AppTypedSelector<T>> query)
 		{
-			return null;
+
+			var results = new List<T>();
+			var queryStr = query(new AppQuery(QueryPlatform.iOS)).ToString();
+			var isMarked = System.Text.RegularExpressions.Regex.IsMatch(queryStr, @"\bmarked\b");
+			if (isMarked)
+			{
+				var markedWords = System.Text.RegularExpressions.Regex.Split(queryStr, @"\bmarked\b:'");
+				var isAll = markedWords[0].Trim() == "*";
+				var markedWord = markedWords[1].Replace("'", "");
+				var ss = Query(markedWord);
+
+			}
+			else if (queryStr.Contains("* index:0"))
+			{
+
+				var allREsults = _cocoaApp.Query();
+				var result = allREsults[0].Children[0];
+				//	results.Add(result.ToUITestResult());
+			}
+			else if (queryStr.Contains("* index:7"))
+			{
+				var allREsults = _cocoaApp.Query();
+				var result = allREsults[0].Children[0].Children[0].Children[1];
+				//	results.Add(result.ToUITestResult());
+			}
+
+			return results.ToArray();
 		}
 
 		public void Repl()

@@ -9,6 +9,9 @@ using Xamarin.UITest.Queries;
 
 namespace Xamarin.Forms.Core.UITests
 {
+#if __MACOS__
+	[Ignore("Not tested on the MAC")]
+#endif
 	[TestFixture]
 	[Category(UITestCategories.Cells)]
 	internal class ContextActionsListUITests : BaseTestFixture
@@ -81,7 +84,9 @@ namespace Xamarin.Forms.Core.UITests
 		}
 #endif
 	}
-
+#if __MACOS__
+	[Ignore("Not tested on the MAC")]
+#endif
 	[TestFixture]
 	[Category(UITestCategories.Cells)]
 	internal class ContextActionsTableUITests : BaseTestFixture
