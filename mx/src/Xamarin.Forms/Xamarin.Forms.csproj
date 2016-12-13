@@ -20,6 +20,10 @@
     <None Include="nuspec.props" />
     <None Include="winrt\uap\project.json" />
     <None Include="winrt\uap\project.lock.json" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\Page.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\StatusBarHiddenMode.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\StatusBarTextColorMode.cs" />
+    <Compile Include="portable\PlatformConfiguration\iOSSpecific\UIStatusBarAnimation.cs" />
     <Compile Include="portable\Platform\Xamarin.Forms.Platform.cs" />
     <Compile Include="portable\AbsoluteLayout.cs" />
     <Compile Include="portable\AbsoluteLayoutFlags.cs" />
@@ -386,6 +390,7 @@
     <Compile Include="portable\Tweener.cs" />
     <Compile Include="portable\TypeConverter.cs" />
     <Compile Include="portable\TypeConverterAttribute.cs" />
+    <Compile Include="portable\TypedBinding.cs" />
     <Compile Include="portable\TypeTypeConverter.cs" />
     <Compile Include="portable\UnsolvableConstraintsException.cs" />
     <Compile Include="portable\UriImageSource.cs" />
@@ -642,6 +647,7 @@
     <Compile Include="ios\VisualElementPackager.cs" />
     <Compile Include="ios\VisualElementRenderer.cs" />
     <Compile Include="ios\VisualElementTracker.cs" />
+    <Compile Include="portable\XmlnsDefinitionAttribute.cs" />
     <Compile Include="winrt\Properties\AssemblyInfo.cs" />
     <Compile Include="winrt\ActivityIndicatorRenderer.cs" />
     <Compile Include="winrt\AlignmentExtensions.cs" />
@@ -728,6 +734,7 @@
     <Compile Include="winrt\TextAlignmentToHorizontalAlignmentConverter.cs" />
     <Compile Include="winrt\TextCellRenderer.cs" />
     <Compile Include="winrt\TimePickerRenderer.cs" />
+    <Compile Include="winrt\uap\FormsPresenter.cs" />
     <Compile Include="winrt\UriImageSourceHandler.cs" />
     <Compile Include="winrt\ViewExtensions.cs" />
     <Compile Include="winrt\ViewRenderer.cs" />
@@ -810,6 +817,10 @@
     <Compile Include="winrt\uap\TabbedPageRenderer.cs" />
     <Compile Include="winrt\uap\ToolbarPlacementHelper.cs" />
     <Page Include="winrt\uap\AutoSuggestStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\uap\FormsCommandBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

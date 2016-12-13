@@ -21,6 +21,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MarkupExpressionParser.cs" />
     <Compile Include="ViewExtensions.cs" />
+    <Compile Include="XamlFilePathAttribute.cs" />
     <Compile Include="XamlLoader.cs" />
     <Compile Include="XamlNode.cs" />
     <Compile Include="XamlServiceProvider.cs" />
