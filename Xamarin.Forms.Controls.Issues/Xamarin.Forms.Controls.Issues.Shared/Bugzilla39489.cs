@@ -22,8 +22,9 @@ namespace Xamarin.Forms.Controls.Issues
 			PushAsync(new Bz39489Content());
 		}
 
+		protected override bool Isolate => true;
+
 #if UITEST
-#if !__IOS__ // Temporarily disabling this test on iOS
 		[Test]
 		public async Task Bugzilla39489Test()
 		{
@@ -41,7 +42,6 @@ namespace Xamarin.Forms.Controls.Issues
 				RunningApp.Back();
 			}
 		}
-#endif
 #endif
 	}
 
