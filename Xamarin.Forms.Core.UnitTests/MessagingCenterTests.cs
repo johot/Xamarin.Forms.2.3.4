@@ -204,20 +204,80 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
-		public void CallbackTargetShouldBeCollected()
+		public void ShouldBeCollectedIfCallbackTargetIsSubscriber()
 		{
-			var subscriber = new TestSubcriber();
+			WeakReference wr = null;
+
 			new Action(() =>
 			{
-				var source = new MessagingCenterTestsCallbackSource();
-				MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => source.FailCallback());
+				var subscriber = new TestSubcriber();
+
+				wr = new WeakReference(subscriber);
+
+				subscriber.SubscribeToTestMessages();
 			})();
 
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 
 			var pub = new TestPublisher();
-			pub.Test(); // source.FailCallback() shouldn't be called, because the TestCallbackSource object should have ben GCed
+			pub.Test();
+
+			Assert.IsFalse(wr.IsAlive); // The Action target and subscriber were the same object, so both could be collected
+		}
+
+		[Test]
+		public void NotCollectedIfSubscriberIsNotTheCallbackTarget()
+		{
+			WeakReference wr = null;
+
+			new Action(() =>
+			{
+				var subscriber = new TestSubcriber();
+
+				wr = new WeakReference(subscriber);
+
+				// This creates a closure, so the callback target is not 'subscriber', but an instancce of a compiler generated class 
+				// So MC has to keep a strong reference to it, and 'subscriber' won't be collectable
+				MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => subscriber.SetSuccess());
+			})();
+
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			
+			Assert.IsTrue(wr.IsAlive); // The closure in Subscribe should be keeping the subscriber alive
+			Assert.IsNotNull(wr.Target as TestSubcriber);
+
+			Assert.IsFalse(((TestSubcriber)wr.Target).Successful);
+
+			var pub = new TestPublisher();
+			pub.Test();
+
+			Assert.IsTrue(((TestSubcriber)wr.Target).Successful);  // Since it's still alive, the subscriber should still have received the message and updated the property
+		}
+
+		[Test]
+		public void SubscriberCollectableAfterUnsubscribeEvenIfHeldByClosure()
+		{
+			WeakReference wr = null;
+
+			new Action(() =>
+			{
+				var subscriber = new TestSubcriber();
+
+				wr = new WeakReference(subscriber);
+
+				MessagingCenter.Subscribe<TestPublisher>(subscriber, "test", p => subscriber.SetSuccess());
+			})();
+
+			Assert.IsNotNull(wr.Target as TestSubcriber); 
+
+			MessagingCenter.Unsubscribe<TestPublisher>(wr.Target, "test");
+			
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
+			Assert.IsFalse(wr.IsAlive); // The Action target and subscriber were the same object, so both could be collected
 		}
 
 		[Test]
@@ -236,36 +296,6 @@ namespace Xamarin.Forms.Core.UnitTests
 			pub.Test();
 
 			Assert.IsTrue(i == 5, "The static method should have incremented 'i'"); 
-		}
-
-		[Test]
-		public void CompilerGeneratedClosuresAreNotCollected()
-		{
-			var source = new MessagingCenterTestsCallbackSource();
-			source.SubscribeAnonymousDelegateWithClosure();
-
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-
-			var pub = new TestPublisher();
-			pub.Test(); 
-
-			Assert.True(source.Successful); // the anonymous delegate should be invoked to make success == true
-		}
-
-		[Test]
-		public void LambdasAreNotCollected()
-		{
-			var source = new MessagingCenterTestsCallbackSource();
-			source.SubscribeAnonymousDelegateSansClosure();
-
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-
-			var pub = new TestPublisher();
-			pub.Test();
-
-			Assert.True(source.Successful); // the anonymous delegate should be invoked to make success == true
 		}
 
 		[Test]
@@ -289,6 +319,17 @@ namespace Xamarin.Forms.Core.UnitTests
 
 		class TestSubcriber
 		{
+			public void SetSuccess()
+			{
+				Successful = true;
+			}
+
+			public bool Successful { get; private set; }
+
+			public void SubscribeToTestMessages()
+			{
+				MessagingCenter.Subscribe<TestPublisher>(this, "test", p => SetSuccess());
+			}
 		}
 
 		class TestPublisher
@@ -301,11 +342,6 @@ namespace Xamarin.Forms.Core.UnitTests
 
 		public class MessagingCenterTestsCallbackSource
 		{
-			public void FailCallback()
-			{
-				Assert.Fail();
-			}
-
 			public void SuccessCallback(ref bool success)
 			{
 				success = true;
@@ -314,27 +350,6 @@ namespace Xamarin.Forms.Core.UnitTests
 			public static void Increment(ref int i)
 			{
 				i = i + 1;
-			}
-
-			public bool Successful { get; private set; }
-
-			void SetToSuccessful(int x)
-			{
-				if (x > 10)
-				{
-					Successful = true;
-				}
-			}
-
-			public void SubscribeAnonymousDelegateWithClosure()
-			{
-				var x = 12; 
-				MessagingCenter.Subscribe<TestPublisher>(this, "test", p => SetToSuccessful(x));
-			}
-
-			public void SubscribeAnonymousDelegateSansClosure()
-			{
-				MessagingCenter.Subscribe<TestPublisher>(this, "test", p => SetToSuccessful(12));
 			}
 		}
 	}

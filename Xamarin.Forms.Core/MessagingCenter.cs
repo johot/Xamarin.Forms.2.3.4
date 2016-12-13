@@ -17,15 +17,41 @@ namespace Xamarin.Forms
 
 		delegate bool Filter(object sender);
 
-		class Subscription : Tuple<WeakReference, WeakReference, MethodInfo, Filter>
+		class MaybeWeakReference
+		{
+			WeakReference DelegateWeakReference { get; set; }
+			object DelegateStrongReference { get; set; }
+
+			readonly bool _isStrongReference;
+
+			public MaybeWeakReference(object subscriber, object delegateSource)
+			{
+				if (subscriber.Equals(delegateSource))
+				{
+					// The target is the subscriber; we can use a weakreference
+					DelegateWeakReference = new WeakReference(delegateSource);
+					_isStrongReference = false;
+				}
+				else
+				{
+					DelegateStrongReference = delegateSource;
+					_isStrongReference = true;
+				}
+			}
+
+			public object Target => _isStrongReference ? DelegateStrongReference : DelegateWeakReference.Target;
+			public bool IsAlive => _isStrongReference || DelegateWeakReference.IsAlive;
+		}
+
+		class Subscription : Tuple<WeakReference, MaybeWeakReference, MethodInfo, Filter>
 		{
 			public Subscription(object subscriber, object delegateSource, MethodInfo methodInfo, Filter filter)
-				: base(new WeakReference(subscriber), new WeakReference(delegateSource), methodInfo, filter)
+				: base(new WeakReference(subscriber), new MaybeWeakReference(subscriber, delegateSource), methodInfo, filter)
 			{
 			}
 
 			public WeakReference Subscriber => Item1;
-			WeakReference DelegateSource => Item2;
+			MaybeWeakReference DelegateSource => Item2;
 			MethodInfo MethodInfo => Item3;
 			Filter Filter => Item4;
 
@@ -42,11 +68,11 @@ namespace Xamarin.Forms
 					return;
 				}
 
-				var target = DelegateSource.Target ;
+				var target = DelegateSource.Target;
 
 				if (target == null)
 				{
-					return; // Collected
+					return; // Collected 
 				}
 
 				MethodInfo.Invoke(target, MethodInfo.GetParameters().Length == 1 ? new[] { sender } : new[] { sender, args });
