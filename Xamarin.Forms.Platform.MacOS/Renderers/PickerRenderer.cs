@@ -16,7 +16,10 @@ namespace Xamarin.Forms.Platform.MacOS
 		protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
 		{
 			if (e.OldElement != null)
-				((ObservableList<string>)e.OldElement.Items).CollectionChanged -= RowsCollectionChanged;
+			{
+				//((ObservableList<string>)e.OldElement.Items).CollectionChanged -= RowsCollectionChanged;
+			}
+
 
 			if (e.NewElement != null)
 			{
@@ -72,7 +75,10 @@ namespace Xamarin.Forms.Platform.MacOS
 				{
 					_disposed = true;
 					if (Element != null)
-						((ObservableList<string>)Element.Items).CollectionChanged -= RowsCollectionChanged;
+					{
+						//((ObservableList<string>)Element.Items).CollectionChanged -= RowsCollectionChanged;
+					}
+
 
 					if (Control != null)
 						Control.SelectionChanged -= ComboBoxSelectionChanged;
@@ -88,12 +94,12 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void OnEnded(object sender, EventArgs eventArgs)
 		{
-			ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+			ElementController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
 		}
 
 		void OnStarted(object sender, EventArgs eventArgs)
 		{
-			ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
+			ElementController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
 		}
 
 		void RowsCollectionChanged(object sender, EventArgs e)
@@ -103,6 +109,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdatePicker()
 		{
+			if (Control == null || Element == null)
+				return;
+
 			var selectedIndex = Element.SelectedIndex;
 			var items = Element.Items;
 			Control.PlaceholderString = Element.Title ?? string.Empty;
@@ -115,6 +124,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateTextColor()
 		{
+			if (Control == null || Element == null)
+				return;
+
 			var textColor = Element.TextColor;
 
 			if (textColor.IsDefault || !Element.IsEnabled)

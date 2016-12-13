@@ -67,12 +67,14 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected override void SetBackgroundColor(Color color)
 		{
+			base.SetBackgroundColor(color);
+
+			if (Control == null)
+				return;
 			if (color == Color.Default)
 				Control.BackgroundColor = _defaultBackgroundColor;
 			else
 				Control.BackgroundColor = color.ToNSColor();
-
-			base.SetBackgroundColor(color);
 		}
 
 		void HandleValueChanged(object sender, NSDatePickerValidatorEventArgs e)
@@ -82,6 +84,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateTime()
 		{
+			if (Control == null || Element == null)
+				return;
 			var time = new DateTime(2001, 1, 1).Add(Element.Time);
 			var newDate = time.ToNSDate();
 			if (Control.DateValue != newDate)
@@ -90,6 +94,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateTextColor()
 		{
+			if (Control == null || Element == null)
+				return;
 			var textColor = Element.TextColor;
 
 			if (textColor.IsDefault || !Element.IsEnabled)

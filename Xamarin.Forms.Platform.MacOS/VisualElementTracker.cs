@@ -150,6 +150,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (isVisible && caLayer.Hidden)
 				{
 					caLayer.Hidden = false;
+					uiview.Hidden = false;
 					if (!caLayer.Frame.IsEmpty)
 						shouldRelayoutSublayers = true;
 				}
@@ -157,6 +158,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (!isVisible && !caLayer.Hidden)
 				{
 					caLayer.Hidden = true;
+					uiview.Hidden = true;
 					shouldRelayoutSublayers = true;
 				}
 

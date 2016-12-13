@@ -20,23 +20,24 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (e.OldElement == null)
 			{
-				_picker = new NSDatePicker { DatePickerMode = NSDatePickerMode.Single, TimeZone = new NSTimeZone("UTC") };
-				_picker.DatePickerStyle = NSDatePickerStyle.TextFieldAndStepper;
-				_picker.DatePickerElements = NSDatePickerElementFlags.YearMonthDateDay;
-				_picker.ValidateProposedDateValue += HandleValueChanged;
-				_defaultTextColor = _picker.TextColor;
-				_defaultBackgroundColor = _picker.BackgroundColor;
+				if (Control == null)
+				{
+					_picker = new NSDatePicker { DatePickerMode = NSDatePickerMode.Single, TimeZone = new NSTimeZone("UTC") };
+					_picker.DatePickerStyle = NSDatePickerStyle.TextFieldAndStepper;
+					_picker.DatePickerElements = NSDatePickerElementFlags.YearMonthDateDay;
+					_picker.ValidateProposedDateValue += HandleValueChanged;
+					_defaultTextColor = _picker.TextColor;
+					_defaultBackgroundColor = _picker.BackgroundColor;
 
-				SetNativeControl(_picker);
+					SetNativeControl(_picker);
+				}
 			}
 
-			if (e.NewElement != null)
-			{
-				UpdateDateFromModel();
-				UpdateMaximumDate();
-				UpdateMinimumDate();
-				UpdateTextColor();
-			}
+			UpdateDateFromModel();
+			UpdateMaximumDate();
+			UpdateMinimumDate();
+			UpdateTextColor();
+
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -68,47 +69,60 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected override void SetBackgroundColor(Color color)
 		{
+			base.SetBackgroundColor(color);
+
+			if (Control == null)
+				return;
+
 			if (color == Color.Default)
 				Control.BackgroundColor = _defaultBackgroundColor;
 			else
 				Control.BackgroundColor = color.ToNSColor();
-
-			base.SetBackgroundColor(color);
 		}
 
 		void HandleValueChanged(object sender, NSDatePickerValidatorEventArgs e)
 		{
+			if (Control == null || Element == null)
+				return;
 			ElementController?.SetValueFromRenderer(DatePicker.DateProperty, _picker.DateValue.ToDateTime().Date);
 		}
 
 		void OnEnded(object sender, EventArgs eventArgs)
 		{
-			ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+			ElementController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
 		}
 
 		void OnStarted(object sender, EventArgs eventArgs)
 		{
-			ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
+			ElementController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
 		}
 
 		void UpdateDateFromModel()
 		{
+			if (Control == null || Element == null)
+				return;
 			if (_picker.DateValue.ToDateTime().Date != Element.Date.Date)
 				_picker.DateValue = Element.Date.ToNSDate();
 		}
 
 		void UpdateMaximumDate()
 		{
+			if (Control == null || Element == null)
+				return;
 			_picker.MaxDate = Element.MaximumDate.ToNSDate();
 		}
 
 		void UpdateMinimumDate()
 		{
+			if (Control == null || Element == null)
+				return;
 			_picker.MinDate = Element.MinimumDate.ToNSDate();
 		}
 
 		void UpdateTextColor()
 		{
+			if (Control == null || Element == null)
+				return;
 			var textColor = Element.TextColor;
 
 			if (textColor.IsDefault || !Element.IsEnabled)
