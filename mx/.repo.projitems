@@ -98,7 +98,6 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms\Xamarin.Forms.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)src\GlobalAssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.AppLinks\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Bindings\Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\android\Properties\AssemblyInfo.cs" />

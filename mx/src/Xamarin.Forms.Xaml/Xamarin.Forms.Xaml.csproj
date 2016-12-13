@@ -74,8 +74,8 @@
     Library
   -->
   <ItemGroup>
-    <Compile Include="$(SrcDir)\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    <Compile Include="$(ExtIdDir)\GlobalBuildInfo.cs">
+      <Link>Properties\GlobalBuildInfo.cs</Link>
       <IsMxbuildTemplate>true</IsMxbuildTemplate>
     </Compile>
     <Compile Include="$(ExtIdDir)BuildInfo.cs">
@@ -87,6 +87,10 @@
       <Link>Properties\BuildInfo.t.cs</Link>
       <CompileOutput>BuildInfo.cs</CompileOutput>
     </None>
+    <Compile Include="$(ExtPackDir)\GlobalPackageInfo.cs">
+      <Link>Properties\GlobalPackageInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
     <Compile Include="$(ExtPackDir)PackageInfo.cs">
       <Link>Properties\PackageInfo.cs</Link>
     </Compile>
