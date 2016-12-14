@@ -109,6 +109,9 @@ namespace Xamarin.Forms.Build.Tasks
 				nullableCtor = originalTypeRef.GetMethods(md => md.IsConstructor && md.Parameters.Count == 1, module).Single().Item1;
 				nullableCtor = nullableCtor.ResolveGenericParameters(nullableTypeRef, module);
 			}
+
+			var implicitOperator = module.TypeSystem.String.GetImplicitOperatorTo(targetTypeRef, module);
+
 			//Obvious Built-in conversions
 			if (targetTypeRef.Resolve().BaseType != null && targetTypeRef.Resolve().BaseType.FullName == "System.Enum")
 				yield return PushParsedEnum(targetTypeRef, str, node);
@@ -125,11 +128,11 @@ namespace Xamarin.Forms.Build.Tasks
 			else if (targetTypeRef.FullName == "System.Byte")
 				yield return Instruction.Create(OpCodes.Ldc_I4, Byte.Parse(str, CultureInfo.InvariantCulture));
 			else if (targetTypeRef.FullName == "System.UInt16")
-				yield return Instruction.Create(OpCodes.Ldc_I4, UInt16.Parse(str, CultureInfo.InvariantCulture));
+				yield return Instruction.Create(OpCodes.Ldc_I4, unchecked((int)UInt16.Parse(str, CultureInfo.InvariantCulture)));
 			else if (targetTypeRef.FullName == "System.UInt32")
 				yield return Instruction.Create(OpCodes.Ldc_I4, UInt32.Parse(str, CultureInfo.InvariantCulture));
 			else if (targetTypeRef.FullName == "System.UInt64")
-				yield return Instruction.Create(OpCodes.Ldc_I8, UInt64.Parse(str, CultureInfo.InvariantCulture));
+				yield return Instruction.Create(OpCodes.Ldc_I8, unchecked((long)UInt64.Parse(str, CultureInfo.InvariantCulture)));
 			else if (targetTypeRef.FullName == "System.Single")
 				yield return Instruction.Create(OpCodes.Ldc_R4, Single.Parse(str, CultureInfo.InvariantCulture));
 			else if (targetTypeRef.FullName == "System.Double")
@@ -203,10 +206,13 @@ namespace Xamarin.Forms.Build.Tasks
 						context.Body.Method.Module.Import(typeof(decimal))
 							.Resolve()
 							.Methods.FirstOrDefault(
-								md => md.IsConstructor && md.Parameters.Count == 1 && md.Parameters [0].ParameterType.FullName == "System.Int32");
+								md => md.IsConstructor && md.Parameters.Count == 1 && md.Parameters[0].ParameterType.FullName == "System.Int32");
 					var decimalctor = context.Body.Method.Module.Import(decimalctorinfo);
 					yield return Instruction.Create(OpCodes.Newobj, decimalctor);
 				}
+			} else if (implicitOperator != null) {
+				yield return Instruction.Create(OpCodes.Ldstr, node.Value as string);
+				yield return Instruction.Create(OpCodes.Call, module.Import(implicitOperator));
 			} else
 				yield return Instruction.Create(OpCodes.Ldnull);
 

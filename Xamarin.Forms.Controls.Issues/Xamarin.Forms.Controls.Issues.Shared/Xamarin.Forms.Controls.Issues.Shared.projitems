@@ -74,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla36649.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla36559.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla36171.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bugzilla36846.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla36955.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla37462.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla37841.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla41078.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla40998.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla41205.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bugzilla41415.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla41418.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla41424.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla42069.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla42329.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla42364.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla42519.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bugzilla43313.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla43516.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla43663.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bugzilla44944.cs" />
