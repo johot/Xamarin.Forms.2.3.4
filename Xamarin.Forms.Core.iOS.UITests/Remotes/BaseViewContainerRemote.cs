@@ -145,13 +145,26 @@ namespace Xamarin.Forms.Core.UITests
 #if __ANDROID__
 			isEdgeCase = (formProperty == View.ScaleProperty);
 #endif
-		    if (!isEdgeCase) {
-			    found =
-					MaybeGetProperty<string> (App, query, propertyPath, out prop) ||
-					MaybeGetProperty<float> (App, query, propertyPath, out prop) ||
-					MaybeGetProperty<bool> (App, query, propertyPath, out prop) ||
-					MaybeGetProperty<object> (App, query, propertyPath, out prop);
-		    }
+			if (!isEdgeCase)
+			{
+				found =
+					MaybeGetProperty<string>(App, query, propertyPath, out prop) ||
+					MaybeGetProperty<float>(App, query, propertyPath, out prop) ||
+					MaybeGetProperty<bool>(App, query, propertyPath, out prop) ||
+					MaybeGetProperty<object>(App, query, propertyPath, out prop);
+			}
+#if __MACOS__
+			if (!found)
+			{
+
+				if (formProperty == View.IsEnabledProperty)
+				{
+					var view = App.Query((arg) => arg.Raw(query)).FirstOrDefault();
+					found = view != null;
+					prop = view.Enabled;
+				}
+			}
+#endif
 
 #if __ANDROID__
 			if (formProperty == View.ScaleProperty) {

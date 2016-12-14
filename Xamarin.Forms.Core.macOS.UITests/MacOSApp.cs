@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Core.macOS.UITests
 			{
 				Id = result.Id ?? result.TestId,
 				Label = result.Label,
-				Text = result.Text,
+				Text = result.Text ?? result.Value,
 				Enabled = result.Enabled,
 				Class = result.Class,
 				Rect = new UITest.Queries.AppRect
