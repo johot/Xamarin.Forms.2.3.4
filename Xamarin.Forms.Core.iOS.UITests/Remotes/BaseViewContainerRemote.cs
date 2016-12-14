@@ -78,11 +78,17 @@ namespace Xamarin.Forms.Core.UITests
 			}
 
 
-			while (true) {
+			while (true)
+			{
+#if __MACOS__
+				var result = App.Query(o => o.Raw(ViewQuery));
+#else
 				var result = App.Query (o => o.Raw(ContainerQuery));
-				if (result.Any ())
+#endif
+
+				if (result.Any())
 					break;
-				App.Tap (o => o.Raw ("* marked:'MoveNextButton'"));
+				App.Tap(o => o.Raw("* marked:'MoveNextButton'"));
 			}
 
 			//Assert.True (App.ScrollForElement (
