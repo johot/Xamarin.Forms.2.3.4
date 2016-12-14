@@ -127,7 +127,9 @@ namespace Xamarin.Forms.Core.macOS.UITests
 
 		public void EnterText(string text)
 		{
-
+			var textField = _cocoaApp.QueryByType("Textfield").First();
+			_cocoaApp.Click(textField.Rect.CenterX, textField.Rect.CenterY);
+			_cocoaApp.EnterText(text);
 		}
 
 		public void EnterText(Func<AppQuery, AppWebQuery> query, string text)
@@ -137,7 +139,9 @@ namespace Xamarin.Forms.Core.macOS.UITests
 
 		public void EnterText(string marked, string text)
 		{
-
+			var textField = _cocoaApp.QueryById(marked).FirstOrDefault((arg) => arg.Class.Contains("SearchField") || arg.Class.Contains("TextField"));
+			_cocoaApp.Click(textField.Rect.CenterX, textField.Rect.CenterY);
+			_cocoaApp.EnterText(text);
 		}
 
 		public void EnterText(Func<AppQuery, AppQuery> query, string text)
@@ -150,12 +154,7 @@ namespace Xamarin.Forms.Core.macOS.UITests
 				var markedWord = System.Text.RegularExpressions.Regex.Split(queryStr, @"\bmarked\b:'");
 				var isAll = markedWord[0].Trim() == "*";
 				var marked = markedWord[1].Replace("'", "");
-
-				var sdsds = _cocoaApp.QueryById(marked);
-				var ssf = _cocoaApp.QueryByText(marked);
-				var textField = _cocoaApp.QueryByText("Search").First();
-				_cocoaApp.Click(textField.Rect.CenterX, textField.Rect.CenterY);
-				_cocoaApp.EnterText(text);
+				EnterText(marked, text);
 			}
 		}
 
