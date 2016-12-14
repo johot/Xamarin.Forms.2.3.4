@@ -416,6 +416,11 @@ namespace Xamarin.Forms.Core.macOS.UITests
 
 		}
 
+		public void SwipeLeftToRight(Func<AppQuery, AppWebQuery> query, double swipePercentage = 0.67, int swipeSpeed = 500, bool withInertia = true)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void SwipeLeftToRight(string marked, double swipePercentage = 0.67, int swipeSpeed = 500, bool withInertia = true)
 		{
 
@@ -429,6 +434,11 @@ namespace Xamarin.Forms.Core.macOS.UITests
 		public void SwipeRightToLeft(double swipePercentage = 0.67, int swipeSpeed = 500, bool withInertia = true)
 		{
 
+		}
+
+		public void SwipeRightToLeft(Func<AppQuery, AppWebQuery> query, double swipePercentage = 0.67, int swipeSpeed = 500, bool withInertia = true)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void SwipeRightToLeft(Func<AppQuery, AppQuery> query, double swipePercentage = 0.67, int swipeSpeed = 500, bool withInertia = true)
