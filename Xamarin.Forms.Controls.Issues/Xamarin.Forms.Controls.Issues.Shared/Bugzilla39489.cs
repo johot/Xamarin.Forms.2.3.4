@@ -22,9 +22,10 @@ namespace Xamarin.Forms.Controls.Issues
 			PushAsync(new Bz39489Content());
 		}
 
+#if UITEST
+
 		protected override bool Isolate => true;
 
-#if UITEST
 		[Test]
 		public async Task Bugzilla39489Test()
 		{
