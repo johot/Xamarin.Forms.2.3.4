@@ -11,6 +11,7 @@ using Xamarin.UITest.iOS;
 
 namespace Xamarin.Forms.Core.UITests
 {
+	[Category("ViewBaseTests")]
 	internal abstract class _ViewUITests : BaseTestFixture
 	{
 		/* Under score prefixes ensure inherited properties run first in test suite */
@@ -118,7 +119,7 @@ namespace Xamarin.Forms.Core.UITests
 			var viewPre = remote.GetViews ();
 
 #if __MACOS__
-			Assert.GreaterOrEqual(viewPre.Length, 2);
+			Assert.GreaterOrEqual(viewPre.Length, 1);
 #else
 			Assert.AreEqual (1, viewPre.Length);
 #endif
