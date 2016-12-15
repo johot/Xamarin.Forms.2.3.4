@@ -3,12 +3,13 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.ControlGallery.MacOS;
 using Xamarin.Forms.Controls;
+using Xamarin.Forms.Platform.MacOS;
 
 [assembly: Dependency(typeof(TestCloudService))]
 [assembly: Dependency(typeof(StringProvider))]
 [assembly: Dependency(typeof(CacheService))]
-//[assembly: ExportRenderer (typeof (DisposePage), typeof(DisposePageRenderer))]
-//[assembly: ExportRenderer (typeof (DisposeLabel), typeof(DisposeLabelRenderer))]
+[assembly: ExportRenderer(typeof(DisposePage), typeof(DisposePageRenderer))]
+[assembly: ExportRenderer(typeof(DisposeLabel), typeof(DisposeLabelRenderer))]
 
 namespace Xamarin.Forms.ControlGallery.MacOS
 {
@@ -25,31 +26,31 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 		}
 	}
 
-	//public class DisposePageRenderer : PageRenderer
-	//{
-	//	protected override void Dispose(bool disposing)
-	//	{
-	//		if (disposing)
-	//		{
-	//			((DisposePage)Element).SendRendererDisposed();
-	//		}
-	//		base.Dispose(disposing);
+	public class DisposePageRenderer : PageRenderer
+	{
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				((DisposePage)Element).SendRendererDisposed();
+			}
+			base.Dispose(disposing);
 
-	//	}
-	//}
+		}
+	}
 
-	//public class DisposeLabelRenderer : LabelRenderer
-	//{
-	//	protected override void Dispose(bool disposing)
-	//	{
+	public class DisposeLabelRenderer : LabelRenderer
+	{
+		protected override void Dispose(bool disposing)
+		{
 
-	//		if (disposing)
-	//		{
-	//			((DisposeLabel)Element).SendRendererDisposed();
-	//		}
-	//		base.Dispose(disposing);
-	//	}
-	//}
+			if (disposing)
+			{
+				((DisposeLabel)Element).SendRendererDisposed();
+			}
+			base.Dispose(disposing);
+		}
+	}
 
 	public class StringProvider : IStringProvider
 	{
