@@ -7,6 +7,7 @@ namespace Xamarin.Forms
 		Android,
 		WinPhone,
 		Windows,
+		Tizen,
 		Mac
 	}
 }
