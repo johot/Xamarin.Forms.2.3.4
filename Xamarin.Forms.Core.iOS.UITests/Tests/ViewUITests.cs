@@ -117,7 +117,11 @@ namespace Xamarin.Forms.Core.UITests
 
 			var viewPre = remote.GetViews ();
 
+#if __MACOS__
+			Assert.GreaterOrEqual(viewPre.Length, 2);
+#else
 			Assert.AreEqual (1, viewPre.Length);
+#endif
 
 			remote.TapStateButton ();
 
