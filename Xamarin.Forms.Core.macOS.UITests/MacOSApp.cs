@@ -212,7 +212,7 @@ namespace Xamarin.Forms.Core.macOS.UITests
 
 		public void PressEnter()
 		{
-
+			_cocoaApp.SendKey(13, KeyModifier.None);
 		}
 
 		public void PressVolumeDown()

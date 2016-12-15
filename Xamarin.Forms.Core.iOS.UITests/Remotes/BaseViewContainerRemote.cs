@@ -163,6 +163,13 @@ namespace Xamarin.Forms.Core.UITests
 					found = view != null;
 					prop = view.Enabled;
 				}
+
+				if (formProperty == Button.TextProperty)
+				{
+					var view = App.Query((arg) => arg.Raw(query)).FirstOrDefault();
+					found = view != null;
+					prop = view.Text;
+				}
 			}
 #endif
 
