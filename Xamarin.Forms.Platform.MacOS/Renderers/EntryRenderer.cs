@@ -11,6 +11,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		IElementController ElementController => Element as IElementController;
 
+		IEntryController EntryController => Element as IEntryController;
+
 		protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
 		{
 			base.OnElementChanged(e);
@@ -106,6 +108,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		void OnEditingEnded(object sender, EventArgs e)
 		{
 			ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+			EntryController?.SendCompleted();
 		}
 
 		void UpdateAlignment()
