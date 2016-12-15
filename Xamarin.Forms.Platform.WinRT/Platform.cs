@@ -83,7 +83,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			_navModel.Clear();
 
 			_navModel.Push(newRoot, null);
-			SetCurrent(newRoot, false, true);
+			SetCurrent(newRoot, true);
 			Application.Current.NavigationProxy.Inner = this;
 		}
 
@@ -156,7 +156,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 			var tcs = new TaskCompletionSource<bool>();
 			_navModel.PushModal(page);
-			SetCurrent(page, animated, completedCallback: () => tcs.SetResult(true));
+			SetCurrent(page, completedCallback: () => tcs.SetResult(true));
 			return tcs.Task;
 		}
 
@@ -164,7 +164,7 @@ namespace Xamarin.Forms.Platform.WinRT
 		{
 			var tcs = new TaskCompletionSource<Page>();
 			Page result = _navModel.PopModal();
-			SetCurrent(_navModel.CurrentPage, animated, true, () => tcs.SetResult(result));
+			SetCurrent(_navModel.CurrentPage, true, () => tcs.SetResult(result));
 			return tcs.Task;
 		}
 
@@ -203,31 +203,6 @@ namespace Xamarin.Forms.Platform.WinRT
 					renderer.ContainerElement.Height = _container.ActualHeight;
 				}
 			}
-		}
-
-		internal IToolbarProvider GetToolbarProvider()
-		{
-			IToolbarProvider provider = null;
-
-			Page element = _currentPage;
-			while (element != null)
-			{
-				provider = GetRenderer(element) as IToolbarProvider;
-				if (provider != null)
-					break;
-
-				var pageContainer = element as IPageContainer<Page>;
-				element = pageContainer?.CurrentPage;
-			}
-
-			if (provider != null
-#if WINDOWS_UWP
-				&& _toolbarProvider == null
-#endif
-				)
-				ClearCommandBar();
-
-			return provider;
 		}
 
 		Rectangle _bounds;
@@ -275,7 +250,7 @@ namespace Xamarin.Forms.Platform.WinRT
 				Page removed = _navModel.PopModal();
 				if (removed != null)
 				{
-					SetCurrent(_navModel.CurrentPage, true, true);
+					SetCurrent(_navModel.CurrentPage, true);
 					handled = true;
 				}
 			}
@@ -300,7 +275,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			UpdatePageSizes();
 		}
 
-		async void SetCurrent(Page newPage, bool animated, bool popping = false, Action completedCallback = null)
+		async void SetCurrent(Page newPage, bool popping = false, Action completedCallback = null)
 		{
 			if (newPage == _currentPage)
 				return;

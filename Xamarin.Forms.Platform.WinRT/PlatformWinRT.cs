@@ -65,11 +65,9 @@ namespace Xamarin.Forms.Platform.WinRT
 			_bounds = new Rectangle(0, 0, _page.ActualWidth, _page.ActualHeight);
 		}
 
-#pragma warning disable 1998 // considered for removal
-		async Task<CommandBar> GetCommandBarAsync()
-#pragma warning restore 1998
+		Task<CommandBar> GetCommandBarAsync()
 		{
-			return _page.BottomAppBar as CommandBar;
+			return Task.FromResult(_page.BottomAppBar as CommandBar);
 		}
 
 		void ClearCommandBar()

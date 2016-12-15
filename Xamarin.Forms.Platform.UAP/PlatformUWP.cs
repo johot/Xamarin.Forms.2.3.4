@@ -17,9 +17,7 @@ namespace Xamarin.Forms.Platform.UWP
 	{
 		internal static StatusBar MobileStatusBar => ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") ? StatusBar.GetForCurrentView() : null;
 
-#pragma warning disable 649
 		IToolbarProvider _toolbarProvider;
-#pragma warning restore 649
 
 		void InitializeStatusBar()
 		{
@@ -136,10 +134,7 @@ namespace Xamarin.Forms.Platform.UWP
 			return bar;
 		}
 
-
-#pragma warning disable 1998 // considered for removal
 		async Task<CommandBar> GetCommandBarAsync()
-#pragma warning restore 1998
 		{
 			IToolbarProvider provider = GetToolbarProvider();
 			//var titleProvider = provider as ITitleProvider; 
@@ -218,6 +213,27 @@ namespace Xamarin.Forms.Platform.UWP
 
 			if (commandBar?.PrimaryCommands.Count + commandBar?.SecondaryCommands.Count == 0)
 				ClearCommandBar();
+		}
+
+		internal IToolbarProvider GetToolbarProvider()
+		{
+			IToolbarProvider provider = null;
+
+			Page element = _currentPage;
+			while (element != null)
+			{
+				provider = GetRenderer(element) as IToolbarProvider;
+				if (provider != null)
+					break;
+
+				var pageContainer = element as IPageContainer<Page>;
+				element = pageContainer?.CurrentPage;
+			}
+
+			if (provider != null && _toolbarProvider == null)
+				ClearCommandBar();
+
+			return provider;
 		}
 
 		class ToolbarProvider : IToolbarProvider
