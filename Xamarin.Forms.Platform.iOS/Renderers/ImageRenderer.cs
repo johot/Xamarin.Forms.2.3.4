@@ -54,16 +54,16 @@ namespace Xamarin.Forms.Platform.iOS
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
 		{
+			if (Control == null)
+			{
+				var imageView = new UIImageView(RectangleF.Empty);
+				imageView.ContentMode = UIViewContentMode.ScaleAspectFit;
+				imageView.ClipsToBounds = true;
+				SetNativeControl(imageView);
+			}
+
 			if (e.NewElement != null)
 			{
-				if (Control == null)
-				{
-					var imageView = new UIImageView(RectangleF.Empty);
-					imageView.ContentMode = UIViewContentMode.ScaleAspectFit;
-					imageView.ClipsToBounds = true;
-					SetNativeControl(imageView);
-				}
-
 				SetAspect();
 				SetImage(e.OldElement);
 				SetOpacity();
