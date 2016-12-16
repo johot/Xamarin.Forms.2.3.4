@@ -116,6 +116,174 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\about.png">
+      <Link>Resources\about.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\about%402x.png">
+      <Link>Resources\about%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\blog.png">
+      <Link>Resources\blog.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\blog%402x.png">
+      <Link>Resources\blog%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\facebook.png">
+      <Link>Resources\facebook.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\facebook%402x.png">
+      <Link>Resources\facebook%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\favorite.png">
+      <Link>Resources\favorite.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\googleplus.png">
+      <Link>Resources\googleplus.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\googleplus%402x.png">
+      <Link>Resources\googleplus%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\hm_full.jpg">
+      <Link>Resources\hm_full.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\hm.png">
+      <Link>Resources\hm.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\hm%402x.png">
+      <Link>Resources\hm%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\home.png">
+      <Link>Resources\home.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_pause.png">
+      <Link>Resources\ic_pause.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_pause%402x.png">
+      <Link>Resources\ic_pause%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_play.png">
+      <Link>Resources\ic_play.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_play%402x.png">
+      <Link>Resources\ic_play%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_share.png">
+      <Link>Resources\ic_share.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_share%402x.png">
+      <Link>Resources\ic_share%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_stop.png">
+      <Link>Resources\ic_stop.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ic_stop%402x.png">
+      <Link>Resources\ic_stop%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\Icon-60%402x.png">
+      <Link>Resources\Icon-60%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\Icon-Small-40%402x.png">
+      <Link>Resources\Icon-Small-40%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\Icon-Small.png">
+      <Link>Resources\Icon-Small.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\Icon-Small%402x.png">
+      <Link>Resources\Icon-Small%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\Icon.png">
+      <Link>Resources\Icon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\Icon%402x.png">
+      <Link>Resources\Icon%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\instagram.png">
+      <Link>Resources\instagram.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\instagram%402x.png">
+      <Link>Resources\instagram%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\lists.png">
+      <Link>Resources\lists.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\messages.png">
+      <Link>Resources\messages.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\notifications.png">
+      <Link>Resources\notifications.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\profile.png">
+      <Link>Resources\profile.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ratchet_full.jpg">
+      <Link>Resources\ratchet_full.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ratchet.png">
+      <Link>Resources\ratchet.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\ratchet%402x.png">
+      <Link>Resources\ratchet%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\refresh.png">
+      <Link>Resources\refresh.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\refresh%402x.png">
+      <Link>Resources\refresh%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\reply.png">
+      <Link>Resources\reply.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\retweet.png">
+      <Link>Resources\retweet.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\rui.jpg">
+      <Link>Resources\rui.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\scott.png">
+      <Link>Resources\scott.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\scott159.png">
+      <Link>Resources\scott159.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\search.png">
+      <Link>Resources\search.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\slideout.png">
+      <Link>Resources\slideout.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\slideout%402x.png">
+      <Link>Resources\slideout%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\tdl_full.jpg">
+      <Link>Resources\tdl_full.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\tdl.png">
+      <Link>Resources\tdl.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\tdl%402x.png">
+      <Link>Resources\tdl%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\tweet.png">
+      <Link>Resources\tweet.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\twitter.png">
+      <Link>Resources\twitter.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\twitter%402x.png">
+      <Link>Resources\twitter%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\twitternav.png">
+      <Link>Resources\twitternav.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\twitternav%402x.png">
+      <Link>Resources\twitternav%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Resources\xamarinlogo.png">
+      <Link>Resources\xamarinlogo.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\bank.png">
+      <Link>Resources\bank.png</Link>
+    </BundleResource>
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\bank%402x.png">
       <Link>Resources\bank%402x.png</Link>
     </BundleResource>
@@ -140,11 +308,35 @@
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\crimsonsmall.jpg">
       <Link>Resources\crimsonsmall.jpg</Link>
     </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default-568h%402x.png">
+      <Link>Resources\Default-568h%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default-667h%402x.png">
+      <Link>Resources\Default-667h%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Goobuntu-icon.png">
+      <Link>Resources\Goobuntu-icon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Intranet-icon.png">
+      <Link>Resources\Intranet-icon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\local.html">
+      <Link>Resources\local.html</Link>
+    </BundleResource>
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\menuIcon.png">
       <Link>Resources\menuIcon.png</Link>
     </BundleResource>
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\menuIcon%402x.png">
       <Link>Resources\menuIcon%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\move_slider_one_right_ios6_iphone.base64">
+      <Link>Resources\move_slider_one_right_ios6_iphone.base64</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\move_slider_three_right_ios6_iphone.base64">
+      <Link>Resources\move_slider_three_right_ios6_iphone.base64</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\move_slider_two_right_ios6_iphone.base64">
+      <Link>Resources\move_slider_two_right_ios6_iphone.base64</Link>
     </BundleResource>
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\oasis.jpg">
       <Link>Resources\oasis.jpg</Link>
@@ -164,76 +356,12 @@
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\settings%402x.png">
       <Link>Resources\settings%402x.png</Link>
     </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\test.jpg">
+      <Link>Resources\test.jpg</Link>
+    </BundleResource>
     <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\toolbar_close.png">
       <Link>Resources\toolbar_close.png</Link>
     </BundleResource>
-    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\bank.png">
-      <Link>Resources\bank.png</Link>
-    </BundleResource>
-    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default-568h%402x.png">
-      <Link>Resources\Default-568h%402x.png</Link>
-    </BundleResource>
-    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default-667h%402x.png">
-      <Link>Resources\Default-667h%402x.png</Link>
-    </BundleResource>
-    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default%402x.png">
-      <Link>Resources\Default%402x.png</Link>
-    </BundleResource>
-    <BundleResource Include="Resources\about.png" />
-    <BundleResource Include="Resources\about%402x.png" />
-    <BundleResource Include="Resources\blog.png" />
-    <BundleResource Include="Resources\blog%402x.png" />
-    <BundleResource Include="Resources\facebook.png" />
-    <BundleResource Include="Resources\facebook%402x.png" />
-    <BundleResource Include="Resources\favorite.png" />
-    <BundleResource Include="Resources\googleplus.png" />
-    <BundleResource Include="Resources\googleplus%402x.png" />
-    <BundleResource Include="Resources\hm_full.jpg" />
-    <BundleResource Include="Resources\hm.png" />
-    <BundleResource Include="Resources\hm%402x.png" />
-    <BundleResource Include="Resources\home.png" />
-    <BundleResource Include="Resources\ic_pause.png" />
-    <BundleResource Include="Resources\ic_pause%402x.png" />
-    <BundleResource Include="Resources\ic_play.png" />
-    <BundleResource Include="Resources\ic_play%402x.png" />
-    <BundleResource Include="Resources\ic_share.png" />
-    <BundleResource Include="Resources\ic_share%402x.png" />
-    <BundleResource Include="Resources\ic_stop.png" />
-    <BundleResource Include="Resources\ic_stop%402x.png" />
-    <BundleResource Include="Resources\Icon-60%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
-    <BundleResource Include="Resources\Icon-Small.png" />
-    <BundleResource Include="Resources\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icon.png" />
-    <BundleResource Include="Resources\Icon%402x.png" />
-    <BundleResource Include="Resources\instagram.png" />
-    <BundleResource Include="Resources\instagram%402x.png" />
-    <BundleResource Include="Resources\lists.png" />
-    <BundleResource Include="Resources\messages.png" />
-    <BundleResource Include="Resources\notifications.png" />
-    <BundleResource Include="Resources\profile.png" />
-    <BundleResource Include="Resources\ratchet_full.jpg" />
-    <BundleResource Include="Resources\ratchet.png" />
-    <BundleResource Include="Resources\ratchet%402x.png" />
-    <BundleResource Include="Resources\refresh.png" />
-    <BundleResource Include="Resources\refresh%402x.png" />
-    <BundleResource Include="Resources\reply.png" />
-    <BundleResource Include="Resources\retweet.png" />
-    <BundleResource Include="Resources\rui.jpg" />
-    <BundleResource Include="Resources\scott.png" />
-    <BundleResource Include="Resources\scott159.png" />
-    <BundleResource Include="Resources\search.png" />
-    <BundleResource Include="Resources\slideout.png" />
-    <BundleResource Include="Resources\slideout%402x.png" />
-    <BundleResource Include="Resources\tdl_full.jpg" />
-    <BundleResource Include="Resources\tdl.png" />
-    <BundleResource Include="Resources\tdl%402x.png" />
-    <BundleResource Include="Resources\tweet.png" />
-    <BundleResource Include="Resources\twitter.png" />
-    <BundleResource Include="Resources\twitter%402x.png" />
-    <BundleResource Include="Resources\twitternav.png" />
-    <BundleResource Include="Resources\twitternav%402x.png" />
-    <BundleResource Include="Resources\xamarinlogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
