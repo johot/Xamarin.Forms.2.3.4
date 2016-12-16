@@ -67,7 +67,7 @@ namespace Xamarin.Forms.Core.macOS.UITests
 
 		public void Back()
 		{
-
+			Tap("NSBackButton");
 		}
 
 		public void ClearText()

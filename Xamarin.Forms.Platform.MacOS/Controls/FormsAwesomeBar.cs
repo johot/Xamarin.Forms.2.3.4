@@ -45,6 +45,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_backButton.ImagePosition = NSCellImagePosition.ImageLeft;
 			_backButton.SizeToFit();
 			_backButton.Layout();
+			_backButton.AccessibilityTitle = "NSBackButton";
 
 			AddSubview(_backButton);
 
