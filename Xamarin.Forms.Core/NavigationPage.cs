@@ -385,11 +385,13 @@ namespace Xamarin.Forms
 			if (!PageController.InternalChildren.Contains(page))
 				throw new ArgumentException("Page to remove must be contained on this Navigation Page");
 
+			PageController.InternalChildren.Remove(page);
+
 			EventHandler<NavigationRequestedEventArgs> handler = RemovePageRequestedInternal;
 			if (handler != null)
 				handler(this, new NavigationRequestedEventArgs(page, true));
 
-			PageController.InternalChildren.Remove(page);
+
 		}
 
 		void SafePop()
