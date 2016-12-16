@@ -166,7 +166,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual async Task<bool> OnPop(Page page, bool animated)
 		{
-			var removed = await RemovePageAsync(page, animated);
+			var removed = await PopPageAsync(page, animated);
 			Platform.NativeToolbarTracker.UpdateToolbarItems();
 			return removed;
 		}
@@ -246,12 +246,34 @@ namespace Xamarin.Forms.Platform.MacOS
 			e.Task = PushPageAsync(e.Page, e.Animated);
 		}
 
-		async void OnRemovedPageRequested(object sender, NavigationRequestedEventArgs e)
+		void OnRemovedPageRequested(object sender, NavigationRequestedEventArgs e)
 		{
-			await RemovePageAsync(e.Page, false);
+			RemovePage(e.Page, true);
+			Platform.NativeToolbarTracker.UpdateToolbarItems();
 		}
 
-		async Task<bool> RemovePageAsync(Page page, bool animated)
+		void RemovePage(Page page, bool removeFromStack)
+		{
+			(page as IPageController)?.SendDisappearing();
+			var target = Platform.GetRenderer(page);
+			target?.NativeView?.RemoveFromSuperview();
+			target?.ViewController?.RemoveFromParentViewController();
+			target?.Dispose();
+			if (removeFromStack)
+			{
+				var newStack = new Stack<PageWrapper>();
+				foreach (var stack in _currentStack)
+				{
+					if (stack.Page != page)
+					{
+						newStack.Push(stack);
+					}
+				}
+				_currentStack = newStack;
+			}
+		}
+
+		async Task<bool> PopPageAsync(Page page, bool animated)
 		{
 			if (page == null)
 				throw new ArgumentNullException(nameof(page));
@@ -272,9 +294,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				return await this.HandleAsyncAnimation(target.ViewController, previousPageRenderer.ViewController, NSViewControllerTransitionOptions.SlideBackward, () => Platform.DisposeRendererAndChildren(target), true);
 			}
 
-			target.NativeView.RemoveFromSuperview();
-			target.ViewController.RemoveFromParentViewController();
-			target.Dispose();
+			RemovePage(page, false);
 			return true;
 		}
 
