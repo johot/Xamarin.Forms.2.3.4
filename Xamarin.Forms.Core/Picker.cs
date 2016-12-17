@@ -7,7 +7,7 @@ using Xamarin.Forms.Platform;
 namespace Xamarin.Forms
 {
 	[RenderWith(typeof(_PickerRenderer))]
-	public class Picker : View, IElementConfiguration<Picker>
+	public class Picker : View, IFontElement, IElementConfiguration<Picker>
 	{
 		public static readonly BindableProperty TextColorProperty =
 			BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Picker), Color.Default);
@@ -26,13 +26,41 @@ namespace Xamarin.Forms
 		public static readonly BindableProperty SelectedItemProperty =
 			BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(Picker), null, BindingMode.TwoWay,
 									propertyChanged: OnSelectedItemChanged);
+		
+		public static readonly BindableProperty FontAttributesProperty =
+			BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(Picker), FontAttributes.None);
 
+		public static readonly BindableProperty FontFamilyProperty =
+			BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Picker), default(string));
+
+		public static readonly BindableProperty FontSizeProperty =
+			BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Picker), -1.0, 
+				defaultValueCreator: bindable => Device.GetNamedSize(NamedSize.Default, (Picker)bindable));
+		
 		readonly Lazy<PlatformConfigurationRegistry<Picker>> _platformConfigurationRegistry;
 
 		public Picker()
 		{
 			((INotifyCollectionChanged)Items).CollectionChanged += OnItemsCollectionChanged;
 			_platformConfigurationRegistry = new Lazy<PlatformConfigurationRegistry<Picker>>(() => new PlatformConfigurationRegistry<Picker>(this));
+		}
+		public FontAttributes FontAttributes
+		{
+			get { return (FontAttributes)GetValue(FontAttributesProperty); }
+			set { SetValue(FontAttributesProperty, value); }
+		}
+
+		public string FontFamily
+		{
+			get { return (string)GetValue(FontFamilyProperty); }
+			set { SetValue(FontFamilyProperty, value); }
+		}
+
+		[TypeConverter(typeof(FontSizeConverter))]
+		public double FontSize
+		{
+			get { return (double)GetValue(FontSizeProperty); }
+			set { SetValue(FontSizeProperty, value); }
 		}
 
 		public IList<string> Items { get; } = new LockableObservableListWrapper();
