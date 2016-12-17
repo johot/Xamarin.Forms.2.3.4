@@ -138,7 +138,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		internal static void DisposeRendererAndChildren(IVisualElementRenderer rendererToRemove)
 		{
-			if (rendererToRemove == null)
+			if (rendererToRemove == null || rendererToRemove.Element == null)
 				return;
 
 			if (rendererToRemove.Element != null && GetRenderer(rendererToRemove.Element) == rendererToRemove)
