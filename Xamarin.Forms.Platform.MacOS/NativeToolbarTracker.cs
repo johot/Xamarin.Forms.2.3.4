@@ -20,6 +20,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		NSToolbar _toolbar;
 		FormsAwesomeBar _awesomeBar;
 		NavigationPage _navigation;
+		string _defaultBackButtonTitle = "Back";
 
 		public NativeToolbarTracker()
 		{
@@ -158,7 +159,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (NavigationController == null || NavigationController.StackDepth <= 1)
 				return string.Empty;
 
-			return NavigationController.StackCopy.ElementAt(NavigationController.StackDepth - 1).Title;
+			return NavigationController.StackCopy.ElementAt(NavigationController.StackDepth - 1).Title ?? _defaultBackButtonTitle;
 		}
 
 		List<ToolbarItem> GetToolbarItems()
