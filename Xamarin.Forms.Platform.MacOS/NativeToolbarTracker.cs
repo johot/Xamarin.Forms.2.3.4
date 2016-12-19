@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		ToolbarTracker _toolbarTracker;
 		NSToolbar _toolbar;
-		FormsAwesomeBar _awesomeBar;
+		FormsToolbar _awesomeBar;
 		NavigationPage _navigation;
 		string _defaultBackButtonTitle = "Back";
 
@@ -26,7 +26,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			_toolbarTracker = new ToolbarTracker();
 			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
-			_awesomeBar = new FormsAwesomeBar(GetBackgroundColor, GetPreviousPageTitle, GetCurrentPageTitle, GetTitleColor, GetToolbarItems);
+			_awesomeBar = new FormsToolbar(GetBackgroundColor, GetPreviousPageTitle, GetCurrentPageTitle, GetTitleColor, GetToolbarItems);
 			_awesomeBar.BackButtonPressed += async (sender, e) => await NavigateBackFrombackButton();
 		}
 
@@ -73,8 +73,8 @@ namespace Xamarin.Forms.Platform.MacOS
 						return new NSToolbarItem(AwesomeBarId)
 						{
 							View = _awesomeBar,
-							MinSize = new CGSize(1024, FormsAwesomeBar.ToolbarHeight),
-							MaxSize = new CGSize(float.PositiveInfinity, FormsAwesomeBar.ToolbarHeight)
+							MinSize = new CGSize(1024, FormsToolbar.ToolbarHeight),
+							MaxSize = new CGSize(float.PositiveInfinity, FormsToolbar.ToolbarHeight)
 						};
 
 					default:
@@ -93,7 +93,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				var item = _toolbar.Items[0];
 
 				var abFrameInWindow = _awesomeBar.ConvertRectToView(_awesomeBar.Frame, null);
-				var awesomebarHeight = FormsAwesomeBar.ToolbarHeight;
+				var awesomebarHeight = FormsToolbar.ToolbarHeight;
 				var size = new CGSize(win.Frame.Width - abFrameInWindow.X - 4, awesomebarHeight);
 
 				if (item.MinSize != size)

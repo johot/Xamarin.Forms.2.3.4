@@ -4,8 +4,8 @@ using Xamarin.Forms.Platform.MacOS;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-[assembly: AssemblyTitle("Xamarin.Forms.Platform.MacOS")]
-[assembly: AssemblyDescription("MacOS Backend for Xamarin.Forms")]
+[assembly: AssemblyTitle("Xamarin.Forms.Platform.macOS")]
+[assembly: AssemblyDescription("macOS Backend for Xamarin.Forms")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 

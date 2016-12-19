@@ -143,7 +143,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Pages.Azure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagesGallery.iOS", "PagesGallery\PagesGallery.iOS\PagesGallery.iOS.csproj", "{392156B2-760A-4EE3-A822-CABD3238A21D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.MacOS", "Xamarin.Forms.Platform.MacOS\Xamarin.Forms.Platform.MacOS.csproj", "{C0059C45-EA1E-42F3-8A0E-794BB547EC3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.macOS", "Xamarin.Forms.Platform.MacOS\Xamarin.Forms.Platform.MacOS.csproj", "{C0059C45-EA1E-42F3-8A0E-794BB547EC3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery.MacOS", "Xamarin.Forms.ControlGallery.MacOS\Xamarin.Forms.ControlGallery.MacOS.csproj", "{8D3DFCB7-DB10-40E5-ACFE-411AAA85520D}"
 EndProject

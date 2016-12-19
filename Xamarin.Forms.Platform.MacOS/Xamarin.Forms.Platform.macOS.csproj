@@ -6,8 +6,8 @@
     <ProjectGuid>{C0059C45-EA1E-42F3-8A0E-794BB547EC3C}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Xamarin.Forms.Platform.MacOS</RootNamespace>
-    <AssemblyName>Xamarin.Forms.Platform.MacOS</AssemblyName>
+    <RootNamespace>Xamarin.Forms.Platform.macOS</RootNamespace>
+    <AssemblyName>Xamarin.Forms.Platform.macOS</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -172,7 +172,7 @@
     <Compile Include="NativeToolbarTracker.cs" />
     <Compile Include="Extensions\NSButtonExtensions.cs" />
     <Compile Include="Controls\FormsVerticallyCenteredTextFieldCell.cs" />
-    <Compile Include="Controls\FormsAwesomeBar.cs" />
+    <Compile Include="Controls\FormsToolbar.cs" />
     <Compile Include="Controls\FormsNSView.cs" />
   </ItemGroup>
   <ItemGroup>

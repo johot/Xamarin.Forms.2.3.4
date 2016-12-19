@@ -8,7 +8,7 @@ using Foundation;
 namespace Xamarin.Forms.Platform.MacOS
 {
 	//Ported from Xamarin Studio
-	public class FormsAwesomeBar : NSView
+	public class FormsToolbar : NSView
 	{
 		const float _buttonsMaxWidth = 120.0f;
 		const float _buttonsMaxHeight = 50.0f;
@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public event EventHandler BackButtonPressed;
 
-		public FormsAwesomeBar(Func<NSColor> getBackgroundColor, Func<string> getBackText, Func<string> getTitle, Func<NSColor> getTitleColor, Func<List<ToolbarItem>> getToolbarItems)
+		public FormsToolbar(Func<NSColor> getBackgroundColor, Func<string> getBackText, Func<string> getTitle, Func<NSColor> getTitleColor, Func<List<ToolbarItem>> getToolbarItems)
 		{
 			_getBackgroundColor = getBackgroundColor;
 			_getBackText = getBackText;

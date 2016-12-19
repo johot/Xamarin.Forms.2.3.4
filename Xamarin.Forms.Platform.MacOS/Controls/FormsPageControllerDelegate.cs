@@ -6,8 +6,8 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	internal class FormsPageControllerDelegate : NSPageControllerDelegate
 	{
-		Func<NSObject, string> _getIdentifier;
-		Func<string, NSViewController> _getViewController;
+		readonly Func<NSObject, string> _getIdentifier;
+		readonly Func<string, NSViewController> _getViewController;
 
 		public FormsPageControllerDelegate(Func<NSObject, string> getIdentifier, Func<string, NSViewController> getViewController)
 		{
