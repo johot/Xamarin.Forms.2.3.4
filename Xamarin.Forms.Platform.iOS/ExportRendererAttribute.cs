@@ -2,8 +2,6 @@ using System;
 
 #if __MOBILE__
 using UIKit;
-#else
-using UIKit;
 #endif
 namespace Xamarin.Forms
 {
