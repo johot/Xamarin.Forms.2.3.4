@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		bool _shouldHandleCustomScrolling = true;
 
-		public EventHandler<FormsScrollViewScrollChangedEventArgs> ScrollChanged;
+		public EventHandler<ScrollViewScrollChangedEventArgs> ScrollChanged;
 
 		public FormsScrollView(bool handleCustomScrolling = true)
 		{
@@ -52,7 +52,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		[Export(nameof(UpdateScrollPosition))]
 		void UpdateScrollPosition()
 		{
-			ScrollChanged?.Invoke(this, new FormsScrollViewScrollChangedEventArgs { CurrentScrollPoint = ContentView.Bounds.Location });
+			ScrollChanged?.Invoke(this, new ScrollViewScrollChangedEventArgs { CurrentScrollPoint = ContentView.Bounds.Location });
 		}
 	}
 }

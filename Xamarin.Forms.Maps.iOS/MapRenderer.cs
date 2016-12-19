@@ -54,10 +54,10 @@ namespace Xamarin.Forms.Maps.MacOS
 
 			return mapPin;
 		}
-
+#if __MOBILE__
 		void AttachGestureToPin(MKPinAnnotationView mapPin, IMKAnnotation annotation)
 		{
-#if __MOBILE__
+
 			UIGestureRecognizer[] recognizers = mapPin.GestureRecognizers;
 
 			if (recognizers != null)
@@ -80,7 +80,10 @@ return true;
 			List.Add(action);
 			List.Add(recognizer);
 			mapPin.AddGestureRecognizer(recognizer);
+			}
 #else
+		void AttachGestureToPin(MKPinAnnotationView mapPin, IMKAnnotation annotation)
+		{
 			NSGestureRecognizer[] recognizers = mapPin.GestureRecognizers;
 
 			if (recognizers != null)
@@ -96,8 +99,9 @@ return true;
 			List.Add(action);
 			List.Add(recognizer);
 			mapPin.AddGestureRecognizer(recognizer);
-#endif
+
 		}
+#endif
 #if __MOBILE__
 		void OnClick(object annotationObject, UITapGestureRecognizer recognizer)
 #else

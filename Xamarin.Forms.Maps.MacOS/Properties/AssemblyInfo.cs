@@ -8,7 +8,7 @@ using Xamarin.Forms.Maps.MacOS;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Xamarin.Forms.Maps.MacOS")]
+[assembly: AssemblyTitle("Xamarin.Forms.Maps.macOS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 

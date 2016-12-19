@@ -147,7 +147,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.macO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery.MacOS", "Xamarin.Forms.ControlGallery.MacOS\Xamarin.Forms.ControlGallery.MacOS.csproj", "{8D3DFCB7-DB10-40E5-ACFE-411AAA85520D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps.MacOS", "Xamarin.Forms.Maps.MacOS\Xamarin.Forms.Maps.MacOS.csproj", "{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps.macOS", "Xamarin.Forms.Maps.MacOS\Xamarin.Forms.Maps.MacOS.csproj", "{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Core.macOS.UITests", "Xamarin.Forms.Core.macOS.UITests\Xamarin.Forms.Core.macOS.UITests.csproj", "{9DB0CABB-24CC-4538-88EC-6E0A0FE40248}"
 EndProject
