@@ -72,7 +72,6 @@
 		<Compile Include="Platform.cs" />
 		<Compile Include="CADisplayLinkTicker.cs" />
 		<Compile Include="Extensions\PageExtensions.cs" />
-		<Compile Include="IVisualElementRenderer.cs" />
 		<Compile Include="VisualElementRenderer.cs" />
 		<Compile Include="ElementChangedEventArgs.cs" />
 		<Compile Include="VisualElementChangedEventArgs.cs" />
@@ -100,7 +99,6 @@
 		<Compile Include="Renderers\PageRenderer.cs" />
 		<Compile Include="Renderers\DefaultRenderer.cs" />
 		<Compile Include="Renderers\LabelRenderer.cs" />
-		<Compile Include="Extensions\FormattedStringExtensions.cs" />
 		<Compile Include="Extensions\AlignmentExtensions.cs" />
 		<Compile Include="Renderers\ButtonRenderer.cs" />
 		<Compile Include="ImageSourceHandlers.cs" />
@@ -147,9 +145,6 @@
 		<Compile Include="Renderers\NavigationPageRenderer.cs" />
 		<Compile Include="Controls\FormsPageControllerDelegate.cs" />
 		<Compile Include="Controls\PageWrapper.cs" />
-		<Compile Include="NativeViewWrapper.cs" />
-		<Compile Include="NativeViewWrapperRenderer.cs" />
-		<Compile Include="NativeValueConverterService.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewPropertyListener.cs">
 			<Link>NativeViewPropertyListener.cs</Link>
 		</Compile>
@@ -188,6 +183,21 @@
 		</Compile>
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\Renderers\FontExtensions.cs">
 		  <Link>Extensions\FontExtensions.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Renderers\FormattedStringExtensions.cs">
+		  <Link>Extensions\FormattedStringExtensions.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\IVisualElementRenderer.cs">
+		  <Link>IVisualElementRenderer.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeValueConverterService.cs">
+		  <Link>NativeValueConverterService.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewWrapper.cs">
+		  <Link>NativeViewWrapper.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewWrapperRenderer.cs">
+		  <Link>NativeViewWrapperRenderer.cs</Link>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>

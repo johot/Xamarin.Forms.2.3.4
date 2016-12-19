@@ -1,9 +1,13 @@
 ﻿using System;
+#if __MOBILE__
 using UIKit;
-
 [assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Platform.iOS.NativeValueConverterService))]
-
 namespace Xamarin.Forms.Platform.iOS
+#else
+using UIView = AppKit.NSView;
+[assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Platform.MacOS.NativeValueConverterService))]
+namespace Xamarin.Forms.Platform.MacOS
+#endif
 {
 	class NativeValueConverterService : Xaml.INativeValueConverterService
 	{

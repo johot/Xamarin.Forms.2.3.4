@@ -1,7 +1,12 @@
 using System;
+#if __MOBILE__
 using UIKit;
-
 namespace Xamarin.Forms.Platform.iOS
+#else
+using UIView = AppKit.NSView;
+using UIViewController = AppKit.NSViewController;
+namespace Xamarin.Forms.Platform.MacOS
+#endif
 {
 	public interface IVisualElementRenderer : IDisposable, IRegisterable
 	{
