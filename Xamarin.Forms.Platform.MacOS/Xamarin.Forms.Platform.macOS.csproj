@@ -98,9 +98,6 @@
 			<Link>EffectUtilities.cs</Link>
 		</Compile>
 		<Compile Include="Renderers\PageRenderer.cs" />
-		<Compile Include="Extensions\NSViewExtensions.cs" />
-		<Compile Include="Extensions\ColorExtensions.cs" />
-		<Compile Include="Extensions\DrawingExtensions.cs" />
 		<Compile Include="Renderers\DefaultRenderer.cs" />
 		<Compile Include="Renderers\LabelRenderer.cs" />
 		<Compile Include="Extensions\FontExtensions.cs" />
@@ -114,7 +111,6 @@
 		<Compile Include="EventTracker.cs" />
 		<Compile Include="Renderers\ActivityIndicatorRenderer.cs" />
 		<Compile Include="Renderers\DatePickerRenderer.cs" />
-		<Compile Include="Extensions\DateExtensions.cs" />
 		<Compile Include="Renderers\EntryRenderer.cs" />
 		<Compile Include="Renderers\EditorRenderer.cs" />
 		<Compile Include="Renderers\FrameRenderer.cs" />
@@ -153,7 +149,6 @@
 		<Compile Include="Controls\FormsPageControllerDelegate.cs" />
 		<Compile Include="Controls\PageWrapper.cs" />
 		<Compile Include="NativeViewWrapper.cs" />
-		<Compile Include="Extensions\LayoutExtensions.cs" />
 		<Compile Include="NativeViewWrapperRenderer.cs" />
 		<Compile Include="NativeValueConverterService.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewPropertyListener.cs">
@@ -179,6 +174,18 @@
 		<Compile Include="Controls\VerticallyCenteredTextFieldCell.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\Forms.cs">
 		  <Link>Forms.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Extensions\DateExtensions.cs">
+		  <Link>Extensions\DateExtensions.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Extensions\LayoutExtensions.cs">
+		  <Link>Extensions\LayoutExtensions.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Extensions\ColorExtensions.cs">
+		  <Link>Extensions\ColorExtensions.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Extensions\UIViewExtensions.cs">
+		  <Link>Extensions\UIViewExtensions.cs</Link>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
