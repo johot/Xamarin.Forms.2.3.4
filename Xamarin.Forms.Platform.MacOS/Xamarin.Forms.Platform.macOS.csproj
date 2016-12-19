@@ -100,7 +100,6 @@
 		<Compile Include="Renderers\PageRenderer.cs" />
 		<Compile Include="Renderers\DefaultRenderer.cs" />
 		<Compile Include="Renderers\LabelRenderer.cs" />
-		<Compile Include="Extensions\FontExtensions.cs" />
 		<Compile Include="Extensions\FormattedStringExtensions.cs" />
 		<Compile Include="Extensions\AlignmentExtensions.cs" />
 		<Compile Include="Renderers\ButtonRenderer.cs" />
@@ -186,6 +185,9 @@
 		</Compile>
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\Extensions\UIViewExtensions.cs">
 		  <Link>Extensions\UIViewExtensions.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Renderers\FontExtensions.cs">
+		  <Link>Extensions\FontExtensions.cs</Link>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>

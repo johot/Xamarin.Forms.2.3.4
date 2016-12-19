@@ -7,12 +7,10 @@ using SizeF = CoreGraphics.CGSize;
 
 #if __MOBILE__
 using UIKit;
-using Xamarin.Forms.Platform.iOS;
 namespace Xamarin.Forms.Platform.iOS
 #else
 using AppKit;
 using UIColor = AppKit.NSColor;
-using Xamarin.Forms.Platform.MacOS;
 namespace Xamarin.Forms.Platform.MacOS
 #endif
 {
