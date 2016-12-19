@@ -73,7 +73,6 @@
 		<Compile Include="CADisplayLinkTicker.cs" />
 		<Compile Include="Extensions\PageExtensions.cs" />
 		<Compile Include="VisualElementRenderer.cs" />
-		<Compile Include="ElementChangedEventArgs.cs" />
 		<Compile Include="VisualElementChangedEventArgs.cs" />
 		<Compile Include="ResourcesProvider.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\ExportCellAttribute.cs">
@@ -82,7 +81,6 @@
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\ExportImageSourceHandlerAttribute.cs">
 			<Link>ExportImageSourceHandlerAttribute.cs</Link>
 		</Compile>
-		<Compile Include="ExportRendererAttribute.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\Deserializer.cs">
 			<Link>Deserializer.cs</Link>
 		</Compile>
@@ -198,6 +196,12 @@
 		</Compile>
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewWrapperRenderer.cs">
 		  <Link>NativeViewWrapperRenderer.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\ElementChangedEventArgs.cs">
+		  <Link>ElementChangedEventArgs.cs</Link>
+		</Compile>
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\ExportRendererAttribute.cs">
+		  <Link>ExportRendererAttribute.cs</Link>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
