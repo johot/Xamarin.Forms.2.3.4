@@ -108,6 +108,9 @@
           <AttributeName>System.Runtime.CompilerServices.InternalsVisibleTo("Xamarin.Forms.Core.Windows.UITests")</AttributeName>
         </Attribute>
         <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.InternalsVisibleTo("Xamarin.Forms.Core.macOS.UITests")</AttributeName>
+        </Attribute>
+        <Attribute>
           <AttributeName>System.Runtime.CompilerServices.InternalsVisibleTo("Xamarin.Forms.iOS.UITests")</AttributeName>
         </Attribute>
         <Attribute>

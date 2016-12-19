@@ -234,6 +234,7 @@ button.HeightRequest = Device.OnPlatform (20,30,30);
         <param name="iOS">The value for iOS.</param>
         <param name="Android">The value for Android.</param>
         <param name="WinPhone">The value for WinPhone.</param>
+        <param name="Tizen">To be added.</param>
         <param name="WinPhone">The value for Tizen.</param>
         <summary>Returns different values depending on the <see cref="T:Xamarin.Forms.TargetOS" /> Xamarin.Forms is working on.</summary>
         <returns>The value for the current OS.</returns>
