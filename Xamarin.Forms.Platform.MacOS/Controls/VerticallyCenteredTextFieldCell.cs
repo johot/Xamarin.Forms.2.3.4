@@ -4,14 +4,14 @@ using CoreGraphics;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	class FormsVerticallyCenteredTextFieldCell : NSTextFieldCell
+	class VerticallyCenteredTextFieldCell : NSTextFieldCell
 	{
-		nfloat offset;
-		public FormsVerticallyCenteredTextFieldCell(nfloat yOffset, NSFont font = null)
+		nfloat yOffset;
+		public VerticallyCenteredTextFieldCell(nfloat yOffset, NSFont font = null)
 		{
 			if (font != null)
 				Font = font;
-			offset = yOffset;
+			this.yOffset = yOffset;
 		}
 
 		public override CGRect DrawingRectForBounds(CGRect theRect)
@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (heightDelta > 0)
 			{
 				newRect.Size = new CGSize(newRect.Width, newRect.Height - heightDelta);
-				newRect.Location = new CGPoint(newRect.X, newRect.Y + heightDelta / 2 + offset);
+				newRect.Location = new CGPoint(newRect.X, newRect.Y + heightDelta / 2 + yOffset);
 			}
 			return newRect;
 		}

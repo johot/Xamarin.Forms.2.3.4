@@ -69,14 +69,11 @@ namespace Xamarin.Forms.Maps.MacOS
 			}
 
 			Action<UITapGestureRecognizer> action = g => OnClick(annotation, g);
-			var recognizer = new UITapGestureRecognizer(action)
+			var recognizer = new UITapGestureRecognizer(action) { ShouldReceiveTouch = (gestureRecognizer, touch) =>
 			{
-				ShouldReceiveTouch = (gestureRecognizer, touch) =>
-{
-_lastTouchedView = touch.View;
-return true;
-}
-			};
+				_lastTouchedView = touch.View;
+				return true;
+			} };
 			List.Add(action);
 			List.Add(recognizer);
 			mapPin.AddGestureRecognizer(recognizer);

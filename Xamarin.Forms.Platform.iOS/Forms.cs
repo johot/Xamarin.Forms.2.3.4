@@ -11,11 +11,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CoreFoundation;
 using Foundation;
-using UIKit;
 using Xamarin.Forms.Internals;
+
+#if __MOBILE__
+using UIKit;
 using Xamarin.Forms.Platform.iOS;
+#else
+using AppKit;
+using Xamarin.Forms.Platform.MacOS;
+#endif
 
 namespace Xamarin.Forms
 {
@@ -23,9 +28,9 @@ namespace Xamarin.Forms
 	{
 		//Preserve GetCallingAssembly
 		static readonly bool nevertrue = false;
-
+#if __MOBILE__
 		static bool? s_isiOS9OrNewer;
-
+#endif
 		static Forms()
 		{
 			if (nevertrue)
@@ -33,7 +38,7 @@ namespace Xamarin.Forms
 		}
 
 		public static bool IsInitialized { get; private set; }
-
+#if __MOBILE__
 		internal static bool IsiOS9OrNewer
 		{
 			get
@@ -43,7 +48,7 @@ namespace Xamarin.Forms
 				return s_isiOS9OrNewer.Value;
 			}
 		}
-
+#endif
 		public static void Init()
 		{
 			if (IsInitialized)
@@ -53,17 +58,21 @@ namespace Xamarin.Forms
 
 			Log.Listeners.Add(new DelegateLogListener((c, m) => Trace.WriteLine(m, c)));
 
+#if __MOBILE__
 			Device.OS = TargetPlatform.iOS;
+			Device.Idiom = UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad ? TargetIdiom.Tablet : TargetIdiom.Phone;
+#else
+			Device.OS = TargetPlatform.macOS;
+			Device.Idiom = TargetIdiom.Desktop;
+#endif
 			Device.PlatformServices = new IOSPlatformServices();
 			Device.Info = new IOSDeviceInfo();
 
 			Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
-
-			Device.Idiom = UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad ? TargetIdiom.Tablet : TargetIdiom.Phone;
-
 			ExpressionSearch.Default = new iOSExpressionSearch();
-		}
 
+		}
+#if __MOBILE__
 		public static event EventHandler<ViewInitializedEventArgs> ViewInitialized;
 
 		internal static void SendViewInitialized(this VisualElement self, UIView nativeView)
@@ -72,7 +81,7 @@ namespace Xamarin.Forms
 			if (viewInitialized != null)
 				viewInitialized(self, new ViewInitializedEventArgs { View = self, NativeView = nativeView });
 		}
-
+#endif
 		class iOSExpressionSearch : ExpressionVisitor, IExpressionSearch
 		{
 			List<object> _results;
@@ -108,10 +117,16 @@ namespace Xamarin.Forms
 
 			public IOSDeviceInfo()
 			{
+#if __MOBILE__
 				_notification = UIDevice.Notifications.ObserveOrientationDidChange((sender, args) => CurrentOrientation = UIDevice.CurrentDevice.Orientation.ToDeviceOrientation());
 
 				_scalingFactor = UIScreen.MainScreen.Scale;
 				_scaledScreenSize = new Size(UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height);
+#else
+				_scalingFactor = NSScreen.MainScreen.BackingScaleFactor;
+				_scaledScreenSize = new Size(NSScreen.MainScreen.Frame.Width, NSScreen.MainScreen.Frame.Height);
+#endif
+
 				PixelScreenSize = new Size(_scaledScreenSize.Width * _scalingFactor, _scaledScreenSize.Height * _scalingFactor);
 			}
 
@@ -205,7 +220,11 @@ namespace Xamarin.Forms
 
 			public void OpenUriAction(Uri uri)
 			{
+#if __MOBILE__
 				UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.AbsoluteUri));
+#else
+				NSWorkspace.SharedWorkspace.OpenUrl(new NSUrl(uri.AbsoluteUri));
+#endif
 			}
 
 			public void StartTimer(TimeSpan interval, Func<bool> callback)
@@ -221,11 +240,11 @@ namespace Xamarin.Forms
 
 			HttpClient GetHttpClient()
 			{
-				var proxy = CFNetwork.GetSystemProxySettings();
+				var proxy = CoreFoundation.CFNetwork.GetSystemProxySettings();
 				var handler = new HttpClientHandler();
 				if (!string.IsNullOrEmpty(proxy.HTTPProxy))
 				{
-					handler.Proxy = CFNetwork.GetDefaultProxy();
+					handler.Proxy = CoreFoundation.CFNetwork.GetDefaultProxy();
 					handler.UseProxy = true;
 				}
 				return new HttpClient(handler);

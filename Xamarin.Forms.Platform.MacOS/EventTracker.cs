@@ -35,8 +35,9 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			get
 			{
-				if (_renderer?.Element is View)
-					return ((View)_renderer.Element).GestureRecognizers as ObservableCollection<IGestureRecognizer>;
+				var viewElement = _renderer?.Element as View;
+				if (viewElement != null)
+					return viewElement.GestureRecognizers as ObservableCollection<IGestureRecognizer>;
 				return null;
 			}
 		}

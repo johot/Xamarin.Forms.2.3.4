@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			{
 				if (Control == null)
 				{
-					SetNativeControl(new FormsNSView(false, RectangleF.Empty) { });
+					SetNativeControl(new FormsNSView());
 				}
 				SetBackgroundColor(Element.Color);
 			}

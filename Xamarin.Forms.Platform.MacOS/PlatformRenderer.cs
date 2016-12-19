@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		internal PlatformRenderer(Platform platform)
 		{
 			Platform = platform;
-			View = new FormsNSView(true, NSApplication.SharedApplication.Windows[0].Frame);
+			View = new NSView(NSApplication.SharedApplication.Windows[0].Frame);
 			_platformNavigation = new PlatformNavigation(this);
 		}
 

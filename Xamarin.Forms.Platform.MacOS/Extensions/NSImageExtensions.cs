@@ -9,14 +9,13 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (self == null)
 				return self;
 			self.ResizingMode = NSImageResizingMode.Stretch;
-			var smallImage = new NSImage(newSize);
-			smallImage.LockFocus();
+			var resizedImage = new NSImage(newSize);
+			resizedImage.LockFocus();
 			self.Size = newSize;
 			NSGraphicsContext.CurrentContext.ImageInterpolation = NSImageInterpolation.High;
 			self.Draw(CoreGraphics.CGPoint.Empty, new CoreGraphics.CGRect(0, 0, newSize.Width, newSize.Height), NSCompositingOperation.Copy, 1.0f);
-			smallImage.UnlockFocus();
-			self.Dispose();
-			return smallImage;
+			resizedImage.UnlockFocus();
+			return resizedImage;
 		}
 	}
 }

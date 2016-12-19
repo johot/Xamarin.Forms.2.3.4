@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public static NSTextFieldCell CreateLabelCentered(string text)
 		{
-			var textField = new FormsVerticallyCenteredTextFieldCell(0);
+			var textField = new VerticallyCenteredTextFieldCell(0);
 			textField.StringValue = text;
 			textField.DrawsBackground = false;
 			textField.Editable = false;

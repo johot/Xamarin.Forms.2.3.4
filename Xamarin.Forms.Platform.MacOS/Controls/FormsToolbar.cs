@@ -57,7 +57,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				Bezeled = false,
 				Editable = false,
 				Selectable = false,
-				Cell = new FormsVerticallyCenteredTextFieldCell(0f, NSFont.TitleBarFontOfSize(18))
+				Cell = new VerticallyCenteredTextFieldCell(0f, NSFont.TitleBarFontOfSize(18))
 			};
 
 			AddSubview(_titleField);
