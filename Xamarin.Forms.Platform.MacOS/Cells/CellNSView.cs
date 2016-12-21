@@ -102,20 +102,25 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.Layout();
 		}
 
-		internal static NSView GetNativeCell(NSTableView tableView, Cell cell, string templateId = "", bool isHeader = false)
+		internal static NSView GetNativeCell(NSTableView tableView, Cell cell, string templateId = "", bool isHeader = false, bool isRecycle = false)
 		{
-
 			var reusable = tableView.MakeView(templateId, tableView);
-			var renderer = (CellRenderer)Registrar.Registered.GetHandler(cell.GetType());
-			var nativeCell = renderer.GetCell(cell, reusable, tableView);
+			NSView nativeCell;
+			if (reusable == null || !isRecycle)
+			{
+				var renderer = (CellRenderer)Registrar.Registered.GetHandler(cell.GetType());
+				nativeCell = renderer.GetCell(cell, null, tableView);
+			}
+			else
+			{
+				nativeCell = reusable;
+			}
+
 			if (string.IsNullOrEmpty(nativeCell.Identifier))
 				nativeCell.Identifier = templateId;
-			if (isHeader)
-			{
-				(nativeCell as FormsNSView).BackgroundColor = NSColor.LightGray;
 
-			}
-			nativeCell.LayoutSubtreeIfNeeded();
+			if (isHeader)
+				(nativeCell as FormsNSView).BackgroundColor = NSColor.LightGray;
 			return nativeCell;
 		}
 

@@ -164,9 +164,37 @@ namespace Xamarin.Forms.Platform.MacOS
 				GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isHeader);
 
 			var indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
-			id = isHeader ? "headerCell" : TemplateIdForPath(indexPath).ToString();
-			cell = GetCellForPath(indexPath, isHeader);
-			var nativeCell = CellNSView.GetNativeCell(tableView, cell, id);
+			var templateId = isHeader ? "headerCell" : TemplateIdForPath(indexPath).ToString();
+
+			NSView nativeCell = null;
+
+			var cachingStrategy = Controller.CachingStrategy;
+			if (cachingStrategy == ListViewCachingStrategy.RetainElement)
+			{
+				cell = GetCellForPath(indexPath, isHeader);
+				nativeCell = CellNSView.GetNativeCell(tableView, cell, templateId, isHeader, false);
+			}
+			else if (cachingStrategy == ListViewCachingStrategy.RecycleElement)
+			{
+				nativeCell = tableView.MakeView(templateId, tableView);
+				if (nativeCell == null)
+				{
+					cell = GetCellForPath(indexPath, isHeader);
+					nativeCell = CellNSView.GetNativeCell(tableView, cell, templateId, isHeader, true);
+				}
+				else
+				{
+					var templatedList = TemplatedItemsView.TemplatedItems.GetGroup(sectionIndex);
+					cell = (Cell)((INativeElementView)nativeCell).Element;
+					ICellController controller = cell;
+					controller.SendDisappearing();
+					templatedList.UpdateContent(cell, itemIndexInSection);
+					controller.SendAppearing();
+				}
+
+			}
+			else
+				throw new NotSupportedException();
 			return nativeCell;
 		}
 
