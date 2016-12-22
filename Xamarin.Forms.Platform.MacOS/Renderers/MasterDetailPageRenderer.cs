@@ -98,6 +98,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_tracker = new VisualElementTracker(this);
 			_events = new EventTracker(this);
 			_events.LoadEvents(NativeView);
+			UpdateChildrenLayout();
 
 			base.ViewWillAppear();
 		}

@@ -22,8 +22,9 @@ namespace Xamarin.Forms.Controls.Issues
 				Text = "Detail"
 			};
 
-			#if !UITEST
-			if (App.IOSVersion == 7) {
+#if !UITEST
+			if (App.IOSVersion == 7 || Device.OS == TargetPlatform.macOS)
+			{
 				lbl.Text = "Don't run";
 			}
 			#endif

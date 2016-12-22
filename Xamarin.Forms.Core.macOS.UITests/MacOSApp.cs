@@ -243,6 +243,9 @@ namespace Xamarin.Forms.Core.macOS.UITests
 			var allResultsById = _cocoaApp.QueryById(marked);
 			foreach (var result in allResultsById)
 				results.Add(result.ToUITestResult());
+			var allResultsByText = _cocoaApp.QueryByText(marked);
+			foreach (var result in allResultsByText)
+				results.Add(result.ToUITestResult());
 			return results.ToArray();
 		}
 
@@ -255,7 +258,7 @@ namespace Xamarin.Forms.Core.macOS.UITests
 			{
 				var markedWords = System.Text.RegularExpressions.Regex.Split(queryStr, @"\bmarked\b:'");
 				var isAll = markedWords[0].Trim() == "*";
-				var markedWord = markedWords[1].Replace("'", "");
+				var markedWord = markedWords[1].Remove(markedWords[1].Length - 1);
 				return Query(markedWord);
 			}
 			else if (queryStr.Contains("* index:0"))

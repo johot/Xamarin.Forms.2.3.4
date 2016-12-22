@@ -310,6 +310,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_currentStack.Push(new PageWrapper(page));
 
 			var vc = CreateViewControllerForPage(page);
+			vc.SetElementSize(new Size(View.Bounds.Width, View.Bounds.Height));
 			page.Layout(new Rectangle(0, 0, View.Bounds.Width, View.Frame.Height));
 
 			if (_currentStack.Count == 1 || !animated)
