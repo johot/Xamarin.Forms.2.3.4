@@ -24,7 +24,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			return result;
 		}
 
-		protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs args)
+		protected override async void HandlePropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			var tvc = (CellNSView)sender;
 			var imageCell = (ImageCell)tvc.Cell;
@@ -32,10 +32,10 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.HandlePropertyChanged(sender, args);
 
 			if (args.PropertyName == ImageCell.ImageSourceProperty.PropertyName)
-				SetImage(imageCell, tvc);
+				await SetImage(imageCell, tvc);
 		}
 
-		static async void SetImage(ImageCell cell, CellNSView target)
+		static async Task SetImage(ImageCell cell, CellNSView target)
 		{
 			var source = cell.ImageSource;
 
