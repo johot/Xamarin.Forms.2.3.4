@@ -21,6 +21,11 @@
 			_container.ShowBackButton = showBackButton;
 		}
 
+		void UpdateToolbarPlacement()
+		{
+			// Currently we don't support toolbar (CommandBar) placement on Windows 8.1
+		}
+
 		void UpdateTitleOnParents()
 		{
 			if (Element == null)
