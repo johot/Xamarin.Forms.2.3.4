@@ -59,10 +59,14 @@ namespace Xamarin.Forms.Platform.iOS
 				SetNativeControl(entry);
 			}
 
-			UpdateDateFromModel(false);
-			UpdateMaximumDate();
-			UpdateMinimumDate();
-			UpdateTextColor();
+			if (e.NewElement != null)
+			{
+				UpdateDateFromModel(false);
+				UpdateFont();
+				UpdateMaximumDate();
+				UpdateMinimumDate();
+				UpdateTextColor();
+			}
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -77,6 +81,8 @@ namespace Xamarin.Forms.Platform.iOS
 				UpdateMaximumDate();
 			else if (e.PropertyName == DatePicker.TextColorProperty.PropertyName || e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
 				UpdateTextColor();
+			else if (e.PropertyName == DatePicker.FontAttributesProperty.PropertyName || e.PropertyName == DatePicker.FontFamilyProperty.PropertyName || e.PropertyName == DatePicker.FontSizeProperty.PropertyName)
+				UpdateFont();
 		}
 
 		void HandleValueChanged(object sender, EventArgs e)
@@ -100,6 +106,11 @@ namespace Xamarin.Forms.Platform.iOS
 				_picker.SetDate(Element.Date.ToNSDate(), animate);
 
 			Control.Text = Element.Date.ToString(Element.Format);
+		}
+
+		void UpdateFont()
+		{
+			Control.Font = Element.ToUIFont();
 		}
 
 		void UpdateMaximumDate()
