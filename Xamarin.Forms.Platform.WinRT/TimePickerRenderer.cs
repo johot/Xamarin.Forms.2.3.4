@@ -15,6 +15,8 @@ namespace Xamarin.Forms.Platform.WinRT
 	public class TimePickerRenderer : ViewRenderer<TimePicker, Windows.UI.Xaml.Controls.TimePicker>
 	{
 		Brush _defaultBrush;
+		bool _fontApplied;
+		FontFamily _defaultFontFamily;
 
 		protected override void Dispose(bool disposing)
 		{
@@ -51,6 +53,8 @@ namespace Xamarin.Forms.Platform.WinRT
 			// The defaults from the control template won't be available
 			// right away; we have to wait until after the template has been applied
 			_defaultBrush = Control.Foreground;
+			_defaultFontFamily = Control.FontFamily;
+			UpdateFont();
 			UpdateTextColor();
 		}
 
@@ -60,15 +64,54 @@ namespace Xamarin.Forms.Platform.WinRT
 
 			if (e.PropertyName == TimePicker.TimeProperty.PropertyName)
 				UpdateTime();
-
-			if (e.PropertyName == TimePicker.TextColorProperty.PropertyName)
+			else if (e.PropertyName == TimePicker.TextColorProperty.PropertyName)
 				UpdateTextColor();
+			else if (e.PropertyName == TimePicker.FontAttributesProperty.PropertyName || e.PropertyName == TimePicker.FontFamilyProperty.PropertyName || e.PropertyName == TimePicker.FontSizeProperty.PropertyName)
+				UpdateFont();
 		}
 
 		void OnControlTimeChanged(object sender, TimePickerValueChangedEventArgs e)
 		{
 			Element.Time = e.NewTime;
 			((IVisualElementController)Element)?.InvalidateMeasure(InvalidationTrigger.SizeRequestChanged);
+		}
+
+		void PickerOnForceInvalidate(object sender, EventArgs eventArgs)
+		{
+			((IVisualElementController)Element)?.InvalidateMeasure(InvalidationTrigger.SizeRequestChanged);
+		}
+
+		void UpdateFont()
+		{
+			if (Control == null)
+				return;
+
+			TimePicker timePicker = Element;
+
+			if (timePicker == null)
+				return;
+
+			bool timePickerIsDefault = timePicker.FontFamily == null && timePicker.FontSize == Device.GetNamedSize(NamedSize.Default, typeof(TimePicker), true) && timePicker.FontAttributes == FontAttributes.None;
+
+			if (timePickerIsDefault && !_fontApplied)
+				return;
+
+			if (timePickerIsDefault)
+			{
+				// ReSharper disable AccessToStaticMemberViaDerivedType
+				Control.ClearValue(ComboBox.FontStyleProperty);
+				Control.ClearValue(ComboBox.FontSizeProperty);
+				Control.ClearValue(ComboBox.FontFamilyProperty);
+				Control.ClearValue(ComboBox.FontWeightProperty);
+				Control.ClearValue(ComboBox.FontStretchProperty);
+				// ReSharper restore AccessToStaticMemberViaDerivedType
+			}
+			else
+			{
+				Control.ApplyFont(timePicker);
+			}
+
+			_fontApplied = true;
 		}
 
 		void UpdateTime()
