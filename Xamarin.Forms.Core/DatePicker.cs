@@ -4,7 +4,7 @@ using Xamarin.Forms.Platform;
 namespace Xamarin.Forms
 {
 	[RenderWith(typeof(_DatePickerRenderer))]
-	public class DatePicker : View, IElementConfiguration<DatePicker>
+	public class DatePicker : View, IFontElement, IElementConfiguration<DatePicker>
 	{
 		public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(DatePicker), "d");
 
@@ -18,6 +18,13 @@ namespace Xamarin.Forms
 			validateValue: ValidateMaximumDate, coerceValue: CoerceMaximumDate);
 
 		public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(DatePicker), Color.Default);
+		
+		public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(DatePicker), FontAttributes.None);
+
+		public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(DatePicker), default(string));
+
+		public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(DatePicker), -1.0,
+				defaultValueCreator: bindable => Device.GetNamedSize(NamedSize.Default, (DatePicker)bindable));
 
 		readonly Lazy<PlatformConfigurationRegistry<DatePicker>> _platformConfigurationRegistry;
 
@@ -54,6 +61,25 @@ namespace Xamarin.Forms
 		{
 			get { return (Color)GetValue(TextColorProperty); }
 			set { SetValue(TextColorProperty, value); }
+		}
+
+		public FontAttributes FontAttributes
+		{
+			get { return (FontAttributes)GetValue(FontAttributesProperty); }
+			set { SetValue(FontAttributesProperty, value); }
+		}
+
+		public string FontFamily
+		{
+			get { return (string)GetValue(FontFamilyProperty); }
+			set { SetValue(FontFamilyProperty, value); }
+		}
+
+		[TypeConverter(typeof(FontSizeConverter))]
+		public double FontSize
+		{
+			get { return (double)GetValue(FontSizeProperty); }
+			set { SetValue(FontSizeProperty, value); }
 		}
 
 		public event EventHandler<DateChangedEventArgs> DateSelected;
