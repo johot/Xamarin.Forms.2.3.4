@@ -6,12 +6,6 @@ using Xamarin.UITest;
 using NUnit.Framework;
 #endif
 
-// Apply the default category of "Issues" to all of the tests in this assembly
-// We use this as a catch-all for tests which haven't been individually categorized
-#if UITEST
-[assembly: NUnit.Framework.Category("Issues")]
-#endif
-
 namespace Xamarin.Forms.Controls.Issues
 {
 	[Preserve(AllMembers = true)]
@@ -20,6 +14,10 @@ namespace Xamarin.Forms.Controls.Issues
 	{
 		protected override void Init()
 		{
+			// Refer to https://bugzilla.xamarin.com/show_bug.cgi?id=48236 for this issue. WinRT/UWP had
+			// an issue where the background color would be used on the area containing the buttons, 
+			// potentially causing the color to run the width of the screen. Only the buttons should have
+			// a background color.
 			var stepper = new Stepper
 			{
 				BackgroundColor = Color.Green,

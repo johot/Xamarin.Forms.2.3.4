@@ -15,7 +15,7 @@ namespace Xamarin.Forms.Platform.WinRT
 		public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment", typeof(double), typeof(StepperControl),
 			new PropertyMetadata(default(double), OnIncrementChanged));
 
-		public static readonly DependencyProperty ButtonBackgroundColorProperty = DependencyProperty.Register("ButtonBackgroundColor", typeof(Color), typeof(StepperControl), new PropertyMetadata(default(Color), OnButtonBackgroundColorChanged));
+		public static readonly DependencyProperty ButtonBackgroundColorProperty = DependencyProperty.Register(nameof(ButtonBackgroundColor), typeof(Color), typeof(StepperControl), new PropertyMetadata(default(Color), OnButtonBackgroundColorChanged));
 
 		public StepperControl()
 		{

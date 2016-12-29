@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Platform.UWP
 		public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment", typeof(double), typeof(StepperControl),
 			new PropertyMetadata(default(double), OnIncrementChanged));
 
-		public static readonly DependencyProperty ButtonBackgroundColorProperty = DependencyProperty.Register("ButtonBackgroundColor", typeof(Color), typeof(StepperControl), new PropertyMetadata(default(Color), OnButtonBackgroundColorChanged));
+		public static readonly DependencyProperty ButtonBackgroundColorProperty = DependencyProperty.Register(nameof(ButtonBackgroundColor), typeof(Color), typeof(StepperControl), new PropertyMetadata(default(Color), OnButtonBackgroundColorChanged));
 
 		Windows.UI.Xaml.Controls.Button _plus;
 		Windows.UI.Xaml.Controls.Button _minus;
