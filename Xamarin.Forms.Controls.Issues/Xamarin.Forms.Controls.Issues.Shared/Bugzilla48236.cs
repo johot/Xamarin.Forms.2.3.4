@@ -14,10 +14,6 @@ namespace Xamarin.Forms.Controls.Issues
 	{
 		protected override void Init()
 		{
-			// Refer to https://bugzilla.xamarin.com/show_bug.cgi?id=48236 for this issue. WinRT/UWP had
-			// an issue where the background color would be used on the area containing the buttons, 
-			// potentially causing the color to run the width of the screen. Only the buttons should have
-			// a background color.
 			var stepper = new Stepper
 			{
 				BackgroundColor = Color.Green,
@@ -29,6 +25,10 @@ namespace Xamarin.Forms.Controls.Issues
 			{
 				Children =
 				{
+					new Label
+					{
+						Text = "If the Stepper's background color extends the width of the page, then this test has failed."
+					},
 					stepper,
 					new Button
 					{
