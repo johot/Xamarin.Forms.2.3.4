@@ -127,8 +127,11 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 
-		#if UITEST
+#if UITEST
 		[Test]
+#if __MACOS__
+		[Ignore("Context Actions not implemented yet")]
+#endif
 		public void Bugzilla31330Test ()
 		{
 			RunningApp.WaitForElement (c => c.Marked ("Something 2"));
