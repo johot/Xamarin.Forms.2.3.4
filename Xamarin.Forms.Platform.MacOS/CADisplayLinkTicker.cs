@@ -42,7 +42,20 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected override void EnableTimer()
 		{
+			_link = new CVDisplayLink();
+			_link.SetOutputCallback(DisplayLinkOutputCallback);
 			_link.Start();
+		}
+
+		public CVReturn DisplayLinkOutputCallback(CVDisplayLink displayLink, ref CVTimeStamp inNow, ref CVTimeStamp inOutputTime, CVOptionFlags flagsIn, ref CVOptionFlags flagsOut)
+		{
+			// There is no autorelease pool when this method is called because it will be called from a background thread
+			// It's important to create one or you will leak objects
+			using (NSAutoreleasePool pool = new NSAutoreleasePool())
+			{
+				Device.BeginInvokeOnMainThread(() => SendSignals());
+			}
+			return CVReturn.Success;
 		}
 
 		void StartThread()
