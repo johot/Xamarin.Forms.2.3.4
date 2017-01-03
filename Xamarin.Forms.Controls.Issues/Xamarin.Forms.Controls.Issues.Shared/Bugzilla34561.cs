@@ -69,6 +69,9 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 
 #if UITEST
+#if __MACOS__
+		[Ignore("Context Actions not implemented yet")]
+#endif
 		[Test]
 		public void Bugzilla34561Test ()
 		{
