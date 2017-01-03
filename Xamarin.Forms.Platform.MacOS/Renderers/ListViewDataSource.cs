@@ -235,21 +235,15 @@ namespace Xamarin.Forms.Platform.MacOS
 		NSIndexPath GetPathFromRow(nint row, ref Cell cell)
 		{
 			NSIndexPath indexPath;
+			var sectionIndex = 0;
+			var isGroupHeader = false;
+			var itemIndexInSection = 0;
 			if (IsGroupingEnabled)
-			{
-				var sectionIndex = 0;
-				var isGroupHeader = false;
-				var itemIndexInSection = 0;
-
 				GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isGroupHeader);
-				indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
-			}
 			else
-			{
-				indexPath = NSIndexPath.FromItemSection(row, 0);
-				cell = GetCellForPath(indexPath, false);
-			}
-
+				itemIndexInSection = (int)row;
+			indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
+			cell = GetCellForPath(indexPath, isGroupHeader);
 			return indexPath;
 		}
 
