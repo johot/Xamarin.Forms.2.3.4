@@ -290,7 +290,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		void GetComputedIndexes(nint row, out int sectionIndex, out int itemIndexInSection, out bool isHeader)
 		{
 			var templatedItems = TemplatedItemsView.TemplatedItems;
-			var totalItems = 1;
+			var totalItems = 0;
 			isHeader = false;
 			sectionIndex = 0;
 			itemIndexInSection = 0;
@@ -298,13 +298,17 @@ namespace Xamarin.Forms.Platform.MacOS
 			for (int i = 0; i < s_sectionCount; i++)
 			{
 				var group = (IList)((IList)templatedItems)[i];
-				var itemsInSection = group.Count + i;
+				var itemsInSection = group.Count + 1;
 
 				if (row < totalItems + itemsInSection)
 				{
 					sectionIndex = i;
 					itemIndexInSection = (int)row - totalItems;
-					isHeader = itemIndexInSection == -1;
+					isHeader = itemIndexInSection == 0;
+					if (isHeader)
+						itemIndexInSection = -1;
+					else
+						itemIndexInSection = itemIndexInSection - 1;
 					break;
 				}
 				totalItems += itemsInSection;
