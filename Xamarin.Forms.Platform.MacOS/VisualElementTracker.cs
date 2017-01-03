@@ -217,7 +217,10 @@ namespace Xamarin.Forms.Platform.MacOS
 				caLayer.Transform = transform;
 			};
 
-			update();
+			if (thread)
+				CADisplayLinkTicker.Default.Invoke(update);
+			else
+				update();
 
 			_lastBounds = view.Bounds;
 			_lastParentBounds = viewParent == null ? Rectangle.Zero : viewParent.Bounds;
