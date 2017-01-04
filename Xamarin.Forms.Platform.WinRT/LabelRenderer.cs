@@ -125,6 +125,8 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		void UpdateAlign(TextBlock textBlock)
 		{
+			_perfectSizeValid = false;
+
 			if (textBlock == null)
 				return;
 
@@ -154,6 +156,8 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		void UpdateFont(TextBlock textBlock)
 		{
+			_perfectSizeValid = false;
+
 			if (textBlock == null)
 				return;
 
