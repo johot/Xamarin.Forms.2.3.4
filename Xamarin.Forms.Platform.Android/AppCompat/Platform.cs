@@ -17,6 +17,27 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 		bool _navAnimationInProgress;
 		NavigationModel _navModel = new NavigationModel();
 
+		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), 
+		                                                                             typeof(Platform), default(IVisualElementRenderer),
+		                                                                             propertyChanged: (bindable, oldvalue, newvalue) =>
+		{
+			Watcher.Start("RendererPropertyChanged");
+			var view = bindable as VisualElement;
+			if (view != null)
+				view.IsPlatformEnabled = newvalue != null;
+			Watcher.Stop();
+		});
+
+		public static IVisualElementRenderer GetRenderer(VisualElement bindable)
+		{
+			Watcher.Start("GetValue");
+			var x =  (IVisualElementRenderer)bindable.GetValue(RendererProperty);
+			Watcher.Stop();
+			return x;
+
+			//return null;
+		}
+
 		public Platform(Context context)
 		{
 			_context = context;
@@ -217,14 +238,22 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		internal void SetPage(Page newRoot)
 		{
+			Watcher.Start("SetPage");
 			var layout = false;
 			if (Page != null)
 			{
+				Watcher.Start("RemoveAllViews");
 				_renderer.RemoveAllViews();
+				Watcher.Stop();
 
+				Watcher.Start("foreach");
 				foreach (IVisualElementRenderer rootRenderer in _navModel.Roots.Select(Android.Platform.GetRenderer))
 					rootRenderer.Dispose();
+				Watcher.Stop();
+
+				Watcher.Start("new NavigationModel");
 				_navModel = new NavigationModel();
+				Watcher.Stop();
 
 				layout = true;
 			}
@@ -232,28 +261,75 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			if (newRoot == null)
 				return;
 
+			Watcher.Start("navModel.Push");
 			_navModel.Push(newRoot, null);
+			Watcher.Stop();
 
+			Watcher.Start("Page = newRoot");
 			Page = newRoot;
-			Page.Platform = this;
-			AddChild(Page, layout);
+			Watcher.Stop();
 
+			Watcher.Start("Page.Platform = this");
+			Page.Platform = this;
+			Watcher.Stop();
+
+			Watcher.Start("AddChild");
+			AddChild(Page, layout);
+			Watcher.Stop();
+
+			Watcher.Start("Set NavigationProxy.Inner");
 			Application.Current.NavigationProxy.Inner = this;
+			Watcher.Stop();
+
+			Watcher.Stop();
+		}
+
+		public static int Foo(){
+			return 10;
 		}
 
 		void AddChild(Page page, bool layout = false)
 		{
-			if (Android.Platform.GetRenderer(page) != null)
+			//Watcher.Start("Force AppCompatPlatform");
+			//System.Diagnostics.Debug.WriteLine(Android.AppCompat.Platform.Foo());
+			//Watcher.Stop();
+
+			//Watcher.Start("Force platform");
+			//System.Diagnostics.Debug.WriteLine( Android.Platform.Foo());
+			//Watcher.Stop();
+
+			Watcher.Start("GetRenderer (first)");
+			var x = Android.AppCompat.Platform.GetRenderer(page);
+			Watcher.Stop();
+
+			Watcher.Start("GetRenderer (second)");
+			x = Android.AppCompat.Platform.GetRenderer(page);
+			Watcher.Stop();
+
+			if (x != null){
 				return;
+			}
 
+			Watcher.Start("SetPageContext");
 			Android.Platform.SetPageContext(page, _context);
-			IVisualElementRenderer renderView = Android.Platform.CreateRenderer(page);
-			Android.Platform.SetRenderer(page, renderView);
+			Watcher.Stop();
 
+			Watcher.Start("Platform.CreateRenderer");
+			IVisualElementRenderer renderView = Android.Platform.CreateRenderer(page);
+			Watcher.Stop();
+
+			Watcher.Start("SetRenderer");
+			Android.Platform.SetRenderer(page, renderView);
+			Watcher.Stop();
+
+			Watcher.Start("LayoutRootPage");
 			if (layout)
 				LayoutRootPage((FormsAppCompatActivity)_context, page, _renderer.Width, _renderer.Height);
+			Watcher.Stop();
 
+			Watcher.Start("AddView");
 			_renderer.AddView(renderView.ViewGroup);
+			Watcher.Stop();
 		}
 
 		bool HandleBackPressed(object sender, EventArgs e)

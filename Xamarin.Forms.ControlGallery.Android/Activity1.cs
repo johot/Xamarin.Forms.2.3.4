@@ -313,12 +313,29 @@ namespace Xamarin.Forms.ControlGallery.Android
 
 			base.OnCreate (bundle);
 
+			var watch = new Stopwatch();
+
 			if (!Debugger.IsAttached)
 				Insights.Initialize (App.InsightsApiKey, ApplicationContext);
 
+			watch.Start();
+
 			Forms.Init (this, bundle);
+
+			watch.Stop();
+			System.Diagnostics.Debug.WriteLine($"Forms.Init : {watch.ElapsedMilliseconds}");
+			watch.Reset();
+
+			watch.Start();
 			FormsMaps.Init (this, bundle);
+			watch.Stop();
+			System.Diagnostics.Debug.WriteLine($"FormsMaps.Init : {watch.ElapsedMilliseconds}");
+			watch.Reset();
+
+
 			AndroidAppLinks.Init(this);
+
+
 			Forms.ViewInitialized += (sender, e) => {
 //				if (!string.IsNullOrWhiteSpace(e.View.StyleId)) {
 //					e.NativeView.ContentDescription = e.View.StyleId;
@@ -327,16 +344,26 @@ namespace Xamarin.Forms.ControlGallery.Android
 			// uncomment to verify turning off title bar works. This is not intended to be dynamic really.
 			//Forms.SetTitleBarVisibility (AndroidTitleBarVisibility.Never);
 
+			watch.Start();
 			var app = new App();
 			_app = app;
+
+			watch.Stop();
+			System.Diagnostics.Debug.WriteLine($"new App() : {watch.ElapsedMilliseconds}");
+			watch.Reset();
 
 			// When the native control gallery loads up, it'll let us know so we can add the nested native controls
 			MessagingCenter.Subscribe<NestedNativeControlGalleryPage>(this, NestedNativeControlGalleryPage.ReadyForNativeControlsMessage, AddNativeControls);
 
 			// When the native binding gallery loads up, it'll let us know so we can set up the native bindings
 			MessagingCenter.Subscribe<NativeBindingGalleryPage >(this, NativeBindingGalleryPage.ReadyForNativeBindingsMessage, AddNativeBindings);
-
+			watch.Start();
 			LoadApplication(app);
+
+			watch.Stop();
+
+			System.Diagnostics.Debug.WriteLine($"LoadApplication(app) : {watch.ElapsedMilliseconds}");
+
 		}
 
 		public override void OnConfigurationChanged (global::Android.Content.Res.Configuration newConfig)

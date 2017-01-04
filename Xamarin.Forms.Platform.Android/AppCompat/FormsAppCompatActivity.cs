@@ -20,11 +20,15 @@ using AToolbar = Android.Support.V7.Widget.Toolbar;
 using AColor = Android.Graphics.Color;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using ARelativeLayout = Android.Widget.RelativeLayout;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 #endregion
 
 namespace Xamarin.Forms.Platform.Android
 {
+	
+
 	public class FormsAppCompatActivity : AppCompatActivity, IDeviceInfoProvider, IStartActivityForResult
 	{
 		public delegate bool BackButtonPressedEventHandler(object sender, EventArgs e);
@@ -106,6 +110,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		protected void LoadApplication(Application application)
 		{
+			Watcher.Start("LoadApplication add renderers");
 			if (!_renderersAdded)
 			{
 				RegisterHandlerForDefaultRenderer(typeof(NavigationPage), typeof(NavigationPageRenderer), typeof(NavigationRenderer));
@@ -119,21 +124,34 @@ namespace Xamarin.Forms.Platform.Android
 
 				_renderersAdded = true;
 			}
+			Watcher.Stop();
 
 			if (application == null)
 				throw new ArgumentNullException("application");
 
 			_application = application;
+
+			Watcher.Start("LoadApplication SetAppIndexingProvider");
 			(application as IApplicationController)?.SetAppIndexingProvider(new AndroidAppIndexProvider(this));
+			Watcher.Stop();
+
+			Watcher.Start("LoadApplication set Application.Current");
 			Xamarin.Forms.Application.Current = application;
+			Watcher.Stop();
 
+			Watcher.Start("LoadApplication SetSoftInputMode");
 			SetSoftInputMode();
+			Watcher.Stop();
 
+			Watcher.Start("LoadApplication CheckForAppLink");
 			CheckForAppLink(Intent);
+			Watcher.Stop();
 
 			application.PropertyChanged += AppOnPropertyChanged;
 
+			Watcher.Start("LoadApplication SetMainPage");
 			SetMainPage();
+			Watcher.Stop();
 		}
 
 		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
@@ -367,7 +385,12 @@ namespace Xamarin.Forms.Platform.Android
 
 			if (_platform != null)
 			{
+				Watcher.Start("InternalSetPage _platform.SetPage");
+
 				_platform.SetPage(page);
+
+				Watcher.Stop();
+
 				return;
 			}
 
@@ -376,12 +399,28 @@ namespace Xamarin.Forms.Platform.Android
 			MessagingCenter.Subscribe<Page, AlertArguments>(this, Page.AlertSignalName, OnAlertRequested);
 			MessagingCenter.Subscribe<Page, ActionSheetArguments>(this, Page.ActionSheetSignalName, OnActionSheetRequested);
 
+			//Watcher.Start("Force AppCompat.Platform.Early");
+			//AppCompat.Platform.Foo();
+			//Watcher.Stop();
+
+			Watcher.Start("InternalSetPage new _platform");
 			_platform = new AppCompat.Platform(this);
+			Watcher.Stop();
+
 			if (_application != null)
 				_application.Platform = _platform;
+
+			Watcher.Start("InternalSetPage _platform.SetPage");
 			_platform.SetPage(page);
+			Watcher.Stop();
+
+			Watcher.Start("InternalSetPage _layout.AddView");
 			_layout.AddView(_platform);
+			Watcher.Stop();
+
+			Watcher.Start("InternalSetPage _layout.BringToFront");
 			_layout.BringToFront();
+			Watcher.Stop();
 		}
 
 		void OnActionSheetRequested(Page sender, ActionSheetArguments arguments)
