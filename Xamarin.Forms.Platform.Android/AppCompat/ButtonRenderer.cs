@@ -85,6 +85,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
 		{
+			Watcher.Start("ButtonRenderer OnElementChanged");
 			base.OnElementChanged(e);
 
 			if (e.OldElement != null)
@@ -95,19 +96,37 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			{
 				if (Control == null)
 				{
+					Watcher.Start("CreateNativeControl");
 					AppCompatButton button = CreateNativeControl();
+					Watcher.Stop();
 
+					Watcher.Start("CreateNativeControl");
 					button.SetOnClickListener(ButtonClickListener.Instance.Value);
-					button.Tag = this;
-					_textColorSwitcher = new TextColorSwitcher(button.TextColors);  
-					SetNativeControl(button);
+					Watcher.Stop();
 
+					Watcher.Start("Tag and Color Switcher");
+					button.Tag = this;
+					_textColorSwitcher = new TextColorSwitcher(button.TextColors);
+					Watcher.Stop();
+
+					Watcher.Start("SetNativeControl");
+					SetNativeControl(button);
+					Watcher.Stop();
+
+					Watcher.Start("AddOnAttachStateChangeListener");
 					button.AddOnAttachStateChangeListener(this);
+					Watcher.Stop();
 				}
 
+				Watcher.Start("UpdateAll");
 				UpdateAll();
+				Watcher.Stop();
+
+				Watcher.Start("UpdateBackgroundColor");
 				UpdateBackgroundColor();
+				Watcher.Stop();
 			}
+			Watcher.Stop();
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

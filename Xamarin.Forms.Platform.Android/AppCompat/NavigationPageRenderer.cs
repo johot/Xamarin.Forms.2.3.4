@@ -220,6 +220,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		protected override void OnElementChanged(ElementChangedEventArgs<NavigationPage> e)
 		{
+			Watcher.Start("NavigationPageRenderer OnElementChanged");
 			base.OnElementChanged(e);
 
 			if (e.OldElement != null)
@@ -239,13 +240,16 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 			if (e.NewElement != null)
 			{
+				Watcher.Start("Toolbar");
 				if (_toolbarTracker == null)
 				{
 					SetupToolbar();
 					_toolbarTracker = new ToolbarTracker();
 					_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
 				}
+				Watcher.Stop();
 
+				Watcher.Start("Parent Stuff");
 				var parents = new List<Page>();
 				Page root = Element;
 				while (!Application.IsApplicationOrNull(root.RealParent))
@@ -253,10 +257,13 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 					root = (Page)root.RealParent;
 					parents.Add(root);
 				}
+				Watcher.Stop();
 
+				Watcher.Start("Toolbar Tracker/Menu");
 				_toolbarTracker.Target = e.NewElement;
 				_toolbarTracker.AdditionalTargets = parents;
 				UpdateMenu();
+				Watcher.Stop();
 
 				var navController = (INavigationPageController)e.NewElement;
 
@@ -267,11 +274,14 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				navController.RemovePageRequested += OnRemovePageRequested;
 
 				// If there is already stuff on the stack we need to push it
+				Watcher.Start("Push Stuff Already on the Stack");
 				foreach (Page page in navController.StackCopy.Reverse())
 				{
 					PushViewAsync(page, false);
 				}
+				Watcher.Stop();
 			}
+			Watcher.Stop();
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
