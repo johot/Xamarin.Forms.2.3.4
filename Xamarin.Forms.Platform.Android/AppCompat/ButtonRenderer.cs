@@ -201,6 +201,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		void UpdateBitmap()
 		{
+			Watcher.Start("UpdateBitmap");
 			var elementImage = Element.Image;
 			var imageFile = elementImage?.File;
 			_imageHeight = -1;
@@ -253,6 +254,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			}
 
 			image?.Dispose();
+			Watcher.Stop();
 		}
 
 		void UpdateEnabled()
@@ -262,6 +264,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		void UpdateFont()
 		{
+			Watcher.Start("UpdateFont");
 			Button button = Element;
 			Font font = button.Font;
 
@@ -284,10 +287,12 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				NativeButton.Typeface = font.ToTypeface();
 				NativeButton.SetTextSize(ComplexUnitType.Sp, font.ToScaledPixel());
 			}
+			Watcher.Stop();
 		}
 
 		void UpdateText()
 		{
+			Watcher.Start("UpdateText");
 			var oldText = NativeButton.Text;
 			NativeButton.Text = Element.Text;
 
@@ -296,11 +301,14 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			{
 				UpdateBitmap();
 			}
+			Watcher.Stop();
 		}
 
 		void UpdateTextColor()
 		{
+			Watcher.Start("UpdateTextColor");
 			_textColorSwitcher?.UpdateTextColor(Control, Element.TextColor);
+			Watcher.Stop();
 		}
 
 		class ButtonClickListener : Object, IOnClickListener

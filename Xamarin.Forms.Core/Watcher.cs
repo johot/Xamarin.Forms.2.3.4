@@ -48,7 +48,7 @@ namespace Xamarin.Forms
 				Output(msg);
 			}
 
-			if (watch.ElapsedMilliseconds > 0)
+			if (sw.InternalData.Count > 0 && watch.ElapsedMilliseconds > 0)
 			{
 				long unaccounted = watch.ElapsedMilliseconds - accountedFor;
 				if (unaccounted > 0)

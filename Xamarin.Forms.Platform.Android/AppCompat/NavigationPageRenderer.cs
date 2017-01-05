@@ -277,7 +277,9 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				Watcher.Start("Push Stuff Already on the Stack");
 				foreach (Page page in navController.StackCopy.Reverse())
 				{
+					Watcher.Start("PushViewAsync");
 					PushViewAsync(page, false);
+					Watcher.Stop();
 				}
 				Watcher.Stop();
 			}
