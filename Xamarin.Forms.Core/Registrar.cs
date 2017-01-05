@@ -143,6 +143,8 @@ namespace Xamarin.Forms
 					}
 				}
 			}
+
+			DependencyService.Initialize(assemblies);
 		}
 	}
 }

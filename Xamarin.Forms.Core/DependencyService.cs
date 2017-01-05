@@ -70,6 +70,16 @@ namespace Xamarin.Forms
 				assemblies = assemblies.Union(Registrar.ExtraAssemblies).ToArray();
 			}
 
+			Initialize(assemblies);
+		}
+
+		internal static void Initialize(Assembly[] assemblies)
+		{
+			if (s_initialized)
+			{
+				return;
+			}
+
 			Type targetAttrType = typeof(DependencyAttribute);
 
 			// Don't use LINQ for performance reasons
