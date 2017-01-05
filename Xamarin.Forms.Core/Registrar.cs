@@ -126,15 +126,16 @@ namespace Xamarin.Forms
 				}
 
 				string resolutionName = assembly.FullName;
-				var resolutionNameAttribute = (ResolutionGroupNameAttribute)assembly.GetCustomAttribute(typeof(ResolutionGroupNameAttribute));
-				if (resolutionNameAttribute != null)
-				{
-					resolutionName = resolutionNameAttribute.ShortName;
-				}
 
 				Attribute[] effectAttributes = assembly.GetCustomAttributes(typeof(ExportEffectAttribute)).ToArray();
 				if (effectAttributes.Length > 0)
 				{
+					var resolutionNameAttribute = (ResolutionGroupNameAttribute)assembly.GetCustomAttribute(typeof(ResolutionGroupNameAttribute));
+					if (resolutionNameAttribute != null)
+					{
+						resolutionName = resolutionNameAttribute.ShortName;
+					}
+
 					foreach (Attribute attribute in effectAttributes)
 					{
 						var effect = (ExportEffectAttribute)attribute;
