@@ -211,7 +211,8 @@ namespace Xamarin.Forms.Platform.iOS
 			UpdateBarTextColor();
 
 			// If there is already stuff on the stack we need to push it
-			((INavigationPageController)navPage).StackCopy.Reverse().ForEach(async p => await PushPageAsync(p, false));
+			// same as iterating over PageController.InternalChildren
+			((INavigationPageController)navPage).Pages.ForEach(async p => await PushPageAsync(p, false));
 
 			_tracker = new VisualElementTracker(this);
 
@@ -617,7 +618,7 @@ namespace Xamarin.Forms.Platform.iOS
 			if (containerController == null)
 				return;
 			var currentChild = containerController.Child;
-			var firstPage = ((INavigationPageController)Element).StackCopy.LastOrDefault();
+			var firstPage = ((INavigationPageController)Element).Pages.FirstOrDefault(); 
 			if ((firstPage != pageBeingRemoved && currentChild != firstPage && NavigationPage.GetHasBackButton(currentChild)) || _parentMasterDetailPage == null)
 				return;
 

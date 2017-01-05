@@ -213,26 +213,22 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
-		public async Task TestStackCopy ()
+		public async Task SecondToLast()
 		{
-			var nav = new NavigationPage ();
+			var nav = new NavigationPage();
 
 			bool signaled = false;
 			nav.PoppedToRoot += (sender, args) => signaled = true;
 
-			var root = new ContentPage {Content = new View ()};
-			var child1 = new ContentPage {Content = new View ()};
-			var child2 = new ContentPage {Content = new View ()};
+			var root = new ContentPage { Content = new View() };
+			var child1 = new ContentPage { Content = new View() };
+			var child2 = new ContentPage { Content = new View() };
 
-			await nav.PushAsync (root);
-			await nav.PushAsync (child1);
-			await nav.PushAsync (child2);
+			await nav.PushAsync(root);
+			await nav.PushAsync(child1);
+			await nav.PushAsync(child2);
 
-			var copy = ((INavigationPageController)nav).StackCopy;
-
-			Assert.AreEqual (child2, copy.Pop ());
-			Assert.AreEqual (child1, copy.Pop ());
-			Assert.AreEqual (root, copy.Pop ());
+			Assert.AreEqual(((INavigationPageController)nav).SecondToLast, child1);
 		}
 
 		[Test]
