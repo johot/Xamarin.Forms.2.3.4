@@ -10,12 +10,17 @@ namespace Xamarin.Forms
 
 		static string Indent => new string('\t', s_watches.Count);
 
+		static void Output(string message)
+		{
+			Debug.WriteLine(message);
+			Log.Warning("Watcher", message);
+		}
+
 		public static void Start(string current)
 		{
 			var indent = new string('\t', s_watches.Count);
 			string message = $"w:{s_counter++:D8} {indent}{current} >>>";
-			Debug.WriteLine(message);
-			Log.Warning("Watcher", message);
+			Output(message);
 			var sw = new WatchData(current);
 			s_watches.Push(sw);
 			sw.Stopwatch.Start();
@@ -27,20 +32,31 @@ namespace Xamarin.Forms
 			Stopwatch watch = sw.Stopwatch;
 			watch.Stop();
 			string message = $"w:{s_counter++:D8} {Indent}{sw.Label} : {watch.ElapsedMilliseconds} ({watch.Elapsed})";
-			Debug.WriteLine(message);
-			Log.Warning("Watcher", message);
+			Output(message);
 
+			long accountedFor = 0;
 			foreach (KeyValuePair<string, long> data in sw.InternalData)
 			{
-				if (watch.ElapsedMilliseconds == 0)
+				if (watch.ElapsedMilliseconds <= 0)
 				{
 					continue;
 				}
 
+				accountedFor += data.Value;
 				double percent = data.Value / (double)watch.ElapsedMilliseconds;
 				string msg = $"w:{s_counter++:D8} {Indent} ---> {data.Key} : {percent:P}";
-				Debug.WriteLine(msg);
-				Log.Warning("Watcher", msg);
+				Output(msg);
+			}
+
+			if (watch.ElapsedMilliseconds > 0)
+			{
+				long unaccounted = watch.ElapsedMilliseconds - accountedFor;
+				if (unaccounted > 0)
+				{
+					double percent = unaccounted / (double)watch.ElapsedMilliseconds;
+					string msg = $"w:{s_counter++:D8} {Indent} ---> Unaccounted : {percent:P}";
+					Output(msg);
+				}
 			}
 
 			if (s_watches.Count == 0)
