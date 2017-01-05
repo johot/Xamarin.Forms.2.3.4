@@ -111,6 +111,7 @@ namespace Xamarin.Forms
 
 		static void SetupInit(Context activity, Assembly resourceAssembly)
 		{
+			Watcher.Start("SetupInit");
 			Context = activity;
 
 			ResourceManager.Init(resourceAssembly);
@@ -139,7 +140,9 @@ namespace Xamarin.Forms
 
 			if (!IsInitialized)
 			{
+				Watcher.Start("Register exports");
 				Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
+				Watcher.Stop();
 			}
 
 			int minWidthDp = Context.Resources.Configuration.SmallestScreenWidthDp;
@@ -150,6 +153,7 @@ namespace Xamarin.Forms
 				ExpressionSearch.Default = new AndroidExpressionSearch();
 
 			IsInitialized = true;
+			Watcher.Stop();
 		}
 
 		static Color GetAccentColor()

@@ -25,16 +25,31 @@ namespace Xamarin.Forms
 
 		protected Application()
 		{
+			Watcher.Start("Application constructor");
 			var f = false;
 			if (f)
 				Loader.Load();
-			NavigationProxy = new NavigationImpl(this);
-			Current = this;
-			_propertiesTask = GetPropertiesAsync();
 
+			Watcher.Start("Set NavigationProxy");
+			NavigationProxy = new NavigationImpl(this);
+			Watcher.Stop();
+
+			Current = this;
+
+			Watcher.Start("GetPropertiesAsync");
+			_propertiesTask = GetPropertiesAsync();
+			Watcher.Stop();
+
+			Watcher.Start("SystemResources");
 			SystemResources = DependencyService.Get<ISystemResourcesProvider>().GetSystemResources();
 			SystemResources.ValuesChanged += OnParentResourcesChanged;
+			Watcher.Stop();
+
+			Watcher.Start("_platformConfigurationRegistry ");
 			_platformConfigurationRegistry = new Lazy<PlatformConfigurationRegistry<Application>>(() => new PlatformConfigurationRegistry<Application>(this));
+			Watcher.Stop();
+
+			Watcher.Stop();
 		}
 
 		public IAppLinks AppLinks
@@ -231,14 +246,18 @@ namespace Xamarin.Forms
 
 		async Task<IDictionary<string, object>> GetPropertiesAsync()
 		{
+			
 			var deserializer = DependencyService.Get<IDeserializer>();
+			
 			if (deserializer == null)
 			{
 				Log.Warning("Startup", "No IDeserialzier was found registered");
 				return new Dictionary<string, object>(4);
 			}
 
+		
 			IDictionary<string, object> properties = await deserializer.DeserializePropertiesAsync().ConfigureAwait(false);
+		
 			if (properties == null)
 				properties = new Dictionary<string, object>(4);
 

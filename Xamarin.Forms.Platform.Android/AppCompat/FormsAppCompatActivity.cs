@@ -166,6 +166,8 @@ namespace Xamarin.Forms.Platform.Android
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
+			Watcher.Start("FormsAppCompatActivity.OnCreate");
+
 			if (!AllowFragmentRestore)
 			{
 				// Remove the automatically persisted fragment structure; we don't need them
@@ -174,8 +176,11 @@ namespace Xamarin.Forms.Platform.Android
 				savedInstanceState?.Remove("android:support:fragments");
 			}
 
+			Watcher.Start("base.OnCreate");
 			base.OnCreate(savedInstanceState);
+			Watcher.Stop();
 
+			Watcher.Start("Toolbar");
 			AToolbar bar;
 			if (ToolbarResource != 0)
 			{
@@ -185,20 +190,35 @@ namespace Xamarin.Forms.Platform.Android
 			}
 			else
 				bar = new AToolbar(this);
+			Watcher.Stop();
 
+			Watcher.Start("Action Bar");
 			SetSupportActionBar(bar);
+			Watcher.Stop();
 
+			Watcher.Start("SetContentView");
 			_layout = new ARelativeLayout(BaseContext);
 			SetContentView(_layout);
+			Watcher.Stop();
 
+			Watcher.Start("ClearCurrent");
 			Xamarin.Forms.Application.ClearCurrent();
+			Watcher.Stop();
 
+			Watcher.Start("_currentState");
 			_previousState = _currentState;
 			_currentState = AndroidApplicationLifecycleState.OnCreate;
+			Watcher.Stop();
 
+			Watcher.Start("OnStateChanged");
 			OnStateChanged();
+			Watcher.Stop();
 
+			Watcher.Start("AddStatusBarUnderlay");
 			AddStatusBarUnderlay();
+			Watcher.Stop();
+
+			Watcher.Stop();
 		}
 
 		protected override void OnDestroy()

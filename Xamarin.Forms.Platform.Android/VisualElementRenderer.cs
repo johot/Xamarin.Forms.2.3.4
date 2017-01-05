@@ -145,6 +145,8 @@ namespace Xamarin.Forms.Platform.Android
 
 		public void SetElement(TElement element)
 		{
+			Watcher.Start($"VisualElementRenderer SetElement {element.GetType().Name}");
+
 			if (element == null)
 				throw new ArgumentNullException(nameof(element));
 
@@ -160,18 +162,23 @@ namespace Xamarin.Forms.Platform.Android
 			}
 
 			// element may be allowed to be passed as null in the future
+			Watcher.Start("Background Color");
 			if (element != null)
 			{
 				Color currentColor = oldElement != null ? oldElement.BackgroundColor : Color.Default;
 				if (element.BackgroundColor != currentColor)
 					UpdateBackgroundColor();
 			}
+			Watcher.Stop();
 
 			if (_propertyChangeHandler == null)
 				_propertyChangeHandler = OnElementPropertyChanged;
 
 			element.PropertyChanged += _propertyChangeHandler;
+
+			Watcher.Start("SubscribeGestureRecognizers");
 			SubscribeGestureRecognizers(element);
+			Watcher.Stop();
 
 			if (oldElement == null)
 			{
@@ -180,35 +187,52 @@ namespace Xamarin.Forms.Platform.Android
 				SoundEffectsEnabled = false;
 			}
 
+			Watcher.Start("InputTransparent");
 			InputTransparent = Element.InputTransparent;
+			Watcher.Stop();
 
 			// must be updated AFTER SetOnClickListener is called
 			// SetOnClickListener implicitly calls Clickable = true
+			Watcher.Start("UpdateGestureRecognizers");
 			UpdateGestureRecognizers(true);
+			Watcher.Stop();
 
+			Watcher.Start("OnElementChanged");
 			OnElementChanged(new ElementChangedEventArgs<TElement>(oldElement, element));
+			Watcher.Stop();
 
+			Watcher.Start("AutoPackage");
 			if (AutoPackage && _packager == null)
 				SetPackager(new VisualElementPackager(this));
+			Watcher.Stop();
 
+			Watcher.Start("AutoTrack");
 			if (AutoTrack && Tracker == null)
 				SetTracker(new VisualElementTracker(this));
+			Watcher.Stop();
 
+			Watcher.Start("SendVisualElementInitialized");
 			if (element != null)
 				SendVisualElementInitialized(element, this);
+			Watcher.Stop();
 
+			Watcher.Start("EffectControlProvider");
 			var controller = (IElementController)oldElement;
 			if (controller != null && controller.EffectControlProvider == this)
 				controller.EffectControlProvider = null;
-
+			
 			controller = element;
 			if (controller != null)
 				controller.EffectControlProvider = this;
+			Watcher.Stop();
 
+			Watcher.Start("SetAutomationId");
 			if (element != null && !string.IsNullOrEmpty(element.AutomationId))
 				SetAutomationId(element.AutomationId);
+			Watcher.Stop();
 
 			Performance.Stop();
+			Watcher.Stop();
 		}
 
 		/// <summary>

@@ -81,7 +81,9 @@ namespace Xamarin.Forms.Platform.Android
 			if (renderer == null)
 			{
 				Performance.Start("New renderer");
+				Watcher.Start("Packager AddChild CreateRenderer");
 				renderer = Platform.CreateRenderer(view);
+				Watcher.Stop();
 				Performance.Stop("New renderer");
 			}
 
@@ -98,8 +100,10 @@ namespace Xamarin.Forms.Platform.Android
 			Performance.Start("Add view");
 			if (!sameChildren)
 			{
+				Watcher.Start("Packager AddChild AddView");
 				_renderer.ViewGroup.AddView(renderer.ViewGroup);
 				_childViews.Add(renderer);
+				Watcher.Stop();
 			}
 			Performance.Stop("Add view");
 

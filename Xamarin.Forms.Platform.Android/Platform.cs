@@ -27,28 +27,16 @@ namespace Xamarin.Forms.Platform.Android
 			return 10;
 		}
 
-		internal static readonly BindableProperty RendererProperty = CreateAttached2("Renderer", typeof(IVisualElementRenderer), 
+		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), 
 		                                                                                             typeof(Platform), default(IVisualElementRenderer),
 			propertyChanged: (bindable, oldvalue, newvalue) =>
 			{
-			Watcher.Start("RendererPropertyChanged");
 				var view = bindable as VisualElement;
 				if (view != null)
 					view.IsPlatformEnabled = newvalue != null;
-			Watcher.Stop();
 		});
 
-		internal static BindableProperty CreateAttached2(string propertyName, Type returnType, Type declaringType, object defaultValue, 
-		                                                 
-		                                                 BindableProperty.BindingPropertyChangedDelegate propertyChanged = null)
-		{
-			Watcher.Start($"Create {propertyName}");
-			var prop = BindableProperty.CreateAttached(propertyName, returnType, declaringType, defaultValue, propertyChanged: propertyChanged);
-			Watcher.Stop();
-			return prop;
-		} 
-
-		internal static readonly BindableProperty PageContextProperty = CreateAttached2("PageContext", typeof(Context), typeof(Platform), null);
+		internal static readonly BindableProperty PageContextProperty = BindableProperty.CreateAttached("PageContext", typeof(Context), typeof(Platform), null);
 
 		IMasterDetailPageController MasterDetailPageController => CurrentMasterDetailPage as IMasterDetailPageController;
 
@@ -300,22 +288,24 @@ namespace Xamarin.Forms.Platform.Android
 
 		public static IVisualElementRenderer CreateRenderer(VisualElement element)
 		{
+			Watcher.Start("UpdateGlobalContext");
 			UpdateGlobalContext(element);
+			Watcher.Stop();
 
+			Watcher.Start("Get renderer from registrar");
 			IVisualElementRenderer renderer = Registrar.Registered.GetHandler<IVisualElementRenderer>(element.GetType()) ?? new DefaultRenderer();
+			Watcher.Stop();
+
+			Watcher.Start($"SetElement {element}");
 			renderer.SetElement(element);
+			Watcher.Stop();
 
 			return renderer;
 		}
 
 		public static IVisualElementRenderer GetRenderer(VisualElement bindable)
 		{
-			//Watcher.Start("GetValue");
-			var x =  (IVisualElementRenderer)bindable.GetValue(RendererProperty);
-			//Watcher.Stop();
-			return x;
-
-			//return null;
+			return (IVisualElementRenderer)bindable.GetValue(RendererProperty);
 		}
 
 		public static void SetRenderer(VisualElement bindable, IVisualElementRenderer value)

@@ -17,27 +17,6 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 		bool _navAnimationInProgress;
 		NavigationModel _navModel = new NavigationModel();
 
-		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), 
-		                                                                             typeof(Platform), default(IVisualElementRenderer),
-		                                                                             propertyChanged: (bindable, oldvalue, newvalue) =>
-		{
-			Watcher.Start("RendererPropertyChanged");
-			var view = bindable as VisualElement;
-			if (view != null)
-				view.IsPlatformEnabled = newvalue != null;
-			Watcher.Stop();
-		});
-
-		public static IVisualElementRenderer GetRenderer(VisualElement bindable)
-		{
-			Watcher.Start("GetValue");
-			var x =  (IVisualElementRenderer)bindable.GetValue(RendererProperty);
-			Watcher.Stop();
-			return x;
-
-			//return null;
-		}
-
 		public Platform(Context context)
 		{
 			_context = context;
@@ -290,20 +269,8 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		void AddChild(Page page, bool layout = false)
 		{
-			//Watcher.Start("Force AppCompatPlatform");
-			//System.Diagnostics.Debug.WriteLine(Android.AppCompat.Platform.Foo());
-			//Watcher.Stop();
-
-			//Watcher.Start("Force platform");
-			//System.Diagnostics.Debug.WriteLine( Android.Platform.Foo());
-			//Watcher.Stop();
-
-			Watcher.Start("GetRenderer (first)");
-			var x = Android.AppCompat.Platform.GetRenderer(page);
-			Watcher.Stop();
-
-			Watcher.Start("GetRenderer (second)");
-			x = Android.AppCompat.Platform.GetRenderer(page);
+			Watcher.Start("GetRenderer");
+			var x = Android.Platform.GetRenderer(page);
 			Watcher.Stop();
 
 			if (x != null){
