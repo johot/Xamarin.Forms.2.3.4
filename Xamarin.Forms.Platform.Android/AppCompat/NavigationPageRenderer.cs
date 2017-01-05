@@ -259,9 +259,12 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				}
 				Watcher.Stop();
 
-				Watcher.Start("Toolbar Tracker/Menu");
+				Watcher.Start("Toolbar Tracker");
 				_toolbarTracker.Target = e.NewElement;
 				_toolbarTracker.AdditionalTargets = parents;
+				Watcher.Stop();
+
+				Watcher.Start("Menu");
 				UpdateMenu();
 				Watcher.Stop();
 
@@ -603,8 +606,14 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		Task<bool> SwitchContentAsync(Page view, bool animated, bool removed = false, bool popToRoot = false)
 		{
+			Watcher.Start($"SwitchContentAsync {view}");
+
 			var tcs = new TaskCompletionSource<bool>();
+
+			Watcher.Start("FragmentContainer CreateInstance");
 			Fragment fragment = FragmentContainer.CreateInstance(view);
+			Watcher.Stop();
+
 			FragmentManager fm = FragmentManager;
 
 #if DEBUG
@@ -654,10 +663,12 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				else
 				{
 					// push
+					Watcher.Start("Push");
 					Fragment currentToHide = fragments.Last();
 					transaction.Hide(currentToHide);
 					transaction.Add(Id, fragment);
 					fragments.Add(fragment);
+					Watcher.Stop();
 				}
 			}
 
@@ -672,9 +683,11 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			{
 				if (!removed)
 				{
+					Watcher.Start("Update Toolbar");
 					UpdateToolbar();
 					if (_drawerToggle != null && ((INavigationPageController)Element).StackDepth == 2)
 						AnimateArrowIn();
+					Watcher.Stop();
 				}
 				else if (_drawerToggle != null && ((INavigationPageController)Element).StackDepth == 2)
 					AnimateArrowOut();
@@ -687,7 +700,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 					{
 						UpdateToolbar();
 					}
-
+					
 					return false;
 				});
 			}
@@ -695,9 +708,11 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			{
 				Device.StartTimer(TimeSpan.FromMilliseconds(1), () =>
 				{
+					Watcher.Start("Update Toolbar");
 					tcs.TrySetResult(true);
 					fragment.UserVisibleHint = true;
 					UpdateToolbar();
+					Watcher.Stop();
 
 					return false;
 				});
@@ -708,6 +723,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 			// TransitionDuration is how long the built-in animations are, and they are "reversible" in the sense that starting another one slightly before it's done is fine
 
+			Watcher.Stop();
 			return tcs.Task;
 		}
 
