@@ -267,10 +267,9 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 		void UpdateFont()
 		{
 			Watcher.Start("UpdateFont");
-			Button button = Element;
-			Font font = button.Font;
+			Font font = Element.Font;
 
-			if (font == Font.Default && _defaultFontSize == 0f)
+			if (font.IsDefault && _defaultFontSize == 0f)
 			{
 				Watcher.Stop();
 				return;
@@ -282,7 +281,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				_defaultFontSize = NativeButton.TextSize;
 			}
 
-			if (font == Font.Default)
+			if (font.IsDefault)
 			{
 				Watcher.Start("Default Font");
 				NativeButton.Typeface = _defaultTypeface;
