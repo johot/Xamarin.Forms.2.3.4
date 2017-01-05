@@ -209,6 +209,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			if (elementImage == null || string.IsNullOrEmpty(imageFile))
 			{
 				Control.SetCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				Watcher.Stop();
 				return;
 			}
 
@@ -229,6 +230,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				_imageHeight = image.IntrinsicHeight;
 
 				image?.Dispose();
+				Watcher.Stop();
 				return;
 			}
 
@@ -269,7 +271,10 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			Font font = button.Font;
 
 			if (font == Font.Default && _defaultFontSize == 0f)
+			{
+				Watcher.Stop();
 				return;
+			}
 
 			if (_defaultFontSize == 0f)
 			{
@@ -279,13 +284,17 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 			if (font == Font.Default)
 			{
+				Watcher.Start("Default Font");
 				NativeButton.Typeface = _defaultTypeface;
 				NativeButton.SetTextSize(ComplexUnitType.Px, _defaultFontSize);
+				Watcher.Stop();
 			}
 			else
 			{
+				Watcher.Start("Non Default");
 				NativeButton.Typeface = font.ToTypeface();
 				NativeButton.SetTextSize(ComplexUnitType.Sp, font.ToScaledPixel());
+				Watcher.Stop();
 			}
 			Watcher.Stop();
 		}
