@@ -10,7 +10,7 @@ namespace Xamarin.Forms
 	public class Application : Element, IResourcesProvider, IApplicationController, IElementConfiguration<Application>
 	{
 		static Application s_current;
-		readonly Task<IDictionary<string, object>> _propertiesTask;
+		Task<IDictionary<string, object>> _propertiesTask;
 		readonly Lazy<PlatformConfigurationRegistry<Application>> _platformConfigurationRegistry;
 
 		IAppIndexingProvider _appIndexProvider;
@@ -37,7 +37,7 @@ namespace Xamarin.Forms
 			Current = this;
 
 			Watcher.Start("GetPropertiesAsync");
-			_propertiesTask = GetPropertiesAsync();
+			//_propertiesTask = GetPropertiesAsync();
 			Watcher.Stop();
 
 			Watcher.Start("SystemResources");
@@ -109,7 +109,15 @@ namespace Xamarin.Forms
 
 		public IDictionary<string, object> Properties
 		{
-			get { return _propertiesTask.Result; }
+			get
+			{
+				if (_propertiesTask == null)
+				{
+					_propertiesTask = GetPropertiesAsync();
+				}
+
+				return _propertiesTask.Result;
+			}
 		}
 
 		internal override ReadOnlyCollection<Element> LogicalChildrenInternal
