@@ -263,10 +263,6 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			Watcher.Stop();
 		}
 
-		public static int Foo(){
-			return 10;
-		}
-
 		void AddChild(Page page, bool layout = false)
 		{
 			Watcher.Start("GetRenderer");

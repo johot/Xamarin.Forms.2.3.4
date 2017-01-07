@@ -614,6 +614,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			Fragment fragment = FragmentContainer.CreateInstance(view);
 			Watcher.Stop();
 
+			Watcher.Start("Other Stuff");
 			FragmentManager fm = FragmentManager;
 
 #if DEBUG
@@ -624,19 +625,26 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			List<Fragment> fragments = _fragmentStack;
 
 			Current = view;
+			Watcher.Stop();
 
+			Watcher.Start("Fragment BeginTransaction");
 			((Platform)Element.Platform).NavAnimationInProgress = true;
 			FragmentTransaction transaction = fm.BeginTransaction();
+			Watcher.Stop();
 
 			if (animated)
 				SetupPageTransition(transaction, !removed);
 
+			Watcher.Start("DisallowAddToBackStack");
 			transaction.DisallowAddToBackStack();
+			Watcher.Stop();
 
 			if (fragments.Count == 0)
 			{
+				Watcher.Start("Transaction add/fragments add");
 				transaction.Add(Id, fragment);
 				fragments.Add(fragment);
+				Watcher.Stop();
 			}
 			else
 			{
@@ -674,7 +682,9 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 			// We don't currently support fragment restoration, so we don't need to worry about
 			// whether the commit loses state
+			Watcher.Start("transaction Commit");
 			transaction.CommitAllowingStateLoss();
+			Watcher.Stop();
 
 			// The fragment transitions don't really SUPPORT telling you when they end
 			// There are some hacks you can do, but they actually are worse than just doing this:
@@ -718,8 +728,10 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				});
 			}
 
+			Watcher.Start("HideKeyboard");
 			Context.HideKeyboard(this);
 			((Platform)Element.Platform).NavAnimationInProgress = false;
+			Watcher.Stop();
 
 			// TransitionDuration is how long the built-in animations are, and they are "reversible" in the sense that starting another one slightly before it's done is fine
 

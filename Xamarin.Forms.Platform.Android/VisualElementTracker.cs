@@ -195,6 +195,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		void SetElement(VisualElement oldElement, VisualElement newElement)
 		{
+			Watcher.Start($"VisualElementTracker SetElement {newElement}");
 			if (oldElement != null)
 			{
 				oldElement.BatchCommitted -= _batchCommittedHandler;
@@ -237,6 +238,7 @@ namespace Xamarin.Forms.Platform.Android
 					_initialUpdateNeeded = false;
 				}
 			}
+			Watcher.Stop();
 		}
 
 		void UpdateAnchorX()

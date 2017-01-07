@@ -159,6 +159,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		void SetElement(VisualElement oldElement, VisualElement newElement)
 		{
+			Watcher.Start($"VisualElementPackage SetElement {newElement}");
 			Performance.Start();
 
 			var sameChildrenTypes = false;
@@ -226,6 +227,7 @@ namespace Xamarin.Forms.Platform.Android
 				//	throw new InvalidOperationException ("SetElement did not create the correct number of children");
 #endif
 				Performance.Stop("Setup");
+				Watcher.Stop();
 			}
 
 			Performance.Stop();
