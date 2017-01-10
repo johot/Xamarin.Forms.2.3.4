@@ -32,7 +32,7 @@ namespace Xamarin.Forms
 			
 			Ticker.Default = new WindowsTicker();
 
-			ExpressionSearch.Default = new WindowsExpressionSearch();
+			ExpressionSearch.Default = new Lazy<IExpressionSearch>(() => new WindowsExpressionSearch()); 
 
 			Registrar.RegisterAll (new[] {
 				typeof (ExportRendererAttribute),
