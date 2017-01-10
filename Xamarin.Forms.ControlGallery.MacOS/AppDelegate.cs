@@ -16,12 +16,18 @@ namespace Xamarin.Forms.ControlGallery.MacOS
 		NSWindow _window;
 		public AppDelegate()
 		{
+			ObjCRuntime.Runtime.MarshalManagedException += (sender, args) =>
+			{
+				Console.WriteLine(args.Exception.ToString());
+			};
+
 			var style = NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled;
 
-			var rect = new CoreGraphics.CGRect(200, 1000, 600, 700);
+			var rect = new CoreGraphics.CGRect(200, 1000, 1024, 768);
 			//var rect = NSWindow.FrameRectFor(NSScreen.MainScreen.Frame, style);
 			_window = new NSWindow(rect, style, NSBackingStore.Buffered, false);
 			_window.Title = "Twitter XF Mac";
+			_window.TitleVisibility = NSWindowTitleVisibility.Hidden;
 		}
 
 		public override NSWindow MainWindow
