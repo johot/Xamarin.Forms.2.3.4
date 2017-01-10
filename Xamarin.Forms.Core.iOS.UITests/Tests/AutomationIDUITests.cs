@@ -3,6 +3,7 @@ using Xamarin.UITest;
 using System;
 using System.Threading;
 using Xamarin.UITest.Queries;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Core.UITests
 {

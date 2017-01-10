@@ -27,6 +27,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			_modals.Add(modal);
 			modal.DescendantRemoved += HandleChildRemoved;
+			Platform.NativeToolbarTracker.TryHide(modal as NavigationPage);
 			return PresentModalAsync(modal, animated);
 		}
 

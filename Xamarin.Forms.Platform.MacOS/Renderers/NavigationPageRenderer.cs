@@ -144,7 +144,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			View.WantsLayer = true;
 		}
 
-		//TODO: Implement PopToRoot
 		protected virtual async Task<bool> OnPopToRoot(Page page, bool animated)
 		{
 			var renderer = Platform.GetRenderer(page);

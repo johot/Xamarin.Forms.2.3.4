@@ -90,7 +90,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				}
 
 				UpdateToolBar();
-				UpdateTabbedItems();
 			}
 		}
 
@@ -156,6 +155,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			{
 				if (_toolbar != null)
 					_toolbar.Visible = false;
+				_toolbar = null;
 				return;
 			}
 
@@ -173,13 +173,12 @@ namespace Xamarin.Forms.Platform.MacOS
 					_toolbar.InsertItem(HasTabs ? TabbedGroupIdentifier : TitleGroupIdentifier, 2);
 					_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 3);
 					_toolbar.InsertItem(ToolbarItemsGroupIdentifier, 4);
-
 				}
+
 				_toolbar.Visible = true;
 				UpdateToolbarItems();
 				UpdateTitle();
 				UpdateNavigationItems();
-
 				if (HasTabs)
 					UpdateTabbedItems();
 				UpdateBarBackgroundColor();
