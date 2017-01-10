@@ -42,8 +42,9 @@ namespace Xamarin.Forms.Core.UITests
 
 
 		[Test]
-		public void Test2 ()
+		public async void Test2()
 		{
+			await Task.Delay(1000);
 			App.WaitForElement(c => c.Marked("btnTest2"));
 			App.Tap (c => c.Marked ("btnTest2"));
 			App.WaitForElement (c => c.Marked ("imgHello"));

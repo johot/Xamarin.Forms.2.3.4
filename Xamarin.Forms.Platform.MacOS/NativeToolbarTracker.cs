@@ -83,7 +83,6 @@ namespace Xamarin.Forms.Platform.MacOS
 					_navigation.PropertyChanged -= NavigationPagePropertyChanged;
 
 				_navigation = value;
-				//_toolbarTracker.AdditionalTargets = _navigation.GetParentPages();
 
 				if (_navigation != null)
 				{
