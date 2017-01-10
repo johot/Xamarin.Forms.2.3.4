@@ -195,6 +195,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			NavigationController.RemovePageRequested += OnRemovedPageRequested;
 			NavigationController.InsertPageBeforeRequested += OnInsertPageBeforeRequested;
 
+			navPage.Popped += (sender, e) => Platform.NativeToolbarTracker.UpdateToolbarItems();
+			navPage.PoppedToRoot += (sender, e) => Platform.NativeToolbarTracker.UpdateToolbarItems();
+
 			UpdateBarBackgroundColor();
 			UpdateBarTextColor();
 
