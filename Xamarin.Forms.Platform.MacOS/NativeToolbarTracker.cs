@@ -63,6 +63,8 @@ namespace Xamarin.Forms.Platform.MacOS
 		NativeToolbarGroup _toolbarGroup;
 		NativeToolbarGroup _titleGroup;
 
+		NSView _nsToolbarItemViewer;
+
 		public NativeToolbarTracker()
 		{
 			_toolbarTracker = new ToolbarTracker();
@@ -194,52 +196,28 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateBarBackgroundColor()
 		{
-			// I'm sorry. I'm so so sorry.
-			// When the user has Graphite appearance set in System Preferences on El Capitan
-			// and they enter fullscreen mode, Cocoa doesn't respect the VibrantDark appearance
-			// making the toolbar background white instead of black, however the toolbar items do still respect
-			// the dark appearance, making them white on white.
-			//
-			// So, an absolute hack is to go through the toolbar hierarchy and make all the views background colours
-			// be the dark grey we wanted them to be in the first place.
-			//
-			// https://bugzilla.xamarin.com/show_bug.cgi?id=40160
-			//
-			//if (_toolbar.Window == null)
-			//{
-			//	if (_toolbarSuperview != null)
-			//	{
-			//		Superview.WantsLayer = false;
+			var bgColor = GetBackgroundColor().CGColor;
 
-			//		if (Superview.Superview != null)
-			//		{
-			//			Superview.Superview.WantsLayer = false;
-			//		}
-			//	}
-			//	return;
-			//}
-			//var bgColor = _getBackgroundColor().CGColor;
+			//// NSToolbarItemViewer
+			if (_nsToolbarItemViewer != null)
+			{
+				//_nsToolbarItemViewer.WantsLayer = true;
+				//_nsToolbarItemViewer.Layer.BackgroundColor = bgColor;
 
-			////// NSToolbarItemViewer
-			//if (Superview != null)
-			//{
-			//	Superview.WantsLayer = true;
-			//	Superview.Layer.BackgroundColor = bgColor;
+				if (_nsToolbarItemViewer.Superview != null)
+				{
+					// _NSToolbarViewClipView
+					//Superview.Superview.WantsLayer = true;
+					//Superview.Superview.Layer.BackgroundColor = bgColor;
 
-			//	if (Superview.Superview != null)
-			//	{
-			//		// _NSToolbarViewClipView
-			//		Superview.Superview.WantsLayer = true;
-			//		Superview.Superview.Layer.BackgroundColor = bgColor;
-
-			//		if (Superview.Superview.Superview != null && Superview.Superview.Superview.Superview != null)
-			//		{
-			//			// NSTitlebarView
-			//			Superview.Superview.Superview.Superview.WantsLayer = true;
-			//			Superview.Superview.Superview.Superview.Layer.BackgroundColor = bgColor;
-			//		}
-			//	}
-			//}
+					if (_nsToolbarItemViewer.Superview.Superview != null && _nsToolbarItemViewer.Superview.Superview.Superview != null)
+					{
+						// NSTitlebarView
+						_nsToolbarItemViewer.Superview.Superview.Superview.WantsLayer = true;
+						_nsToolbarItemViewer.Superview.Superview.Superview.Layer.BackgroundColor = bgColor;
+					}
+				}
+			}
 		}
 
 		void NavigationPagePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
