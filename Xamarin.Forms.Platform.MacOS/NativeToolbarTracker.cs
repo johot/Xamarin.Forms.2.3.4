@@ -9,28 +9,65 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	internal class NativeToolbarTracker
+	class NativeToolbarGroup
+	{
+		public class Item
+		{
+			public NSToolbarItem ToolbarItem;
+			public NSButton Button;
+		}
+
+		public NativeToolbarGroup(NSToolbarItemGroup itemGroup)
+		{
+			Group = itemGroup;
+			Items = new List<Item>();
+		}
+
+		public NSToolbarItemGroup Group
+		{
+			get;
+			private set;
+		}
+
+		public List<Item> Items
+		{
+			get;
+			private set;
+		}
+	}
+
+	internal class NativeToolbarTracker : NSToolbarDelegate
 	{
 		const string ToolBarId = "AwesomeBarToolbar";
-		const string AwesomeBarId = "AwesomeBarToolbarItem";
 
 		INavigationPageController NavigationController => _navigation as INavigationPageController;
 
 		ToolbarTracker _toolbarTracker;
 		NSToolbar _toolbar;
-		FormsToolbar _awesomeBar;
 		NavigationPage _navigation;
 		string _defaultBackButtonTitle = "Back";
+
+		const double BackButtonItemWidth = 30;
+		const double ToolbarItemWidth = 44;
+		const double ToolbarItemHeight = 25;
+		const double ToolbarItemSpacing = 6;
+		const double ToolbarHeight = 30;
+
+		const string NavigationGroupIdentifier = "NavigationGroup";
+		const string TabbedGroupIdentifier = "TabbedGroup";
+		const string ToolbarItemsGroupIdentifier = "ToolbarGroup";
+		const string TitleGroupIdentifier = "TitleGroup";
+
+		NativeToolbarGroup _navigationGroup;
+		NativeToolbarGroup _tabbedGroup;
+		NativeToolbarGroup _toolbarGroup;
+		NativeToolbarGroup _titleGroup;
 
 		public NativeToolbarTracker()
 		{
 			_toolbarTracker = new ToolbarTracker();
 			_toolbarTracker.CollectionChanged += ToolbarTrackerOnCollectionChanged;
-			_awesomeBar = new FormsToolbar(GetBackgroundColor, GetPreviousPageTitle, GetCurrentPageTitle, GetTitleColor, GetToolbarItems);
-			_awesomeBar.BackButtonPressed += async (sender, e) => await NavigateBackFrombackButton();
 		}
-
-		public static bool IsFullscreen { get; private set; }
 
 		public NavigationPage Navigation
 		{
@@ -44,74 +81,166 @@ namespace Xamarin.Forms.Platform.MacOS
 					_navigation.PropertyChanged -= NavigationPagePropertyChanged;
 
 				_navigation = value;
+				//_toolbarTracker.AdditionalTargets = _navigation.GetParentPages();
+
 				if (_navigation != null)
+				{
+					_toolbarTracker.Target = _navigation.CurrentPage;
 					_navigation.PropertyChanged += NavigationPagePropertyChanged;
+				}
+
 				UpdateToolBar();
+				UpdateTabbedItems();
 			}
 		}
 
-		public void TryHide(NavigationPage navPage)
+
+		public void TryHide(NavigationPage navPage = null)
 		{
-			if (navPage == _navigation)
+			if (navPage == null || navPage == _navigation)
 			{
 				Navigation = null;
 			}
 		}
 
+		public override string[] AllowedItemIdentifiers(NSToolbar toolbar)
+		{
+			return new string[] { };
+		}
+
+		public override string[] DefaultItemIdentifiers(NSToolbar toolbar)
+		{
+			return new string[] { };
+		}
+
+		public override NSToolbarItem WillInsertItem(NSToolbar toolbar, string itemIdentifier, bool willBeInserted)
+		{
+			var group = new NSToolbarItemGroup(itemIdentifier);
+			var view = new NSView();
+			group.View = view;
+
+			if (itemIdentifier == NavigationGroupIdentifier)
+				_navigationGroup = new NativeToolbarGroup(group);
+			else if (itemIdentifier == TitleGroupIdentifier)
+				_titleGroup = new NativeToolbarGroup(group);
+			else if (itemIdentifier == TabbedGroupIdentifier)
+				_tabbedGroup = new NativeToolbarGroup(group);
+			else if (itemIdentifier == ToolbarItemsGroupIdentifier)
+				_toolbarGroup = new NativeToolbarGroup(group);
+
+			return group;
+		}
+
+		protected virtual bool HasTabs => false;
+
 		protected virtual NSToolbar ConfigureToolbar()
 		{
 			var toolbar = new NSToolbar(ToolBarId)
 			{
-				DisplayMode = NSToolbarDisplayMode.Icon
+				DisplayMode = NSToolbarDisplayMode.Icon,
+				AllowsUserCustomization = false,
+				ShowsBaselineSeparator = true,
+				SizeMode = NSToolbarSizeMode.Regular
 			};
 
-			toolbar.WillInsertItem = (tool, id, send) =>
-			{
-				switch (id)
-				{
-					case AwesomeBarId:
-						return new NSToolbarItem(AwesomeBarId)
-						{
-							View = _awesomeBar,
-							MinSize = new CGSize(1024, FormsToolbar.ToolbarHeight),
-							MaxSize = new CGSize(float.PositiveInfinity, FormsToolbar.ToolbarHeight)
-						};
-
-					default:
-						throw new NotImplementedException();
-				}
-			};
-
-			Action<NSNotification> resizeAction = notif =>
-			{
-				var win = _awesomeBar.Window;
-				if (win == null)
-				{
-					return;
-				}
-
-				var item = _toolbar.Items[0];
-
-				var abFrameInWindow = _awesomeBar.ConvertRectToView(_awesomeBar.Frame, null);
-				var awesomebarHeight = FormsToolbar.ToolbarHeight;
-				var size = new CGSize(win.Frame.Width - abFrameInWindow.X - 4, awesomebarHeight);
-
-				if (item.MinSize != size)
-				{
-					item.MinSize = size;
-				}
-			};
-
-			// We can't use the events that Xamarin.Mac adds for delegate methods as they will overwrite
-			// the delegate that Gtk has added
-			NSWindow nswin = NSApplication.SharedApplication.MainWindow;
-			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.DidResizeNotification, resizeAction, nswin);
-			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.DidEndLiveResizeNotification, resizeAction, nswin);
-
-			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.WillEnterFullScreenNotification, (note) => IsFullscreen = true, nswin);
-			NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.WillExitFullScreenNotification, (note) => IsFullscreen = false, nswin);
-
+			toolbar.Delegate = this;
 			return toolbar;
+		}
+
+		internal void UpdateToolBar()
+		{
+			if (NSApplication.SharedApplication.MainWindow == null)
+				return;
+
+			if (NavigationController == null)
+			{
+				if (_toolbar != null)
+					_toolbar.Visible = false;
+				return;
+			}
+
+			var currentPage = NavigationController.StackCopy.Peek();
+
+			if (NavigationPage.GetHasNavigationBar(currentPage))
+			{
+				if (_toolbar == null)
+				{
+					_toolbar = ConfigureToolbar();
+					NSApplication.SharedApplication.MainWindow.Toolbar = _toolbar;
+
+					_toolbar.InsertItem(NavigationGroupIdentifier, 0);
+					_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
+					_toolbar.InsertItem(HasTabs ? TabbedGroupIdentifier : TitleGroupIdentifier, 2);
+					_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 3);
+					_toolbar.InsertItem(ToolbarItemsGroupIdentifier, 4);
+
+				}
+				_toolbar.Visible = true;
+				UpdateToolbarItems();
+				UpdateTitle();
+				UpdateNavigationItems();
+
+				if (HasTabs)
+					UpdateTabbedItems();
+				UpdateBarBackgroundColor();
+			}
+			else
+			{
+				if (_toolbar != null)
+				{
+					_toolbar.Visible = false;
+				}
+			}
+		}
+
+		void UpdateBarBackgroundColor()
+		{
+			// I'm sorry. I'm so so sorry.
+			// When the user has Graphite appearance set in System Preferences on El Capitan
+			// and they enter fullscreen mode, Cocoa doesn't respect the VibrantDark appearance
+			// making the toolbar background white instead of black, however the toolbar items do still respect
+			// the dark appearance, making them white on white.
+			//
+			// So, an absolute hack is to go through the toolbar hierarchy and make all the views background colours
+			// be the dark grey we wanted them to be in the first place.
+			//
+			// https://bugzilla.xamarin.com/show_bug.cgi?id=40160
+			//
+			//if (_toolbar.Window == null)
+			//{
+			//	if (_toolbarSuperview != null)
+			//	{
+			//		Superview.WantsLayer = false;
+
+			//		if (Superview.Superview != null)
+			//		{
+			//			Superview.Superview.WantsLayer = false;
+			//		}
+			//	}
+			//	return;
+			//}
+			//var bgColor = _getBackgroundColor().CGColor;
+
+			////// NSToolbarItemViewer
+			//if (Superview != null)
+			//{
+			//	Superview.WantsLayer = true;
+			//	Superview.Layer.BackgroundColor = bgColor;
+
+			//	if (Superview.Superview != null)
+			//	{
+			//		// _NSToolbarViewClipView
+			//		Superview.Superview.WantsLayer = true;
+			//		Superview.Superview.Layer.BackgroundColor = bgColor;
+
+			//		if (Superview.Superview.Superview != null && Superview.Superview.Superview.Superview != null)
+			//		{
+			//			// NSTitlebarView
+			//			Superview.Superview.Superview.Superview.WantsLayer = true;
+			//			Superview.Superview.Superview.Superview.Layer.BackgroundColor = bgColor;
+			//		}
+			//	}
+			//}
 		}
 
 		void NavigationPagePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -128,6 +257,21 @@ namespace Xamarin.Forms.Platform.MacOS
 		async Task NavigateBackFrombackButton()
 		{
 			await NavigationController?.PopAsyncInner(true, true);
+		}
+
+		bool ShowBackButton()
+		{
+			if (_navigation == null)
+				return false;
+
+			return NavigationPage.GetHasBackButton(_navigation.CurrentPage) && !IsRootPage();
+		}
+
+		bool IsRootPage()
+		{
+			if (NavigationController == null)
+				return true;
+			return NavigationController.StackDepth <= 1;
 		}
 
 		NSColor GetBackgroundColor()
@@ -167,54 +311,127 @@ namespace Xamarin.Forms.Platform.MacOS
 			return _toolbarTracker.ToolbarItems.ToList();
 		}
 
-		void UpdateToolBar()
+		void UpdateTitle()
 		{
-			if (NSApplication.SharedApplication.MainWindow == null)
+			if (_toolbar == null || _navigation == null || _titleGroup == null)
 				return;
 
-			if (NavigationController == null)
+			var title = GetCurrentPageTitle();
+			var item = new NSToolbarItem(title);
+
+			var titleField = new NSTextField
 			{
-				if (_toolbar != null)
-					_toolbar.Visible = false;
+				AllowsEditingTextAttributes = true,
+				Bordered = false,
+				DrawsBackground = false,
+				Bezeled = false,
+				Editable = false,
+				Selectable = false,
+				Cell = new VerticallyCenteredTextFieldCell(0f, NSFont.TitleBarFontOfSize(18)),
+				StringValue = title
+			};
+			titleField.Cell.TextColor = GetTitleColor();
+			titleField.SizeToFit();
+			titleField.Layout();
+			titleField.SetNeedsDisplay();
+			_titleGroup.Group.Subitems = new NSToolbarItem[] { item };
+			_titleGroup.Group.View = titleField;
+		}
+
+		void UpdateToolbarItems()
+		{
+			if (_toolbar == null || _navigation == null || _toolbarGroup == null)
 				return;
-			}
 
 			var currentPage = NavigationController.StackCopy.Peek();
+			UpdateGroup(_toolbarGroup, currentPage.ToolbarItems, ToolbarItemWidth, ToolbarItemSpacing);
+		}
 
-			if (NavigationPage.GetHasNavigationBar(currentPage))
+		void UpdateNavigationItems()
+		{
+			if (_toolbar == null || _navigation == null || _navigationGroup == null)
+				return;
+			var items = new List<ToolbarItem>();
+			if (ShowBackButton())
 			{
-				if (_toolbar == null)
+				var backButtonItem = new ToolbarItem
 				{
-					_toolbar = ConfigureToolbar();
-					NSApplication.SharedApplication.MainWindow.Toolbar = _toolbar;
-				}
-				_toolbar.Visible = true;
-
-				UpdateToolbarItems();
+					Text = GetPreviousPageTitle(),
+					Command = new Command(async () => await NavigateBackFrombackButton())
+				};
+				items.Add(backButtonItem);
 			}
-			else
+
+			UpdateGroup(_navigationGroup, items, BackButtonItemWidth, -1);
+
+			var navItemBack = _navigationGroup.Items.FirstOrDefault();
+			if (navItemBack != null)
 			{
-				if (_toolbar == null)
-				{
-					_toolbar.Visible = false;
-				}
+				navItemBack.Button.Image = NSImage.ImageNamed(NSImageName.GoLeftTemplate);
+				navItemBack.Button.SizeToFit();
+				navItemBack.Button.AccessibilityTitle = "NSBackButton";
 			}
 		}
 
-		internal void UpdateToolbarItems()
+		void UpdateTabbedItems()
 		{
-			if (_toolbar == null || _navigation == null)
+			if (_toolbar == null || _navigation == null || _tabbedGroup == null)
 				return;
 
-			var nItems = _toolbar.Items.Length;
-			if (nItems == 0)
-			{
-				_toolbar.InsertItem(AwesomeBarId, 0);
+			UpdateGroup(_tabbedGroup, _navigation.ToolbarItems, ToolbarItemWidth, ToolbarItemSpacing);
+		}
 
-			}
-			else
+		static void UpdateGroup(NativeToolbarGroup group, IList<ToolbarItem> toolbarItems, double itemWidth, double itemSpacing)
+		{
+			int count = toolbarItems.Count;
+			group.Items.Clear();
+			if (count > 0)
 			{
-				_awesomeBar?.UpdateItems();
+				var subItems = new NSToolbarItem[count];
+				var view = new NSView();
+				nfloat totalWidth = 0;
+				var currentX = 0.0;
+				for (int i = 0; i < toolbarItems.Count; i++)
+				{
+					var element = toolbarItems[i];
+
+					var item = new NSToolbarItem(element.Text);
+					item.Activated += (sender, e) => (element as IMenuItemController)?.Activate();
+
+					var button = new NSButton();
+					button.Title = element.Text;
+					button.SizeToFit();
+					var buttonWidth = itemWidth;
+					if (button.FittingSize.Width > itemWidth)
+					{
+						buttonWidth = button.FittingSize.Width + 10;
+					}
+					button.Frame = new CGRect(currentX + i * itemSpacing, 0, buttonWidth, ToolbarItemHeight);
+					currentX += buttonWidth;
+					totalWidth += button.Frame.Width;
+					button.Activated += (sender, e) => (element as IMenuItemController)?.Activate();
+
+					button.BezelStyle = NSBezelStyle.TexturedRounded;
+					if (!string.IsNullOrEmpty(element.Icon))
+						button.Image = new NSImage(element.Icon);
+
+					button.SizeToFit();
+					view.AddSubview(button);
+
+					item.Label = item.PaletteLabel = item.ToolTip = button.ToolTip = element.Text;
+
+					subItems[i] = item;
+
+					group.Items.Add(new NativeToolbarGroup.Item { ToolbarItem = item, Button = button });
+				}
+				view.Frame = new CGRect(0, 0, totalWidth + (itemSpacing * (count - 1)), ToolbarItemHeight);
+
+				group.Group.Subitems = subItems;
+				group.Group.View = view;
+			}
+			else {
+				group.Group.Subitems = new NSToolbarItem[] { };
+				group.Group.View = new NSView();
 			}
 		}
 	}

@@ -140,7 +140,7 @@
 		<Compile Include="Renderers\TabbedPageRenderer.cs" />
 		<Compile Include="Renderers\NavigationPageRenderer.cs" />
 		<Compile Include="Controls\FormsPageControllerDelegate.cs" />
-		<Compile Include="Controls\PageWrapper.cs" />
+		<Compile Include="Controls\NavigationChildPageWrapper.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\NativeViewPropertyListener.cs">
 			<Link>NativeViewPropertyListener.cs</Link>
 		</Compile>
@@ -159,7 +159,6 @@
 		<Compile Include="Renderers\TableViewDataSource.cs" />
 		<Compile Include="NativeToolbarTracker.cs" />
 		<Compile Include="Extensions\NSButtonExtensions.cs" />
-		<Compile Include="Controls\FormsToolbar.cs" />
 		<Compile Include="Controls\FormsNSView.cs" />
 		<Compile Include="Controls\VerticallyCenteredTextFieldCell.cs" />
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\Forms.cs">
@@ -204,6 +203,7 @@
 		<Compile Include="..\Xamarin.Forms.Platform.iOS\PlatformEffect.cs">
 		  <Link>PlatformEffect.cs</Link>
 		</Compile>
+		<Compile Include="Controls\NSToolbarItemGroup.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">

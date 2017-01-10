@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		string _currentTitle;
 		EventTracker _events;
 		VisualElementTracker _tracker;
-		Stack<PageWrapper> _currentStack = new Stack<PageWrapper>();
+		Stack<NavigationChildPageWrapper> _currentStack = new Stack<NavigationChildPageWrapper>();
 
 		IPageController PageController => Element as IPageController;
 
@@ -107,13 +107,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.Dispose(disposing);
 		}
 
-		public override void RemoveFromParentViewController()
-		{
-
-
-			base.RemoveFromParentViewController();
-		}
-
 		public override void ViewDidDisappear()
 		{
 			base.ViewDidDisappear();
@@ -160,21 +153,21 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			var success = false;
 
-			Platform.NativeToolbarTracker.UpdateToolbarItems();
+			Platform.NativeToolbarTracker.UpdateToolBar();
 			return success;
 		}
 
 		protected virtual async Task<bool> OnPop(Page page, bool animated)
 		{
 			var removed = await PopPageAsync(page, animated);
-			Platform.NativeToolbarTracker.UpdateToolbarItems();
+			Platform.NativeToolbarTracker.UpdateToolBar();
 			return removed;
 		}
 
 		protected virtual async Task<bool> OnPush(Page page, bool animated)
 		{
 			var shown = await AddPage(page, animated);
-			Platform.NativeToolbarTracker.UpdateToolbarItems();
+			Platform.NativeToolbarTracker.UpdateToolBar();
 			return shown;
 		}
 
@@ -195,8 +188,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			NavigationController.RemovePageRequested += OnRemovedPageRequested;
 			NavigationController.InsertPageBeforeRequested += OnInsertPageBeforeRequested;
 
-			navPage.Popped += (sender, e) => Platform.NativeToolbarTracker.UpdateToolbarItems();
-			navPage.PoppedToRoot += (sender, e) => Platform.NativeToolbarTracker.UpdateToolbarItems();
+			navPage.Popped += (sender, e) => Platform.NativeToolbarTracker.UpdateToolBar();
+			navPage.PoppedToRoot += (sender, e) => Platform.NativeToolbarTracker.UpdateToolBar();
 
 			UpdateBarBackgroundColor();
 			UpdateBarTextColor();
@@ -252,7 +245,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		void OnRemovedPageRequested(object sender, NavigationRequestedEventArgs e)
 		{
 			RemovePage(e.Page, true);
-			Platform.NativeToolbarTracker.UpdateToolbarItems();
+			Platform.NativeToolbarTracker.UpdateToolBar();
 		}
 
 		void RemovePage(Page page, bool removeFromStack)
@@ -264,7 +257,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			target?.Dispose();
 			if (removeFromStack)
 			{
-				var newStack = new Stack<PageWrapper>();
+				var newStack = new Stack<NavigationChildPageWrapper>();
 				foreach (var stack in _currentStack)
 				{
 					if (stack.Page != page)
@@ -310,7 +303,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (_currentStack.Count >= 1)
 				oldPage = _currentStack.Peek().Page;
 
-			_currentStack.Push(new PageWrapper(page));
+			_currentStack.Push(new NavigationChildPageWrapper(page));
 
 			var vc = CreateViewControllerForPage(page);
 			vc.SetElementSize(new Size(View.Bounds.Width, View.Bounds.Height));
@@ -336,16 +329,14 @@ namespace Xamarin.Forms.Platform.MacOS
 			(View as FormsNSView).BackgroundColor = color.ToNSColor();
 		}
 
-		//TODO: Implement
 		void UpdateBarBackgroundColor()
 		{
-
+			Platform.NativeToolbarTracker.UpdateToolBar();
 		}
 
-		//TODO: Implement
 		void UpdateBarTextColor()
 		{
-
+			Platform.NativeToolbarTracker.UpdateToolBar();
 		}
 
 		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
