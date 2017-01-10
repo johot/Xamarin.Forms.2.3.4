@@ -267,7 +267,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				navController.RemovePageRequested += OnRemovePageRequested;
 
 				// If there is already stuff on the stack we need to push it
-				foreach (Page page in navController.StackCopy.Reverse())
+				foreach (Page page in navController.Pages)
 				{
 					PushViewAsync(page, false);
 				}
@@ -460,7 +460,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		Task<bool> OnPopViewAsync(Page page, bool animated)
 		{
-			Page pageToShow = ((INavigationPageController)Element).StackCopy.Skip(1).FirstOrDefault();
+			Page pageToShow = ((INavigationPageController)Element).SecondToLast;
 			if (pageToShow == null)
 				return Task.FromResult(false);
 
