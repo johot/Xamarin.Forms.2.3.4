@@ -123,6 +123,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void OnNSWebViewFailedLoadWithError(object sender, WebKit.WebResourceErrorEventArgs e)
 		{
+			_lastEvent = _lastBackForwardEvent;
 			Element?.SendNavigated(new WebNavigatedEventArgs(_lastEvent, new UrlWebViewSource { Url = Control.MainFrameUrl }, Control.MainFrameUrl, WebNavigationResult.Failure));
 
 			UpdateCanGoBackForward();
@@ -137,6 +138,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			ElementController?.SetValueFromRenderer(WebView.SourceProperty, new UrlWebViewSource { Url = Control.MainFrameUrl });
 			_ignoreSourceChanges = false;
 
+			_lastEvent = _lastBackForwardEvent;
 			Element?.SendNavigated(new WebNavigatedEventArgs(_lastEvent, Element?.Source, Control.MainFrameUrl, WebNavigationResult.Success));
 
 			UpdateCanGoBackForward();

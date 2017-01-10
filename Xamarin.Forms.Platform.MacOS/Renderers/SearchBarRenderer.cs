@@ -7,9 +7,7 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class SearchBarRenderer : ViewRenderer<SearchBar, NSSearchField>
 	{
-		NSColor _cancelButtonTextColorDefaultNormal;
 		NSColor _defaultTextColor;
-		NSColor _defaultTintColor;
 
 		IElementController ElementController => Element as IElementController;
 
@@ -97,23 +95,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			else
 				Control.BackgroundColor = color.ToNSColor();
 
-			//if (_defaultTintColor == null)
-			//{
-			//	if (Forms.IsiOS7OrNewer)
-			//		_defaultTintColor = Control.BarTintColor;
-			//	else
-			//		_defaultTintColor = Control.TintColor;
-			//}
-
-			//if (Forms.IsiOS7OrNewer)
-			//	Control.BarTintColor = color.ToUIColor(_defaultTintColor);
-			//else
-			//	Control.TintColor = color.ToUIColor(_defaultTintColor);
-
-			//if (color.A < 1)
-			//	Control.SetBackgroundImage(new UIImage(), UIBarPosition.Any, UIBarMetrics.Default);
-
-			// updating BarTintColor resets the button color so we need to update the button color again
 			UpdateCancelButton();
 		}
 
@@ -151,13 +132,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateCancelButton()
 		{
-
-			//// We can't cache the cancel button reference because iOS drops it when it's not displayed
-			//// and creates a brand new one when necessary, so we have to look for it each time
-			//var cancelButton = Control.FindDescendantView<UIButton>();
-
-			//if (cancelButton == null)
-			//	return;
 			var cancelButtonColor = Element.CancelButtonColor;
 
 			if (cancelButtonColor.IsDefault)
@@ -201,9 +175,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			_defaultTextColor = _defaultTextColor ?? Control.TextColor;
 			var targetColor = Element.TextColor;
 
-			//var color = Element.IsEnabled && !targetColor.IsDefault ? targetColor : _defaultTextColor.ToColor();
+			var color = Element.IsEnabled && !targetColor.IsDefault ? targetColor : _defaultTextColor.ToColor();
 
-			Control.TextColor = targetColor.ToNSColor(_defaultTextColor);
+			Control.TextColor = color.ToNSColor();
 		}
 	}
 }

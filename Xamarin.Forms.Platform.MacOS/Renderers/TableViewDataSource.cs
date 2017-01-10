@@ -7,7 +7,6 @@ namespace Xamarin.Forms.Platform.MacOS
 	internal class TableViewDataSource : NSTableViewSource
 	{
 		static int s_sectionCount;
-		static int s_totalCount;
 
 		const string headerIdentifier = nameof(TextCell);
 		const string itemIdentifier = nameof(ViewCell);
@@ -61,7 +60,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			}
 
 			s_sectionCount = Controller.Model.GetSectionCount();
-			s_totalCount = (int)count;
 
 			return count;
 		}

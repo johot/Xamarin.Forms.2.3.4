@@ -64,7 +64,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			nfloat imageHeight = 0;
 			nfloat accessoryViewWidth = 0;
 
-			var style = _style;
 
 			if (ImageView != null)
 			{

@@ -16,8 +16,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		bool _barTextColorWasSet;
 		bool _defaultBarTextColorSet;
 		bool _defaultBarColorSet;
-		NSColor _defaultBarTextColor;
-		NSColor _defaultBarColor;
 		VisualElementTracker _tracker;
 
 		public VisualElement Element { get; private set; }

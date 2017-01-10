@@ -6,14 +6,8 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	internal class PageControllerDelegate : NSPageControllerDelegate
 	{
-		readonly CarouselPageRenderer _carouselPageRenderer;
 
-		public PageControllerDelegate(CarouselPageRenderer pageController)
-		{
-			_carouselPageRenderer = pageController;
-		}
-
-		public override string GetIdentifier(NSPageController pv, NSObject obj)
+		public override string GetIdentifier(NSPageController pageController, NSObject targetObject)
 		{
 			return nameof(PageRenderer);
 		}
@@ -25,10 +19,10 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override void PrepareViewController(NSPageController pageController, NSViewController viewController, NSObject targetObject)
 		{
-			var pContainer = targetObject as NSPageContainer;
-			if (pContainer != null)
+			var pageContainer = targetObject as NSPageContainer;
+			if (pageContainer != null)
 			{
-				var page = pContainer.Page;
+				var page = pageContainer.Page;
 				var pageRenderer = (viewController as PageRenderer);
 				pageRenderer.SetElement(page);
 				Platform.SetRenderer(page, pageRenderer);

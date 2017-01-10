@@ -312,6 +312,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			titleField.SetNeedsDisplay();
 			_titleGroup.Group.Subitems = new NSToolbarItem[] { item };
 			_titleGroup.Group.View = titleField;
+			_nsToolbarItemViewer = _titleGroup.Group.View.Superview;
 		}
 
 		void UpdateToolbarItems()

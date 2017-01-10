@@ -13,7 +13,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		bool _appeared;
 		bool _disposed;
 		EventTracker _events;
-		bool _ignoreNativeScrolling;
 		VisualElementTracker _tracker;
 
 		public CarouselPageRenderer() { View = new FormsNSView { BackgroundColor = NSColor.Clear }; }
@@ -143,7 +142,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void Init()
 		{
-			Delegate = new PageControllerDelegate(this);
+			Delegate = new PageControllerDelegate();
 
 			_tracker = new VisualElementTracker(this);
 			_events = new EventTracker(this);
@@ -175,11 +174,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void OnPagesChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			_ignoreNativeScrolling = true;
-
 			UpdateSource();
-
-			_ignoreNativeScrolling = false;
 		}
 
 		void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

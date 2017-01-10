@@ -14,7 +14,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		const int DefaultItemTemplateId = 1;
 		static int s_dataTemplateIncrementer = 2; // lets start at not 0 because
 		static int s_sectionCount;
-		static int s_totalCount;
 		readonly nfloat _defaultSectionHeight;
 		readonly Dictionary<DataTemplate, int> _templateToId = new Dictionary<DataTemplate, int>();
 		readonly NSTableView _nsTableView;
@@ -120,9 +119,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (!List.HasUnevenRows)
 				return List.RowHeight == -1 ? ListViewRenderer.DefaultRowHeight : List.RowHeight;
 
-			NSIndexPath indexPath = null;
 			Cell cell = null;
-			indexPath = GetPathFromRow(row, ref cell);
+			GetPathFromRow(row, ref cell);
 
 			return CalculateHeightForCell(tableView, cell);
 		}
@@ -147,7 +145,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				s_sectionCount = sections;
 
 			}
-			s_totalCount = (int)count;
 			return count;
 		}
 
@@ -155,7 +152,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			var sectionIndex = 0;
 			var itemIndexInSection = (int)row;
-			var id = string.Empty;
 			Cell cell = null;
 
 			var isHeader = false;

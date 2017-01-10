@@ -7,7 +7,6 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class TimePickerRenderer : ViewRenderer<TimePicker, NSDatePicker>
 	{
-		static DateTime _defaultDateTime = new DateTime(2001, 1, 1);
 		NSColor _defaultTextColor;
 		NSColor _defaultBackgroundColor;
 		bool _disposed;

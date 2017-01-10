@@ -14,8 +14,6 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		bool _disposed;
 		bool _appeared;
-		string _previousTitle;
-		string _currentTitle;
 		EventTracker _events;
 		VisualElementTracker _tracker;
 		Stack<NavigationChildPageWrapper> _currentStack = new Stack<NavigationChildPageWrapper>();
@@ -144,16 +142,14 @@ namespace Xamarin.Forms.Platform.MacOS
 			View.WantsLayer = true;
 		}
 
-		protected virtual async Task<bool> OnPopToRoot(Page page, bool animated)
+		protected virtual Task<bool> OnPopToRoot(Page page, bool animated)
 		{
 			var renderer = Platform.GetRenderer(page);
 			if (renderer == null || renderer.ViewController == null)
-				return false;
-
-			var success = false;
+				return Task.FromResult(false);
 
 			Platform.NativeToolbarTracker.UpdateToolBar();
-			return success;
+			return Task.FromResult(true);
 		}
 
 		protected virtual async Task<bool> OnPop(Page page, bool animated)

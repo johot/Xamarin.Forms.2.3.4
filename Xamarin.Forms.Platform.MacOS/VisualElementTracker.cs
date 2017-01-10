@@ -143,7 +143,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (updateTarget != _updateCount)
 					return;
 
-				var visualElement = view;
 				var parent = view.RealParent;
 
 				var shouldRelayoutSublayers = false;

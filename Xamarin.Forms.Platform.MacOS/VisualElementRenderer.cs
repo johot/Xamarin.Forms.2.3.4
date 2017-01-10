@@ -209,11 +209,10 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 		}
 
+		//TODO: Implement ClipToBounds
 		void UpdateClipToBounds()
 		{
-			var clippableLayout = Element as Layout;
-			//if (clippableLayout != null)
-			//	ClipsToBounds = clippableLayout.IsClippedToBounds;
+
 		}
 	}
 }

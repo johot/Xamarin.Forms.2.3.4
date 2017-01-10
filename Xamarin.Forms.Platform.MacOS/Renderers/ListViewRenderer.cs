@@ -16,7 +16,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		ListViewDataSource _dataSource;
 		IVisualElementRenderer _headerRenderer;
 		IVisualElementRenderer _footerRenderer;
-		ScrollToRequestedEventArgs _requestedScroll;
 
 		IListViewController Controller => Element;
 		ITemplatedItemsView<Cell> TemplatedItemsView => Element;
@@ -91,8 +90,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
 		{
-			_requestedScroll = null;
-
 			if (e.OldElement != null)
 			{
 				var controller = (IListViewController)e.OldElement;

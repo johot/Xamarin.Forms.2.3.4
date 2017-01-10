@@ -10,18 +10,10 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (BackgroundColor != NSColor.Clear && BackgroundColor != null)
 			{
 				BackgroundColor.Set();
-				NSGraphics.RectFill(this.Bounds);
+				NSGraphics.RectFill(Bounds);
 			}
 
 			base.DrawRect(dirtyRect);
-		}
-
-		public override bool IsFlipped
-		{
-			get
-			{
-				return _isFlipped;
-			}
 		}
 
 		public NSColor BackgroundColor
@@ -29,9 +21,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			get;
 			set;
 		}
-
-		bool _isFlipped;
-
 	}
 }
 

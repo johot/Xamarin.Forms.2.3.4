@@ -64,10 +64,8 @@ namespace Xamarin.Forms.Platform.MacOS
 					Control.Frame = new RectangleF(0, Bounds.Height - Element.Height, (nfloat)Element.Width, (nfloat)Element.Height);
 					break;
 				case TextAlignment.End:
-					nfloat yOffset = 0;
 					fitSize = Control.SizeThatFits(Element.Bounds.Size.ToSizeF());
 					labelHeight = (nfloat)Math.Min(Bounds.Height, fitSize.Height);
-					yOffset = (nfloat)labelHeight;
 					Control.Frame = new RectangleF(0, 0, (nfloat)Element.Width, labelHeight);
 					break;
 			}
