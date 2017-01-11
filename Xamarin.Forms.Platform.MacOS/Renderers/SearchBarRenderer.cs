@@ -175,9 +175,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_defaultTextColor = _defaultTextColor ?? Control.TextColor;
 			var targetColor = Element.TextColor;
 
-			var color = Element.IsEnabled && !targetColor.IsDefault ? targetColor : _defaultTextColor.ToColor();
-
-			Control.TextColor = color.ToNSColor();
+			Control.TextColor = targetColor.ToNSColor(_defaultTextColor);
 		}
 	}
 }
