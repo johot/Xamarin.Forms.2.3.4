@@ -163,7 +163,9 @@ namespace Xamarin.Forms.Platform.Android
 			if (_editText == null)
 				return;
 
+			Watcher.Start("ToTypeFace");
 			_editText.Typeface = Element.ToTypeface();
+			Watcher.Stop();
 			_editText.SetTextSize(ComplexUnitType.Sp, (float)Element.FontSize);
 		}
 

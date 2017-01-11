@@ -290,10 +290,10 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			}
 			else
 			{
-				Watcher.Start("Non Default");
+				Watcher.Start("ToTypeFace");
 				NativeButton.Typeface = font.ToTypeface();
-				NativeButton.SetTextSize(ComplexUnitType.Sp, font.ToScaledPixel());
 				Watcher.Stop();
+				NativeButton.SetTextSize(ComplexUnitType.Sp, font.ToScaledPixel());
 			}
 			Watcher.Stop();
 		}
