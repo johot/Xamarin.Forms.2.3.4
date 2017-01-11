@@ -6,6 +6,7 @@ using AppKit;
 using CoreGraphics;
 using Foundation;
 using Xamarin.Forms.Internals;
+using Xamarin.Forms.PlatformConfiguration.macOSSpecific;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -46,8 +47,9 @@ namespace Xamarin.Forms.Platform.MacOS
 		NSToolbar _toolbar;
 		NavigationPage _navigation;
 		string _defaultBackButtonTitle = "Back";
+		bool _hasTabs = false;
 
-		const double BackButtonItemWidth = 30;
+		const double BackButtonItemWidth = 36;
 		const double ToolbarItemWidth = 44;
 		const double ToolbarItemHeight = 25;
 		const double ToolbarItemSpacing = 6;
@@ -87,6 +89,10 @@ namespace Xamarin.Forms.Platform.MacOS
 
 				if (_navigation != null)
 				{
+					if (_navigation.Parent is TabbedPage)
+					{
+						_hasTabs = (_navigation.Parent as TabbedPage).OnThisPlatform().GetTabsStyle() == TabsStyle.OnNavigation;
+					}
 					_toolbarTracker.Target = _navigation.CurrentPage;
 					_navigation.PropertyChanged += NavigationPagePropertyChanged;
 				}
@@ -132,7 +138,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			return group;
 		}
 
-		protected virtual bool HasTabs => false;
+		protected virtual bool HasTabs => _hasTabs;
 
 		protected virtual NSToolbar ConfigureToolbar()
 		{
@@ -171,7 +177,7 @@ namespace Xamarin.Forms.Platform.MacOS
 					NSApplication.SharedApplication.MainWindow.Toolbar = _toolbar;
 
 					_toolbar.InsertItem(NavigationGroupIdentifier, 0);
-					_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
+					_toolbar.InsertItem(HasTabs ? NSToolbar.NSToolbarSpaceItemIdentifier : NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 1);
 					_toolbar.InsertItem(HasTabs ? TabbedGroupIdentifier : TitleGroupIdentifier, 2);
 					_toolbar.InsertItem(NSToolbar.NSToolbarFlexibleSpaceItemIdentifier, 3);
 					_toolbar.InsertItem(ToolbarItemsGroupIdentifier, 4);
@@ -309,8 +315,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			};
 			titleField.Cell.TextColor = GetTitleColor();
 			titleField.SizeToFit();
-			titleField.Layout();
-			titleField.SetNeedsDisplay();
 			_titleGroup.Group.MinSize = new CGSize(NavigationTitleMinSize, ToolbarHeight);
 			_titleGroup.Group.Subitems = new NSToolbarItem[] { item };
 			view.AddSubview(titleField);
@@ -364,7 +368,16 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (_toolbar == null || _navigation == null || _tabbedGroup == null)
 				return;
 
-			UpdateGroup(_tabbedGroup, _navigation.ToolbarItems, ToolbarItemWidth, ToolbarItemSpacing);
+			var items = new List<ToolbarItem>();
+
+			foreach (var item in (_navigation.Parent as TabbedPage).Children)
+			{
+				var tbI = new ToolbarItem { Text = item.Title, Icon = item.Icon };
+				tbI.Command = new Command(() => (_navigation.Parent as TabbedPage).SelectedItem = item);
+				items.Add(tbI);
+			}
+
+			UpdateGroup(_tabbedGroup, items, ToolbarItemWidth, ToolbarItemSpacing);
 		}
 
 		static void UpdateGroup(NativeToolbarGroup group, IList<ToolbarItem> toolbarItems, double itemWidth, double itemSpacing)

@@ -205,6 +205,9 @@
 		  <Link>PlatformEffect.cs</Link>
 		</Compile>
 		<Compile Include="Controls\NSToolbarItemGroup.cs" />
+		<Compile Include="..\Xamarin.Forms.Platform.iOS\Extensions\PlatformConfigurationExtensions.cs">
+		  <Link>Extensions\PlatformConfigurationExtensions.cs</Link>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">

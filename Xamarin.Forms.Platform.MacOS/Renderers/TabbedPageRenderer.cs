@@ -4,6 +4,7 @@ using System.ComponentModel;
 using AppKit;
 using CoreGraphics;
 using Xamarin.Forms.Internals;
+using Xamarin.Forms.PlatformConfiguration.macOSSpecific;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -137,7 +138,25 @@ namespace Xamarin.Forms.Platform.MacOS
 		protected virtual void ConfigureTabView()
 		{
 			TabView.DrawsBackground = false;
-			TabStyle = NSTabViewControllerTabStyle.SegmentedControlOnTop;
+			var tabStyle = Tabbed.OnThisPlatform().GetTabsStyle();
+			switch (tabStyle)
+			{
+				case TabsStyle.OnNavigation:
+				case TabsStyle.Hidden:
+					TabStyle = NSTabViewControllerTabStyle.Unspecified;
+					break;
+				case TabsStyle.Icons:
+					TabStyle = NSTabViewControllerTabStyle.Toolbar;
+					break;
+				case TabsStyle.OnBottom:
+					TabStyle = NSTabViewControllerTabStyle.SegmentedControlOnBottom;
+					break;
+				default:
+					TabStyle = NSTabViewControllerTabStyle.SegmentedControlOnTop;
+					break;
+			}
+
+
 			TabView.TabViewType = NSTabViewType.NSNoTabsNoBorder;
 		}
 
@@ -307,7 +326,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			Tabbed.CurrentPage = SelectedTabViewItemIndex >= 0 && SelectedTabViewItemIndex < count ? Tabbed.GetPageByIndex((int)SelectedTabViewItemIndex) : null;
 		}
 
-		//TODO: Implement
+		//TODO: Implement UpdateBarBackgroundColor
 		void UpdateBarBackgroundColor()
 		{
 			if (Tabbed == null || TabView == null)
@@ -328,10 +347,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (!isDefaultColor)
 				_barBackgroundColorWasSet = true;
 
-			System.Diagnostics.Debug.WriteLine("UpdateBarBackgroundColor not implemented");
 		}
 
-		//TODO: Implement
+		//TODO: Implement UpdateBarTextColor
 		void UpdateBarTextColor()
 		{
 			if (Tabbed == null || TabView == null)
@@ -351,9 +369,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (!isDefaultColor)
 				_barTextColorWasSet = true;
-
-
-			System.Diagnostics.Debug.WriteLine("UpdateBarTextColor not implemented");
 		}
 	}
 }
