@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using AppKit;
+// ReSharper disable UnusedParameter.Local
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -26,13 +27,13 @@ namespace Xamarin.Forms.Platform.MacOS
 			UpdateIsEnabled(cell, viewCell);
 			return cell;
 		}
-
+        
 		static void UpdateIsEnabled(ViewCellNSView cell, ViewCell viewCell)
 		{
-
+            //TODO: Implement IsEnabled on ViewCell
 		}
 
-		void ViewCellPropertyChanged(object sender, PropertyChangedEventArgs e)
+	    static void ViewCellPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			var viewCell = (ViewCell)sender;
 			var realCell = (ViewCellNSView)GetRealCell(viewCell);

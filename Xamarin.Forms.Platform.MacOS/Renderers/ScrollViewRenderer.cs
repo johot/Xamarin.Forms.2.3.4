@@ -4,6 +4,8 @@ using AppKit;
 using RectangleF = CoreGraphics.CGRect;
 using ObjCRuntime;
 using Foundation;
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedParameter.Local
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -21,12 +23,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			NSNotificationCenter.DefaultCenter.AddObserver(this, new Selector(nameof(UpdateScrollPosition)), BoundsChangedNotification, ContentView);
 		}
 
-		protected IScrollViewController Controller
-		{
-			get { return (IScrollViewController)Element; }
-		}
+	    IScrollViewController Controller => Element as IScrollViewController;
 
-		public VisualElement Element { get; private set; }
+	    public VisualElement Element { get; private set; }
 
 		public event EventHandler<VisualElementChangedEventArgs> ElementChanged;
 
@@ -76,12 +75,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(Element, new Rectangle(Element.X, Element.Y, size.Width, size.Height));
 		}
 
-		public NSViewController ViewController
-		{
-			get { return null; }
-		}
+		public NSViewController ViewController => null;
 
-		public override void Layout()
+	    public override void Layout()
 		{
 			base.Layout();
 			LayoutSubviews();
@@ -111,11 +107,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			base.Dispose(disposing);
 		}
 
-		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
+	    void OnElementChanged(VisualElementChangedEventArgs e)
 		{
-			var changed = ElementChanged;
-			if (changed != null)
-				changed(this, e);
+            ElementChanged?.Invoke(this, e);
 		}
 
 		void PackContent()

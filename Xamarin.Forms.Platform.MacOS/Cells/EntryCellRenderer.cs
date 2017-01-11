@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class EntryCellRenderer : CellRenderer
 	{
-		static readonly Color defaultTextColor = Color.Black;
+		static readonly Color s_defaultTextColor = Color.Black;
 
 		public override NSView GetCell(Cell item, NSView reusableView, NSTableView tv)
 		{
@@ -56,9 +56,11 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			var realCell = (CellNSView)GetRealCell(cell);
 
-			(realCell.AccessoryView.Subviews[0] as NSTextField).BackgroundColor = backgroundColor;
+		    var nsTextField = realCell.AccessoryView.Subviews[0] as NSTextField;
+		    if (nsTextField != null)
+		        nsTextField.BackgroundColor = backgroundColor;
 
-			base.UpdateBackgroundChild(cell, backgroundColor);
+		    base.UpdateBackgroundChild(cell, backgroundColor);
 		}
 
 		static void OnCellPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -99,13 +101,17 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		static void UpdateHorizontalTextAlignment(CellNSView cell, EntryCell entryCell)
 		{
-			(cell.AccessoryView.Subviews[0] as NSTextField).Alignment = entryCell.HorizontalTextAlignment.ToNativeTextAlignment();
+		    var nsTextField = cell.AccessoryView.Subviews[0] as NSTextField;
+		    if (nsTextField != null)
+		        nsTextField.Alignment = entryCell.HorizontalTextAlignment.ToNativeTextAlignment();
 		}
 
 		static void UpdateIsEnabled(CellNSView cell, EntryCell entryCell)
 		{
-			cell.TextLabel.Enabled = entryCell.IsEnabled;
-			(cell.AccessoryView.Subviews[0] as NSTextField).Enabled = entryCell.IsEnabled;
+		    cell.TextLabel.Enabled = entryCell.IsEnabled;
+		    var nsTextField = cell.AccessoryView.Subviews[0] as NSTextField;
+		    if (nsTextField != null)
+		        nsTextField.Enabled = entryCell.IsEnabled;
 		}
 
 		static void UpdateLabel(CellNSView cell, EntryCell entryCell)
@@ -115,21 +121,25 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		static void UpdateLabelColor(CellNSView cell, EntryCell entryCell)
 		{
-			cell.TextLabel.TextColor = entryCell.LabelColor.ToNSColor(defaultTextColor);
+			cell.TextLabel.TextColor = entryCell.LabelColor.ToNSColor(s_defaultTextColor);
 		}
 
 		static void UpdatePlaceholder(CellNSView cell, EntryCell entryCell)
 		{
-			(cell.AccessoryView.Subviews[0] as NSTextField).PlaceholderString = entryCell.Placeholder ?? "";
+		    var nsTextField = cell.AccessoryView.Subviews[0] as NSTextField;
+		    if (nsTextField != null)
+		        nsTextField.PlaceholderString = entryCell.Placeholder ?? "";
 		}
 
 		static void UpdateText(CellNSView cell, EntryCell entryCell)
 		{
-			if ((cell.AccessoryView.Subviews[0] as NSTextField).StringValue == entryCell.Text)
+		    var nsTextField = cell.AccessoryView.Subviews[0] as NSTextField;
+		    if (nsTextField != null && nsTextField.StringValue == entryCell.Text)
 				return;
 
-			(cell.AccessoryView.Subviews[0] as NSTextField).StringValue = entryCell.Text;
+		    if (nsTextField != null)
+		        nsTextField.StringValue = entryCell.Text;
 		}
-	}
+	}  
 }
 

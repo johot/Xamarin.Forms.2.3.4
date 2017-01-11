@@ -10,8 +10,8 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class TabbedPageRenderer : NSTabViewController, IVisualElementRenderer, IEffectControlProvider
 	{
-		static float s_defaultImageSizeSegmentedButton = 19;
-		bool _disposed;
+	    const float DefaultImageSizeSegmentedButton = 19;
+	    bool _disposed;
 		bool _updatingControllers;
 		bool _barBackgroundColorWasSet;
 		bool _barTextColorWasSet;
@@ -28,20 +28,18 @@ namespace Xamarin.Forms.Platform.MacOS
 			return NativeView.GetSizeRequest(widthConstraint, heightConstraint);
 		}
 
-		public NSView NativeView
-		{
-			get { return View; }
-		}
+		public NSView NativeView => View;
 
-		public void SetElement(VisualElement element)
+	    public void SetElement(VisualElement element)
 		{
 			var oldElement = Element;
 			Element = element;
 
 			if (oldElement != null)
 			{
-				oldElement.PropertyChanged -= OnPropertyChanged;
-				(oldElement as TabbedPage).PagesChanged -= OnPagesChanged;
+			    oldElement.PropertyChanged -= OnPropertyChanged;
+			    var tabbedPage = oldElement as TabbedPage;
+			    if (tabbedPage != null) tabbedPage.PagesChanged -= OnPagesChanged;
 			}
 
 			if (element != null)
@@ -71,7 +69,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		IPageController PageController => Element as IPageController;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		void IEffectControlProvider.RegisterEffect(Effect effect)
 		{
@@ -85,12 +83,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			Element.Layout(new Rectangle(Element.X, Element.Y, size.Width, size.Height));
 		}
 
-		public NSViewController ViewController
-		{
-			get { return this; }
-		}
+		public NSViewController ViewController => this;
 
-		public override nint SelectedTabViewItemIndex
+	    public override nint SelectedTabViewItemIndex
 		{
 			get
 			{
@@ -162,9 +157,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
 		{
-			var changed = ElementChanged;
-			if (changed != null)
-				changed(this, e);
+		    ElementChanged?.Invoke(this, e);
 		}
 
 		protected virtual NSTabViewItem GetTabViewItem(Page page, IVisualElementRenderer pageRenderer)
@@ -180,7 +173,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			var image = NSImage.ImageNamed(imageName);
 			bool shouldResize = TabStyle == NSTabViewControllerTabStyle.SegmentedControlOnTop || TabStyle == NSTabViewControllerTabStyle.SegmentedControlOnBottom;
 			if (shouldResize)
-				image = image.ResizeTo(new CGSize(s_defaultImageSizeSegmentedButton, s_defaultImageSizeSegmentedButton));
+				image = image.ResizeTo(new CGSize(DefaultImageSizeSegmentedButton, DefaultImageSizeSegmentedButton));
 			return image;
 		}
 
@@ -188,12 +181,9 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 		}
 
-		protected TabbedPage Tabbed
-		{
-			get { return (TabbedPage)Element; }
-		}
+		protected TabbedPage Tabbed => (TabbedPage)Element;
 
-		void OnPagePropertyChanged(object sender, PropertyChangedEventArgs e)
+	    void OnPagePropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == Page.TitleProperty.PropertyName)
 			{
@@ -222,7 +212,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void OnPagesChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			e.Apply((o, i, c) => SetupPage((Page)o, i), (o, i) => TeardownPage((Page)o, i), Reset);
+			e.Apply((o, i, c) => SetupPage((Page)o, i), (o, i) => TeardownPage((Page)o), Reset);
 
 			SetControllers();
 
@@ -269,9 +259,9 @@ namespace Xamarin.Forms.Platform.MacOS
 				{
 					pageRenderer.ViewController.Identifier = i.ToString();
 
-					NSTabViewItem newTVI = GetTabViewItem(page, pageRenderer);
+					NSTabViewItem newTvi = GetTabViewItem(page, pageRenderer);
 
-					AddTabViewItem(newTVI);
+					AddTabViewItem(newTvi);
 				}
 			}
 			_updatingControllers = false;
@@ -292,7 +282,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		}
 
-		void TeardownPage(Page page, int index)
+		void TeardownPage(Page page)
 		{
 			page.PropertyChanged -= OnPagePropertyChanged;
 
@@ -311,7 +301,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			for (var i = 0; i < TabViewItems.Length; i++)
 			{
-				var originalIndex = -1;
+				int originalIndex;
 				if (int.TryParse(TabViewItems[i].ViewController.Identifier, out originalIndex))
 				{
 					var page = PageController.InternalChildren[originalIndex];

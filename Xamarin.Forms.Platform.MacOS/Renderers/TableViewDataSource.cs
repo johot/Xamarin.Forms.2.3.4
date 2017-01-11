@@ -8,8 +8,8 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		static int s_sectionCount;
 
-		const string headerIdentifier = nameof(TextCell);
-		const string itemIdentifier = nameof(ViewCell);
+		const string HeaderIdentifier = nameof(TextCell);
+		const string ItemIdentifier = nameof(ViewCell);
 
 		protected ITableViewController Controller => _tableView;
 
@@ -22,8 +22,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			_nsTableView = tableViewRenderer.TableView;
 			Controller.ModelChanged += (s, e) =>
 			{
-				if (_nsTableView != null)
-					_nsTableView.ReloadData();
+			    _nsTableView?.ReloadData();
 			};
 			AutomaticallyDeselect = true;
 		}
@@ -36,9 +35,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (row == -1)
 				return;
 
-			var sectionIndex = 0;
-			var isHeader = false;
-			var itemIndexInSection = 0;
+			int sectionIndex;
+			bool isHeader;
+			int itemIndexInSection;
 
 			GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isHeader);
 
@@ -67,9 +66,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override bool ShouldSelectRow(NSTableView tableView, nint row)
 		{
-			var sectionIndex = 0;
-			var isHeader = false;
-			var itemIndexInSection = 0;
+			int sectionIndex;
+			bool isHeader;
+			int itemIndexInSection;
 
 			GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isHeader);
 
@@ -78,22 +77,22 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override NSView GetViewForItem(NSTableView tableView, NSTableColumn tableColumn, nint row)
 		{
-			var sectionIndex = 0;
-			var isHeader = false;
-			var itemIndexInSection = 0;
+			int sectionIndex;
+			bool isHeader;
+			int itemIndexInSection;
 
 			GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isHeader);
 
-			var id = string.Empty;
-			Cell cell = null;
+			string id;
+			Cell cell;
 			if (isHeader)
 			{
-				id = headerIdentifier;
+				id = HeaderIdentifier;
 				cell = Controller.Model.GetHeaderCell(sectionIndex) ?? new TextCell { Text = Controller.Model.GetSectionTitle(sectionIndex) };
 			}
 			else
 			{
-				id = itemIdentifier;
+				id = ItemIdentifier;
 				cell = Controller.Model.GetCell(sectionIndex, itemIndexInSection - 1);
 			}
 

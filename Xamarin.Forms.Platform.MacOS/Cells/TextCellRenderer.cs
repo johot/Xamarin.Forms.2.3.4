@@ -5,18 +5,16 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class TextCellRenderer : CellRenderer
 	{
-		static readonly Color defaultDetailColor = new Color(.32, .4, .57);
-		static readonly Color defaultTextColor = Color.Black;
+		static readonly Color s_defaultDetailColor = new Color(.32, .4, .57);
+		static readonly Color s_defaultTextColor = Color.Black;
 
 		public override NSView GetCell(Cell item, NSView reusableView, NSTableView tv)
 		{
 			var textCell = (TextCell)item;
 
-			var tvc = reusableView as CellNSView;
-			if (tvc == null)
-				tvc = new CellNSView(NSTableViewCellStyle.Subtitle);
+			var tvc = reusableView as CellNSView ?? new CellNSView(NSTableViewCellStyle.Subtitle);
 
-			if (tvc.Cell != null)
+		    if (tvc.Cell != null)
 				tvc.Cell.PropertyChanged -= tvc.HandlePropertyChanged;
 
 			tvc.Cell = textCell;
@@ -25,8 +23,8 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			tvc.TextLabel.StringValue = textCell.Text ?? "";
 			tvc.DetailTextLabel.StringValue = textCell.Detail ?? "";
-			tvc.TextLabel.TextColor = textCell.TextColor.ToNSColor(defaultTextColor);
-			tvc.DetailTextLabel.TextColor = textCell.DetailColor.ToNSColor(defaultDetailColor);
+			tvc.TextLabel.TextColor = textCell.TextColor.ToNSColor(s_defaultTextColor);
+			tvc.DetailTextLabel.TextColor = textCell.DetailColor.ToNSColor(s_defaultDetailColor);
 
 			WireUpForceUpdateSizeRequested(item, tvc, tv);
 
@@ -52,9 +50,9 @@ namespace Xamarin.Forms.Platform.MacOS
 				tvc.DetailTextLabel.SizeToFit();
 			}
 			else if (args.PropertyName == TextCell.TextColorProperty.PropertyName)
-				tvc.TextLabel.TextColor = textCell.TextColor.ToNSColor(defaultTextColor);
+				tvc.TextLabel.TextColor = textCell.TextColor.ToNSColor(s_defaultTextColor);
 			else if (args.PropertyName == TextCell.DetailColorProperty.PropertyName)
-				tvc.DetailTextLabel.TextColor = textCell.DetailColor.ToNSColor(defaultTextColor);
+				tvc.DetailTextLabel.TextColor = textCell.DetailColor.ToNSColor(s_defaultTextColor);
 			else if (args.PropertyName == Cell.IsEnabledProperty.PropertyName)
 				UpdateIsEnabled(tvc, textCell);
 		}

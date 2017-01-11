@@ -37,8 +37,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			SetElement(null, renderer.Element);
 		}
 
-		IElementController ElementController => Renderer.Element as IElementController;
-
 		IVisualElementRenderer Renderer { get; set; }
 
 		public void Dispose()
@@ -105,7 +103,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			var viewParent = view.RealParent as VisualElement;
 			var uiview = Renderer.NativeView;
 
-			if (view == null || view.Batched)
+			if (view.Batched)
 				return;
 
 			var shouldInteract = !view.InputTransparent && view.IsEnabled;
@@ -222,7 +220,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				update();
 
 			_lastBounds = view.Bounds;
-			_lastParentBounds = viewParent == null ? Rectangle.Zero : viewParent.Bounds;
+			_lastParentBounds = viewParent?.Bounds ?? Rectangle.Zero;
 		}
 
 		void SetElement(VisualElement oldElement, VisualElement newElement)
@@ -263,9 +261,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			OnUpdateNativeControl(_layer);
 
-			if (NativeControlUpdated != null)
-				NativeControlUpdated(this, EventArgs.Empty);
-
+		    NativeControlUpdated?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

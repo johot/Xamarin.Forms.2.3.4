@@ -9,11 +9,9 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		public override NSView GetCell(Cell item, NSView reusableView, NSTableView tv)
 		{
-			var tvc = reusableView as CellNSView;
-			if (tvc == null)
-				tvc = new CellNSView(NSTableViewCellStyle.ImageSubtitle);
+			var tvc = reusableView as CellNSView ?? new CellNSView(NSTableViewCellStyle.ImageSubtitle);
 
-			var result = (CellNSView)base.GetCell(item, tvc, tv);
+		    var result = (CellNSView)base.GetCell(item, tvc, tv);
 
 			var imageCell = (ImageCell)item;
 

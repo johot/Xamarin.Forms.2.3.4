@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using AppKit;
-using Foundation;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
 	public class TableViewRenderer : ViewRenderer<TableView, NSView>
 	{
-		NSTableView _table;
-		const int DefaultRowHeight = 44;
+	    const int DefaultRowHeight = 44;
 
-		public NSTableView TableView => _table;
+	    internal NSTableView TableView { get; set; }
 
-		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
+	    public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
 			return Control.GetSizeRequest(widthConstraint, heightConstraint, DefaultRowHeight, DefaultRowHeight);
 		}
@@ -56,7 +53,7 @@ namespace Xamarin.Forms.Platform.MacOS
 					var scroller = new NSScrollView
 					{
 						AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable,
-						DocumentView = _table = CreateNSTableView(e.NewElement)
+						DocumentView = TableView = CreateNSTableView(e.NewElement)
 					};
 
 					SetNativeControl(scroller);
@@ -78,14 +75,14 @@ namespace Xamarin.Forms.Platform.MacOS
 				UpdateRowHeight();
 			else if (e.PropertyName == Xamarin.Forms.TableView.HasUnevenRowsProperty.PropertyName)
 				SetSource();
-			else if (e.PropertyName == Xamarin.Forms.TableView.BackgroundColorProperty.PropertyName)
+			else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
 				UpdateBackgroundView();
 		}
 
 		void SetSource()
 		{
 			var modeledView = Element;
-			_table.Source = modeledView.HasUnevenRows ? new UnEvenTableViewModelRenderer(this) : new TableViewDataSource(this);
+			TableView.Source = modeledView.HasUnevenRows ? new UnEvenTableViewModelRenderer(this) : new TableViewDataSource(this);
 		}
 
 		void UpdateBackgroundView()
@@ -96,7 +93,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		void UpdateRowHeight()
 		{
 			var rowHeight = Element.RowHeight;
-			_table.RowHeight = rowHeight <= 0 ? DefaultRowHeight : rowHeight;
+			TableView.RowHeight = rowHeight <= 0 ? DefaultRowHeight : rowHeight;
 		}
 	}
 }

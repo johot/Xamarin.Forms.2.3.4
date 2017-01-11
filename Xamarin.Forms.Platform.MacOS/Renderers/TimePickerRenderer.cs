@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		NSColor _defaultBackgroundColor;
 		bool _disposed;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<TimePicker> e)
 		{
@@ -70,10 +70,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (Control == null)
 				return;
-			if (color == Color.Default)
-				Control.BackgroundColor = _defaultBackgroundColor;
-			else
-				Control.BackgroundColor = color.ToNSColor();
+			Control.BackgroundColor = color == Color.Default ? _defaultBackgroundColor : color.ToNSColor();
 		}
 
 		void HandleValueChanged(object sender, NSDatePickerValidatorEventArgs e)
@@ -87,7 +84,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				return;
 			var time = new DateTime(2001, 1, 1).Add(Element.Time);
 			var newDate = time.ToNSDate();
-			if (Control.DateValue != newDate)
+			if (!Equals(Control.DateValue, newDate))
 				Control.DateValue = newDate;
 		}
 

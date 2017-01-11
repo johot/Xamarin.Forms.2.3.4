@@ -10,8 +10,9 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			if (!animate)
 			{
-				(scrollView.DocumentView as NSView).ScrollPoint(point);
-				return Task.FromResult(true);
+			    var nsView = scrollView.DocumentView as NSView;
+			    nsView?.ScrollPoint(point);
+			    return Task.FromResult(true);
 			}
 
 			TaskCompletionSource<bool> source = new TaskCompletionSource<bool>();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using AppKit;
 
 namespace Xamarin.Forms.Platform.MacOS
@@ -9,9 +8,7 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		bool _isDisposed;
 
-		IElementController ElementController => Element as IElementController;
-
-		protected override void Dispose(bool disposing)
+	    protected override void Dispose(bool disposing)
 		{
 			if (_isDisposed)
 				return;
@@ -22,7 +19,6 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (Control != null && (oldUIImage = Control.Image) != null)
 				{
 					oldUIImage.Dispose();
-					oldUIImage = null;
 				}
 			}
 
@@ -36,8 +32,6 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (Control == null)
 			{
 				var imageView = new FormsNSImageView();
-				//	imageView.ContentMode = UIViewContentMode.ScaleAspectFit;
-				//	imageView.ClipsToBounds = true;
 				SetNativeControl(imageView);
 			}
 
@@ -77,7 +71,8 @@ namespace Xamarin.Forms.Platform.MacOS
 				if (Equals(oldSource, source))
 					return;
 
-				if (oldSource is FileImageSource && source is FileImageSource && ((FileImageSource)oldSource).File == ((FileImageSource)source).File)
+			    var imageSource = oldSource as FileImageSource;
+			    if (imageSource != null && source is FileImageSource && imageSource.File == ((FileImageSource)source).File)
 					return;
 
 				Control.Image = null;

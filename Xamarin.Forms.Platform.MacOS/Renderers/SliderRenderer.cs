@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		bool _disposed;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Slider> e)
 		{

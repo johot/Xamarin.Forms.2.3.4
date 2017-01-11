@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		NSColor _defaultTextColor;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		protected override void Dispose(bool disposing)
 		{
@@ -90,10 +90,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (Control == null)
 				return;
-			if (color == Color.Default)
-				Control.BackgroundColor = NSColor.Clear;
-			else
-				Control.BackgroundColor = color.ToNSColor();
+			Control.BackgroundColor = color == Color.Default ? NSColor.Clear : color.ToNSColor();
 
 			UpdateCancelButton();
 		}

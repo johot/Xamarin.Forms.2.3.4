@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		NSColor _defaultBackgroundColor;
 		bool _disposed;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
 		{
@@ -22,10 +22,14 @@ namespace Xamarin.Forms.Platform.MacOS
 			{
 				if (Control == null)
 				{
-					_picker = new NSDatePicker { DatePickerMode = NSDatePickerMode.Single, TimeZone = new NSTimeZone("UTC") };
-					_picker.DatePickerStyle = NSDatePickerStyle.TextFieldAndStepper;
-					_picker.DatePickerElements = NSDatePickerElementFlags.YearMonthDateDay;
-					_picker.ValidateProposedDateValue += HandleValueChanged;
+				    _picker = new NSDatePicker
+				    {
+				        DatePickerMode = NSDatePickerMode.Single,
+				        TimeZone = new NSTimeZone("UTC"),
+				        DatePickerStyle = NSDatePickerStyle.TextFieldAndStepper,
+				        DatePickerElements = NSDatePickerElementFlags.YearMonthDateDay
+				    };
+				    _picker.ValidateProposedDateValue += HandleValueChanged;
 					_defaultTextColor = _picker.TextColor;
 					_defaultBackgroundColor = _picker.BackgroundColor;
 

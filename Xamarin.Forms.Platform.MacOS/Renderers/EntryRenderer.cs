@@ -9,19 +9,18 @@ namespace Xamarin.Forms.Platform.MacOS
 		bool _disposed;
 		NSColor _defaultTextColor;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
-		IEntryController EntryController => Element as IEntryController;
+		IEntryController EntryController => Element;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
 		{
 			base.OnElementChanged(e);
 
-			var textField = Control;
-
-			if (Control == null)
+		    if (Control == null)
 			{
-				SetNativeControl(textField = e.NewElement.IsPassword ? new NSSecureTextField() : new NSTextField());
+			    NSTextField textField;
+			    SetNativeControl(textField = e.NewElement.IsPassword ? new NSSecureTextField() : new NSTextField());
 
 				_defaultTextColor = textField.TextColor;
 
@@ -71,10 +70,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			if (Control == null)
 				return;
-			if (color == Color.Default)
-				Control.BackgroundColor = NSColor.Clear;
-			else
-				Control.BackgroundColor = color.ToNSColor();
+			Control.BackgroundColor = color == Color.Default ? NSColor.Clear : color.ToNSColor();
 
 			base.SetBackgroundColor(color);
 		}

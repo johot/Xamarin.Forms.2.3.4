@@ -1,6 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using AppKit;
+﻿using System.ComponentModel;
+
 using RectangleF = CoreGraphics.CGRect;
 using SizeF = CoreGraphics.CGSize;
 

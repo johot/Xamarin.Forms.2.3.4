@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using CoreVideo;
-using Foundation;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
+    // ReSharper disable once InconsistentNaming
 	internal class OpenGLViewRenderer : ViewRenderer<OpenGLView, MacOSOpenGLView>
 	{
 		CVDisplayLink _displayLink;

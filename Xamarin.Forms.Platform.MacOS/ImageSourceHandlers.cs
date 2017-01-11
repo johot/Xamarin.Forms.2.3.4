@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using AppKit;
-using Foundation;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -18,13 +16,10 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			NSImage image = null;
 			var filesource = imagesource as FileImageSource;
-			if (filesource != null)
-			{
-				var file = filesource.File;
-				if (!string.IsNullOrEmpty(file))
-					image = File.Exists(file) ? new NSImage(file) : null;
-			}
-			return Task.FromResult(image);
+		    var file = filesource?.File;
+		    if (!string.IsNullOrEmpty(file))
+		        image = File.Exists(file) ? new NSImage(file) : null;
+		    return Task.FromResult(image);
 		}
 	}
 
@@ -34,15 +29,13 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			NSImage image = null;
 			var streamsource = imagesource as StreamImageSource;
-			if (streamsource != null && streamsource.Stream != null)
-			{
-				using (var streamImage = await ((IStreamImageSource)streamsource).GetStreamAsync(cancelationToken).ConfigureAwait(false))
-				{
-					if (streamImage != null)
-						image = NSImage.FromStream(streamImage);
-				}
-			}
-			return image;
+		    if (streamsource?.Stream == null) return null;
+		    using (var streamImage = await ((IStreamImageSource)streamsource).GetStreamAsync(cancelationToken).ConfigureAwait(false))
+		    {
+		        if (streamImage != null)
+		            image = NSImage.FromStream(streamImage);
+		    }
+		    return image;
 		}
 	}
 

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using AppKit;
 using CoreGraphics;
-using Xamarin.Forms;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -33,11 +32,9 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			base.Dispose(disposing);
 
-			if (disposing && Control != null && ManageNativeControlLifetime)
-			{
-				Control.Dispose();
-				Control = null;
-			}
+		    if (!disposing || Control == null || !ManageNativeControlLifetime) return;
+		    Control.Dispose();
+		    Control = null;
 		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<TView> e)
@@ -96,10 +93,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (formsNSView == null)
 				return;
 
-			if (color == Color.Default)
-				formsNSView.BackgroundColor = _defaultColor;
-			else
-				formsNSView.BackgroundColor = color.ToNSColor();
+			formsNSView.BackgroundColor = color == Color.Default ? _defaultColor : color.ToNSColor();
 		}
 
 		protected void SetNativeControl(TNativeView uiview)

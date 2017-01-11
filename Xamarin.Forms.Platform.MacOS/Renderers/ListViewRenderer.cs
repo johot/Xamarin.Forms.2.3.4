@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -32,8 +31,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		protected virtual NSTableView CreateNSTableView(ListView list)
 		{
-			NSTableView table;
-			table = new NSTableView().AsListViewLook();
+		    NSTableView table = new NSTableView().AsListViewLook();
 			table.Source = _dataSource = new ListViewDataSource(list, table);
 			return table;
 		}
@@ -186,8 +184,9 @@ namespace Xamarin.Forms.Platform.MacOS
 					if (header != null && _headerRenderer.GetType() == Registrar.Registered.GetHandlerType(header.GetType()))
 					{
 						_headerRenderer.SetElement(headerView);
-						(_table.HeaderView as CustomNSTableHeaderView).Update(Bounds.Width, _headerRenderer);
-						return;
+					    var customNSTableHeaderView = _table.HeaderView as CustomNSTableHeaderView;
+					    customNSTableHeaderView?.Update(Bounds.Width, _headerRenderer);
+					    return;
 					}
 					ClearHeader();
 				}

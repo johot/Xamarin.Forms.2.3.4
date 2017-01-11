@@ -15,9 +15,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		IPageController PageController => Element as IPageController;
 
-		IElementController ElementController => Element as IElementController;
-
-		void IEffectControlProvider.RegisterEffect(Effect effect)
+	    void IEffectControlProvider.RegisterEffect(Effect effect)
 		{
 			var platformEffect = effect as PlatformEffect;
 			if (platformEffect != null)
@@ -113,8 +111,7 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (View.Frame.Width == -1)
 				return;
 			var width = View.Frame.Width;
-			var height = View.Frame.Height;
-			var masterWidth = MasterWidthPercentage * width;
+		    var masterWidth = MasterWidthPercentage * width;
 			if (SplitViewItems.Length > 0)
 				SplitViewItems[0].MaximumThickness = SplitViewItems[0].MinimumThickness = (nfloat)masterWidth;
 		}
@@ -152,21 +149,16 @@ namespace Xamarin.Forms.Platform.MacOS
 		//TODO: Implement Background color on MDP
 		void UpdateBackground()
 		{
-			//if (!string.IsNullOrEmpty(((Page)Element).BackgroundImage))
-			//	View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromBundle(((Page)Element).BackgroundImage));
-			//else if (Element.BackgroundColor == Color.Default)
-			//	View.BackgroundColor = UIColor.White;
-			//else
-			//	View.BackgroundColor = Element.BackgroundColor.ToUIColor();
+			
 		}
 
-		class ViewControllerWrapper : NSViewController
+	    sealed class ViewControllerWrapper : NSViewController
 		{
 			readonly IVisualElementRenderer _renderer;
 			public ViewControllerWrapper(IVisualElementRenderer renderer)
 			{
 				_renderer = renderer;
-				View = new FormsNSView { };
+				View = new FormsNSView();
 				AddChildViewController(renderer.ViewController);
 				View.AddSubview(renderer.NativeView);
 			}

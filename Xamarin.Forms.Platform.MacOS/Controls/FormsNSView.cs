@@ -1,5 +1,4 @@
-﻿using System;
-using AppKit;
+﻿using AppKit;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -7,7 +6,7 @@ namespace Xamarin.Forms.Platform.MacOS
 	{
 		public override void DrawRect(CoreGraphics.CGRect dirtyRect)
 		{
-			if (BackgroundColor != NSColor.Clear && BackgroundColor != null)
+			if (!Equals(BackgroundColor, NSColor.Clear) && BackgroundColor != null)
 			{
 				BackgroundColor.Set();
 				NSGraphics.RectFill(Bounds);

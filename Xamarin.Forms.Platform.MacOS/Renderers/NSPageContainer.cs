@@ -1,5 +1,4 @@
-﻿using System;
-using Foundation;
+﻿using Foundation;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
@@ -9,10 +8,6 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			Page = element;
 			Index = index;
-			var render = Platform.GetRenderer(element);
-			if (render == null)
-				render = Platform.CreateRenderer(element);
-
 		}
 
 		public Page Page { get; }

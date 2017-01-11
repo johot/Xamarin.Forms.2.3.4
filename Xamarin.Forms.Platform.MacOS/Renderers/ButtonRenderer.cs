@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using AppKit;
-using CoreText;
 using Foundation;
 using SizeF = CoreGraphics.CGSize;
 

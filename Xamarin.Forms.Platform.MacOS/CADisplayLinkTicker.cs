@@ -9,6 +9,7 @@ using CoreAnimation;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
+    // ReSharper disable once InconsistentNaming
 	internal class CADisplayLinkTicker : Ticker
 	{
 		readonly BlockingCollection<Action> _queue = new BlockingCollection<Action>();
@@ -20,12 +21,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			thread.Start();
 		}
 
-		internal new static CADisplayLinkTicker Default
-		{
-			get { return Ticker.Default as CADisplayLinkTicker; }
-		}
+		internal new static CADisplayLinkTicker Default => Ticker.Default as CADisplayLinkTicker;
 
-		public void Invoke(Action action)
+	    public void Invoke(Action action)
 		{
 			_queue.Add(action);
 		}
@@ -51,7 +49,8 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			// There is no autorelease pool when this method is called because it will be called from a background thread
 			// It's important to create one or you will leak objects
-			using (NSAutoreleasePool pool = new NSAutoreleasePool())
+		    // ReSharper disable once UnusedVariable
+			using (var pool = new NSAutoreleasePool())
 			{
 				Device.BeginInvokeOnMainThread(() => SendSignals());
 			}
@@ -62,8 +61,8 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			while (true)
 			{
-				var action = _queue.Take();
-				var previous = NSApplication.CheckForIllegalCrossThreadCalls;
+				Action action = _queue.Take();
+				bool previous = NSApplication.CheckForIllegalCrossThreadCalls;
 				NSApplication.CheckForIllegalCrossThreadCalls = false;
 
 				CATransaction.Begin();
@@ -75,6 +74,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 				NSApplication.CheckForIllegalCrossThreadCalls = previous;
 			}
+		    // ReSharper disable once FunctionNeverReturns
 		}
 	}
 }

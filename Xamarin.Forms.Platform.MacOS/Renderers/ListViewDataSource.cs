@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using AppKit;
 using Foundation;
 
@@ -10,8 +9,7 @@ namespace Xamarin.Forms.Platform.MacOS
 	internal class ListViewDataSource : NSTableViewSource
 	{
 		IVisualElementRenderer _prototype;
-		const string GroupHeaderCellKey = "GroupHeaderCell";
-		const int DefaultItemTemplateId = 1;
+	    const int DefaultItemTemplateId = 1;
 		static int s_dataTemplateIncrementer = 2; // lets start at not 0 because
 		static int s_sectionCount;
 		readonly nfloat _defaultSectionHeight;
@@ -67,8 +65,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				return;
 			}
 			_selectionFromForms = true;
-			var groupId = location.Item1;
-			var rowId = location.Item2;
+		    var rowId = location.Item2;
 
 			_nsTableView.SelectRow(rowId, false);
 		}
@@ -85,9 +82,8 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (selectedRow == -1)
 				return;
 
-			NSIndexPath indexPath = null;
-			Cell cell = null;
-			indexPath = GetPathFromRow(selectedRow, ref cell);
+		    Cell cell = null;
+			NSIndexPath indexPath = GetPathFromRow(selectedRow, ref cell);
 
 			if (cell == null)
 				return;
@@ -101,9 +97,9 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (!IsGroupingEnabled)
 				return false;
 
-			var sectionIndex = 0;
-			var isGroupHeader = false;
-			var itemIndexInSection = 0;
+			int sectionIndex;
+			bool isGroupHeader;
+			int itemIndexInSection;
 
 			GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isGroupHeader);
 			return isGroupHeader;
@@ -152,7 +148,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			var sectionIndex = 0;
 			var itemIndexInSection = (int)row;
-			Cell cell = null;
+			Cell cell;
 
 			var isHeader = false;
 
@@ -162,13 +158,13 @@ namespace Xamarin.Forms.Platform.MacOS
 			var indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
 			var templateId = isHeader ? "headerCell" : TemplateIdForPath(indexPath).ToString();
 
-			NSView nativeCell = null;
+			NSView nativeCell;
 
 			var cachingStrategy = Controller.CachingStrategy;
 			if (cachingStrategy == ListViewCachingStrategy.RetainElement)
 			{
 				cell = GetCellForPath(indexPath, isHeader);
-				nativeCell = CellNSView.GetNativeCell(tableView, cell, templateId, isHeader, false);
+				nativeCell = CellNSView.GetNativeCell(tableView, cell, templateId, isHeader);
 			}
 			else if (cachingStrategy == ListViewCachingStrategy.RecycleElement)
 			{
@@ -230,15 +226,15 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		NSIndexPath GetPathFromRow(nint row, ref Cell cell)
 		{
-			NSIndexPath indexPath;
-			var sectionIndex = 0;
-			var isGroupHeader = false;
-			var itemIndexInSection = 0;
+		    if (cell == null) throw new ArgumentNullException(nameof(cell));
+		    var sectionIndex = 0;
+			bool isGroupHeader = false;
+			int itemIndexInSection;
 			if (IsGroupingEnabled)
 				GetComputedIndexes(row, out sectionIndex, out itemIndexInSection, out isGroupHeader);
 			else
 				itemIndexInSection = (int)row;
-			indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
+			NSIndexPath indexPath = NSIndexPath.FromItemSection(itemIndexInSection, sectionIndex);
 			cell = GetCellForPath(indexPath, isGroupHeader);
 			return indexPath;
 		}
@@ -246,8 +242,8 @@ namespace Xamarin.Forms.Platform.MacOS
 		nfloat CalculateHeightForCell(NSTableView tableView, Cell cell)
 		{
 			var viewCell = cell as ViewCell;
-			double renderHeight = -1;
-			if (List.RowHeight == -1 && viewCell != null && viewCell.View != null)
+			double renderHeight;
+			if (List.RowHeight == -1 && viewCell?.View != null)
 			{
 				var target = viewCell.View;
 				if (_prototype == null)

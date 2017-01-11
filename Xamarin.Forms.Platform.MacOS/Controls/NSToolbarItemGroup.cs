@@ -5,107 +5,98 @@ using Foundation;
 using ObjCRuntime;
 
 [Register("NSToolbarItemGroup", true)]
-public partial class NSToolbarItemGroup : NSToolbarItem
+// ReSharper disable once CheckNamespace
+// ReSharper disable once InconsistentNaming
+public class NSToolbarItemGroup : NSToolbarItem
 {
-	const string selSetSubitems_ = "setSubitems:";
-	static readonly IntPtr selSetSubitems_Handle = Selector.GetHandle("setSubitems:");
-	const string selSubitems = "subitems";
-	static readonly IntPtr selSubitemsHandle = Selector.GetHandle("subitems");
-	const string selInitWithItemIdentifier_ = "initWithItemIdentifier:";
-	static readonly IntPtr selInitWithItemIdentifier_Handle = Selector.GetHandle("initWithItemIdentifier:");
+    const string SelSetSubitems = "setSubitems:";
+    const string SelSubitems = "subitems";
+    const string SelInitWithItemIdentifier = "initWithItemIdentifier:";
+    static readonly IntPtr s_selSetSubitemsHandle = Selector.GetHandle(SelSetSubitems);
+    static readonly IntPtr s_selSubitemsHandle = Selector.GetHandle(SelSubitems);
+    static readonly IntPtr s_selInitWithItemIdentifierHandle = Selector.GetHandle(SelInitWithItemIdentifier);
+    static readonly IntPtr s_classPtr = Class.GetHandle("NSToolbarItemGroup");
 
-	static readonly IntPtr class_ptr = Class.GetHandle("NSToolbarItemGroup");
+    [Export("init")]
+    public NSToolbarItemGroup() : base(NSObjectFlag.Empty)
+    {
+        InitializeHandle(
+            IsDirectBinding
+                ? IntPtr_objc_msgSend(Handle, Selector.GetHandle("init"))
+                : IntPtr_objc_msgSendSuper(SuperHandle, Selector.GetHandle("init")), "init");
+    }
 
-	public override IntPtr ClassHandle { get { return class_ptr; } }
+    [Export("initWithItemIdentifier:")]
+    public NSToolbarItemGroup(string itemIdentifier)
+        : base(NSObjectFlag.Empty)
+    {
+        NSApplication.EnsureUIThread();
+        if (itemIdentifier == null)
+            throw new ArgumentNullException(nameof(itemIdentifier));
+        IntPtr nsitemIdentifier = NSString.CreateNative(itemIdentifier);
 
-	[DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-	public extern static IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector);
-	[DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSendSuper")]
-	public extern static IntPtr IntPtr_objc_msgSendSuper(IntPtr receiver, IntPtr selector);
-	[DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-	public extern static void void_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
-	[DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSendSuper")]
-	public extern static void void_objc_msgSendSuper_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
-	[DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-	public extern static IntPtr IntPtr_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
-	[DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSendSuper")]
-	public extern static IntPtr IntPtr_objc_msgSendSuper_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+        InitializeHandle(
+            IsDirectBinding
+                ? IntPtr_objc_msgSend_IntPtr(Handle, s_selInitWithItemIdentifierHandle, nsitemIdentifier)
+                : IntPtr_objc_msgSendSuper_IntPtr(SuperHandle, s_selInitWithItemIdentifierHandle, nsitemIdentifier),
+            "initWithItemIdentifier:");
+        NSString.ReleaseNative(nsitemIdentifier);
+    }
 
-	[Export("init")]
-	public NSToolbarItemGroup() : base(NSObjectFlag.Empty)
-	{
-		if (IsDirectBinding)
-		{
-			InitializeHandle(IntPtr_objc_msgSend(this.Handle, Selector.GetHandle("init")), "init");
-		}
-		else {
-			InitializeHandle(IntPtr_objc_msgSendSuper(this.SuperHandle, Selector.GetHandle("init")), "init");
-		}
-	}
+    protected internal NSToolbarItemGroup(IntPtr handle) : base(handle)
+    {
+    }
 
+    protected NSToolbarItemGroup(NSObjectFlag t) : base(t)
+    {
+    }
 
-	[Export("initWithItemIdentifier:")]
-	public NSToolbarItemGroup(string itemIdentifier)
-		: base(NSObjectFlag.Empty)
-	{
-		global::AppKit.NSApplication.EnsureUIThread();
-		if (itemIdentifier == null)
-			throw new ArgumentNullException("itemIdentifier");
-		var nsitemIdentifier = NSString.CreateNative(itemIdentifier);
+    public override IntPtr ClassHandle => s_classPtr;
 
-		if (IsDirectBinding)
-		{
-			InitializeHandle(IntPtr_objc_msgSend_IntPtr(this.Handle, selInitWithItemIdentifier_Handle, nsitemIdentifier), "initWithItemIdentifier:");
-		}
-		else {
-			InitializeHandle(IntPtr_objc_msgSendSuper_IntPtr(this.SuperHandle, selInitWithItemIdentifier_Handle, nsitemIdentifier), "initWithItemIdentifier:");
-		}
-		NSString.ReleaseNative(nsitemIdentifier);
+    public virtual NSToolbarItem[] Subitems
+    {
+        [Export(SelSubitems, ArgumentSemantic.Copy)]
+        get
+        {
+            NSApplication.EnsureUIThread();
+            NSToolbarItem[] ret =
+                NSArray.ArrayFromHandle<NSToolbarItem>(IsDirectBinding
+                    ? IntPtr_objc_msgSend(Handle, s_selSubitemsHandle)
+                    : IntPtr_objc_msgSendSuper(SuperHandle, s_selSubitemsHandle));
+            return ret;
+        }
 
-	}
+        [Export(SelSetSubitems, ArgumentSemantic.Copy)]
+        set
+        {
+            NSApplication.EnsureUIThread();
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            // ReSharper disable once CoVariantArrayConversion
+            NSArray nsaValue = NSArray.FromNSObjects(value);
 
-	protected NSToolbarItemGroup(NSObjectFlag t) : base(t)
-	{
-	}
+            if (IsDirectBinding)
+                void_objc_msgSend_IntPtr(Handle, s_selSetSubitemsHandle, nsaValue.Handle);
+            else void_objc_msgSendSuper_IntPtr(SuperHandle, s_selSetSubitemsHandle, nsaValue.Handle);
+            nsaValue.Dispose();
+        }
+    }
 
-	protected internal NSToolbarItemGroup(IntPtr handle) : base(handle)
-	{
-	}
+    [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+    public static extern IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector);
 
-	public virtual NSToolbarItem[] Subitems
-	{
-		[Export("subitems", ArgumentSemantic.Copy)]
-		get
-		{
-			global::AppKit.NSApplication.EnsureUIThread();
-			NSToolbarItem[] ret;
-			if (IsDirectBinding)
-			{
-				ret = NSArray.ArrayFromHandle<NSToolbarItem>(IntPtr_objc_msgSend(this.Handle, selSubitemsHandle));
-			}
-			else {
-				ret = NSArray.ArrayFromHandle<NSToolbarItem>(IntPtr_objc_msgSendSuper(this.SuperHandle, selSubitemsHandle));
-			}
-			return ret;
-		}
+    [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+    public static extern IntPtr IntPtr_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
 
-		[Export("setSubitems:", ArgumentSemantic.Copy)]
-		set
-		{
-			global::AppKit.NSApplication.EnsureUIThread();
-			if (value == null)
-				throw new ArgumentNullException("value");
-			var nsa_value = NSArray.FromNSObjects(value);
+    [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSendSuper")]
+    public static extern IntPtr IntPtr_objc_msgSendSuper(IntPtr receiver, IntPtr selector);
 
-			if (IsDirectBinding)
-			{
-				void_objc_msgSend_IntPtr(this.Handle, selSetSubitems_Handle, nsa_value.Handle);
-			}
-			else {
-				void_objc_msgSendSuper_IntPtr(this.SuperHandle, selSetSubitems_Handle, nsa_value.Handle);
-			}
-			nsa_value.Dispose();
+    [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSendSuper")]
+    public static extern IntPtr IntPtr_objc_msgSendSuper_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
 
-		}
-	}
+    [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+    public static extern void void_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+
+    [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSendSuper")]
+    public static extern void void_objc_msgSendSuper_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
 }

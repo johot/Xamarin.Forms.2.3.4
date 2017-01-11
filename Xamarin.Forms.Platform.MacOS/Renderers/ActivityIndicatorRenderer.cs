@@ -7,8 +7,8 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class ActivityIndicatorRenderer : ViewRenderer<ActivityIndicator, NSProgressIndicator>
 	{
-		static CIColorPolynomial _currentColorFilter;
-		static NSColor _currentColor;
+		static CIColorPolynomial s_currentColorFilter;
+		static NSColor s_currentColor;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<ActivityIndicator> e)
 		{
@@ -37,26 +37,26 @@ namespace Xamarin.Forms.Platform.MacOS
 		void UpdateColor()
 		{
 			var color = Element.Color;
-			if (_currentColorFilter == null && color.IsDefault)
+			if (s_currentColorFilter == null && color.IsDefault)
 				return;
 
 			if (color.IsDefault)
 				Control.ContentFilters = new CIFilter[0];
 
 			var newColor = Element.Color.ToNSColor();
-			if (_currentColor == newColor)
+			if (Equals(s_currentColor, newColor))
 				return;
 
-			_currentColor = newColor;
+			s_currentColor = newColor;
 
-			_currentColorFilter = new CIColorPolynomial
+			s_currentColorFilter = new CIColorPolynomial
 			{
-				RedCoefficients = new CIVector(_currentColor.RedComponent),
-				BlueCoefficients = new CIVector(_currentColor.BlueComponent),
-				GreenCoefficients = new CIVector(_currentColor.GreenComponent)
+				RedCoefficients = new CIVector(s_currentColor.RedComponent),
+				BlueCoefficients = new CIVector(s_currentColor.BlueComponent),
+				GreenCoefficients = new CIVector(s_currentColor.GreenComponent)
 			};
 
-			Control.ContentFilters = new CIFilter[1] { _currentColorFilter };
+			Control.ContentFilters = new CIFilter[] { s_currentColorFilter };
 		}
 
 		void UpdateIsRunning()

@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	class CustomNSTableHeaderView : NSTableHeaderView
+    sealed class CustomNSTableHeaderView : NSTableHeaderView
 	{
 
 		public CustomNSTableHeaderView(double width, IVisualElementRenderer headerRenderer)

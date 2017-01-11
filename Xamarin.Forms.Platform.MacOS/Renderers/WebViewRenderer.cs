@@ -13,7 +13,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		WebNavigationEvent _lastBackForwardEvent;
 		WebNavigationEvent _lastEvent;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		void IWebViewDelegate.LoadHtml(string html, string baseUrl)
 		{

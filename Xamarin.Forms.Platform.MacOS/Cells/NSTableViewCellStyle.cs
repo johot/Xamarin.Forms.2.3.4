@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xamarin.Forms.Platform.MacOS
+﻿namespace Xamarin.Forms.Platform.MacOS
 {
 	internal enum NSTableViewCellStyle
 	{

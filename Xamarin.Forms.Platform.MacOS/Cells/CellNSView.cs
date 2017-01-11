@@ -5,11 +5,11 @@ using CoreGraphics;
 
 namespace Xamarin.Forms.Platform.MacOS
 {
-	internal class CellNSView : FormsNSView, INativeElementView
+    internal class CellNSView : FormsNSView, INativeElementView
 	{
-		static readonly NSColor _defaultChildViewsBackground = NSColor.Clear;
+		static readonly NSColor s_defaultChildViewsBackground = NSColor.Clear;
 		Cell _cell;
-		NSTableViewCellStyle _style;
+	    readonly NSTableViewCellStyle _style;
 
 		public Action<object, PropertyChangedEventArgs> PropertyChanged;
 
@@ -57,18 +57,17 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		public override void Layout()
 		{
-			var padding = 10;
-			var availableHeight = Frame.Height;
-			var availableWidth = Frame.Width - padding * 2;
+			const int padding = 10;
+			nfloat availableHeight = Frame.Height;
+			nfloat availableWidth = Frame.Width - padding * 2;
 			nfloat imageWidth = 0;
-			nfloat imageHeight = 0;
-			nfloat accessoryViewWidth = 0;
+		    nfloat accessoryViewWidth = 0;
 
 
 			if (ImageView != null)
 			{
-				imageHeight = imageWidth = availableHeight;
-				ImageView.Frame = new CGRect(padding, 0, imageWidth, imageHeight);
+			    nfloat imageHeight = imageWidth = availableHeight;
+			    ImageView.Frame = new CGRect(padding, 0, imageWidth, imageHeight);
 			}
 
 			if (AccessoryView != null)
@@ -88,10 +87,10 @@ namespace Xamarin.Forms.Platform.MacOS
 				}
 			}
 
-			var labelHeights = availableHeight;
-			var labelWidth = availableWidth - imageWidth - accessoryViewWidth;
+			nfloat labelHeights = availableHeight;
+			nfloat labelWidth = availableWidth - imageWidth - accessoryViewWidth;
 
-			if (DetailTextLabel != null && !string.IsNullOrEmpty(DetailTextLabel.StringValue))
+			if (!string.IsNullOrEmpty(DetailTextLabel?.StringValue))
 			{
 				labelHeights = availableHeight / 2;
 				DetailTextLabel.CenterTextVertically(new CGRect(imageWidth + padding, 0, labelWidth, labelHeights));
@@ -118,9 +117,10 @@ namespace Xamarin.Forms.Platform.MacOS
 			if (string.IsNullOrEmpty(nativeCell.Identifier))
 				nativeCell.Identifier = templateId;
 
-			if (isHeader)
-				(nativeCell as FormsNSView).BackgroundColor = NSColor.LightGray;
-			return nativeCell;
+		    if (!isHeader) return nativeCell;
+		    var formsNsView = nativeCell as FormsNSView;
+		    if (formsNsView != null) formsNsView.BackgroundColor = NSColor.LightGray;
+		    return nativeCell;
 		}
 
 		void CreateUI()
@@ -135,7 +135,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				Font = NSFont.LabelFontOfSize(NSFont.SystemFontSize)
 			});
 
-			TextLabel.Cell.BackgroundColor = _defaultChildViewsBackground;
+			TextLabel.Cell.BackgroundColor = s_defaultChildViewsBackground;
 
 			if (style == NSTableViewCellStyle.Image || style == NSTableViewCellStyle.Subtitle || style == NSTableViewCellStyle.ImageSubtitle)
 			{
@@ -146,14 +146,14 @@ namespace Xamarin.Forms.Platform.MacOS
 					Editable = false,
 					Font = NSFont.LabelFontOfSize(NSFont.SmallSystemFontSize)
 				});
-				DetailTextLabel.Cell.BackgroundColor = _defaultChildViewsBackground;
+				DetailTextLabel.Cell.BackgroundColor = s_defaultChildViewsBackground;
 			}
 
 			if (style == NSTableViewCellStyle.Image || style == NSTableViewCellStyle.ImageSubtitle)
 				AddSubview(ImageView = new NSImageView());
 
 			if (style == NSTableViewCellStyle.Value1 || style == NSTableViewCellStyle.Value2)
-				AddSubview(AccessoryView = new FormsNSView { BackgroundColor = _defaultChildViewsBackground });
+				AddSubview(AccessoryView = new FormsNSView { BackgroundColor = s_defaultChildViewsBackground });
 		}
 	}
 }

@@ -15,9 +15,12 @@ namespace Xamarin.Forms.Platform.MacOS
 			else
 			{
 				nsSwitch = tvc.AccessoryView.Subviews[0] as NSButton;
-				nsSwitch.RemoveFromSuperview();
-				nsSwitch.Activated -= OnSwitchValueChanged;
-				tvc.Cell.PropertyChanged -= OnCellPropertyChanged;
+			    if (nsSwitch != null)
+			    {
+			        nsSwitch.RemoveFromSuperview();
+			        nsSwitch.Activated -= OnSwitchValueChanged;
+			    }
+			    tvc.Cell.PropertyChanged -= OnCellPropertyChanged;
 			}
 
 			SetRealCell(item, tvc);

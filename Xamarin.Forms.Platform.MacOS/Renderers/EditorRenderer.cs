@@ -7,10 +7,10 @@ namespace Xamarin.Forms.Platform.MacOS
 {
 	public class EditorRenderer : ViewRenderer<Editor, NSTextField>
 	{
-		const string _newLineSelector = "insertNewline";
+		const string NewLineSelector = "insertNewline";
 		bool _disposed;
 
-		IElementController ElementController => Element as IElementController;
+		IElementController ElementController => Element;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
 		{
@@ -23,11 +23,11 @@ namespace Xamarin.Forms.Platform.MacOS
 				Control.Cell.Wraps = true;
 				Control.Changed += HandleChanged;
 				Control.EditingBegan += OnEditingBegan;
-				Control.EditingEnded += OnEditingBegan;
+				Control.EditingEnded += OnEditingEnded;
 				Control.DoCommandBySelector = (control, textView, commandSelector) =>
 				{
 					var result = false;
-					if (commandSelector.Name.StartsWith(_newLineSelector, StringComparison.InvariantCultureIgnoreCase))
+					if (commandSelector.Name.StartsWith(NewLineSelector, StringComparison.InvariantCultureIgnoreCase))
 					{
 						textView.InsertText(new NSString(Environment.NewLine));
 						result = true;
@@ -36,13 +36,11 @@ namespace Xamarin.Forms.Platform.MacOS
 				};
 			}
 
-			if (e.NewElement != null)
-			{
-				UpdateText();
-				UpdateFont();
-				UpdateTextColor();
-				UpdateEditable();
-			}
+		    if (e.NewElement == null) return;
+		    UpdateText();
+		    UpdateFont();
+		    UpdateTextColor();
+		    UpdateEditable();
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -67,10 +65,8 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			if (Control == null)
 				return;
-			if (color == Color.Default)
-				Control.BackgroundColor = NSColor.Clear;
-			else
-				Control.BackgroundColor = color.ToNSColor();
+
+            Control.BackgroundColor = color == Color.Default ? NSColor.Clear : color.ToNSColor();
 
 			base.SetBackgroundColor(color);
 		}
@@ -84,7 +80,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				{
 					Control.Changed -= HandleChanged;
 					Control.EditingBegan -= OnEditingBegan;
-					Control.EditingEnded -= OnEditingBegan;
+					Control.EditingEnded -= OnEditingEnded;
 				}
 			}
 			base.Dispose(disposing);
@@ -124,12 +120,9 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateTextColor()
 		{
-			var textColor = Element.TextColor;
+		    var textColor = Element.TextColor;
 
-			if (textColor.IsDefault)
-				Control.TextColor = NSColor.Black;
-			else
-				Control.TextColor = textColor.ToNSColor();
+		    Control.TextColor = textColor.IsDefault ? NSColor.Black : textColor.ToNSColor();
 		}
 	}
 }
