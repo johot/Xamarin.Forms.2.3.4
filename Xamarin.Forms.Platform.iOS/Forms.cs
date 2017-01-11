@@ -111,7 +111,9 @@ namespace Xamarin.Forms
 
 		internal class IOSDeviceInfo : DeviceInfo
 		{
+#if __MOBILE__
 			readonly NSObject _notification;
+#endif
 			readonly Size _scaledScreenSize;
 			readonly double _scalingFactor;
 
