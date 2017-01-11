@@ -143,11 +143,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Pages.Azure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagesGallery.iOS", "PagesGallery\PagesGallery.iOS\PagesGallery.iOS.csproj", "{392156B2-760A-4EE3-A822-CABD3238A21D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.macOS", "Xamarin.Forms.Platform.MacOS\Xamarin.Forms.Platform.MacOS.csproj", "{C0059C45-EA1E-42F3-8A0E-794BB547EC3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.MacOS", "Xamarin.Forms.Platform.MacOS\Xamarin.Forms.Platform.MacOS.csproj", "{C0059C45-EA1E-42F3-8A0E-794BB547EC3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery.MacOS", "Xamarin.Forms.ControlGallery.MacOS\Xamarin.Forms.ControlGallery.MacOS.csproj", "{8D3DFCB7-DB10-40E5-ACFE-411AAA85520D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps.macOS", "Xamarin.Forms.Maps.MacOS\Xamarin.Forms.Maps.MacOS.csproj", "{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Maps.MacOS", "Xamarin.Forms.Maps.MacOS\Xamarin.Forms.Maps.MacOS.csproj", "{C3C24A6D-2D0C-4053-9FCC-E54FF9CA1884}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Core.macOS.UITests", "Xamarin.Forms.Core.macOS.UITests\Xamarin.Forms.Core.macOS.UITests.csproj", "{9DB0CABB-24CC-4538-88EC-6E0A0FE40248}"
 EndProject
@@ -155,6 +155,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\Xamarin.Forms.Controls.Issues.Shared.projitems*{0a39a74b-6f7a-4d41-84f2-b0ccdce899df}*SharedItemsImports = 4
 		Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\Xamarin.Forms.Controls.Issues.Shared.projitems*{0f0db9cc-ea65-429c-9363-38624bf8f49c}*SharedItemsImports = 13
+		Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\Xamarin.Forms.Controls.Issues.Shared.projitems*{9db0cabb-24cc-4538-88ec-6e0a0fe40248}*SharedItemsImports = 4
 		Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\Xamarin.Forms.Controls.Issues.Shared.projitems*{a34ebe01-25bf-4e69-a2dc-2288dc625541}*SharedItemsImports = 4
 		Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\Xamarin.Forms.Controls.Issues.Shared.projitems*{cb9c96ce-125c-4a68-b6a1-c3ff1fbf93e1}*SharedItemsImports = 4
 		docs\APIDocs.projitems*{dc1f3933-ac99-4887-8b09-e13c2b346d4f}*SharedItemsImports = 13
