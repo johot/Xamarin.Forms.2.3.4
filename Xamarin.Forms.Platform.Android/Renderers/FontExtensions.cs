@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Platform.Android
 	{
 		static readonly Dictionary<Tuple<string, FontAttributes>, Typeface> Typefaces = new Dictionary<Tuple<string, FontAttributes>, Typeface>();
 
-		static readonly Lazy<Regex> s_loadFromAssets = new Lazy<Regex>(() => new Regex(@"\w+\.((ttf)|(otf))\#\w*"));
+		const string LoadFromAssetsRegex = @"\w+\.((ttf)|(otf))\#\w*";
 
 		static Typeface s_defaultTypeface;
 
@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Platform.Android
 				var style = ToTypefaceStyle(self.FontAttributes);
 				result = Typeface.Create(Typeface.Default, style);
 			}
-			else if (s_loadFromAssets.Value.IsMatch(self.FontFamily))
+			else if (Regex.IsMatch(self.FontFamily, LoadFromAssetsRegex))
 			{
 				result = Typeface.CreateFromAsset(AApplication.Context.Assets, FontNameToFontFile(self.FontFamily));
 			}
@@ -88,7 +88,7 @@ namespace Xamarin.Forms.Platform.Android
 				var style = ToTypefaceStyle(self.FontAttributes);
 				result = Typeface.Create(Typeface.Default, style);
 			}
-			else if (s_loadFromAssets.Value.IsMatch(self.FontFamily))
+			else if (Regex.IsMatch(self.FontFamily, LoadFromAssetsRegex))
 			{
 				result = Typeface.CreateFromAsset(AApplication.Context.Assets, FontNameToFontFile(self.FontFamily));
 			}
