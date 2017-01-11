@@ -450,7 +450,7 @@
           <AttributeName>System.Diagnostics.DebuggerStepThrough</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;PopAsync&gt;d__40))</AttributeName>
+          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;PopAsync&gt;d__39))</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -548,7 +548,7 @@
           <AttributeName>System.Diagnostics.DebuggerStepThrough</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;PopToRootAsync&gt;d__48))</AttributeName>
+          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;PopToRootAsync&gt;d__47))</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -605,7 +605,7 @@
           <AttributeName>System.Diagnostics.DebuggerStepThrough</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;PushAsync&gt;d__50))</AttributeName>
+          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;PushAsync&gt;d__49))</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -860,6 +860,26 @@ public class MyPage : NavigationPage
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="Xamarin.Forms.INavigationPageController.Peek">
+      <MemberSignature Language="C#" Value="Xamarin.Forms.Page INavigationPageController.Peek (int depth);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class Xamarin.Forms.Page Xamarin.Forms.INavigationPageController.Peek(int32 depth) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.Page</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="depth" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="depth">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Xamarin.Forms.INavigationPageController.PopAsyncInner">
       <MemberSignature Language="C#" Value="System.Threading.Tasks.Task&lt;Xamarin.Forms.Page&gt; INavigationPageController.PopAsyncInner (bool animated, bool fast);" />
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Forms.Page&gt; Xamarin.Forms.INavigationPageController.PopAsyncInner(bool animated, bool fast) cil managed" />
@@ -872,7 +892,7 @@ public class MyPage : NavigationPage
           <AttributeName>System.Diagnostics.DebuggerStepThrough</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;Xamarin-Forms-INavigationPageController-PopAsyncInner&gt;d__65))</AttributeName>
+          <AttributeName>System.Runtime.CompilerServices.AsyncStateMachine(typeof(Xamarin.Forms.NavigationPage/&lt;Xamarin-Forms-INavigationPageController-PopAsyncInner&gt;d__64))</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -887,22 +907,6 @@ public class MyPage : NavigationPage
         <param name="fast">To be added.</param>
         <summary>This method is for internal use by platform renderers.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Xamarin.Forms.INavigationPageController.SecondToLast">
-      <MemberSignature Language="C#" Value="Xamarin.Forms.Page Xamarin.Forms.INavigationPageController.SecondToLast { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Xamarin.Forms.Page Xamarin.Forms.INavigationPageController.SecondToLast" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Xamarin.Forms.Page</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
