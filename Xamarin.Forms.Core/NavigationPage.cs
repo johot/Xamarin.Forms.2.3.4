@@ -62,17 +62,14 @@ namespace Xamarin.Forms
 
 		internal Task CurrentNavigationTask { get; set; }
 
-		Page INavigationPageController.SecondToLast
+		Page INavigationPageController.Peek(int depth)
 		{
-			get
+			if (PageController.InternalChildren.Count <= depth)
 			{
-				if (PageController.InternalChildren.Count < 2)
-				{
-					return null;
-				}
-
-				return (Page)PageController.InternalChildren[PageController.InternalChildren.Count - 2];
+				return null;
 			}
+
+			return (Page)PageController.InternalChildren[PageController.InternalChildren.Count - depth - 1];
 		}
 
 		IEnumerable<Page> INavigationPageController.Pages => PageController.InternalChildren.Cast<Page>();

@@ -397,7 +397,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		void OnPopRequested(object sender, NavigationRequestedEventArgs e)
 		{
-			var newCurrent = (Page)PageController.InternalChildren[PageController.InternalChildren.Count - 2];
+			var newCurrent = ((INavigationPageController)Element).Peek(1);
 			SetPage(newCurrent, e.Animated, true);
 		}
 

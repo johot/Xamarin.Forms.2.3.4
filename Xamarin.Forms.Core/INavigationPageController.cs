@@ -7,7 +7,8 @@ namespace Xamarin.Forms
 {
 	public interface INavigationPageController
 	{
-		Page SecondToLast { get;  }
+		Page Peek(int depth);
+
 		IEnumerable<Page> Pages { get; }
 
 		int StackDepth { get; }
