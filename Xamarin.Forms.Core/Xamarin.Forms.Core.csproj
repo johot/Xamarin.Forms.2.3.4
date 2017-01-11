@@ -461,4 +461,7 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="PlatformConfiguration\macOSSpecific\" />
+  </ItemGroup>
 </Project>
