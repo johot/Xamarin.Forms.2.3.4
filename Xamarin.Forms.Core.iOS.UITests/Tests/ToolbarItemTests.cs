@@ -6,9 +6,6 @@ using Xamarin.UITest.iOS;
 
 namespace Xamarin.Forms.Core.UITests
 {
-#if __MACOS__
-	[Ignore("Not tested in MacOS yet")]
-#endif
 	[TestFixture]
 	[Category(UITestCategories.ToolbarItem)]
 	internal class ToolbarItemTests : BaseTestFixture

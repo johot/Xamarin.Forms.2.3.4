@@ -3,7 +3,6 @@ using Xamarin.UITest;
 using System;
 using System.Threading;
 using Xamarin.UITest.Queries;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Core.UITests
 {
@@ -42,9 +41,8 @@ namespace Xamarin.Forms.Core.UITests
 
 
 		[Test]
-		public async void Test2()
+		public void Test2 ()
 		{
-			await Task.Delay(1000);
 			App.WaitForElement(c => c.Marked("btnTest2"));
 			App.Tap (c => c.Marked ("btnTest2"));
 			App.WaitForElement (c => c.Marked ("imgHello"));

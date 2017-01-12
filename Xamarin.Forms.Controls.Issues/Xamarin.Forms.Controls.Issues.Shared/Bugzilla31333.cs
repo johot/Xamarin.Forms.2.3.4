@@ -210,9 +210,6 @@ namespace Xamarin.Forms.Controls.Issues
 
 #if UITEST
 		[Test]
-#if __MACOS__
-		[Ignore("EnterText on UITest.Desktop not implemented")]
-#endif
 		[UiTest (typeof(NavigationPage))]
 		public void Issue31333FocusEntryInListViewCell ()
 		{
@@ -225,9 +222,6 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 
 		[Test]
-#if __MACOS__
-		[Ignore("EnterText on UITest.Desktop not implemented")]
-#endif
 		[UiTest (typeof(NavigationPage))]
 		public void Issue31333FocusEditorInListViewCell ()
 		{
@@ -241,9 +235,6 @@ namespace Xamarin.Forms.Controls.Issues
 
 		
 		[Test]
-#if __MACOS__
-		[Ignore("EnterText on UITest.Desktop not implemented")]
-#endif
 		[UiTest (typeof(NavigationPage))]
 		public void Issue31333FocusEntryInTableViewCell ()
 		{
@@ -256,9 +247,6 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 
 		[Test]
-#if __MACOS__
-		[Ignore("EnterText on UITest.Desktop not implemented")]
-#endif
 		[UiTest (typeof(NavigationPage))]
 		public void Issue31333FocusEditorInTableViewCell ()
 		{
