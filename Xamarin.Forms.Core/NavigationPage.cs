@@ -64,6 +64,11 @@ namespace Xamarin.Forms
 
 		Page INavigationPageController.Peek(int depth)
 		{
+			if (depth < 0)
+			{
+				return null;
+			}
+
 			if (PageController.InternalChildren.Count <= depth)
 			{
 				return null;

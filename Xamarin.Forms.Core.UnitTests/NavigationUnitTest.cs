@@ -270,6 +270,25 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
+		public async Task PeekShallow()
+		{
+			var nav = new NavigationPage();
+
+			bool signaled = false;
+			nav.PoppedToRoot += (sender, args) => signaled = true;
+
+			var root = new ContentPage { Content = new View() };
+			var child1 = new ContentPage { Content = new View() };
+			var child2 = new ContentPage { Content = new View() };
+
+			await nav.PushAsync(root);
+			await nav.PushAsync(child1);
+			await nav.PushAsync(child2);
+
+			Assert.AreEqual(((INavigationPageController)nav).Peek(-1), null);
+		}
+
+		[Test]
 		public async Task PeekEmpty([Range(0, 3)] int depth)
 		{
 			var nav = new NavigationPage();
