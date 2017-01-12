@@ -226,7 +226,6 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		NSIndexPath GetPathFromRow(nint row, ref Cell cell)
 		{
-		    if (cell == null) throw new ArgumentNullException(nameof(cell));
 		    var sectionIndex = 0;
 			bool isGroupHeader = false;
 			int itemIndexInSection;
