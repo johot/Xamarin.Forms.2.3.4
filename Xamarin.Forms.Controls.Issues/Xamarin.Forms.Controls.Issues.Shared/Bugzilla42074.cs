@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -11,7 +10,8 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls.Issues
 {
     [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 42074, "[Android] Clicking cancel on a TimePicker does not cause it to unfocus", PlatformAffected.Android)]
+    [Issue(IssueTracker.Bugzilla, 42074, "[Android] Clicking cancel on a TimePicker does not cause it to unfocus",
+        PlatformAffected.Android)]
     public class Bugzilla42074 : TestContentPage
     {
         const string TimePicker = "TimePicker";

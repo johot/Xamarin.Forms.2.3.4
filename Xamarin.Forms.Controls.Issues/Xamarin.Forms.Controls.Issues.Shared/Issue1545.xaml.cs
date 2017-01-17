@@ -5,126 +5,129 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
 #if APP
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 1545, "Binding instances cannot be reused", PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone)]
-	public partial class Issue1545 : ContentPage
-	{
-		ArtistsViewModel _viewModel;
-		public Issue1545()
-		{
-			InitializeComponent();
-			BindingContext = _viewModel = new ArtistsViewModel();
-		}
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 1545, "Binding instances cannot be reused",
+        PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone)]
+    public partial class Issue1545 : ContentPage
+    {
+        ArtistsViewModel _viewModel;
 
-		protected override void OnAppearing()
-		{
-		  base.OnAppearing();
-		  if (_viewModel.IsInitialized)
-			return;
+        public Issue1545()
+        {
+            InitializeComponent();
+            BindingContext = _viewModel = new ArtistsViewModel();
+        }
 
-		  _viewModel.IsInitialized = true;
-		  _viewModel.LoadCommand.Execute(null);
-		}
-	}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (_viewModel.IsInitialized)
+                return;
 
-	public class BaseViewModel : INotifyPropertyChanged
-	{
-		public string Title { get; set; }
-		public bool IsInitialized { get; set; }
+            _viewModel.IsInitialized = true;
+            _viewModel.LoadCommand.Execute(null);
+        }
+    }
 
-		bool _isBusy;
+    public class BaseViewModel : INotifyPropertyChanged
+    {
+        public string Title { get; set; }
 
-		/// <summary>
-		/// Gets or sets if VM is busy working
-		/// </summary>
-		public bool IsBusy
-		{
-			get { return _isBusy; }
-			set { _isBusy = value; OnPropertyChanged("IsBusy"); }
-		}
+        public bool IsInitialized { get; set; }
 
-		//INotifyPropertyChanged Implementation
-		public event PropertyChangedEventHandler PropertyChanged;
+        bool _isBusy;
 
-		protected void OnPropertyChanged(string propertyName)
-		{
-			if (PropertyChanged == null)
-			return;
+        /// <summary>
+        /// Gets or sets if VM is busy working
+        /// </summary>
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged("IsBusy");
+            }
+        }
 
-			PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
+        //INotifyPropertyChanged Implementation
+        public event PropertyChangedEventHandler PropertyChanged;
 
-	public class ArtistsViewModel : BaseViewModel
-	{
-		public ArtistsViewModel()
-		{
-			Title = "Artists";
-			Artists = new ObservableCollection<Artist>();
-		}
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged == null)
+                return;
 
-		/// <summary>
-		/// gets or sets the feed items
-		/// </summary>
-		public ObservableCollection<Artist> Artists
-		{
-			get;
-			private set;
-		}
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 
-		Command _loadCommand;
-		/// <summary>
-		/// Command to load/refresh artitists
-		/// </summary>
-		public Command LoadCommand
-		{
-			get { return _loadCommand ?? (_loadCommand = new Command(async () => await ExecuteLoadCommand())); }
-		}
+    public class ArtistsViewModel : BaseViewModel
+    {
+        public ArtistsViewModel()
+        {
+            Title = "Artists";
+            Artists = new ObservableCollection<Artist>();
+        }
 
-		static readonly Artist[] ArtistsToLoad = new Artist[] {
-			new Artist { Name = "Metallica", ListenerCount = "100", PlayCount = "5000" },
-			new Artist { Name = "Epica", ListenerCount = "50", PlayCount = "1000" }
-		};
+        /// <summary>
+        /// gets or sets the feed items
+        /// </summary>
+        public ObservableCollection<Artist> Artists { get; private set; }
 
-		async Task ExecuteLoadCommand()
-		{
-			if (IsBusy)
-				return;
+        Command _loadCommand;
 
-			IsBusy = true;
+        /// <summary>
+        /// Command to load/refresh artitists
+        /// </summary>
+        public Command LoadCommand
+        {
+            get { return _loadCommand ?? (_loadCommand = new Command(async () => await ExecuteLoadCommand())); }
+        }
 
-			Artists.Clear();
+        static readonly Artist[] ArtistsToLoad = new Artist[]
+        {
+            new Artist { Name = "Metallica", ListenerCount = "100", PlayCount = "5000" },
+            new Artist { Name = "Epica", ListenerCount = "50", PlayCount = "1000" }
+        };
 
-			await Task.Delay (3000);
+        async Task ExecuteLoadCommand()
+        {
+            if (IsBusy)
+                return;
 
-			foreach (Artist a in ArtistsToLoad)
-				Artists.Add (a);
+            IsBusy = true;
 
-			IsBusy = false;
-		}
-	}
+            Artists.Clear();
 
-	public class Artist
-	{
+            await Task.Delay(3000);
 
-		public string Name { get; set; }
+            foreach (Artist a in ArtistsToLoad)
+                Artists.Add(a);
 
-		public string PlayCount { get; set; }
+            IsBusy = false;
+        }
+    }
 
-		public string ListenerCount { get; set; }
+    public class Artist
+    {
+        public string Name { get; set; }
 
-		public string Mbid { get; set; }
+        public string PlayCount { get; set; }
 
-		public string Url { get; set; }
+        public string ListenerCount { get; set; }
 
-		public string Streamable { get; set; }
-	}
+        public string Mbid { get; set; }
+
+        public string Url { get; set; }
+
+        public string Streamable { get; set; }
+    }
 #endif
 }

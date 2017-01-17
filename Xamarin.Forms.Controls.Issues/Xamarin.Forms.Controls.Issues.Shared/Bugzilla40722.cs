@@ -5,64 +5,67 @@ using Xamarin.Forms.PlatformConfiguration.AndroidSpecific.AppCompat;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 40722, "Using FormsAppCompatActivity calls OnDisappearing on device sleep")]
-	public class Bugzilla40722 : TestContentPage
-	{
-		const string ButtonText_Disable = "Disable Pause/Resume events";
-		const string ButtonText_Enable = "Enable Pause/Resume events";
-		const string Instructions_Disabled = "Sleep the device, then wake it. If \"Disappearing!\" and/or \"Appearing!\" is displayed on this screen, this test has failed.";
-		const string Instructions_Enabled = "Sleep the device, then wake it. If \"Disappearing!\" and/or \"Appearing!\" is NOT displayed on this screen, this test has failed.";
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 40722, "Using FormsAppCompatActivity calls OnDisappearing on device sleep")]
+    public class Bugzilla40722 : TestContentPage
+    {
+        const string ButtonText_Disable = "Disable Pause/Resume events";
+        const string ButtonText_Enable = "Enable Pause/Resume events";
 
-		Label _Target = new Label();
-		bool _sendEvents = true;
+        const string Instructions_Disabled =
+            "Sleep the device, then wake it. If \"Disappearing!\" and/or \"Appearing!\" is displayed on this screen, this test has failed.";
 
-		protected override void Init()
-		{
-			ToggleEvents(_sendEvents);
+        const string Instructions_Enabled =
+            "Sleep the device, then wake it. If \"Disappearing!\" and/or \"Appearing!\" is NOT displayed on this screen, this test has failed.";
 
-			var instructions = new Label
-			{
-				Text = Instructions_Enabled
-			};
+        Label _Target = new Label();
+        bool _sendEvents = true;
 
-			var button = new Button
-			{
-				Text = ButtonText_Disable
-			};
+        protected override void Init()
+        {
+            ToggleEvents(_sendEvents);
 
-			button.Clicked += (sender, e) =>
-			{
-				_sendEvents = !_sendEvents;
-				ToggleEvents(_sendEvents);
-				button.Text = _sendEvents ? ButtonText_Disable : ButtonText_Enable;
-				instructions.Text = _sendEvents ? Instructions_Enabled : Instructions_Disabled;
-				_Target.Text = "";
-			};
+            var instructions = new Label
+            {
+                Text = Instructions_Enabled
+            };
 
-			Content = new StackLayout { Children = { instructions, button, _Target } };
-		}
+            var button = new Button
+            {
+                Text = ButtonText_Disable
+            };
 
+            button.Clicked += (sender, e) =>
+            {
+                _sendEvents = !_sendEvents;
+                ToggleEvents(_sendEvents);
+                button.Text = _sendEvents ? ButtonText_Disable : ButtonText_Enable;
+                instructions.Text = _sendEvents ? Instructions_Enabled : Instructions_Disabled;
+                _Target.Text = "";
+            };
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
+            Content = new StackLayout { Children = { instructions, button, _Target } };
+        }
 
-			_Target.Text += "\r\nAppearing!";
-		}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
-		protected override void OnDisappearing()
-		{
-			base.OnDisappearing();
+            _Target.Text += "\r\nAppearing!";
+        }
 
-			_Target.Text += "\r\nDisappearing!";
-		}
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
 
-		void ToggleEvents(bool value)
-		{
-			Application.Current.On<Android>()
-							.SendDisappearingEventOnPause(value)
-							.SendAppearingEventOnResume(value);
-		}
-	}
+            _Target.Text += "\r\nDisappearing!";
+        }
+
+        void ToggleEvents(bool value)
+        {
+            Application.Current.On<Android>()
+                .SendDisappearingEventOnPause(value)
+                .SendAppearingEventOnResume(value);
+        }
+    }
 }

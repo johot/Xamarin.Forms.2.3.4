@@ -1,15 +1,14 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace Xamarin.Forms.Controls
-{	
-	public partial class StyleXamlGallery : ContentPage
-	{	
-		public StyleXamlGallery ()
-		{
-			InitializeComponent ();
-		}
-	}
+{
+    public partial class StyleXamlGallery : ContentPage
+    {
+        public StyleXamlGallery()
+        {
+            InitializeComponent();
+        }
+    }
 }
-

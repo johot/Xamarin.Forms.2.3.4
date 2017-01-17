@@ -14,42 +14,44 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 44453, "[UWP] ToolbarItem Text hard to see when BarTextColor is light", PlatformAffected.WinRT)]
-	public class Bugzilla44453 : TestMasterDetailPage
-	{
-		protected override void Init()
-		{
-			var content = new ContentPage
-			{
-				Title = "UWPToolbarItemColor",
-				Content = new StackLayout
-				{
-					VerticalOptions = LayoutOptions.Center,
-					Children =
-					{
-						new Label
-						{
-							LineBreakMode = LineBreakMode.WordWrap,
-							HorizontalTextAlignment = TextAlignment.Center,
-							Text = "The toolbar secondary items should not have white text on a light background"
-						}
-					}
-				}
-			};
-			
-			MasterBehavior = MasterBehavior.Popover;
-			Master = new ContentPage
-			{
-				Title = "Master"
-			};
-			Detail = new NavigationPage(content)
-			{
-				BarBackgroundColor = Color.Green,
-				BarTextColor = Color.White
-			};
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 44453, "[UWP] ToolbarItem Text hard to see when BarTextColor is light",
+        PlatformAffected.WinRT)]
+    public class Bugzilla44453 : TestMasterDetailPage
+    {
+        protected override void Init()
+        {
+            var content = new ContentPage
+            {
+                Title = "UWPToolbarItemColor",
+                Content = new StackLayout
+                {
+                    VerticalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new Label
+                        {
+                            LineBreakMode = LineBreakMode.WordWrap,
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            Text = "The toolbar secondary items should not have white text on a light background"
+                        }
+                    }
+                }
+            };
 
-			Detail.ToolbarItems.Add(new ToolbarItem("Test Secondary Item", null, delegate { }, ToolbarItemOrder.Secondary));
-		}
-	}
+            MasterBehavior = MasterBehavior.Popover;
+            Master = new ContentPage
+            {
+                Title = "Master"
+            };
+            Detail = new NavigationPage(content)
+            {
+                BarBackgroundColor = Color.Green,
+                BarTextColor = Color.White
+            };
+
+            Detail.ToolbarItems.Add(new ToolbarItem("Test Secondary Item", null, delegate { },
+                ToolbarItemOrder.Secondary));
+        }
+    }
 }

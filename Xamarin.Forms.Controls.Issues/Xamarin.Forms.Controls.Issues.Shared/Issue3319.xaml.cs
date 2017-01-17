@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
@@ -15,11 +14,11 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 3319, "[iOS] Clear and adding rows exception")]
-	public partial class Issue3319 : TestContentPage
-	{
-		#if UITEST
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 3319, "[iOS] Clear and adding rows exception")]
+    public partial class Issue3319 : TestContentPage
+    {
+#if UITEST
 		[Test]
 		public void Issue3319Test ()
 		{
@@ -28,242 +27,247 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 		#endif
 
-		FavoritesViewModel ViewModel {
-			get { return BindingContext as FavoritesViewModel; }
-		}
+        FavoritesViewModel ViewModel
+        {
+            get { return BindingContext as FavoritesViewModel; }
+        }
 
-		public Issue3319 ()
-		{
-			#if APP
-			InitializeComponent ();
-			BindingContext = new FavoritesViewModel ();
+        public Issue3319()
+        {
+#if APP
+            InitializeComponent();
+            BindingContext = new FavoritesViewModel();
 
-			listView.SeparatorVisibility = SeparatorVisibility.Default;
-			listView.SeparatorColor = Color.FromHex ("#ababab");
+            listView.SeparatorVisibility = SeparatorVisibility.Default;
+            listView.SeparatorColor = Color.FromHex("#ababab");
 
-			listView.ItemTapped += (sender, args) => {
-				if (listView.SelectedItem == null)
-					return;
+            listView.ItemTapped += (sender, args) =>
+            {
+                if (listView.SelectedItem == null)
+                    return;
 
-				//do nothing anyway
-				return;
-			};
-			#endif
+                //do nothing anyway
+                return;
+            };
+#endif
+        }
 
-		}
-
-		protected override void Init ()
-		{
-	
-		}
-
-#pragma warning disable 1998 // considered for removal
-		public async void OnDelete (object sender, EventArgs e)
-#pragma warning restore 1998
-		{
-			var mi = ((MenuItem)sender);
-			if (mi.CommandParameter == null)
-				return;
-
-			var articlelistingitem = mi.CommandParameter;
-
-			if (articlelistingitem != null)
-				DisplayAlert ("Alert", "I'm not deleting just refreshing...", "Ok");
-			ViewModel.LoadFavoritesCommand.Execute (null);
-		}
-
-
-		protected override void OnAppearing ()
-		{
-			base.OnAppearing ();
-			if (ViewModel == null || !ViewModel.CanLoadMore || ViewModel.IsBusy)
-				return;
-
-			Device.BeginInvokeOnMainThread (() => {
-				ViewModel.LoadFavoritesCommand.Execute (null);
-			});
-		}
-
-		[Preserve (AllMembers = true)]
-		public class FavoritesViewModel :BaseViewModelF
-		{
-			public ObservableCollection<ArticleListing> FavoriteArticles { get; set; }
-
-			public FavoritesViewModel ()
-			{
-				Title = "Favorites";
-				FavoriteArticles = new ObservableCollection<ArticleListing> ();
-			}
-
-			Command _loadFavoritesCommand;
-
-			public Command LoadFavoritesCommand {
-				get {
-					return _loadFavoritesCommand ??
-					(_loadFavoritesCommand = new Command (async () => {
-						await ExecuteFavoritesCommand ();
-					}, () => {
-						return !IsBusy;
-					}));
-				}
-			}
+        protected override void Init()
+        {
+        }
 
 #pragma warning disable 1998 // considered for removal
-			public async Task ExecuteFavoritesCommand ()
+        public async void OnDelete(object sender, EventArgs e)
 #pragma warning restore 1998
-			{
-				if (IsBusy)
-					return;
+        {
+            var mi = ((MenuItem)sender);
+            if (mi.CommandParameter == null)
+                return;
 
-				IsBusy = true;
-				LoadFavoritesCommand.ChangeCanExecute ();
-				FavoriteArticles.Clear ();
-				var articles = new ObservableCollection<ArticleListing> {
-					new ArticleListing {
-						ArticleTitle = "Will this repo work?",
-						AuthorString = "Ben Crispin",
-						FormattedPostedDate = "7-28-2015"
-					},
-					new ArticleListing {
-						ArticleTitle = "Xamarin Forms BugZilla",
-						AuthorString = "Some Guy",
-						FormattedPostedDate = "7-28-2015"
-					}
-				};
-				var templist = new ObservableCollection<ArticleListing> ();
-				foreach (var article in articles) {
-					//templist.Add(article);
-					FavoriteArticles.Add (article);
-				}
-				//FavoriteArticles = templist;
-				OnPropertyChanged ("FavoriteArticles");
-				IsBusy = false;
-				LoadFavoritesCommand.ChangeCanExecute ();
-			}
+            var articlelistingitem = mi.CommandParameter;
 
-		}
-	}
+            if (articlelistingitem != null)
+                DisplayAlert("Alert", "I'm not deleting just refreshing...", "Ok");
+            ViewModel.LoadFavoritesCommand.Execute(null);
+        }
 
-	public class BaseViewModelF : INotifyPropertyChanged
-	{
-		public BaseViewModelF ()
-		{
-		}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (ViewModel == null || !ViewModel.CanLoadMore || ViewModel.IsBusy)
+                return;
 
-		string _title = string.Empty;
-		public const string TitlePropertyName = "Title";
+            Device.BeginInvokeOnMainThread(() => { ViewModel.LoadFavoritesCommand.Execute(null); });
+        }
 
-		/// <summary>
-		/// Gets or sets the "Title" property
-		/// </summary>
-		/// <value>The title.</value>
-		public string Title {
-			get { return _title; }
-			set { SetProperty (ref _title, value, TitlePropertyName); }
-		}
+        [Preserve(AllMembers = true)]
+        public class FavoritesViewModel : BaseViewModelF
+        {
+            public ObservableCollection<ArticleListing> FavoriteArticles { get; set; }
 
-		string _subTitle = string.Empty;
-		/// <summary>
-		/// Gets or sets the "Subtitle" property
-		/// </summary>
-		public const string SubtitlePropertyName = "Subtitle";
+            public FavoritesViewModel()
+            {
+                Title = "Favorites";
+                FavoriteArticles = new ObservableCollection<ArticleListing>();
+            }
 
-		public string Subtitle {
-			get { return _subTitle; }
-			set { SetProperty (ref _subTitle, value, SubtitlePropertyName); }
-		}
+            Command _loadFavoritesCommand;
 
-		string _icon = null;
-		/// <summary>
-		/// Gets or sets the "Icon" of the viewmodel
-		/// </summary>
-		public const string IconPropertyName = "Icon";
+            public Command LoadFavoritesCommand
+            {
+                get
+                {
+                    return _loadFavoritesCommand ??
+                           (_loadFavoritesCommand =
+                               new Command(async () => { await ExecuteFavoritesCommand(); }, () => { return !IsBusy; }));
+                }
+            }
 
-		public string Icon {
-			get { return _icon; }
-			set { SetProperty (ref _icon, value, IconPropertyName); }
-		}
+#pragma warning disable 1998 // considered for removal
+            public async Task ExecuteFavoritesCommand()
+#pragma warning restore 1998
+            {
+                if (IsBusy)
+                    return;
 
-		bool _isBusy;
-		/// <summary>
-		/// Gets or sets if the view is busy.
-		/// </summary>
-		public const string IsBusyPropertyName = "IsBusy";
+                IsBusy = true;
+                LoadFavoritesCommand.ChangeCanExecute();
+                FavoriteArticles.Clear();
+                var articles = new ObservableCollection<ArticleListing>
+                {
+                    new ArticleListing
+                    {
+                        ArticleTitle = "Will this repo work?",
+                        AuthorString = "Ben Crispin",
+                        FormattedPostedDate = "7-28-2015"
+                    },
+                    new ArticleListing
+                    {
+                        ArticleTitle = "Xamarin Forms BugZilla",
+                        AuthorString = "Some Guy",
+                        FormattedPostedDate = "7-28-2015"
+                    }
+                };
+                var templist = new ObservableCollection<ArticleListing>();
+                foreach (var article in articles)
+                {
+                    //templist.Add(article);
+                    FavoriteArticles.Add(article);
+                }
+                //FavoriteArticles = templist;
+                OnPropertyChanged("FavoriteArticles");
+                IsBusy = false;
+                LoadFavoritesCommand.ChangeCanExecute();
+            }
+        }
+    }
 
-		public bool IsBusy {
-			get { return _isBusy; }
-			set { SetProperty (ref _isBusy, value, IsBusyPropertyName); }
-		}
+    public class BaseViewModelF : INotifyPropertyChanged
+    {
+        public BaseViewModelF()
+        {
+        }
 
-		bool _canLoadMore = true;
-		/// <summary>
-		/// Gets or sets if we can load more.
-		/// </summary>
-		public const string CanLoadMorePropertyName = "CanLoadMore";
+        string _title = string.Empty;
+        public const string TitlePropertyName = "Title";
 
-		public bool CanLoadMore {
-			get { return _canLoadMore; }
-			set { SetProperty (ref _canLoadMore, value, CanLoadMorePropertyName); }
-		}
+        /// <summary>
+        /// Gets or sets the "Title" property
+        /// </summary>
+        /// <value>The title.</value>
+        public string Title
+        {
+            get { return _title; }
+            set { SetProperty(ref _title, value, TitlePropertyName); }
+        }
 
-		protected void SetProperty<T> (
-			ref T backingStore, T value,
-			string propertyName,
-			Action onChanged = null)
-		{
+        string _subTitle = string.Empty;
 
-			if (EqualityComparer<T>.Default.Equals (backingStore, value))
-				return;
+        /// <summary>
+        /// Gets or sets the "Subtitle" property
+        /// </summary>
+        public const string SubtitlePropertyName = "Subtitle";
 
-			backingStore = value;
+        public string Subtitle
+        {
+            get { return _subTitle; }
+            set { SetProperty(ref _subTitle, value, SubtitlePropertyName); }
+        }
 
-			if (onChanged != null)
-				onChanged ();
+        string _icon = null;
 
-			OnPropertyChanged (propertyName);
-		}
+        /// <summary>
+        /// Gets or sets the "Icon" of the viewmodel
+        /// </summary>
+        public const string IconPropertyName = "Icon";
 
-		#region INotifyPropertyChanged implementation
+        public string Icon
+        {
+            get { return _icon; }
+            set { SetProperty(ref _icon, value, IconPropertyName); }
+        }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        bool _isBusy;
 
-		#endregion
+        /// <summary>
+        /// Gets or sets if the view is busy.
+        /// </summary>
+        public const string IsBusyPropertyName = "IsBusy";
 
-		public void OnPropertyChanged (string propertyName)
-		{
-			if (PropertyChanged == null)
-				return;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value, IsBusyPropertyName); }
+        }
 
-			PropertyChanged (this, new PropertyChangedEventArgs (propertyName));
-		}
+        bool _canLoadMore = true;
 
-	}
+        /// <summary>
+        /// Gets or sets if we can load more.
+        /// </summary>
+        public const string CanLoadMorePropertyName = "CanLoadMore";
 
-	[Preserve (AllMembers = true)]
-	public class ArticleListing
-	{
-		public ArticleListing ()
-		{
-		}
+        public bool CanLoadMore
+        {
+            get { return _canLoadMore; }
+            set { SetProperty(ref _canLoadMore, value, CanLoadMorePropertyName); }
+        }
 
-		public string ArticleTitle { get; set; }
+        protected void SetProperty<T>(
+            ref T backingStore, T value,
+            string propertyName,
+            Action onChanged = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return;
 
-		public string ShortArticleTitle { get; set; }
+            backingStore = value;
 
-		public string AuthorString { get; set; }
+            if (onChanged != null)
+                onChanged();
 
-		public string FormattedPostedDate { get; set; }
+            OnPropertyChanged(propertyName);
+        }
 
-		public string KickerName { get; set; }
+        #region INotifyPropertyChanged implementation
 
-		public string ArticleUrl { get; set; }
-	}
+        public event PropertyChangedEventHandler PropertyChanged;
 
-	public class YearOloArticleList
-	{
-		public string Year { get; set; }
+        #endregion
 
-		public List<ArticleListing> ListArticleListing { get; set; }
-	}
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged == null)
+                return;
+
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [Preserve(AllMembers = true)]
+    public class ArticleListing
+    {
+        public ArticleListing()
+        {
+        }
+
+        public string ArticleTitle { get; set; }
+
+        public string ShortArticleTitle { get; set; }
+
+        public string AuthorString { get; set; }
+
+        public string FormattedPostedDate { get; set; }
+
+        public string KickerName { get; set; }
+
+        public string ArticleUrl { get; set; }
+    }
+
+    public class YearOloArticleList
+    {
+        public string Year { get; set; }
+
+        public List<ArticleListing> ListArticleListing { get; set; }
+    }
 }
-

@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Bugzilla, 32447, "[iOS] App crash when scrolling quickly through a TableView that has Pickers in the cells.", PlatformAffected.iOS)]
-	public partial class Bugzilla32447 : TestContentPage
-	{
-		public Bugzilla32447 ()
-		{
-			#if APP
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 32447,
+        "[iOS] App crash when scrolling quickly through a TableView that has Pickers in the cells.",
+        PlatformAffected.iOS)]
+    public partial class Bugzilla32447 : TestContentPage
+    {
+        public Bugzilla32447()
+        {
+#if APP
 
-			InitializeComponent ();
+            InitializeComponent();
 
-			#endif
-		}
+#endif
+        }
 
-		protected override void Init ()
-		{
-			
-		}
-	}
+        protected override void Init()
+        {
+        }
+    }
 }
-

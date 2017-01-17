@@ -3,59 +3,55 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers=true)]
-	[Issue (IssueTracker.Github, 1400, "Group binding errors", PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone, NavigationBehavior.PushModalAsync)]
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 1400, "Group binding errors",
+        PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone, NavigationBehavior.PushModalAsync)]
     public class Issue1400 : ContentPage
     {
         public static Entry Editfield { get; set; }
+
         public static ListView List { get; set; }
-        public static List<MyGroup> Data { get; set;  }
-        public Issue1400 ()
+
+        public static List<MyGroup> Data { get; set; }
+
+        public Issue1400()
         {
             Data = new List<MyGroup>();
-            Data.Add(new MyGroup(){Headertitle = "Header 1"});
-            Data.First().Add(new MyData(){Title = "title 1"});
+            Data.Add(new MyGroup() { Headertitle = "Header 1" });
+            Data.First().Add(new MyData() { Title = "title 1" });
             Data.First().Add(new MyData() { Title = "title 2" });
             Data.Add(new MyGroup() { Headertitle = "Header 2" });
             Data.Last().Add(new MyData() { Title = "title 2a" });
             Data.Last().Add(new MyData() { Title = "title 2b" });
-
 
             Editfield = new Entry();
             Editfield.HorizontalOptions = LayoutOptions.FillAndExpand;
             Editfield.BindingContext = Data.First().First();
             Editfield.SetBinding(Entry.TextProperty, "Title");
 
-            Editfield.TextChanged += (sender, args) =>
-            {
-
-                AddCell(null);
-            };
+            Editfield.TextChanged += (sender, args) => { AddCell(null); };
 
             List = new ListView();
             List.HorizontalOptions = LayoutOptions.FillAndExpand;
             List.VerticalOptions = LayoutOptions.FillAndExpand;
             List.BackgroundColor = Color.Yellow;
-            List.ItemTemplate = new DataTemplate(typeof (VCTest));
+            List.ItemTemplate = new DataTemplate(typeof(VCTest));
             List.GroupHeaderTemplate = new DataTemplate(typeof(VCHeader));
             List.IsGroupingEnabled = true;
             List.ItemsSource = Data;
 
-
-
-			Content = new StackLayout () {
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				Children = { Editfield, List },
-				Padding = new Thickness (10, 10, 10, 10)
-
-			};
+            Content = new StackLayout()
+            {
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Children = { Editfield, List },
+                Padding = new Thickness(10, 10, 10, 10)
+            };
         }
 
         public static List<MyGroup> CopyList(List<MyGroup> data)
@@ -72,7 +68,7 @@ namespace Xamarin.Forms.Controls
                 newlist.Add(grpItem);
             }
             return newlist;
-        } 
+        }
 
         public static void AddCell(MyData data)
         {
@@ -81,7 +77,7 @@ namespace Xamarin.Forms.Controls
             // just make some changes
             newlist.Last().Add(new MyData() { Title = Editfield.Text });
             newlist.Last().RemoveAt(0);
-            newlist.Last().Add(new MyData() { Title = "2nd "+Editfield.Text });
+            newlist.Last().Add(new MyData() { Title = "2nd " + Editfield.Text });
 
             Data = newlist;
 
@@ -93,7 +89,7 @@ namespace Xamarin.Forms.Controls
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-	    string _title;
+        string _title;
 
         public const string PropTitle = "Title";
 
@@ -116,7 +112,7 @@ namespace Xamarin.Forms.Controls
 
     public class MyGroup : ObservableCollection<MyData>, INotifyPropertyChanged
     {
-	    string _headertitle;
+        string _headertitle;
 
         public const string PropHeadertitle = "Headertitle";
 
@@ -127,12 +123,12 @@ namespace Xamarin.Forms.Controls
             {
                 if (value.Equals(_headertitle, StringComparison.Ordinal)) return;
                 _headertitle = value;
-                OnPropertyChanged( new PropertyChangedEventArgs(PropHeadertitle));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropHeadertitle));
             }
         }
     }
 
-	internal class VCTest : ViewCell
+    internal class VCTest : ViewCell
     {
         public VCTest()
         {
@@ -142,7 +138,7 @@ namespace Xamarin.Forms.Controls
         }
     }
 
-	internal class VCHeader : ViewCell
+    internal class VCHeader : ViewCell
     {
         public VCHeader()
         {

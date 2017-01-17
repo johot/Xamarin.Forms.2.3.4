@@ -1,37 +1,37 @@
 using System;
 using System.Threading;
-
 using Xamarin.Forms.CustomAttributes;
 
 namespace Xamarin.Forms.Controls
 {
-	internal class CoreBoxViewGalleryPage : CoreGalleryPage<BoxView>
-	{
-		static readonly object SyncLock = new object ();
-		static readonly Random Rand = new Random ();
-		
-		protected override bool SupportsFocus
-		{
-			get { return false; }
-		}
+    internal class CoreBoxViewGalleryPage : CoreGalleryPage<BoxView>
+    {
+        static readonly object SyncLock = new object();
+        static readonly Random Rand = new Random();
 
-		protected override void InitializeElement (BoxView element)
-		{
-			lock (SyncLock) {
-				var red = Rand.NextDouble ();
-				var green = Rand.NextDouble ();
-				var blue = Rand.NextDouble ();
-				element.Color = new Color (red, green, blue);
-			}
-		}
+        protected override bool SupportsFocus
+        {
+            get { return false; }
+        }
 
-		protected override void Build (StackLayout stackLayout)
-		{
-			base.Build (stackLayout);
+        protected override void InitializeElement(BoxView element)
+        {
+            lock (SyncLock)
+            {
+                var red = Rand.NextDouble();
+                var green = Rand.NextDouble();
+                var blue = Rand.NextDouble();
+                element.Color = new Color(red, green, blue);
+            }
+        }
 
-			var colorContainer = new ViewContainer<BoxView> (Test.BoxView.Color, new BoxView { Color = Color.Pink });
+        protected override void Build(StackLayout stackLayout)
+        {
+            base.Build(stackLayout);
 
-			Add (colorContainer);
-		}
-	}
+            var colorContainer = new ViewContainer<BoxView>(Test.BoxView.Color, new BoxView { Color = Color.Pink });
+
+            Add(colorContainer);
+        }
+    }
 }

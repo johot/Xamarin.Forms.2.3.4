@@ -1,18 +1,16 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-
 namespace App2
 {
-
     public partial class SampleViewCell : ViewCell
     {
-	    MenuItem _overRideItemmenuitem = null;
+        MenuItem _overRideItemmenuitem = null;
+
         public SampleViewCell()
         {
             try
@@ -34,7 +32,7 @@ namespace App2
             }
         }
 
-	    void OverRide_Clicked(object sender, EventArgs e)
+        void OverRide_Clicked(object sender, EventArgs e)
         {
             try
             {
@@ -49,7 +47,7 @@ namespace App2
             }
         }
 
-	    void Checklist_tapped(object sender, EventArgs e)
+        void Checklist_tapped(object sender, EventArgs e)
         {
             try
             {
@@ -82,7 +80,7 @@ namespace App2
             SetContextActions();
         }
 
-	    void SetContextActions()
+        void SetContextActions()
         {
             try
             {
@@ -101,7 +99,6 @@ namespace App2
                     {
                         if (ContextActions.Count > 0)
                         {
-
                             ContextActions.Remove(_overRideItemmenuitem);
                             if (_overRideItemmenuitem != null)
                             {
@@ -109,8 +106,6 @@ namespace App2
                                 _overRideItemmenuitem = null;
                             }
                         }
-
-
                     }
                     else if (obj.ChecklistStatus == CheckListStatus.Pending)
                     {
@@ -118,8 +113,6 @@ namespace App2
                         {
                             ContextActions.Add(_overRideItemmenuitem);
                         }
-
-
                     }
                     else if (obj.ChecklistStatus == CheckListStatus.OverRide)
                     {
@@ -131,19 +124,14 @@ namespace App2
                                 _overRideItemmenuitem.Clicked -= OverRide_Clicked;
                                 _overRideItemmenuitem = null;
                             }
-
                         }
                     }
-
                 }
-
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
     }
 }

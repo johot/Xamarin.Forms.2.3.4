@@ -3,43 +3,47 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers = true)]
-	public class SwitchCellItem 
-	{
-		public string Label { get; set; }
-		public bool SwitchOn { get; set; }
-	}
+    [Preserve(AllMembers = true)]
+    public class SwitchCellItem
+    {
+        public string Label { get; set; }
 
-	public class SwitchCellListPage : ContentPage
-	{
-		public SwitchCellListPage ()
-		{
-			Title = "SwitchCell List Gallery - Legacy";
+        public bool SwitchOn { get; set; }
+    }
 
-			if (Device.RuntimePlatform == Device.iOS && Device.Idiom == TargetIdiom.Tablet)
-				Padding = new Thickness(0, 0, 0, 60);
+    public class SwitchCellListPage : ContentPage
+    {
+        public SwitchCellListPage()
+        {
+            Title = "SwitchCell List Gallery - Legacy";
 
-			var dataTemplate = new DataTemplate (typeof (SwitchCell)) {
-				Bindings = {
-					{SwitchCell.TextProperty, new Binding ("Label")},
-					{SwitchCell.OnProperty, new Binding ("SwitchOn")},
-				}
-			};
+            if (Device.RuntimePlatform == Device.iOS && Device.Idiom == TargetIdiom.Tablet)
+                Padding = new Thickness(0, 0, 0, 60);
 
-			var label = new Label { Text = "I have not been selected" };
+            var dataTemplate = new DataTemplate(typeof(SwitchCell))
+            {
+                Bindings =
+                {
+                    { SwitchCell.TextProperty, new Binding("Label") },
+                    { SwitchCell.OnProperty, new Binding("SwitchOn") },
+                }
+            };
 
-			var listView = new ListView {
-				ItemsSource = Enumerable.Range (0, 100).Select (i => new SwitchCellItem {
-					Label = "Label " + i,
-					SwitchOn =  i % 2 == 0 ? false : true,
-				}),
-				ItemTemplate = dataTemplate
-			};
+            var label = new Label { Text = "I have not been selected" };
 
-			listView.ItemSelected += (sender, args) => label.Text = "I was selected.";
+            var listView = new ListView
+            {
+                ItemsSource = Enumerable.Range(0, 100).Select(i => new SwitchCellItem
+                {
+                    Label = "Label " + i,
+                    SwitchOn = i % 2 == 0 ? false : true,
+                }),
+                ItemTemplate = dataTemplate
+            };
 
-			Content = new StackLayout { Children = { label, listView } };
-		}
+            listView.ItemSelected += (sender, args) => label.Text = "I was selected.";
 
-	}
+            Content = new StackLayout { Children = { label, listView } };
+        }
+    }
 }

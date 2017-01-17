@@ -16,7 +16,8 @@ namespace Xamarin.Forms.Controls.Issues
 #endif
 
     [Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 42364, "ListView item's contextual action menu not being closed upon swiping a TabbedPage in AppCompat")]
+    [Issue(IssueTracker.Bugzilla, 42364,
+        "ListView item's contextual action menu not being closed upon swiping a TabbedPage in AppCompat")]
     public class Bugzilla42354 : TestTabbedPage
     {
         protected override void Init()
@@ -54,7 +55,14 @@ namespace Xamarin.Forms.Controls.Issues
                         new Button
                         {
                             Text = "Go to next page",
-                            Command = new Command(() => Navigation.PushAsync(new ContentPage { Title = "Next Page", Content = new Label { Text = "Here" } }))
+                            Command =
+                                new Command(
+                                    () =>
+                                        Navigation.PushAsync(new ContentPage
+                                        {
+                                            Title = "Next Page",
+                                            Content = new Label { Text = "Here" }
+                                        }))
                         },
                         list
                     }

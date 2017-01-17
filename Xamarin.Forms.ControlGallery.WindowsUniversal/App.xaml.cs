@@ -44,11 +44,10 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-             //   DebugSettings.EnableFrameRateCounter = true;
+                //   DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 
@@ -65,11 +64,11 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-				Forms.Init (e);
-				FormsMaps.Init (Controls.App.Config["UWPMapsAuthKey"]);
+                Forms.Init(e);
+                FormsMaps.Init(Controls.App.Config["UWPMapsAuthKey"]);
 
-				// Place the frame in the current Window
-				Window.Current.Content = rootFrame;
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
             }
 
             if (rootFrame.Content == null)
@@ -80,20 +79,20 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
-			//// Uncomment to test overriding the status bar color
-			//if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-			//{
-			//	var statusBar = StatusBar.GetForCurrentView();
-			//	if (statusBar != null)
-			//	{
-			//		statusBar.BackgroundOpacity = 1;
-			//		statusBar.BackgroundColor = Colors.Black;
-			//		statusBar.ForegroundColor = Colors.White;
-			//	}
-			//}
+            //// Uncomment to test overriding the status bar color
+            //if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            //{
+            //	var statusBar = StatusBar.GetForCurrentView();
+            //	if (statusBar != null)
+            //	{
+            //		statusBar.BackgroundOpacity = 1;
+            //		statusBar.BackgroundColor = Colors.Black;
+            //		statusBar.ForegroundColor = Colors.White;
+            //	}
+            //}
 
-			// Ensure the current window is active
-			Window.Current.Activate();
+            // Ensure the current window is active
+            Window.Current.Activate();
         }
 
         /// <summary>

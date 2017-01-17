@@ -14,19 +14,19 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 1, "Issue Description", PlatformAffected.Default)]
-	public class Bugzilla1 : TestContentPage // or TestMasterDetailPage, etc ...
-	{
-		protected override void Init()
-		{
-			// Initialize ui here instead of ctor
-			Content = new Label
-			{
-				AutomationId = "IssuePageLabel",
-				Text = "See if I'm here"
-			};
-		}
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 1, "Issue Description", PlatformAffected.Default)]
+    public class Bugzilla1 : TestContentPage // or TestMasterDetailPage, etc ...
+    {
+        protected override void Init()
+        {
+            // Initialize ui here instead of ctor
+            Content = new Label
+            {
+                AutomationId = "IssuePageLabel",
+                Text = "See if I'm here"
+            };
+        }
 
 #if UITEST
 		[Test]
@@ -37,5 +37,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("I see the Label");
 		}
 #endif
-	}
+    }
 }

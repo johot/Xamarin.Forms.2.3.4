@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Controls.Issues
 
     [Preserve(AllMembers = true)]
     [Issue(IssueTracker.Bugzilla, 40173, "Android BoxView/Frame not clickthrough in ListView")]
-	public class Bugzilla40173 : TestContentPage // or TestMasterDetailPage, etc ...
+    public class Bugzilla40173 : TestContentPage // or TestMasterDetailPage, etc ...
     {
         const string CantTouchButtonId = "CantTouchButtonId";
         const string CanTouchButtonId = "CanTouchButtonId";

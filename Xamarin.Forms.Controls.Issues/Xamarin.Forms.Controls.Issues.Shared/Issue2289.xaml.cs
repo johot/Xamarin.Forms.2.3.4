@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using System.Windows.Input;
@@ -15,33 +14,29 @@ using Xamarin.UITest.iOS;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 2289, "TextCell IsEnabled property not disabling element in TableView", PlatformAffected.iOS)]
-	public partial class Issue2289 : TestContentPage
-	{
-
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 2289, "TextCell IsEnabled property not disabling element in TableView",
+        PlatformAffected.iOS)]
+    public partial class Issue2289 : TestContentPage
+    {
 #if APP
-		public Issue2289 ()
-		{
-			InitializeComponent ();
-		}
+        public Issue2289()
+        {
+            InitializeComponent();
+        }
 #endif
 
-		protected override void Init ()
-		{
-			MoreCommand = new Command<MenuItem> ((menuItem) => {
-				Debug.WriteLine ("More! Command Called!");
-			});
+        protected override void Init()
+        {
+            MoreCommand = new Command<MenuItem>((menuItem) => { Debug.WriteLine("More! Command Called!"); });
 
-			DeleteCommand = new Command<MenuItem> ((menuItem) => {
-				Debug.WriteLine ("Delete Command Called!");
-			});
-			BindingContext = this;
-		}
+            DeleteCommand = new Command<MenuItem>((menuItem) => { Debug.WriteLine("Delete Command Called!"); });
+            BindingContext = this;
+        }
 
-		public ICommand MoreCommand { get; protected set; }
+        public ICommand MoreCommand { get; protected set; }
 
-		public ICommand DeleteCommand { get; protected set; }
+        public ICommand DeleteCommand { get; protected set; }
 
 #if UITEST && __IOS__
 		[Test]
@@ -95,7 +90,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (c => c.Marked ("More"));
 		}
 #endif
-
-	}
+    }
 }
-

@@ -16,40 +16,38 @@ namespace Xamarin.Forms.Controls.Issues
 	[Category(UITestCategories.ListView)]
 #endif
 
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Bugzilla, 26032, " ListView ItemTapped doesn't get called for the selected item ", PlatformAffected.iOS)]
-	public partial class Bugzilla26032 : TestContentPage
-	{
-		#if APP
-		public Bugzilla26032 ()
-		{
-			
-			InitializeComponent ();
-			var data = new[] { "1", "2", "3", "4", "5" };
-			var dataContext = new[] { "1 Context", "2 Context", "3 Context", "4 Context", "5 Context" };
-			List1.ItemsSource = data;
-			List2.ItemsSource = dataContext;
-		}
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 26032, " ListView ItemTapped doesn't get called for the selected item ",
+        PlatformAffected.iOS)]
+    public partial class Bugzilla26032 : TestContentPage
+    {
+#if APP
+        public Bugzilla26032()
+        {
+            InitializeComponent();
+            var data = new[] { "1", "2", "3", "4", "5" };
+            var dataContext = new[] { "1 Context", "2 Context", "3 Context", "4 Context", "5 Context" };
+            List1.ItemsSource = data;
+            List2.ItemsSource = dataContext;
+        }
 
+        public void OnItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            Log.Text = string.Format("Item '{0}' tapped\n{1}", e.Item, Log.Text);
+        }
 
-		public void OnItemTapped(object sender, ItemTappedEventArgs e)
-		{
-			Log.Text = string.Format("Item '{0}' tapped\n{1}", e.Item, Log.Text);
-		}
+        public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            Log.Text = string.Format("Item '{0}' selected\n{1}", e.SelectedItem, Log.Text);
+        }
 
-		public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
-		{
-			Log.Text = string.Format("Item '{0}' selected\n{1}", e.SelectedItem, Log.Text);
-		}
+#endif
 
-		#endif
+        protected override void Init()
+        {
+        }
 
-		protected override void Init ()
-		{
-		}
-
-
-		#if UITEST
+#if UITEST
 		[Test]
 		public void SelectedItemTap ()
 		{
@@ -74,6 +72,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Text (forIdContext + forId1));
 		}
 		#endif
-	}
+    }
 }
-

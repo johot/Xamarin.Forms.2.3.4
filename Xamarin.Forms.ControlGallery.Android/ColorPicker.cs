@@ -8,153 +8,155 @@ using Droid = Android;
 
 namespace Xamarin.Forms.ControlGallery.Android
 {
-	public class ColorPickerView : ViewGroup
-	//, INotifyPropertyChanged
-	{
-		static readonly int[] COLORS = new[] {
-				new Droid.Graphics.Color(255,0,0,255).ToArgb(), new Droid.Graphics.Color(255,0,255,255).ToArgb(), new Droid.Graphics.Color(0,0,255,255).ToArgb(),
-				new Droid.Graphics.Color(0,255,255,255).ToArgb(), new Droid.Graphics.Color(0,255,0,255).ToArgb(), new Droid.Graphics.Color(255,255,0,255).ToArgb(),
-				new Droid.Graphics.Color(255,0,0,255).ToArgb()
-			};
-		Droid.Graphics.Point currentPoint;
-		ColorPointer colorPointer;
-		ImageView imageViewSelectedColor;
-		ImageView imageViewPallete;
-		Droid.Graphics.Color selectedColor;
-		Droid.Graphics.Color previewColor;
+    public class ColorPickerView : ViewGroup
+        //, INotifyPropertyChanged
+    {
+        static readonly int[] COLORS = new[]
+        {
+            new Droid.Graphics.Color(255, 0, 0, 255).ToArgb(), new Droid.Graphics.Color(255, 0, 255, 255).ToArgb(),
+            new Droid.Graphics.Color(0, 0, 255, 255).ToArgb(),
+            new Droid.Graphics.Color(0, 255, 255, 255).ToArgb(), new Droid.Graphics.Color(0, 255, 0, 255).ToArgb(),
+            new Droid.Graphics.Color(255, 255, 0, 255).ToArgb(),
+            new Droid.Graphics.Color(255, 0, 0, 255).ToArgb()
+        };
 
-		//public event PropertyChangedEventHandler PropertyChanged;
-		public event EventHandler ColorPicked;
+        Droid.Graphics.Point currentPoint;
+        ColorPointer colorPointer;
+        ImageView imageViewSelectedColor;
+        ImageView imageViewPallete;
+        Droid.Graphics.Color selectedColor;
+        Droid.Graphics.Color previewColor;
 
-		public ColorPickerView(Context context, int minWidth, int minHeight) : base(context)
-		{
-			SelectedColor = Color.Black.ToAndroid();
+        //public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler ColorPicked;
 
-			SetMinimumHeight(minHeight);
-			SetMinimumWidth(minWidth);
+        public ColorPickerView(Context context, int minWidth, int minHeight) : base(context)
+        {
+            SelectedColor = Color.Black.ToAndroid();
 
-			imageViewPallete = new ImageView(context);
-			imageViewPallete.DrawingCacheEnabled = true;
-			imageViewPallete.Background = new Droid.Graphics.Drawables.GradientDrawable(Droid.Graphics.Drawables.GradientDrawable.Orientation.LeftRight, COLORS);
+            SetMinimumHeight(minHeight);
+            SetMinimumWidth(minWidth);
 
-			imageViewPallete.Touch += (object sender, TouchEventArgs e) =>
-			{
-				if (e.Event.Action == MotionEventActions.Down || e.Event.Action == MotionEventActions.Move)
-				{
-					currentPoint = new Droid.Graphics.Point((int)e.Event.GetX(), (int)e.Event.GetY());
+            imageViewPallete = new ImageView(context);
+            imageViewPallete.DrawingCacheEnabled = true;
+            imageViewPallete.Background =
+                new Droid.Graphics.Drawables.GradientDrawable(
+                    Droid.Graphics.Drawables.GradientDrawable.Orientation.LeftRight, COLORS);
 
-					previewColor = GetCurrentColor(imageViewPallete.GetDrawingCache(false), (int)e.Event.GetX(), (int)e.Event.GetY());
-				}
-				if (e.Event.Action == MotionEventActions.Up)
-				{
-					SelectedColor = previewColor;
-				}
-			};
+            imageViewPallete.Touch += (object sender, TouchEventArgs e) =>
+            {
+                if (e.Event.Action == MotionEventActions.Down || e.Event.Action == MotionEventActions.Move)
+                {
+                    currentPoint = new Droid.Graphics.Point((int)e.Event.GetX(), (int)e.Event.GetY());
 
-			imageViewSelectedColor = new ImageView(context);
-			colorPointer = new ColorPointer(context);
+                    previewColor = GetCurrentColor(imageViewPallete.GetDrawingCache(false), (int)e.Event.GetX(),
+                        (int)e.Event.GetY());
+                }
+                if (e.Event.Action == MotionEventActions.Up)
+                {
+                    SelectedColor = previewColor;
+                }
+            };
 
-			AddView(imageViewPallete);
-			AddView(imageViewSelectedColor);
-			AddView(colorPointer);
-		}
+            imageViewSelectedColor = new ImageView(context);
+            colorPointer = new ColorPointer(context);
 
-		public Droid.Graphics.Color SelectedColor
-		{
-			get
-			{
-				return selectedColor;
-			}
+            AddView(imageViewPallete);
+            AddView(imageViewSelectedColor);
+            AddView(colorPointer);
+        }
 
-			set
-			{
-				if (selectedColor == value)
-					return;
+        public Droid.Graphics.Color SelectedColor
+        {
+            get { return selectedColor; }
 
-				selectedColor = value;
-				UpdateUi();
-				OnPropertyChanged();
-				OnColorPicked();
-			}
-		}
+            set
+            {
+                if (selectedColor == value)
+                    return;
 
-		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
-		{
-			var half = (bottom - top) / 2;
-			var margin = 20;
+                selectedColor = value;
+                UpdateUi();
+                OnPropertyChanged();
+                OnColorPicked();
+            }
+        }
 
-			var palleteY = top + half;
+        protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
+        {
+            var half = (bottom - top) / 2;
+            var margin = 20;
 
-			imageViewSelectedColor.Layout(left, top, right, bottom - half - margin);
-			imageViewPallete.Layout(left, palleteY, right, bottom);
-			colorPointer.Layout(left, palleteY, right, bottom);
-		}
+            var palleteY = top + half;
 
-		void UpdateUi()
-		{
-			imageViewSelectedColor?.SetBackgroundColor(selectedColor);
-			colorPointer?.UpdatePoint(currentPoint);
-		}
+            imageViewSelectedColor.Layout(left, top, right, bottom - half - margin);
+            imageViewPallete.Layout(left, palleteY, right, bottom);
+            colorPointer.Layout(left, palleteY, right, bottom);
+        }
 
-		Droid.Graphics.Color GetCurrentColor(Droid.Graphics.Bitmap bitmap, int x, int y)
-		{
-			if (bitmap == null)
-				return new Droid.Graphics.Color(255, 255, 255, 255);
+        void UpdateUi()
+        {
+            imageViewSelectedColor?.SetBackgroundColor(selectedColor);
+            colorPointer?.UpdatePoint(currentPoint);
+        }
 
-			if (x < 0)
-				x = 0;
-			if (y < 0)
-				y = 0;
-			if (x >= bitmap.Width)
-				x = bitmap.Width - 1;
-			if (y >= bitmap.Height)
-				y = bitmap.Height - 1;
+        Droid.Graphics.Color GetCurrentColor(Droid.Graphics.Bitmap bitmap, int x, int y)
+        {
+            if (bitmap == null)
+                return new Droid.Graphics.Color(255, 255, 255, 255);
 
-			int color = bitmap.GetPixel(x, y);
-			return new Droid.Graphics.Color(color);
-		}
+            if (x < 0)
+                x = 0;
+            if (y < 0)
+                y = 0;
+            if (x >= bitmap.Width)
+                x = bitmap.Width - 1;
+            if (y >= bitmap.Height)
+                y = bitmap.Height - 1;
 
-		void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-		{
-			//PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+            int color = bitmap.GetPixel(x, y);
+            return new Droid.Graphics.Color(color);
+        }
 
-		void OnColorPicked()
-		{
-			ColorPicked?.Invoke(this, new EventArgs());
-		}
-	}
+        void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-	public class ColorPointer : Droid.Views.View
-	{
-		Droid.Graphics.Paint colorPointerPaint;
-		Droid.Graphics.Point currentPoint;
-		Droid.Graphics.Point nextPoint;
+        void OnColorPicked()
+        {
+            ColorPicked?.Invoke(this, new EventArgs());
+        }
+    }
 
-		public ColorPointer(Context context) : base(context)
-		{
+    public class ColorPointer : Droid.Views.View
+    {
+        Droid.Graphics.Paint colorPointerPaint;
+        Droid.Graphics.Point currentPoint;
+        Droid.Graphics.Point nextPoint;
 
-			colorPointerPaint = new Droid.Graphics.Paint();
-			colorPointerPaint.SetStyle(Droid.Graphics.Paint.Style.Stroke);
-			colorPointerPaint.StrokeWidth = 5f;
-			colorPointerPaint.SetARGB(255, 0, 0, 0);
+        public ColorPointer(Context context) : base(context)
+        {
+            colorPointerPaint = new Droid.Graphics.Paint();
+            colorPointerPaint.SetStyle(Droid.Graphics.Paint.Style.Stroke);
+            colorPointerPaint.StrokeWidth = 5f;
+            colorPointerPaint.SetARGB(255, 0, 0, 0);
+        }
 
-		}
+        public void UpdatePoint(Droid.Graphics.Point p)
+        {
+            if (p == null)
+                return;
 
-		public void UpdatePoint(Droid.Graphics.Point p)
-		{
-			if (p == null)
-				return;
+            if (currentPoint == null)
+                currentPoint = nextPoint;
 
-			if (currentPoint == null)
-				currentPoint = nextPoint;
+            nextPoint = p;
+        }
 
-			nextPoint = p;
-		}
-
-		protected override void OnDraw(Droid.Graphics.Canvas canvas)
-		{
-			base.OnDraw(canvas);
-		}
-	}
+        protected override void OnDraw(Droid.Graphics.Canvas canvas)
+        {
+            base.OnDraw(canvas);
+        }
+    }
 }

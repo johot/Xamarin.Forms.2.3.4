@@ -1,12 +1,11 @@
 ﻿namespace Xamarin.Forms.Controls
 {
-	public interface ITestCloudService
-	{
-		bool IsOnTestCloud ();
+    public interface ITestCloudService
+    {
+        bool IsOnTestCloud();
 
-		string GetTestCloudDeviceName ();
+        string GetTestCloudDeviceName();
 
-		string GetTestCloudDevice ();
-	}
+        string GetTestCloudDevice();
+    }
 }
-

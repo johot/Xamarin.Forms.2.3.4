@@ -2,65 +2,59 @@ using System;
 
 namespace Xamarin.Forms.Controls
 {
-	// Not quite sure how to turn this into a test case, effectively replace the normal Application with this to repro issues reported.
-	// Full repro requires assignment to MainPage, hence the issue
-	public class NavReproApp : Application
-	{
-		NavigationPage navPage1 = new NavigationPage ();
+    // Not quite sure how to turn this into a test case, effectively replace the normal Application with this to repro issues reported.
+    // Full repro requires assignment to MainPage, hence the issue
+    public class NavReproApp : Application
+    {
+        NavigationPage navPage1 = new NavigationPage();
 
-		public NavReproApp ()
-		{
+        public NavReproApp()
+        {
+            var btn = new Button() { Text = "Start" };
 
-			var btn = new Button () { Text = "Start" };
+            btn.Clicked += Btn_Clicked;
 
-			btn.Clicked += Btn_Clicked;
+            navPage1.PushAsync(new ContentPage() { Content = btn });
 
-			navPage1.PushAsync (new ContentPage () { Content = btn });
+            MainPage = navPage1;
+        }
 
-			MainPage = navPage1;
+        async void Btn_Clicked(object sender, EventArgs e)
+        {
+            await navPage1.PushAsync(new ContentPage() { Content = new Label() { Text = "Page 2" } });
+            await navPage1.PushAsync(new ContentPage() { Content = new Label() { Text = "Page 3" } });
 
-		}
+            var navPage2 = new NavigationPage();
 
-		async void Btn_Clicked (object sender, EventArgs e)
-		{
-			await navPage1.PushAsync (new ContentPage () { Content = new Label () { Text = "Page 2" } });
-			await navPage1.PushAsync (new ContentPage () { Content = new Label () { Text = "Page 3" } });
+            var btn = new Button() { Text = "Start Next" };
+            btn.Clicked += Btn_Clicked1;
 
+            await navPage2.PushAsync(new ContentPage() { Content = btn });
 
-			var navPage2 = new NavigationPage ();
+            MainPage = navPage2;
+        }
 
-			var btn = new Button () { Text = "Start Next" };
-			btn.Clicked += Btn_Clicked1;
+        async void Btn_Clicked1(object sender, EventArgs e)
+        {
+            MainPage = navPage1;
+            await navPage1.PopAsync();
 
-			await navPage2.PushAsync (new ContentPage () { Content = btn });
+            await navPage1.PushAsync(new ContentPage() { Content = new Label() { Text = "Page 3a" } });
+        }
 
-			MainPage = navPage2;
+        protected override void OnStart()
+        {
+            // Handle when your app starts
+        }
 
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
 
-		}
-
-		async void Btn_Clicked1 (object sender, EventArgs e)
-		{
-			MainPage = navPage1;
-			await navPage1.PopAsync ();
-
-
-			await navPage1.PushAsync (new ContentPage () { Content = new Label () { Text = "Page 3a" } });
-		}
-
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
-
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
-
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
 }

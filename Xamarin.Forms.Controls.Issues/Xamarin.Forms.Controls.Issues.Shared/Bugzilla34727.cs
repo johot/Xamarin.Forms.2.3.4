@@ -3,15 +3,15 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Bugzilla, 34727, "(A) Cannot browse files from WebView on Android", PlatformAffected.Android)]
-	public class Bugzilla34727 : TestContentPage
-	{
-		protected override void Init ()
-		{
-			var webView = new WebView ();
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 34727, "(A) Cannot browse files from WebView on Android", PlatformAffected.Android)]
+    public class Bugzilla34727 : TestContentPage
+    {
+        protected override void Init()
+        {
+            var webView = new WebView();
 
-			var htmlSource = new HtmlWebViewSource { Html = @"
+            var htmlSource = new HtmlWebViewSource { Html = @"
 <h3>Test Web View File Chooser</h3>
 <ol>
 	<li>Open the camera app.</li>
@@ -24,8 +24,8 @@ namespace Xamarin.Forms.Controls
 <br/>
 <input type='file' name='file' id='chooser' accept='image/*'>" };
 
-			webView.Source = htmlSource;
-			Content = webView;
-		}
-	}
+            webView.Source = htmlSource;
+            Content = webView;
+        }
+    }
 }

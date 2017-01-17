@@ -2,31 +2,32 @@ using System;
 
 namespace Xamarin.Forms.Controls
 {
-	internal class EventViewContainer<T> : ViewContainer<T> 
-		where T : View
-	{
-		string _formsMember;
-		Label _eventLabel;
-		int _numberOfTimesFired;
+    internal class EventViewContainer<T> : ViewContainer<T>
+        where T : View
+    {
+        string _formsMember;
+        Label _eventLabel;
+        int _numberOfTimesFired;
 
-		public EventViewContainer (Enum formsMember, T view) : base (formsMember, view)
-		{
-			_numberOfTimesFired = 0;
+        public EventViewContainer(Enum formsMember, T view) : base(formsMember, view)
+        {
+            _numberOfTimesFired = 0;
 
-			_formsMember = formsMember.ToString ();
-			
-			_eventLabel = new Label {
-				AutomationId = formsMember + "EventLabel",
-				Text = "Event: " + _formsMember + " (none)"
-			};
+            _formsMember = formsMember.ToString();
 
-			ContainerLayout.Children.Add (_eventLabel);
-		}
+            _eventLabel = new Label
+            {
+                AutomationId = formsMember + "EventLabel",
+                Text = "Event: " + _formsMember + " (none)"
+            };
 
-		public void EventFired ()
-		{
-			_numberOfTimesFired++;
-			_eventLabel.Text = "Event: " + _formsMember + " (fired " + _numberOfTimesFired + ")";
-		}
-	}
+            ContainerLayout.Children.Add(_eventLabel);
+        }
+
+        public void EventFired()
+        {
+            _numberOfTimesFired++;
+            _eventLabel.Text = "Event: " + _formsMember + " (fired " + _numberOfTimesFired + ")";
+        }
+    }
 }

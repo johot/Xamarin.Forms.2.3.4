@@ -9,110 +9,116 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	public class ListPage : ContentPage
-	{
-		ListScreen _listScreen;
-		public ListPage ()
-		{
-			_listScreen = new ListScreen ();
-			Content = new StackLayout {
-				Children = {
-					new Label {Text = "Foo"},
-					_listScreen.View
-				}
-			};
-		}
-	}
+    public class ListPage : ContentPage
+    {
+        ListScreen _listScreen;
 
-	public class ListScreen
-	{
-		public ListView View { get; private set; }
+        public ListPage()
+        {
+            _listScreen = new ListScreen();
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    new Label { Text = "Foo" },
+                    _listScreen.View
+                }
+            };
+        }
+    }
 
-		internal class A : INotifyPropertyChanged
-		{
-			string _text;
-			public string Text {
-				get {
-					return _text;
-				}
-				set {
-					_text = value;
-					if(PropertyChanged != null)
-						PropertyChanged(this, new PropertyChangedEventArgs("Text"));
-				}
-			}
+    public class ListScreen
+    {
+        public ListView View { get; private set; }
 
-			#region INotifyPropertyChanged implementation
+        internal class A : INotifyPropertyChanged
+        {
+            string _text;
 
-			public event PropertyChangedEventHandler PropertyChanged;
+            public string Text
+            {
+                get { return _text; }
+                set
+                {
+                    _text = value;
+                    if (PropertyChanged != null)
+                        PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+                }
+            }
 
-			#endregion
-		}
+            #region INotifyPropertyChanged implementation
 
-		[Preserve (AllMembers = true)]
-		internal class ViewCellTest : ViewCell
-		{
-			static int s_inc = 0;
+            public event PropertyChangedEventHandler PropertyChanged;
 
-			public ViewCellTest ()
-			{
-				var stackLayout = new StackLayout {
-					Orientation = StackOrientation.Horizontal
-				};
+            #endregion
+        }
 
-				var label = new Label ();
-				label.SetBinding (Label.TextProperty, "Text");
+        [Preserve(AllMembers = true)]
+        internal class ViewCellTest : ViewCell
+        {
+            static int s_inc = 0;
 
-				var box = new BoxView {WidthRequest = 100, HeightRequest = 10, Color = Color.Red};
+            public ViewCellTest()
+            {
+                var stackLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal
+                };
 
-				stackLayout.Children.Add (label);
-				stackLayout.Children.Add (box);
+                var label = new Label();
+                label.SetBinding(Label.TextProperty, "Text");
 
-				View = stackLayout;
-			}
+                var box = new BoxView { WidthRequest = 100, HeightRequest = 10, Color = Color.Red };
 
-			protected override void OnAppearing ()
-			{
-				base.OnAppearing ();
-				Debug.WriteLine ("Appearing: " + (BindingContext as A)?.Text + " : " + s_inc);
-				s_inc++;
-			}
+                stackLayout.Children.Add(label);
+                stackLayout.Children.Add(box);
 
-			protected override void OnDisappearing ()
-			{
-				base.OnDisappearing ();
-				Debug.WriteLine ("Disappearing: " + (BindingContext as A)?.Text + " : " + s_inc);
-				s_inc++;
-			}
-		}
+                View = stackLayout;
+            }
 
-		public ListScreen ()
-		{
+            protected override void OnAppearing()
+            {
+                base.OnAppearing();
+                Debug.WriteLine("Appearing: " + (BindingContext as A)?.Text + " : " + s_inc);
+                s_inc++;
+            }
 
-			View = new ListView (ListViewCachingStrategy.RecycleElement);
+            protected override void OnDisappearing()
+            {
+                base.OnDisappearing();
+                Debug.WriteLine("Disappearing: " + (BindingContext as A)?.Text + " : " + s_inc);
+                s_inc++;
+            }
+        }
 
-			View.RowHeight = 30;
+        public ListScreen()
+        {
+            View = new ListView(ListViewCachingStrategy.RecycleElement);
 
-			var n = 500;
-			var items = Enumerable.Range (0, n).Select (i => new A {Text = i.ToString ()}).ToList ();
-			View.ItemsSource = items;
+            View.RowHeight = 30;
 
-			View.ItemTemplate = new DataTemplate (typeof (ViewCellTest));
+            var n = 500;
+            var items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+            View.ItemsSource = items;
 
-			View.ItemSelected += (sender, e) => {
-				var cell = (e.SelectedItem as A);
-				if (cell == null)
-					return;
-				var x = int.Parse (cell.Text);
-				if (x == 5) {
-					n += 10;
-					View.ItemsSource = Enumerable.Range (0, n).Select (i => new A { Text = i.ToString () }).ToList ();
-				} else {
-					cell.Text = (x + 1).ToString ();
-				}
-			};
+            View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
 
-				
-		}
-	}
+            View.ItemSelected += (sender, e) =>
+            {
+                var cell = (e.SelectedItem as A);
+                if (cell == null)
+                    return;
+                var x = int.Parse(cell.Text);
+                if (x == 5)
+                {
+                    n += 10;
+                    View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+                }
+                else
+                {
+                    cell.Text = (x + 1).ToString();
+                }
+            };
+        }
+    }
 }

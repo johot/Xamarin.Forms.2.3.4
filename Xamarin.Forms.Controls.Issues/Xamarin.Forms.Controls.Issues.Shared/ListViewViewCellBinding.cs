@@ -11,126 +11,133 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls
 {
-	public class GenericValueConverter : IValueConverter
-	{
-		Func<object, object> _convert;
-		Func<object, object> _back;
-		public GenericValueConverter(Func<object, object> convert, Func<object, object> back = null)
-		{
-			_convert = convert;
-			_back = back;
-		}
+    public class GenericValueConverter : IValueConverter
+    {
+        Func<object, object> _convert;
+        Func<object, object> _back;
 
-		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-		{
-			return _convert(value);
-		}
+        public GenericValueConverter(Func<object, object> convert, Func<object, object> back = null)
+        {
+            _convert = convert;
+            _back = back;
+        }
 
-		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-		{
-			return _back(value);
-		}
-	}
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return _convert(value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            return _back(value);
+        }
+    }
 }
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	public class Expense
-	{
-		public string Name { get; private set; }
-		public decimal Amount { get; private set; }
+    [Preserve(AllMembers = true)]
+    public class Expense
+    {
+        public string Name { get; private set; }
 
-		public Expense (string name, decimal amount)
-		{
-			Name = name;
-			Amount = amount;
-		}
-	}
+        public decimal Amount { get; private set; }
 
-	[Preserve (AllMembers = true)]
-	public class ExpenseListViewCell : ViewCell
-	{
-		public ExpenseListViewCell ()
-		{
-			var expenseNameLabel = new Label ();
-			expenseNameLabel.SetBinding (Label.TextProperty, "Name");
+        public Expense(string name, decimal amount)
+        {
+            Name = name;
+            Amount = amount;
+        }
+    }
 
-			var expenseAmountLabel = new Label ();
-			var expenseAmountToStringConverter = new GenericValueConverter (obj => string.Format ("{0:C}", ((decimal)obj)));
-			expenseAmountLabel.SetBinding (Label.TextProperty, new Binding ("Amount", converter: expenseAmountToStringConverter));
+    [Preserve(AllMembers = true)]
+    public class ExpenseListViewCell : ViewCell
+    {
+        public ExpenseListViewCell()
+        {
+            var expenseNameLabel = new Label();
+            expenseNameLabel.SetBinding(Label.TextProperty, "Name");
 
-			var layout = new StackLayout ();
+            var expenseAmountLabel = new Label();
+            var expenseAmountToStringConverter = new GenericValueConverter(obj => string.Format("{0:C}", ((decimal)obj)));
+            expenseAmountLabel.SetBinding(Label.TextProperty,
+                new Binding("Amount", converter: expenseAmountToStringConverter));
 
-			layout.Children.Add (expenseNameLabel);
-			layout.Children.Add (expenseAmountLabel);
+            var layout = new StackLayout();
 
-			View = layout;
-		}
+            layout.Children.Add(expenseNameLabel);
+            layout.Children.Add(expenseAmountLabel);
 
-		protected override void OnBindingContextChanged ()
-		{
-			// Fixme : this is happening because the View.Parent is getting 
-			// set after the Cell gets the binding context set on it. Then it is inheriting
-			// the parents binding context.
-			View.BindingContext = BindingContext;
-			base.OnBindingContextChanged ();
-		}
-	}
+            View = layout;
+        }
 
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.None, 0, "ListView ViewCell binding", PlatformAffected.All)]
-	public class ListViewViewCellBinding : TestContentPage
-	{
+        protected override void OnBindingContextChanged()
+        {
+            // Fixme : this is happening because the View.Parent is getting 
+            // set after the Cell gets the binding context set on it. Then it is inheriting
+            // the parents binding context.
+            View.BindingContext = BindingContext;
+            base.OnBindingContextChanged();
+        }
+    }
 
-		// Binding issue with view cells
-		public ObservableCollection<Expense> Expenses;
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.None, 0, "ListView ViewCell binding", PlatformAffected.All)]
+    public class ListViewViewCellBinding : TestContentPage
+    {
+        // Binding issue with view cells
+        public ObservableCollection<Expense> Expenses;
 
-		protected override void Init ()
-		{
-			//BindingContext = this;
+        protected override void Init()
+        {
+            //BindingContext = this;
 
-			Expenses = new ObservableCollection<Expense> {
-				new Expense ("1", 100.0m),
-				new Expense ("2", 200.0m),
-				new Expense ("3", 300.0m)
-			};
+            Expenses = new ObservableCollection<Expense>
+            {
+                new Expense("1", 100.0m),
+                new Expense("2", 200.0m),
+                new Expense("3", 300.0m)
+            };
 
-			var listView = new ListView ();
+            var listView = new ListView();
 
-			listView.ItemsSource = Expenses;
-			listView.ItemTemplate = new DataTemplate (typeof (ExpenseListViewCell));
+            listView.ItemsSource = Expenses;
+            listView.ItemTemplate = new DataTemplate(typeof(ExpenseListViewCell));
 
-			var layout = new StackLayout ();
-			int numberAdded = 3;
+            var layout = new StackLayout();
+            int numberAdded = 3;
 
-			var label = new Label {
-				Text = numberAdded.ToString()
-			};
+            var label = new Label
+            {
+                Text = numberAdded.ToString()
+            };
 
-			var removeBtn = new Button { Text = "Remove" };
-			removeBtn.Clicked += (s, e) => {
-				if (numberAdded > 0) {
-					numberAdded--;
-					Expenses.RemoveAt (0);
-					label.Text = numberAdded.ToString ();
-				}
-			};
-			var addBtn = new Button { Text = "Add" };
-			addBtn.Clicked += (s, e) => {
-				Expenses.Add (new Expense ("4", 400.0m));
-				numberAdded++;
-				label.Text = numberAdded.ToString ();
-			};
+            var removeBtn = new Button { Text = "Remove" };
+            removeBtn.Clicked += (s, e) =>
+            {
+                if (numberAdded > 0)
+                {
+                    numberAdded--;
+                    Expenses.RemoveAt(0);
+                    label.Text = numberAdded.ToString();
+                }
+            };
+            var addBtn = new Button { Text = "Add" };
+            addBtn.Clicked += (s, e) =>
+            {
+                Expenses.Add(new Expense("4", 400.0m));
+                numberAdded++;
+                label.Text = numberAdded.ToString();
+            };
 
-			
-			layout.Children.Add (label);
-			layout.Children.Add (removeBtn);
-			layout.Children.Add (addBtn);
-			layout.Children.Add (listView);
+            layout.Children.Add(label);
+            layout.Children.Add(removeBtn);
+            layout.Children.Add(addBtn);
+            layout.Children.Add(listView);
 
-			Content = layout;
-		}
+            Content = layout;
+        }
 
 #if UITEST
 		[Test]
@@ -166,6 +173,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("List item removed");
 		}
 #endif
-
-	}
+    }
 }

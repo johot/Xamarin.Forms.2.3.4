@@ -9,7 +9,8 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls
 {
     [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 36479, "[WP8] Picker is not disabled when IsEnabled is set to false", PlatformAffected.WinPhone)]
+    [Issue(IssueTracker.Bugzilla, 36479, "[WP8] Picker is not disabled when IsEnabled is set to false",
+        PlatformAffected.WinPhone)]
     public class Bugzilla36479 : TestContentPage
     {
         protected override void Init()
@@ -20,7 +21,7 @@ namespace Xamarin.Forms.Controls
             };
             picker.Items.Add("item");
             picker.Items.Add("item 2");
-            
+
             Content = new StackLayout
             {
                 Children =

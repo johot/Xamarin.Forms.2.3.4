@@ -4,75 +4,77 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers=true)]
-	[Issue (IssueTracker.Github, 1685, "Entry clears when upadting text from native with one-way binding", PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone, NavigationBehavior.PushModalAsync)]
-	public class Issue1685 : ContentPage
-	{
-		class Test : INotifyPropertyChanged
-		{
-			public event PropertyChangedEventHandler PropertyChanged;
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 1685, "Entry clears when upadting text from native with one-way binding",
+        PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone, NavigationBehavior.PushModalAsync)]
+    public class Issue1685 : ContentPage
+    {
+        class Test : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
 
-			decimal _entryValue = decimal.Zero;
-			public decimal EntryValue
-			{
-				get
-				{
-					return _entryValue;
-				}
-				set
-				{
-					_entryValue = value;
-					OnPropertyChanged("EntryValue");
-				}
-			}
+            decimal _entryValue = decimal.Zero;
 
-			void OnPropertyChanged(string caller) {
-				var handler = PropertyChanged;
-				if (handler != null) 
-				{
-					handler(this, new PropertyChangedEventArgs(caller));
-				}
-			}
-		}
+            public decimal EntryValue
+            {
+                get { return _entryValue; }
+                set
+                {
+                    _entryValue = value;
+                    OnPropertyChanged("EntryValue");
+                }
+            }
 
-		public Issue1685()
-		{
-			Title = "EntryBindingBug";
+            void OnPropertyChanged(string caller)
+            {
+                var handler = PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(caller));
+                }
+            }
+        }
 
-			BindingContext = new Test();
+        public Issue1685()
+        {
+            Title = "EntryBindingBug";
 
-			var entry = new Entry() {
-				Placeholder = "Entry"
-			};
-			entry.SetBinding(Entry.TextProperty, "EntryValue", BindingMode.OneWay);
+            BindingContext = new Test();
 
-			var button = new Button() {
-				Text = "Click me"
-			};
+            var entry = new Entry()
+            {
+                Placeholder = "Entry"
+            };
+            entry.SetBinding(Entry.TextProperty, "EntryValue", BindingMode.OneWay);
 
-			button.Clicked += (sender, e) => 
-			{
-				var context = BindingContext as Test;
-				context.EntryValue = context.EntryValue + 1;
-			};
+            var button = new Button()
+            {
+                Text = "Click me"
+            };
 
-			var root = new StackLayout() {
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				Children = {
-					entry,
-					button
-				}
-			};
+            button.Clicked += (sender, e) =>
+            {
+                var context = BindingContext as Test;
+                context.EntryValue = context.EntryValue + 1;
+            };
 
-			Content = root;
+            var root = new StackLayout()
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Children =
+                {
+                    entry,
+                    button
+                }
+            };
 
-		}
-	}
+            Content = root;
+        }
+    }
 }

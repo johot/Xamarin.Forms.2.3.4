@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Controls
 {
-	internal class ListViewDemoPage : ContentPage
+    internal class ListViewDemoPage : ContentPage
     {
-		class Person
+        class Person
         {
             public Person(string name, DateTime birthday, Color favoriteColor)
             {
@@ -23,102 +23,121 @@ namespace Xamarin.Forms.Controls
             public Color FavoriteColor { private set; get; }
         };
 
-		class MyDataTemplateSelector : DataTemplateSelector
-	    {
-		    DataTemplate _oddTemplate;
-		    DataTemplate _evenTemplate;
+        class MyDataTemplateSelector : DataTemplateSelector
+        {
+            DataTemplate _oddTemplate;
+            DataTemplate _evenTemplate;
 
-		    public MyDataTemplateSelector ()
-		    {
-			    _evenTemplate = new DataTemplate (() => {
-				    // Create views with bindings for displaying each property.
-				    Label nameLabel = new Label ();
-				    nameLabel.SetBinding (Label.TextProperty, "Name");
+            public MyDataTemplateSelector()
+            {
+                _evenTemplate = new DataTemplate(() =>
+                {
+                    // Create views with bindings for displaying each property.
+                    Label nameLabel = new Label();
+                    nameLabel.SetBinding(Label.TextProperty, "Name");
 
-				    Label birthdayLabel = new Label ();
-				    birthdayLabel.SetBinding (Label.TextProperty,
-											  new Binding ("Birthday", BindingMode.OneWay,
-														   null, null, "Born {0:d}"));
+                    Label birthdayLabel = new Label();
+                    birthdayLabel.SetBinding(Label.TextProperty,
+                        new Binding("Birthday", BindingMode.OneWay,
+                            null, null, "Born {0:d}"));
 
-				    BoxView boxView = new BoxView ();
-				    boxView.SetBinding (BoxView.ColorProperty, "FavoriteColor");
+                    BoxView boxView = new BoxView();
+                    boxView.SetBinding(BoxView.ColorProperty, "FavoriteColor");
 
-				    // Return an assembled ViewCell.
-				    return new ViewCell {
-					    View = new StackLayout {
-						    Padding = new Thickness (0, 5),
-						    Orientation = StackOrientation.Horizontal,
-						    Children = {
-							    new Image {
-								    HeightRequest = 40,
-								    WidthRequest = 40,
-								    Source = new UriImageSource {
-									    //											CacheValidity = TimeSpan.FromSeconds (10),
-									    Uri = new Uri ("https://xamarin.com/content/images/pages/index/xamarin-studio-icon.png"),
-								    }
-							    },
-							    boxView,
-							    new StackLayout {
-								    VerticalOptions = LayoutOptions.Center,
-								    Spacing = 0,
-								    Children = {
-									    nameLabel,
-									    birthdayLabel
-								    }
-							    }
-						    }
-					    }
-				    };
-			    });
+                    // Return an assembled ViewCell.
+                    return new ViewCell
+                    {
+                        View = new StackLayout
+                        {
+                            Padding = new Thickness(0, 5),
+                            Orientation = StackOrientation.Horizontal,
+                            Children =
+                            {
+                                new Image
+                                {
+                                    HeightRequest = 40,
+                                    WidthRequest = 40,
+                                    Source = new UriImageSource
+                                    {
+                                        //											CacheValidity = TimeSpan.FromSeconds (10),
+                                        Uri =
+                                            new Uri(
+                                                "https://xamarin.com/content/images/pages/index/xamarin-studio-icon.png"),
+                                    }
+                                },
+                                boxView,
+                                new StackLayout
+                                {
+                                    VerticalOptions = LayoutOptions.Center,
+                                    Spacing = 0,
+                                    Children =
+                                    {
+                                        nameLabel,
+                                        birthdayLabel
+                                    }
+                                }
+                            }
+                        }
+                    };
+                });
 
-			    _oddTemplate = new DataTemplate (() => {
-				    // Create views with bindings for displaying each property.
-				    Label nameLabel = new Label ();
-				    nameLabel.SetBinding (Label.TextProperty, "Name");
+                _oddTemplate = new DataTemplate(() =>
+                {
+                    // Create views with bindings for displaying each property.
+                    Label nameLabel = new Label();
+                    nameLabel.SetBinding(Label.TextProperty, "Name");
 
-				    Label birthdayLabel = new Label ();
-				    birthdayLabel.SetBinding (Label.TextProperty,
-											  new Binding ("Birthday", BindingMode.OneWay,
-														   null, null, "Born {0:d}"));
+                    Label birthdayLabel = new Label();
+                    birthdayLabel.SetBinding(Label.TextProperty,
+                        new Binding("Birthday", BindingMode.OneWay,
+                            null, null, "Born {0:d}"));
 
-				    BoxView boxView = new BoxView ();
-				    boxView.SetBinding (BoxView.ColorProperty, "FavoriteColor");
+                    BoxView boxView = new BoxView();
+                    boxView.SetBinding(BoxView.ColorProperty, "FavoriteColor");
 
-				    // Return an assembled ViewCell.
-				    return new ViewCell {
-					    View = new StackLayout {
-						    Padding = new Thickness (0, 5),
-						    Orientation = StackOrientation.Horizontal,
-						    Children = {
-							    new Image {
-								    HeightRequest = 40,
-								    WidthRequest = 40,
-								    Source = new UriImageSource {
-									    //											CacheValidity = TimeSpan.FromSeconds (10),
-									    Uri = new Uri ("https://xamarin.com/content/images/pages/index/xamarin-studio-icon.png"),
-								    }
-							    },
+                    // Return an assembled ViewCell.
+                    return new ViewCell
+                    {
+                        View = new StackLayout
+                        {
+                            Padding = new Thickness(0, 5),
+                            Orientation = StackOrientation.Horizontal,
+                            Children =
+                            {
+                                new Image
+                                {
+                                    HeightRequest = 40,
+                                    WidthRequest = 40,
+                                    Source = new UriImageSource
+                                    {
+                                        //											CacheValidity = TimeSpan.FromSeconds (10),
+                                        Uri =
+                                            new Uri(
+                                                "https://xamarin.com/content/images/pages/index/xamarin-studio-icon.png"),
+                                    }
+                                },
+                                new StackLayout
+                                {
+                                    VerticalOptions = LayoutOptions.Center,
+                                    Spacing = 0,
+                                    Children =
+                                    {
+                                        birthdayLabel,
+                                        nameLabel,
+                                    }
+                                },
+                                boxView,
+                            }
+                        }
+                    };
+                });
+            }
 
-							    new StackLayout {
-								    VerticalOptions = LayoutOptions.Center,
-								    Spacing = 0,
-								    Children = {
-									    birthdayLabel,
-									    nameLabel,
-								    }
-							    },
-							    boxView,
-						    }
-					    }
-				    };
-			    });
-		    }
-
-		    protected override DataTemplate OnSelectTemplate (object item, BindableObject container)
-		    {
-			    return ((Person)item).Birthday.Month % 2 == 0 ? _evenTemplate : _oddTemplate;
-		    }
-	    }
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
+            {
+                return ((Person)item).Birthday.Month % 2 == 0 ? _evenTemplate : _oddTemplate;
+            }
+        }
 
         public ListViewDemoPage()
         {
@@ -165,7 +184,7 @@ namespace Xamarin.Forms.Controls
                 new Person("Yvonne", new DateTime(1987, 1, 10), Color.Purple),
                 new Person("Zachary", new DateTime(1988, 2, 5), Color.Red)
             };
-			List<Person> people2 = new List<Person>
+            List<Person> people2 = new List<Person>
             {
                 new Person("Abigail", new DateTime(1975, 1, 15), Color.Aqua),
                 new Person("Bob", new DateTime(1976, 2, 20), Color.Black),
@@ -200,36 +219,38 @@ namespace Xamarin.Forms.Controls
             };
 
             // Create the ListView.
-            ListView listView = new ListView (ListViewCachingStrategy.RecycleElement)
+            ListView listView = new ListView(ListViewCachingStrategy.RecycleElement)
             {
                 // Source of data items.
-                ItemsSource = new List<List<Person>> {people, people2},
-				IsPullToRefreshEnabled = true,
-				IsGroupingEnabled = true,
+                ItemsSource = new List<List<Person>> { people, people2 },
+                IsPullToRefreshEnabled = true,
+                IsGroupingEnabled = true,
 
                 // Define template for displaying each item.
                 // (Argument of DataTemplate constructor is called for 
                 //      each item; it must return a Cell derivative.)
-                ItemTemplate = new MyDataTemplateSelector ()
+                ItemTemplate = new MyDataTemplateSelector()
             };
 
-	        listView.Refreshing += async (sender, e) => {
-		        await Task.Delay (5000);
-		        listView.IsRefreshing = false;
-	        };
+            listView.Refreshing += async (sender, e) =>
+            {
+                await Task.Delay(5000);
+                listView.IsRefreshing = false;
+            };
 
-	        listView.ItemSelected += (sender, args) => {
-		        if (listView.SelectedItem == null)
-			        return;
-		        listView.SelectedItem = null;
-	        };
+            listView.ItemSelected += (sender, args) =>
+            {
+                if (listView.SelectedItem == null)
+                    return;
+                listView.SelectedItem = null;
+            };
 
             // Accomodate iPhone status bar.
-			Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(10, 20, 10, 5) : new Thickness(10, 0, 10, 5);
+            Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(10, 20, 10, 5) : new Thickness(10, 0, 10, 5);
             // Build the page.
             Content = new StackLayout
             {
-                Children = 
+                Children =
                 {
                     header,
                     listView

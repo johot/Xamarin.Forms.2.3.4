@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -11,7 +10,8 @@ using NUnit.Framework;
 namespace Xamarin.Forms.Controls.Issues
 {
     [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 36559, "[WP] Navigating to a ContentPage with a Grid inside a TableView affects Entry heights")]
+    [Issue(IssueTracker.Bugzilla, 36559,
+        "[WP] Navigating to a ContentPage with a Grid inside a TableView affects Entry heights")]
     public class Bugzilla36559 : TestContentPage
     {
         protected override void Init()

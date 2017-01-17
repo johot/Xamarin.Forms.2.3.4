@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers=true)]
-	[Issue (IssueTracker.Github, 1742, "Invisible Button still fires Clicked event", PlatformAffected.WinPhone)]
-	public class Issue1742 : ContentPage
-	{
-		public Issue1742 ()
-		{
-			 var listView = new ListView
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 1742, "Invisible Button still fires Clicked event", PlatformAffected.WinPhone)]
+    public class Issue1742 : ContentPage
+    {
+        public Issue1742()
+        {
+            var listView = new ListView
             {
                 RowHeight = 40
             };
@@ -36,21 +35,21 @@ namespace Xamarin.Forms.Controls
 
             listView.ItemsSource = new string[] { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
-			Content = new StackLayout {
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				Children = { listView, visibleButton, invisibleButton }
-			};
+            Content = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Children = { listView, visibleButton, invisibleButton }
+            };
+        }
 
-		}
-
-		void ListView_ItemTapped(object sender, ItemTappedEventArgs args)
+        void ListView_ItemTapped(object sender, ItemTappedEventArgs args)
         {
             DisplayAlert("Alert", "List item tapped", "OK", "Cancel");
         }
 
-		void Button_Clicked(object sender, EventArgs args)
+        void Button_Clicked(object sender, EventArgs args)
         {
             DisplayAlert("Alert", ((Button)sender).Text + " clicked", "OK", "Cancel");
         }
-	}
+    }
 }

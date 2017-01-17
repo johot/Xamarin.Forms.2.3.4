@@ -17,96 +17,109 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	public class Issue2470ViewModelBase : INotifyPropertyChanged
-	{
-		public event PropertyChangedEventHandler PropertyChanged;
+    [Preserve(AllMembers = true)]
+    public class Issue2470ViewModelBase : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 
-	[Preserve (AllMembers = true)]
-	public class EntryViewModel : ViewModelBase
-	{
-		string _name;
-		public string Name
-		{
-			get { return _name; }
-			set { _name = value; OnPropertyChanged (); }
-		}
+    [Preserve(AllMembers = true)]
+    public class EntryViewModel : ViewModelBase
+    {
+        string _name;
 
-		bool _selected;
-		public bool Selected
-		{
-			get { return _selected; }
-			set { _selected = value; OnPropertyChanged (); }
-		}
-	}
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
 
-	[Preserve (AllMembers = true)]
-	public class Issue2470MainViewModel : Issue2470ViewModelBase
-	{
-		public ObservableCollection<EntryViewModel> Entries { get; private set; }
+        bool _selected;
 
-		double _desiredCount;
-		public double DesiredCount
-		{
-			get { return _desiredCount; }
-			set
-			{
-				_desiredCount = value;
-				OnPropertyChanged ();
-				GenerateEntries ();
-			}
-		}
+        public bool Selected
+        {
+            get { return _selected; }
+            set
+            {
+                _selected = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
-		bool _twoOrFive;
-		public bool TwoOrFive
-		{
-			get { return _twoOrFive; }
-			set
-			{
-				_twoOrFive = value;
-				OnPropertyChanged ();
-				DesiredCount = _twoOrFive ? 5 : 2;
-			}
-		}
+    [Preserve(AllMembers = true)]
+    public class Issue2470MainViewModel : Issue2470ViewModelBase
+    {
+        public ObservableCollection<EntryViewModel> Entries { get; private set; }
 
-		public Issue2470MainViewModel ()
-		{
-			Entries = new ObservableCollection<EntryViewModel> ();
-			TwoOrFive = false; // prime
-		}
+        double _desiredCount;
 
-		void GenerateEntries ()
-		{
-			Entries.Clear ();
-			for (var i = 0; i < DesiredCount; i++) {
-				Entries.Add (new EntryViewModel { Name = "Entry " + i + " of " + DesiredCount });
-			}
-		}
-	}
+        public double DesiredCount
+        {
+            get { return _desiredCount; }
+            set
+            {
+                _desiredCount = value;
+                OnPropertyChanged();
+                GenerateEntries();
+            }
+        }
 
-	[Preserve (AllMembers=true)]
-	[Issue (IssueTracker.Github, 2470, "ObservableCollection changes do not update ListView", PlatformAffected.Android)]
-	public partial class Issue2470 : TestTabbedPage
-	{
-		protected override void Init ()
-		{
-			var mainViewModel = new Issue2470MainViewModel ();
-			BindingContext = mainViewModel;
-		}
+        bool _twoOrFive;
+
+        public bool TwoOrFive
+        {
+            get { return _twoOrFive; }
+            set
+            {
+                _twoOrFive = value;
+                OnPropertyChanged();
+                DesiredCount = _twoOrFive ? 5 : 2;
+            }
+        }
+
+        public Issue2470MainViewModel()
+        {
+            Entries = new ObservableCollection<EntryViewModel>();
+            TwoOrFive = false; // prime
+        }
+
+        void GenerateEntries()
+        {
+            Entries.Clear();
+            for (var i = 0; i < DesiredCount; i++)
+            {
+                Entries.Add(new EntryViewModel { Name = "Entry " + i + " of " + DesiredCount });
+            }
+        }
+    }
+
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 2470, "ObservableCollection changes do not update ListView", PlatformAffected.Android)]
+    public partial class Issue2470 : TestTabbedPage
+    {
+        protected override void Init()
+        {
+            var mainViewModel = new Issue2470MainViewModel();
+            BindingContext = mainViewModel;
+        }
 
 #if APP
-		[Preserve (AllMembers = true)]
-		public Issue2470 ()
-		{
-			InitializeComponent ();
-		}
+        [Preserve(AllMembers = true)]
+        public Issue2470()
+        {
+            InitializeComponent();
+        }
 #endif
 
 #if UITEST
@@ -152,5 +165,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("Should be 5 elements");
 		}
 #endif
-	}
+    }
 }

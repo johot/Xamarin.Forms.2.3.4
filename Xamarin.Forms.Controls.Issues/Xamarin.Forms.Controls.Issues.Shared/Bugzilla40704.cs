@@ -18,204 +18,213 @@ namespace Xamarin.Forms.Controls.Issues
 	[Category(UITestCategories.ListView)]
 #endif
 
-	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 40704, "Strange duplication of listview headers when collapsing/expanding sections")]
-	public class Bugzilla40704 : TestContentPage // or TestMasterDetailPage, etc ...
-	{
-		ListView listview;
-		int count = 2;
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 40704, "Strange duplication of listview headers when collapsing/expanding sections")]
+    public class Bugzilla40704 : TestContentPage // or TestMasterDetailPage, etc ...
+    {
+        ListView listview;
+        int count = 2;
 
-		protected override void Init()
-		{
-			listview = new ListView(ListViewCachingStrategy.RecycleElement)
-			{
-				AutomationId = "lstMain",
-				IsGroupingEnabled = true,
-				HasUnevenRows = true,
-				GroupHeaderTemplate = new DataTemplate(typeof(GroupHeaderViewCell)),
-				ItemTemplate = new DataTemplate(typeof(ItemTestViewCell))
-			};
+        protected override void Init()
+        {
+            listview = new ListView(ListViewCachingStrategy.RecycleElement)
+            {
+                AutomationId = "lstMain",
+                IsGroupingEnabled = true,
+                HasUnevenRows = true,
+                GroupHeaderTemplate = new DataTemplate(typeof(GroupHeaderViewCell)),
+                ItemTemplate = new DataTemplate(typeof(ItemTestViewCell))
+            };
 
-			FillPatientsList();
+            FillPatientsList();
 
-			var button = new Button()
-			{
-				Text = "Collapse",
-				AutomationId = "btnCollappse"
-			};
-			listview.Footer = button;
-			button.Clicked += Button_Clicked;
-			Content = listview;
-		}
+            var button = new Button()
+            {
+                Text = "Collapse",
+                AutomationId = "btnCollappse"
+            };
+            listview.Footer = button;
+            button.Clicked += Button_Clicked;
+            Content = listview;
+        }
 
-		void Button_Clicked(object sender, EventArgs e)
-		{
-			var source = listview.ItemsSource as List<PatientsGroupViewModel>;
-			source[count].Toggle();
-			count--;
-			if (count < 0)
-				count = 2;
-		}
+        void Button_Clicked(object sender, EventArgs e)
+        {
+            var source = listview.ItemsSource as List<PatientsGroupViewModel>;
+            source[count].Toggle();
+            count--;
+            if (count < 0)
+                count = 2;
+        }
 
-		private void FillPatientsList()
-		{
-			const int groupsNumber = 3;
-			const int patientsNumber = 10;
+        private void FillPatientsList()
+        {
+            const int groupsNumber = 3;
+            const int patientsNumber = 10;
 
-			var patientGroups = new List<PatientsGroupViewModel>();
-			var random = new Random();
+            var patientGroups = new List<PatientsGroupViewModel>();
+            var random = new Random();
 
-			for (var i = 0; i < groupsNumber; i++)
-			{
-				var patients = new List<PatientViewModel>();
-				for (var j = 0; j < patientsNumber; j++)
-				{
-					var code = string.Format("{0}-{1}", i, j);
-					var length = random.Next(5, 100);
-					var strBuilder = new StringBuilder();
-					for (int z = 0; z < length; z++)
-					{
-						strBuilder.Append(code);
-						if (z % 7 == 0)
-						{
-							strBuilder.Append(' ');
-						}
-					}
+            for (var i = 0; i < groupsNumber; i++)
+            {
+                var patients = new List<PatientViewModel>();
+                for (var j = 0; j < patientsNumber; j++)
+                {
+                    var code = string.Format("{0}-{1}", i, j);
+                    var length = random.Next(5, 100);
+                    var strBuilder = new StringBuilder();
+                    for (int z = 0; z < length; z++)
+                    {
+                        strBuilder.Append(code);
+                        if (z % 7 == 0)
+                        {
+                            strBuilder.Append(' ');
+                        }
+                    }
 
-					patients.Add(new PatientViewModel(code) { Description = strBuilder.ToString() });
-				}
+                    patients.Add(new PatientViewModel(code) { Description = strBuilder.ToString() });
+                }
 
-				patientGroups.Add(new PatientsGroupViewModel(patients)
-				{
-					Title = "Menu - " + i.ToString()
-				});
+                patientGroups.Add(new PatientsGroupViewModel(patients)
+                {
+                    Title = "Menu - " + i.ToString()
+                });
+            }
 
-			}
+            listview.ItemsSource = patientGroups;
+        }
 
-			listview.ItemsSource = patientGroups;
-		}
+        [Preserve(AllMembers = true)]
+        public class GroupHeaderViewCell : ViewCell
+        {
+            TapGestureRecognizer tapGesture;
 
-		[Preserve(AllMembers = true)]
-		public class GroupHeaderViewCell : ViewCell
-		{
-			TapGestureRecognizer tapGesture;
+            public GroupHeaderViewCell()
+            {
+                Height = 40;
+                var grd = new Grid { BackgroundColor = Color.Aqua, Padding = new Thickness(5, 10) };
+                tapGesture = new TapGestureRecognizer();
+                tapGesture.Tapped += HeaderCell_OnTapped;
+                grd.GestureRecognizers.Add(tapGesture);
+                var lbl = new Label
+                {
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    TextColor = Color.Black,
+                    FontSize = 16
+                };
+                lbl.SetBinding(Label.TextProperty, new Binding("Title"));
 
-			public GroupHeaderViewCell()
-			{
-				Height = 40;
-				var grd = new Grid { BackgroundColor = Color.Aqua, Padding = new Thickness(5, 10) };
-				tapGesture = new TapGestureRecognizer();
-				tapGesture.Tapped += HeaderCell_OnTapped;
-				grd.GestureRecognizers.Add(tapGesture);
-				var lbl = new Label { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = Color.Black, FontSize = 16 };
-				lbl.SetBinding(Label.TextProperty, new Binding("Title"));
+                grd.Children.Add(lbl);
+                View = grd;
+            }
 
-				grd.Children.Add(lbl);
-				View = grd;
-			}
+            void HeaderCell_OnTapped(object sender, EventArgs e)
+            {
+                var cell = (Layout)sender;
+                var vm = cell.BindingContext as PatientsGroupViewModel;
 
-			void HeaderCell_OnTapped(object sender, EventArgs e)
-			{
-				var cell = (Layout)sender;
-				var vm = cell.BindingContext as PatientsGroupViewModel;
+                if (vm != null)
+                {
+                    vm.Toggle();
+                }
+            }
+        }
 
-				if (vm != null)
-				{
-					vm.Toggle();
-				}
-			}
-		}
+        [Preserve(AllMembers = true)]
+        public class ItemTestViewCell : ViewCell
+        {
+            public ItemTestViewCell()
+            {
+                var grd = new Grid { BackgroundColor = Color.Yellow };
+                var lbl = new Label
+                {
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    TextColor = Color.Black,
+                    FontSize = 16,
+                    LineBreakMode = LineBreakMode.WordWrap
+                };
+                lbl.SetBinding(Label.TextProperty, new Binding("Description"));
+                grd.Children.Add(lbl);
+                View = grd;
+            }
+        }
 
-		[Preserve(AllMembers = true)]
-		public class ItemTestViewCell : ViewCell
-		{
-			public ItemTestViewCell()
-			{
+        [Preserve(AllMembers = true)]
+        public class RangeObservableCollection<T> : ObservableCollection<T>
+        {
+            private bool _suppressNotification = false;
 
-				var grd = new Grid { BackgroundColor = Color.Yellow };
-				var lbl = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = Color.Black, FontSize = 16, LineBreakMode = LineBreakMode.WordWrap };
-				lbl.SetBinding(Label.TextProperty, new Binding("Description"));
-				grd.Children.Add(lbl);
-				View = grd;
-			}
-		}
+            protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+            {
+                if (!_suppressNotification)
+                    base.OnCollectionChanged(e);
+            }
 
-		[Preserve(AllMembers = true)]
-		public class RangeObservableCollection<T> : ObservableCollection<T>
-		{
-			private bool _suppressNotification = false;
+            public void AddRange(IEnumerable<T> list)
+            {
+                if (list == null)
+                    throw new ArgumentNullException("list");
 
-			protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-			{
-				if (!_suppressNotification)
-					base.OnCollectionChanged(e);
-			}
+                _suppressNotification = true;
 
-			public void AddRange(IEnumerable<T> list)
-			{
-				if (list == null)
-					throw new ArgumentNullException("list");
+                foreach (var item in list)
+                {
+                    Add(item);
+                }
+                _suppressNotification = false;
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
 
-				_suppressNotification = true;
+        [Preserve(AllMembers = true)]
+        public class PatientsGroupViewModel : RangeObservableCollection<PatientViewModel>
+        {
+            public bool IsCollapsed { get; private set; }
 
-				foreach (var item in list)
-				{
-					Add(item);
-				}
-				_suppressNotification = false;
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-			}
-		}
+            public string Title { get; set; }
 
-		[Preserve(AllMembers = true)]
-		public class PatientsGroupViewModel : RangeObservableCollection<PatientViewModel>
-		{
-			public bool IsCollapsed { get; private set; }
+            private readonly List<PatientViewModel> _patients;
 
-			public string Title { get; set; }
+            public PatientsGroupViewModel(List<PatientViewModel> patients)
+            {
+                _patients = patients;
 
-			private readonly List<PatientViewModel> _patients;
+                UpdateCollection();
+            }
 
-			public PatientsGroupViewModel(List<PatientViewModel> patients)
-			{
-				_patients = patients;
+            public void Toggle()
+            {
+                IsCollapsed = !IsCollapsed;
 
-				UpdateCollection();
-			}
+                UpdateCollection();
+            }
 
-			public void Toggle()
-			{
-				IsCollapsed = !IsCollapsed;
+            private void UpdateCollection()
+            {
+                if (!IsCollapsed)
+                {
+                    AddRange(_patients);
+                }
+                else
+                {
+                    Clear();
+                }
+            }
+        }
 
-				UpdateCollection();
-			}
+        [Preserve(AllMembers = true)]
+        public class PatientViewModel
+        {
+            public PatientViewModel(string code)
+            {
+                Code = code;
+            }
 
-			private void UpdateCollection()
-			{
-				if (!IsCollapsed)
-				{
-					AddRange(_patients);
-				}
-				else
-				{
-					Clear();
-				}
-			}
-		}
+            public string Code { get; set; }
 
-		[Preserve(AllMembers = true)]
-		public class PatientViewModel
-		{
-			public PatientViewModel(string code)
-			{
-				Code = code;
-			}
-
-			public string Code { get; set; }
-
-			public string Description { get; set; }
-		}
-
+            public string Description { get; set; }
+        }
 
 #if UITEST
 		[Test]
@@ -237,5 +246,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement("Menu - 0");
 		}
 #endif
-	}
+    }
 }

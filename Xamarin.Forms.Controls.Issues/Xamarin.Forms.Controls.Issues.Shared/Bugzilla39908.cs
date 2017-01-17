@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -10,63 +9,65 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 39908, " Back button hit quickly results in jumbled pages")]
-	public class Bugzilla39908 : TestContentPage // or TestMasterDetailPage, etc ...
-	{
-		protected override void Init()
-		{
-			var label = "Root Page";
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 39908, " Back button hit quickly results in jumbled pages")]
+    public class Bugzilla39908 : TestContentPage // or TestMasterDetailPage, etc ...
+    {
+        protected override void Init()
+        {
+            var label = "Root Page";
 
-			Title = label;
-			Content = new StackLayout
-			{
-				VerticalOptions = LayoutOptions.Center,
-				Children = {
-					new Label {
-						HorizontalTextAlignment = TextAlignment.Center,
-						Text = label
-					},
-					NewButton ()
-				}
-			};
-		}
+            Title = label;
+            Content = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Center,
+                Children =
+                {
+                    new Label
+                    {
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        Text = label
+                    },
+                    NewButton()
+                }
+            };
+        }
 
+        private Button NewButton()
+        {
+            var newPageButton = new Button();
+            newPageButton.Text = "Another one";
+            newPageButton.Clicked += OnNewPage;
 
+            return newPageButton;
+        }
 
-		private Button NewButton()
-		{
-			var newPageButton = new Button();
-			newPageButton.Text = "Another one";
-			newPageButton.Clicked += OnNewPage;
+        private ContentPage NewPage()
+        {
+            var label = Navigation != null ? "Page " + (Navigation.NavigationStack.Count - 1) : "Root Page";
 
-			return newPageButton;
-		}
+            return new ContentPage
+            {
+                Title = label,
+                Content = new StackLayout
+                {
+                    VerticalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new Label
+                        {
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            Text = label
+                        },
+                        NewButton()
+                    }
+                }
+            };
+        }
 
-		private ContentPage NewPage()
-		{
-			var label = Navigation != null ? "Page " + (Navigation.NavigationStack.Count - 1) : "Root Page";
-
-			return new ContentPage
-			{
-				Title = label,
-				Content = new StackLayout
-				{
-					VerticalOptions = LayoutOptions.Center,
-					Children = {
-					new Label {
-						HorizontalTextAlignment = TextAlignment.Center,
-						Text = label
-					},
-					NewButton ()
-				}
-				}
-			};
-		}
-
-		private async void OnNewPage(object sender, EventArgs e)
-		{
-			await Navigation.PushAsync(NewPage());
-		}
-	}
+        private async void OnNewPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(NewPage());
+        }
+    }
 }

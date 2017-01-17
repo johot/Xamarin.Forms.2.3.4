@@ -11,13 +11,16 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-
     [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 36802, "[iOS] AccessoryView Partially Hidden When Using RecycleElement and GroupShortName", PlatformAffected.iOS)]
+    [Issue(IssueTracker.Bugzilla, 36802,
+        "[iOS] AccessoryView Partially Hidden When Using RecycleElement and GroupShortName", PlatformAffected.iOS)]
     public class Bugzilla36802 : TestContentPage
     {
-        const string Instructions = "On iOS, all the list items below should have an AccessoryView visible. If any are not visible or are covered by the section index list then this test has failed.";
+        const string Instructions =
+            "On iOS, all the list items below should have an AccessoryView visible. If any are not visible or are covered by the section index list then this test has failed.";
+
         ObservableCollection<GroupedItem> grouped { get; set; }
+
         ListView lstView;
 
         public class AccessoryViewCell : ViewCell
@@ -33,6 +36,7 @@ namespace Xamarin.Forms.Controls.Issues
         public class GroupedItem : ObservableCollection<string>
         {
             public string LongName { get; set; }
+
             public string ShortName { get; set; }
         }
 
@@ -40,7 +44,8 @@ namespace Xamarin.Forms.Controls.Issues
         {
             var label = new Label { Text = Instructions };
             grouped = new ObservableCollection<GroupedItem>();
-            lstView = new ListView(ListViewCachingStrategy.RecycleElement) {
+            lstView = new ListView(ListViewCachingStrategy.RecycleElement)
+            {
                 IsGroupingEnabled = true,
                 ItemTemplate = new DataTemplate(typeof(AccessoryViewCell)),
                 ItemsSource = grouped,
@@ -57,12 +62,13 @@ namespace Xamarin.Forms.Controls.Issues
                 grp2.Add($"Item #{i}");
             }
 
-            grouped.Add(grp1); 
+            grouped.Add(grp1);
             grouped.Add(grp2);
 
             Content = new StackLayout
             {
-                Children = {
+                Children =
+                {
                     label,
                     lstView
                 }

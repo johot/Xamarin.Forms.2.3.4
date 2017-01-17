@@ -13,7 +13,8 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 
         public static void AddToolBarItems(Page page)
         {
-            Action action = () => page.DisplayAlert(CommandBarActionTitle, CommandBarActionMessage, CommandBarActionDismiss);
+            Action action =
+                () => page.DisplayAlert(CommandBarActionTitle, CommandBarActionMessage, CommandBarActionDismiss);
 
             var tb1 = new ToolbarItem("Primary 1", "coffee.png", action, ToolbarItemOrder.Primary)
             {
@@ -45,7 +46,8 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             page.ToolbarItems.Add(tb4);
         }
 
-        public static Layout CreateChanger(Type enumType, string defaultOption, Action<Picker> selectedIndexChanged, string label)
+        public static Layout CreateChanger(Type enumType, string defaultOption, Action<Picker> selectedIndexChanged,
+            string label)
         {
             var picker = new Picker();
             string[] options = Enum.GetNames(enumType);
@@ -56,10 +58,7 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 
             picker.SelectedIndex = options.IndexOf(defaultOption);
 
-            picker.SelectedIndexChanged += (sender, args) =>
-            {
-                selectedIndexChanged(picker);
-            };
+            picker.SelectedIndexChanged += (sender, args) => { selectedIndexChanged(picker); };
 
             var changerLabel = new Label { Text = label, VerticalOptions = LayoutOptions.Center };
 
@@ -88,13 +87,18 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
                 Enum.GetName(enumType, page.On<Windows>().GetToolbarPlacement()),
                 picker =>
                 {
-                    page.On<Windows>().SetToolbarPlacement((ToolbarPlacement)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
+                    page.On<Windows>()
+                        .SetToolbarPlacement((ToolbarPlacement)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
                 }, "Select Toolbar Placement");
         }
 
         public static Layout CreateAddRemoveToolBarItemButtons(Page page)
         {
-            var layout = new StackLayout { Orientation = StackOrientation.Vertical, HorizontalOptions = LayoutOptions.Center };
+            var layout = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                HorizontalOptions = LayoutOptions.Center
+            };
             layout.Children.Add(new Label { Text = "Toolbar Items:" });
 
             var buttonLayout = new StackLayout
@@ -113,7 +117,8 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             buttonLayout.Children.Add(addSecondary);
             buttonLayout.Children.Add(remove);
 
-            Action action = () => page.DisplayAlert(CommandBarActionTitle, CommandBarActionMessage, CommandBarActionDismiss);
+            Action action =
+                () => page.DisplayAlert(CommandBarActionTitle, CommandBarActionMessage, CommandBarActionDismiss);
 
             addPrimary.Clicked += (sender, args) =>
             {
@@ -124,7 +129,8 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             addSecondary.Clicked += (sender, args) =>
             {
                 int index = page.ToolbarItems.Count(item => item.Order == ToolbarItemOrder.Secondary) + 1;
-                page.ToolbarItems.Add(new ToolbarItem($"Secondary {index}", "coffee.png", action, ToolbarItemOrder.Secondary));
+                page.ToolbarItems.Add(new ToolbarItem($"Secondary {index}", "coffee.png", action,
+                    ToolbarItemOrder.Secondary));
             };
 
             remove.Clicked += (sender, args) =>

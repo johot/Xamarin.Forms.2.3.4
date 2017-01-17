@@ -1,7 +1,7 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
+
 #if UITEST
 using Xamarin.UITest;
 using NUnit.Framework;
@@ -9,27 +9,28 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Bugzilla, 24574, "Tap Double Tap")]
-	public class Issue24574 : TestContentPage // or TestMasterDetailPage, etc ...
-	{
-		protected override void Init ()
-		{
-			var label = new Label {
-				AutomationId = "TapLabel",
-				Text = "123" 
-			};
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 24574, "Tap Double Tap")]
+    public class Issue24574 : TestContentPage // or TestMasterDetailPage, etc ...
+    {
+        protected override void Init()
+        {
+            var label = new Label
+            {
+                AutomationId = "TapLabel",
+                Text = "123"
+            };
 
-			var rec = new TapGestureRecognizer () { NumberOfTapsRequired = 1 };
-			rec.Tapped += (s, e) => { label.Text = "Single"; };
-			label.GestureRecognizers.Add (rec);
+            var rec = new TapGestureRecognizer() { NumberOfTapsRequired = 1 };
+            rec.Tapped += (s, e) => { label.Text = "Single"; };
+            label.GestureRecognizers.Add(rec);
 
-			rec = new TapGestureRecognizer () { NumberOfTapsRequired = 2 };
-			rec.Tapped += (s, e) => { label.Text = "Double"; };
-			label.GestureRecognizers.Add (rec);
+            rec = new TapGestureRecognizer() { NumberOfTapsRequired = 2 };
+            rec.Tapped += (s, e) => { label.Text = "Double"; };
+            label.GestureRecognizers.Add(rec);
 
-			Content = label;
-		}
+            Content = label;
+        }
 
 #if UITEST
 		[Test]
@@ -46,5 +47,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Marked ("Double"));
 		}
 #endif
-	}
+    }
 }

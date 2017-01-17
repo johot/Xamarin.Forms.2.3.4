@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
+
 #if UITEST
 using Xamarin.UITest;
 using NUnit.Framework;
@@ -10,71 +10,81 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Bugzilla, 38978, "Cell.ForceUpdateSize issues with row selection/deselection (ViewCell)", PlatformAffected.Android)]
-	public class Bugzilla38978 : TestContentPage // or TestMasterDetailPage, etc ...
-	{
-		[Preserve (AllMembers = true)]
-		public class MyViewCell : ViewCell
-		{
-			Image _image;
-			public MyViewCell ()
-			{
-				_image = new Image {
-					Source = ImageSource.FromFile ("oasis.jpg"),
-					HeightRequest = 50
-				};
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 38978, "Cell.ForceUpdateSize issues with row selection/deselection (ViewCell)",
+        PlatformAffected.Android)]
+    public class Bugzilla38978 : TestContentPage // or TestMasterDetailPage, etc ...
+    {
+        [Preserve(AllMembers = true)]
+        public class MyViewCell : ViewCell
+        {
+            Image _image;
 
-				Label label = new Label { Text = "Click the image to resize", VerticalOptions = LayoutOptions.Center };
+            public MyViewCell()
+            {
+                _image = new Image
+                {
+                    Source = ImageSource.FromFile("oasis.jpg"),
+                    HeightRequest = 50
+                };
 
-				var tapGestureRecognizer = new TapGestureRecognizer ();
-				tapGestureRecognizer.Tapped += (object sender, EventArgs e) => {
-					if (_image.HeightRequest < 250) {
-						_image.HeightRequest = _image.Height + 100;
-						ForceUpdateSize ();
-						label.Text = "If the tapped image is not larger, this test has failed.";
-					}
-				};
-				_image.GestureRecognizers.Add (tapGestureRecognizer);
+                Label label = new Label { Text = "Click the image to resize", VerticalOptions = LayoutOptions.Center };
 
-				var stackLayout = new StackLayout {
-					Padding = new Thickness (20, 5, 5, 5),
-					Orientation = StackOrientation.Horizontal,
-					Children = {
-						_image,
-						label
-					}
-				};
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += (object sender, EventArgs e) =>
+                {
+                    if (_image.HeightRequest < 250)
+                    {
+                        _image.HeightRequest = _image.Height + 100;
+                        ForceUpdateSize();
+                        label.Text = "If the tapped image is not larger, this test has failed.";
+                    }
+                };
+                _image.GestureRecognizers.Add(tapGestureRecognizer);
 
-				View = stackLayout;
-			}
+                var stackLayout = new StackLayout
+                {
+                    Padding = new Thickness(20, 5, 5, 5),
+                    Orientation = StackOrientation.Horizontal,
+                    Children =
+                    {
+                        _image,
+                        label
+                    }
+                };
 
-			protected override void OnBindingContextChanged ()
-			{
-				base.OnBindingContextChanged ();
-				var item = BindingContext?.ToString();
-				if (string.IsNullOrWhiteSpace (item))
-					return;
+                View = stackLayout;
+            }
 
-				_image.AutomationId = item;
-			}
-		}
+            protected override void OnBindingContextChanged()
+            {
+                base.OnBindingContextChanged();
+                var item = BindingContext?.ToString();
+                if (string.IsNullOrWhiteSpace(item))
+                    return;
 
-		protected override void Init ()
-		{
-			var listView = new ListView {
-				HasUnevenRows = true,
-				ItemTemplate = new DataTemplate (typeof (MyViewCell)),
-				ItemsSource = Enumerable.Range (0, 10)
-			};
+                _image.AutomationId = item;
+            }
+        }
 
-			Content = new StackLayout {
-				Padding = new Thickness (0, 20, 0, 0),
-				Children = {
-					listView
-				}
-			};
-		}
+        protected override void Init()
+        {
+            var listView = new ListView
+            {
+                HasUnevenRows = true,
+                ItemTemplate = new DataTemplate(typeof(MyViewCell)),
+                ItemsSource = Enumerable.Range(0, 10)
+            };
+
+            Content = new StackLayout
+            {
+                Padding = new Thickness(0, 20, 0, 0),
+                Children =
+                {
+                    listView
+                }
+            };
+        }
 
 #if UITEST
 		[Test]
@@ -86,5 +96,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot("If the tapped image is not larger, this test has failed.");
 		}
 #endif
-	}
+    }
 }

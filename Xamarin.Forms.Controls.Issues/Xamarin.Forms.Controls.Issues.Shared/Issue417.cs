@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -13,69 +12,69 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 417, "Navigation.PopToRootAsync does nothing", PlatformAffected.Android)]
-	public class Issue417 : TestNavigationPage
-	{
-		public static NavigationPage NavRoot;
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 417, "Navigation.PopToRootAsync does nothing", PlatformAffected.Android)]
+    public class Issue417 : TestNavigationPage
+    {
+        public static NavigationPage NavRoot;
 
-		protected override void Init ()
-		{
-			Navigation.PushAsync (new FirstPage ());
-			NavRoot = this;
-		}
+        protected override void Init()
+        {
+            Navigation.PushAsync(new FirstPage());
+            NavRoot = this;
+        }
 
-		public class FirstPage : ContentPage
-		{
-			public FirstPage ()
-			{
-				Title = "First Page";
-				BackgroundColor = Color.Black;
+        public class FirstPage : ContentPage
+        {
+            public FirstPage()
+            {
+                Title = "First Page";
+                BackgroundColor = Color.Black;
 
-				var nextPageBtn = new Button {
-					Text = "Next Page"
-				};
+                var nextPageBtn = new Button
+                {
+                    Text = "Next Page"
+                };
 
-				nextPageBtn.Clicked += (s, e) => NavRoot.Navigation.PushAsync (new NextPage ());
+                nextPageBtn.Clicked += (s, e) => NavRoot.Navigation.PushAsync(new NextPage());
 
-				Content = nextPageBtn;
-			}
-		
-		}
+                Content = nextPageBtn;
+            }
+        }
 
-		public class NextPage : ContentPage
-		{
-			public NextPage ()
-			{
-				Title = "Second Page";
+        public class NextPage : ContentPage
+        {
+            public NextPage()
+            {
+                Title = "Second Page";
 
-				var nextPage2Btn = new Button {
-					Text = "Next Page 2"
-				};
+                var nextPage2Btn = new Button
+                {
+                    Text = "Next Page 2"
+                };
 
-				nextPage2Btn.Clicked += (s, e) => NavRoot.Navigation.PushAsync (new NextPage2 ());
-				BackgroundColor = Color.Black;
-				Content = nextPage2Btn;
+                nextPage2Btn.Clicked += (s, e) => NavRoot.Navigation.PushAsync(new NextPage2());
+                BackgroundColor = Color.Black;
+                Content = nextPage2Btn;
+            }
+        }
 
-			}
-		}
+        public class NextPage2 : ContentPage
+        {
+            public NextPage2()
+            {
+                Title = "Third Page";
 
-		public class NextPage2 : ContentPage
-		{
-			public NextPage2 ()
-			{
-				Title = "Third Page";
+                var popToRootButton = new Button
+                {
+                    Text = "Pop to root"
+                };
 
-				var popToRootButton = new Button {
-					Text = "Pop to root"
-				};
-
-				popToRootButton.Clicked += (s, e) => NavRoot.PopToRootAsync ();
-				BackgroundColor = Color.Black;
-				Content = popToRootButton;
-			}
-		}
-
+                popToRootButton.Clicked += (s, e) => NavRoot.PopToRootAsync();
+                BackgroundColor = Color.Black;
+                Content = popToRootButton;
+            }
+        }
 
 #if UITEST
 		[Test]
@@ -105,7 +104,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("Popped to root");
 		}
 #endif
-	}
-
-
+    }
 }

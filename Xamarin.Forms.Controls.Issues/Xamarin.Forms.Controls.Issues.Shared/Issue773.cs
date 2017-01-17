@@ -7,17 +7,16 @@ using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 #endif
 
-
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers=true)]
-	[Issue (IssueTracker.Github, 773, "Horizontal ScrollView locks after rotation", PlatformAffected.iOS)]
-	public class Issue773 : TestNavigationPage
-	{
-		protected override void Init ()
-		{
-			PushAsync (new CannotScrollRepro ());
-		}
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 773, "Horizontal ScrollView locks after rotation", PlatformAffected.iOS)]
+    public class Issue773 : TestNavigationPage
+    {
+        protected override void Init()
+        {
+            PushAsync(new CannotScrollRepro());
+        }
 
 #if UITEST
 		[Test]
@@ -99,77 +98,89 @@ namespace Xamarin.Forms.Controls.Issues
 
 		//}
 #endif
-	}
+    }
 
-	public class CannotScrollRepro : ContentPage
-	{
-		public CannotScrollRepro ()
-		{
-			Title = "Nav Bar";
+    public class CannotScrollRepro : ContentPage
+    {
+        public CannotScrollRepro()
+        {
+            Title = "Nav Bar";
 
-			var layout = new StackLayout {
-				Padding = new Thickness (20),
-				BackgroundColor = Color.Gray
-			};
+            var layout = new StackLayout
+            {
+                Padding = new Thickness(20),
+                BackgroundColor = Color.Gray
+            };
 
-			var button1 = new Button { Text = "Button 1" };
-			var button2 = new Button { Text = "Button 2", IsEnabled = false };
-			var button3 = new Button { Text = "Button 3", IsEnabled = false };
-			var button4 = new Button { Text = "Button 4", IsEnabled = false };
-			var button5 = new Button { Text = "Button 5", IsEnabled = false };
-			var button6 = new Button { Text = "Button 6", IsEnabled = false };
-			var button7 = new Button { Text = "Button 7", IsEnabled = false };
-			var button8 = new Button { Text = "Button 8" };
+            var button1 = new Button { Text = "Button 1" };
+            var button2 = new Button { Text = "Button 2", IsEnabled = false };
+            var button3 = new Button { Text = "Button 3", IsEnabled = false };
+            var button4 = new Button { Text = "Button 4", IsEnabled = false };
+            var button5 = new Button { Text = "Button 5", IsEnabled = false };
+            var button6 = new Button { Text = "Button 6", IsEnabled = false };
+            var button7 = new Button { Text = "Button 7", IsEnabled = false };
+            var button8 = new Button { Text = "Button 8" };
 
-			var label = new Label { Text = "Not Clicked" };
+            var label = new Label { Text = "Not Clicked" };
 
-			var buttonStack = new StackLayout {
-				Padding = new Thickness (30, 0),
-				Orientation = StackOrientation.Horizontal,
-				Spacing = 30,
-				Children = {
-					button1,
-					button2,
-					button3,
-					button4,
-					button5,
-					button6,
-					button7,
-					button8,
-				}
-			};
+            var buttonStack = new StackLayout
+            {
+                Padding = new Thickness(30, 0),
+                Orientation = StackOrientation.Horizontal,
+                Spacing = 30,
+                Children =
+                {
+                    button1,
+                    button2,
+                    button3,
+                    button4,
+                    button5,
+                    button6,
+                    button7,
+                    button8,
+                }
+            };
 
-			button1.Clicked += (sender, args) => Navigation.PopModalAsync ();
+            button1.Clicked += (sender, args) => Navigation.PopModalAsync();
 
-			int count = 0;
-			button8.Clicked += (sender, e) => {
-				if (count == 0) {
-					label.Text = "I was clicked once!";
-					count++;
-				} else if (count == 1) {
-					label.Text = "I was clicked again!";
-					count++;
-				} else if (count == 2) {
-					label.Text = "I was clicked again again!";
-				}
-			};
+            int count = 0;
+            button8.Clicked += (sender, e) =>
+            {
+                if (count == 0)
+                {
+                    label.Text = "I was clicked once!";
+                    count++;
+                }
+                else if (count == 1)
+                {
+                    label.Text = "I was clicked again!";
+                    count++;
+                }
+                else if (count == 2)
+                {
+                    label.Text = "I was clicked again again!";
+                }
+            };
 
-			layout.Children.Add (new BoxView {
-				BackgroundColor = Color.Red,
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand
-			});
+            layout.Children.Add(new BoxView
+            {
+                BackgroundColor = Color.Red,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            });
 
-			layout.Children.Add (label);
+            layout.Children.Add(label);
 
-			layout.Children.Add(new ScrollView {
-				BackgroundColor = Color.Aqua,
-				Orientation = ScrollOrientation.Horizontal,
-				HeightRequest = Device.RuntimePlatform == Device.Windows || Device.RuntimePlatform == Device.WinPhone ? 80 : 44,
-				Content = buttonStack
-			});
+            layout.Children.Add(new ScrollView
+            {
+                BackgroundColor = Color.Aqua,
+                Orientation = ScrollOrientation.Horizontal,
+                HeightRequest =
+                    Device.RuntimePlatform == Device.Windows || Device.RuntimePlatform == Device.WinPhone ? 80 : 44,
+                Content = buttonStack
+            });
 
-			Content = layout;
-		}
-	}
+            Content = layout;
+        }
+    }
 }

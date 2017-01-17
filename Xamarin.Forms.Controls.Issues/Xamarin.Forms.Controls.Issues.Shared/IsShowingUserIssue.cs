@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Maps;
@@ -11,19 +10,20 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.None, 0, "IsShowingUser renderes as pin instead of dot")]
-	public class IsShowingUserIssue : TestContentPage
-	{
-		protected override void Init ()
-		{
-			var map = new Map (MapSpan.FromCenterAndRadius (new Position(37.79, -122.4), Distance.FromMiles(2))) {
-				AutomationId = "FormsMap",
-				IsShowingUser = true
-			};
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.None, 0, "IsShowingUser renderes as pin instead of dot")]
+    public class IsShowingUserIssue : TestContentPage
+    {
+        protected override void Init()
+        {
+            var map = new Map(MapSpan.FromCenterAndRadius(new Position(37.79, -122.4), Distance.FromMiles(2)))
+            {
+                AutomationId = "FormsMap",
+                IsShowingUser = true
+            };
 
-			Content = map;
-		}
+            Content = map;
+        }
 
 #if UITEST
 		public void IsShowingUserIssueTest ()
@@ -32,5 +32,5 @@ namespace Xamarin.Forms.Controls
 			Assert.Inconclusive ("Verify that user location is visible and a dot");
 		}
 #endif
-	}
+    }
 }

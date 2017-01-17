@@ -5,28 +5,33 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 {
-	public class EntryPageiOS : ContentPage
-	{
-		public EntryPageiOS()
-		{
-			var entry = new Entry
-			{
-				FontSize = 22,
-				Placeholder = "Type and toggle AdjustsFontSizeToFitWidth"
-			};
+    public class EntryPageiOS : ContentPage
+    {
+        public EntryPageiOS()
+        {
+            var entry = new Entry
+            {
+                FontSize = 22,
+                Placeholder = "Type and toggle AdjustsFontSizeToFitWidth"
+            };
 
-			Content = new StackLayout
-			{
-				Children =
-				{
-					entry,
-					new Button
-					{
-						Text = "Toggle AdjustsFontSizeToFitWidth",
-						Command = new Command(() => entry.On<iOS>().SetAdjustsFontSizeToFitWidthEnabled(!entry.On<iOS>().IsAdjustsFontSizeToFitWidthEnabled()))
-					}
-				}
-			};
-		}
-	}
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    entry,
+                    new Button
+                    {
+                        Text = "Toggle AdjustsFontSizeToFitWidth",
+                        Command =
+                            new Command(
+                                () =>
+                                    entry.On<iOS>()
+                                        .SetAdjustsFontSizeToFitWidthEnabled(
+                                            !entry.On<iOS>().IsAdjustsFontSizeToFitWidthEnabled()))
+                    }
+                }
+            };
+        }
+    }
 }

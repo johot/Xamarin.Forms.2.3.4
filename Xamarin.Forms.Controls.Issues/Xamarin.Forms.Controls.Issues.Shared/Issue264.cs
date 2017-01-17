@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -11,35 +10,39 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 264, "PopModal NRE", PlatformAffected.Android | PlatformAffected.iOS)]
-	public class Issue264 : TestContentPage
-	{
-		Page _current;
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 264, "PopModal NRE", PlatformAffected.Android | PlatformAffected.iOS)]
+    public class Issue264 : TestContentPage
+    {
+        Page _current;
 
-		protected override void Init ()
-		{
-			var aboutBtn = new Button {
-				Text = "About"
-			};
+        protected override void Init()
+        {
+            var aboutBtn = new Button
+            {
+                Text = "About"
+            };
 
-			aboutBtn.Clicked += (s, e) => Navigation.PushModalAsync (new AboutPage ());
+            aboutBtn.Clicked += (s, e) => Navigation.PushModalAsync(new AboutPage());
 
-			var popButton = new Button {
-				Text = "Pop me",
-				Command = new Command (async () => await Navigation.PopAsync ())
-			};
+            var popButton = new Button
+            {
+                Text = "Pop me",
+                Command = new Command(async () => await Navigation.PopAsync())
+            };
 
-			Content = new StackLayout {
-				Children = {
-					new Label {Text = "Home"},
-					aboutBtn,
-					popButton
-				}
-			};
-		}
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    new Label { Text = "Home" },
+                    aboutBtn,
+                    popButton
+                }
+            };
+        }
 
-		// Pop modal null reference exception
+        // Pop modal null reference exception
 
 #if UITEST
 		[Test]
@@ -62,15 +65,14 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("No crash");
 		}
 #endif
-	}
+    }
 
-	public class AboutPage : ContentPage
-	{
-		public AboutPage()
-		{
-			BackgroundColor = Color.Black;
-			Content = new Button { Text = "Close", Command = new Command (() => Navigation.PopModalAsync ()) };
-
-		}
-	}
+    public class AboutPage : ContentPage
+    {
+        public AboutPage()
+        {
+            BackgroundColor = Color.Black;
+            Content = new Button { Text = "Close", Command = new Command(() => Navigation.PopModalAsync()) };
+        }
+    }
 }

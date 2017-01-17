@@ -4,35 +4,36 @@ using System.Threading;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	public partial class Bugzilla42069_Page : ContentPage
-	{
-		public const string DestructorMessage = ">>>>>>>>>> Bugzilla42069_Page destructor <<<<<<<<<<";
+    public partial class Bugzilla42069_Page : ContentPage
+    {
+        public const string DestructorMessage = ">>>>>>>>>> Bugzilla42069_Page destructor <<<<<<<<<<";
 
-		public Bugzilla42069_Page()
-		{
-			#if APP
-			InitializeComponent();
-			
-			ImageWhichChanges = ImageSource.FromFile("oasissmall.jpg") as FileImageSource;
+        public Bugzilla42069_Page()
+        {
+#if APP
+            InitializeComponent();
 
-			ChangingImage.SetBinding(Image.SourceProperty, nameof(ImageWhichChanges));
+            ImageWhichChanges = ImageSource.FromFile("oasissmall.jpg") as FileImageSource;
 
-			Button.Clicked += (sender, args) => Navigation.PopAsync(false);
+            ChangingImage.SetBinding(Image.SourceProperty, nameof(ImageWhichChanges));
 
-			Button2.Clicked += (sender, args) =>
-			{
-				ImageWhichChanges.File = ImageWhichChanges.File == "bank.png" ? "oasissmall.jpg" : "bank.png";
-			};
+            Button.Clicked += (sender, args) => Navigation.PopAsync(false);
 
-			BindingContext = this;
-			#endif
-		}
+            Button2.Clicked +=
+                (sender, args) =>
+                {
+                    ImageWhichChanges.File = ImageWhichChanges.File == "bank.png" ? "oasissmall.jpg" : "bank.png";
+                };
 
-		~Bugzilla42069_Page()
-		{
-			Debug.WriteLine(DestructorMessage);
-		}
+            BindingContext = this;
+#endif
+        }
 
-		public FileImageSource ImageWhichChanges { get; set; }
-	}
+        ~Bugzilla42069_Page()
+        {
+            Debug.WriteLine(DestructorMessage);
+        }
+
+        public FileImageSource ImageWhichChanges { get; set; }
+    }
 }

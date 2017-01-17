@@ -5,174 +5,178 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 {
-	public class MasterDetailPageiOS : MasterDetailPage
-	{
-		public MasterDetailPageiOS(ICommand restore)
-		{
-			MasterBehavior = MasterBehavior.Popover;
+    public class MasterDetailPageiOS : MasterDetailPage
+    {
+        public MasterDetailPageiOS(ICommand restore)
+        {
+            MasterBehavior = MasterBehavior.Popover;
 
-			var master = new ContentPage { Title = "Master Detail Page" };
-			var masterContent = new StackLayout { Spacing = 10, Margin = new Thickness(0, 10, 5, 0) };
-			var detail = new ContentPage
-			{
-				Title = "This is the detail page's Title",
-				Padding = new Thickness(0,20,0,0)
-			};
-			
-			var navItems = new List<NavItem>
-			{
-				new NavItem("Display Alert", "\uE171", new Command(() => DisplayAlert("Alert", "This is an alert", "OK"))),
-				new NavItem("Return To Gallery", "\uE106", restore),
-				new NavItem("Save", "\uE105", new Command(() => DisplayAlert("Save", "Fake save dialog", "OK"))),
-				new NavItem("Audio", "\uE189", new Command(() => DisplayAlert("Audio", "Never gonna give you up...", "OK"))),
-				new NavItem("Set Detail to Navigation Page", "\uE16F", new Command(() => Detail = CreateNavigationPage())),
-				new NavItem("Set Detail to Content Page", "\uE160", new Command(() => Detail = detail)),
-			};
+            var master = new ContentPage { Title = "Master Detail Page" };
+            var masterContent = new StackLayout { Spacing = 10, Margin = new Thickness(0, 10, 5, 0) };
+            var detail = new ContentPage
+            {
+                Title = "This is the detail page's Title",
+                Padding = new Thickness(0, 20, 0, 0)
+            };
 
-			var navList = new NavList(navItems);
-			
-			masterContent.Children.Add(navList);
-			master.Content = masterContent;
+            var navItems = new List<NavItem>
+            {
+                new NavItem("Display Alert", "\uE171",
+                    new Command(() => DisplayAlert("Alert", "This is an alert", "OK"))),
+                new NavItem("Return To Gallery", "\uE106", restore),
+                new NavItem("Save", "\uE105", new Command(() => DisplayAlert("Save", "Fake save dialog", "OK"))),
+                new NavItem("Audio", "\uE189",
+                    new Command(() => DisplayAlert("Audio", "Never gonna give you up...", "OK"))),
+                new NavItem("Set Detail to Navigation Page", "\uE16F",
+                    new Command(() => Detail = CreateNavigationPage())),
+                new NavItem("Set Detail to Content Page", "\uE160", new Command(() => Detail = detail)),
+            };
 
-			var detailContent = new StackLayout {
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.Center,
-				Children =
-				{
-					new Label
-					{
-						Text = "This is a ContentPage with StatusBarHiddenMode.True"
-					}
-				}
-			};
+            var navList = new NavList(navItems);
 
-			detail.Content = detailContent;
+            masterContent.Children.Add(navList);
+            master.Content = masterContent;
 
-			Master = master;
+            var detailContent = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                Children =
+                {
+                    new Label
+                    {
+                        Text = "This is a ContentPage with StatusBarHiddenMode.True"
+                    }
+                }
+            };
 
-			detail.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.True);
+            detail.Content = detailContent;
 
-			Detail = detail;
-		}
+            Master = master;
 
-		public class NavItem
-		{
-			public NavItem(string text, string icon, ICommand command)
-			{
-				Text = text;
-				Icon = icon;
-				Command = command;
-			}
+            detail.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.True);
 
-			public ICommand Command { get; set; }
+            Detail = detail;
+        }
 
-			public string Icon { get; set; }
+        public class NavItem
+        {
+            public NavItem(string text, string icon, ICommand command)
+            {
+                Text = text;
+                Icon = icon;
+                Command = command;
+            }
 
-			public string Text { get; set; }
-		}
+            public ICommand Command { get; set; }
 
-		public class NavList : ListView
-		{
-			public NavList(IEnumerable<NavItem> items)
-			{
-				ItemsSource = items;
-				ItemTapped += (sender, args) => (args.Item as NavItem)?.Command.Execute(null);
+            public string Icon { get; set; }
 
-				ItemTemplate = new DataTemplate(() =>
-				{
-					var grid = new Grid();
-					grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 48 });
-					grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 200 });
+            public string Text { get; set; }
+        }
 
-					grid.Margin = new Thickness(0, 10, 0, 10);
+        public class NavList : ListView
+        {
+            public NavList(IEnumerable<NavItem> items)
+            {
+                ItemsSource = items;
+                ItemTapped += (sender, args) => (args.Item as NavItem)?.Command.Execute(null);
 
-					var text = new Label
-					{
-						VerticalOptions = LayoutOptions.Fill
-					};
-					text.SetBinding(Label.TextProperty, "Text");
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    var grid = new Grid();
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 48 });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 200 });
 
-					var glyph = new Label
-					{
-						FontSize = 24,
-						HorizontalTextAlignment = TextAlignment.Center
-					};
+                    grid.Margin = new Thickness(0, 10, 0, 10);
 
-					glyph.SetBinding(Label.TextProperty, "Icon");
+                    var text = new Label
+                    {
+                        VerticalOptions = LayoutOptions.Fill
+                    };
+                    text.SetBinding(Label.TextProperty, "Text");
 
-					grid.Children.Add(glyph);
-					grid.Children.Add(text);
+                    var glyph = new Label
+                    {
+                        FontSize = 24,
+                        HorizontalTextAlignment = TextAlignment.Center
+                    };
 
-					Grid.SetColumn(glyph, 0);
-					Grid.SetColumn(text, 1);
+                    glyph.SetBinding(Label.TextProperty, "Icon");
 
-					grid.WidthRequest = 48;
+                    grid.Children.Add(glyph);
+                    grid.Children.Add(text);
 
-					var cell = new ViewCell
-					{
-						View = grid
-					};
+                    Grid.SetColumn(glyph, 0);
+                    Grid.SetColumn(text, 1);
 
-					return cell;
-				});
-			}
-		}
+                    grid.WidthRequest = 48;
 
-		static NavigationPage CreateNavigationPage()
-		{
-			var page = new NavigationPage { Title = "This is the Navigation Page Title" };
+                    var cell = new ViewCell
+                    {
+                        View = grid
+                    };
 
-			page.PushAsync(CreateNavSubPage());
+                    return cell;
+                });
+            }
+        }
 
-			return page;
-		}
+        static NavigationPage CreateNavigationPage()
+        {
+            var page = new NavigationPage { Title = "This is the Navigation Page Title" };
 
-		static ContentPage CreateNavSubPage()
-		{
-			var page = new ContentPage();
-			var content = new StackLayout();
-			var navigateButton = new Button() { Text = "Push Another Page" };
+            page.PushAsync(CreateNavSubPage());
 
-			navigateButton.Clicked += (sender, args) => page.Navigation.PushAsync(CreateNavSubPage());
+            return page;
+        }
 
-			var togglePrefersStatusBarHiddenButtonForPageButton = new Button
-			{
-				Text = "Toggle PrefersStatusBarHidden for Page"
-			};
-			var togglePreferredStatusBarUpdateAnimationButton = new Button
-			{
-				Text = "Toggle PreferredStatusBarUpdateAnimation"
-			};
+        static ContentPage CreateNavSubPage()
+        {
+            var page = new ContentPage();
+            var content = new StackLayout();
+            var navigateButton = new Button() { Text = "Push Another Page" };
 
-			togglePrefersStatusBarHiddenButtonForPageButton.Command = new Command(() =>
-			{
-				var mode = page.On<iOS>().PrefersStatusBarHidden();
-				if (mode == StatusBarHiddenMode.Default)
-					page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.True);
-				else if (mode == StatusBarHiddenMode.True)
-					page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.False);
-				else
-					page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.Default);
-			});
+            navigateButton.Clicked += (sender, args) => page.Navigation.PushAsync(CreateNavSubPage());
 
-			togglePreferredStatusBarUpdateAnimationButton.Command = new Command(() =>
-			{
-				var animation = page.On<iOS>().PreferredStatusBarUpdateAnimation();
-				if (animation == UIStatusBarAnimation.Fade)
-					page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.Slide);
-				else if (animation == UIStatusBarAnimation.Slide)
-					page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.None);
-				else
-					page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.Fade);
-			});
-			
-			content.Children.Add(navigateButton);
-			content.Children.Add(togglePrefersStatusBarHiddenButtonForPageButton);
-			content.Children.Add(togglePreferredStatusBarUpdateAnimationButton);
+            var togglePrefersStatusBarHiddenButtonForPageButton = new Button
+            {
+                Text = "Toggle PrefersStatusBarHidden for Page"
+            };
+            var togglePreferredStatusBarUpdateAnimationButton = new Button
+            {
+                Text = "Toggle PreferredStatusBarUpdateAnimation"
+            };
 
-			page.Content = content;
+            togglePrefersStatusBarHiddenButtonForPageButton.Command = new Command(() =>
+            {
+                var mode = page.On<iOS>().PrefersStatusBarHidden();
+                if (mode == StatusBarHiddenMode.Default)
+                    page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.True);
+                else if (mode == StatusBarHiddenMode.True)
+                    page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.False);
+                else
+                    page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.Default);
+            });
 
-			return page;
-		}
-	}
+            togglePreferredStatusBarUpdateAnimationButton.Command = new Command(() =>
+            {
+                var animation = page.On<iOS>().PreferredStatusBarUpdateAnimation();
+                if (animation == UIStatusBarAnimation.Fade)
+                    page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.Slide);
+                else if (animation == UIStatusBarAnimation.Slide)
+                    page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.None);
+                else
+                    page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.Fade);
+            });
+
+            content.Children.Add(navigateButton);
+            content.Children.Add(togglePrefersStatusBarHiddenButtonForPageButton);
+            content.Children.Add(togglePreferredStatusBarUpdateAnimationButton);
+
+            page.Content = content;
+
+            return page;
+        }
+    }
 }

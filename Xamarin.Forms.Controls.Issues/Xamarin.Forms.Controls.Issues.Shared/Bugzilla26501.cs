@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
+
 #if UITEST
 using NUnit.Framework;
 using Xamarin.UITest;
@@ -9,130 +10,135 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	public class FamilyViewModel
-	{
-		public Guid ProfileId { get; set; }
-		public string DisplayName { get; set; }
-		public string ImageFilename { get; set; }
-		public string BonusBalance { get; set; }
-		public string MemberNo { get; set; }
+    [Preserve(AllMembers = true)]
+    public class FamilyViewModel
+    {
+        public Guid ProfileId { get; set; }
 
-		public FamilyViewModel ()
-		{
-			ProfileId = Guid.Empty;
-			DisplayName = "";
-			BonusBalance = "";
-			MemberNo = "";
-			ImageFilename = "";
-		}
-	}
+        public string DisplayName { get; set; }
 
-	[Preserve (AllMembers = true)]
-	public class FamilyCell : ViewCell
-	{
-		public Label FamilyLabel;
+        public string ImageFilename { get; set; }
 
-		public FamilyCell ()
-		{
-			FamilyLabel = new Label ();
+        public string BonusBalance { get; set; }
 
-			var l1 = new RelativeLayout ();
+        public string MemberNo { get; set; }
 
-			l1.Children.Add (FamilyLabel,
-			                 Constraint.Constant (50),
-			                 Constraint.Constant (4),
-			                 Constraint.RelativeToParent (p => p.Width - 10 - 50 - 85)
-				);
+        public FamilyViewModel()
+        {
+            ProfileId = Guid.Empty;
+            DisplayName = "";
+            BonusBalance = "";
+            MemberNo = "";
+            ImageFilename = "";
+        }
+    }
 
+    [Preserve(AllMembers = true)]
+    public class FamilyCell : ViewCell
+    {
+        public Label FamilyLabel;
 
-			View = l1;
+        public FamilyCell()
+        {
+            FamilyLabel = new Label();
 
-			FamilyLabel.SetBinding (Label.TextProperty, "DisplayName");
+            var l1 = new RelativeLayout();
 
-			// COMMENT LINE BELOW OUT TO MAKE IT WORK!
-			AddContextActions ();
-		}
+            l1.Children.Add(FamilyLabel,
+                Constraint.Constant(50),
+                Constraint.Constant(4),
+                Constraint.RelativeToParent(p => p.Width - 10 - 50 - 85)
+            );
 
-		void AddContextActions ()
-		{
-			ContextActions.Add (new MenuItem () {
-				Text = "Delete",
-				IsDestructive = true,
-				Command = new Command (Delete)
-			});
+            View = l1;
 
-			ContextActions.Add (new MenuItem () {
-				Text = "More",
-				IsDestructive = false,
-				Command = new Command (More)
-			});
-		}
+            FamilyLabel.SetBinding(Label.TextProperty, "DisplayName");
 
-		void Delete ()
-		{
-		}
+            // COMMENT LINE BELOW OUT TO MAKE IT WORK!
+            AddContextActions();
+        }
 
-		void More ()
-		{
-		}
-	}
+        void AddContextActions()
+        {
+            ContextActions.Add(new MenuItem()
+            {
+                Text = "Delete",
+                IsDestructive = true,
+                Command = new Command(Delete)
+            });
 
-	[Preserve (AllMembers=true)]
-	[Issue (IssueTracker.Bugzilla, 26501, "BindingSource / Context action issue", PlatformAffected.iOS)]
-	public class Bugzilla26501 : TestContentPage
-	{
-		protected override void Init ()
-		{
-			//TODO: Multilanguage
-			Title = "Context Action Bug";
+            ContextActions.Add(new MenuItem()
+            {
+                Text = "More",
+                IsDestructive = false,
+                Command = new Command(More)
+            });
+        }
 
-			_familyListView = new ListView () {
-				RowHeight = 50,
-				ItemTemplate = new DataTemplate (typeof (FamilyCell)),
-				HasUnevenRows = true
-			};
+        void Delete()
+        {
+        }
 
-			//TODO: Multilanguage
-			ToolbarItems.Add (new ToolbarItem ("Refresh", "", () => {
-				_familyListView.ItemsSource = _demoDataSource2;
-			}));
+        void More()
+        {
+        }
+    }
 
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 26501, "BindingSource / Context action issue", PlatformAffected.iOS)]
+    public class Bugzilla26501 : TestContentPage
+    {
+        protected override void Init()
+        {
+            //TODO: Multilanguage
+            Title = "Context Action Bug";
 
-			_familyListView.ItemSelected += (sender, e) => _familyListView.SelectedItem = null;
+            _familyListView = new ListView()
+            {
+                RowHeight = 50,
+                ItemTemplate = new DataTemplate(typeof(FamilyCell)),
+                HasUnevenRows = true
+            };
 
-			Content = _familyListView;
+            //TODO: Multilanguage
+            ToolbarItems.Add(new ToolbarItem("Refresh", "", () => { _familyListView.ItemsSource = _demoDataSource2; }));
 
-			UpdateData ();
-		}
+            _familyListView.ItemSelected += (sender, e) => _familyListView.SelectedItem = null;
 
-		readonly FamilyViewModel[] _demoDataSource = new FamilyViewModel[] {
-			new FamilyViewModel {DisplayName = "ZOOMER robothund"},
-			new FamilyViewModel {DisplayName = "FROST sengetøj"},
-			new FamilyViewModel {DisplayName = "BEADOS Quick Dry designstation"},
-			new FamilyViewModel {DisplayName = "Redningsstation i junglen"},
-		};
+            Content = _familyListView;
 
-		readonly FamilyViewModel[] _demoDataSource2 = new FamilyViewModel[] {
-			new FamilyViewModel {DisplayName = "ZOOMER robothund"},
-			new FamilyViewModel {DisplayName = "FROST sengetøj"},
-			new FamilyViewModel {DisplayName = "BEADOS Quick Dry designstation"},
-			new FamilyViewModel {DisplayName = "Redningsstation i junglen"},
-			new FamilyViewModel {DisplayName = "CHAMPIONS LEAGUE 2014/15 boosterpakke"},
-			new FamilyViewModel {DisplayName = "NEW BORN BABY luksusæske med dukke"},
-			new FamilyViewModel {DisplayName = "FURBY Boom Festive Sweater elektronisk plysdyr"},
-			new FamilyViewModel {DisplayName = "LEGO FRIENDS 41007 Heartlake hundesalon"},
-			new FamilyViewModel {DisplayName = "LEGO CITY 4204 Minen"}
-		};
+            UpdateData();
+        }
 
-		ListView _familyListView;
+        readonly FamilyViewModel[] _demoDataSource = new FamilyViewModel[]
+        {
+            new FamilyViewModel { DisplayName = "ZOOMER robothund" },
+            new FamilyViewModel { DisplayName = "FROST sengetøj" },
+            new FamilyViewModel { DisplayName = "BEADOS Quick Dry designstation" },
+            new FamilyViewModel { DisplayName = "Redningsstation i junglen" },
+        };
 
-		List<FamilyViewModel> _itemSource;
+        readonly FamilyViewModel[] _demoDataSource2 = new FamilyViewModel[]
+        {
+            new FamilyViewModel { DisplayName = "ZOOMER robothund" },
+            new FamilyViewModel { DisplayName = "FROST sengetøj" },
+            new FamilyViewModel { DisplayName = "BEADOS Quick Dry designstation" },
+            new FamilyViewModel { DisplayName = "Redningsstation i junglen" },
+            new FamilyViewModel { DisplayName = "CHAMPIONS LEAGUE 2014/15 boosterpakke" },
+            new FamilyViewModel { DisplayName = "NEW BORN BABY luksusæske med dukke" },
+            new FamilyViewModel { DisplayName = "FURBY Boom Festive Sweater elektronisk plysdyr" },
+            new FamilyViewModel { DisplayName = "LEGO FRIENDS 41007 Heartlake hundesalon" },
+            new FamilyViewModel { DisplayName = "LEGO CITY 4204 Minen" }
+        };
 
-		void UpdateData ()
-		{
-			Device.BeginInvokeOnMainThread (() => _familyListView.ItemsSource = _demoDataSource);
-		}
+        ListView _familyListView;
+
+        List<FamilyViewModel> _itemSource;
+
+        void UpdateData()
+        {
+            Device.BeginInvokeOnMainThread(() => _familyListView.ItemsSource = _demoDataSource);
+        }
 
 #if UITEST
 		[Test]
@@ -146,5 +152,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Marked ("ZOOMER robothund"));
 		}
 #endif
-	}
+    }
 }

@@ -2,47 +2,55 @@ using System;
 
 namespace Xamarin.Forms.Controls
 {
-	internal class StateViewContainer<T> : ViewContainer<T> 
-		where T : View
-	{
-		public Button StateChangeButton { get; private set; }
-		public Label ViewInteractionLabel { get; private set; }
+    internal class StateViewContainer<T> : ViewContainer<T>
+        where T : View
+    {
+        public Button StateChangeButton { get; private set; }
 
-		public StateViewContainer (Enum formsMember, T view) : base (formsMember, view)
-		{
-			var name = formsMember.ToString ();
+        public Label ViewInteractionLabel { get; private set; }
 
-			var stateTitleLabel = new Label {
-				Text = name + "?"
-			};
+        public StateViewContainer(Enum formsMember, T view) : base(formsMember, view)
+        {
+            var name = formsMember.ToString();
 
-			ViewInteractionLabel = new Label {
-				Text = "Interacted? : False"
-			};
+            var stateTitleLabel = new Label
+            {
+                Text = name + "?"
+            };
 
-			var stateValueLabel = new Label {
-				BindingContext = view,
-				AutomationId = name + "StateLabel"
-			};
-			if (name != "Focus")
-				stateValueLabel.SetBinding (Label.TextProperty, name, converter: new GenericValueConverter (o => o.ToString()));
+            ViewInteractionLabel = new Label
+            {
+                Text = "Interacted? : False"
+            };
 
-			StateChangeButton = new Button {
-				Text = "Change State: " + name,
-				AutomationId = name + "StateButton"
-			};
+            var stateValueLabel = new Label
+            {
+                BindingContext = view,
+                AutomationId = name + "StateLabel"
+            };
+            if (name != "Focus")
+                stateValueLabel.SetBinding(Label.TextProperty, name,
+                    converter: new GenericValueConverter(o => o.ToString()));
 
-			var labelLayout = new StackLayout {
-				Orientation = StackOrientation.Horizontal,
-				Children = {
-					stateTitleLabel,
-					stateValueLabel
-				}
-			};
+            StateChangeButton = new Button
+            {
+                Text = "Change State: " + name,
+                AutomationId = name + "StateButton"
+            };
 
-			ContainerLayout.Children.Add (ViewInteractionLabel);
-			ContainerLayout.Children.Add (labelLayout);
-			ContainerLayout.Children.Add (StateChangeButton);
-		}
-	}
+            var labelLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                Children =
+                {
+                    stateTitleLabel,
+                    stateValueLabel
+                }
+            };
+
+            ContainerLayout.Children.Add(ViewInteractionLabel);
+            ContainerLayout.Children.Add(labelLayout);
+            ContainerLayout.Children.Add(StateChangeButton);
+        }
+    }
 }

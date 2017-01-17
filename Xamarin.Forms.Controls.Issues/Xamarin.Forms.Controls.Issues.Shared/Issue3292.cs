@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using System.Threading.Tasks;
 using System.ComponentModel;
@@ -13,65 +12,62 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 3292, "TableSection.Title property binding fails in XAML")]
-	public class Issue3292 : TestContentPage 
-	{
-		protected override void Init ()
-		{
-			var vm = new SomePageViewModel ();
-			BindingContext = vm;
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 3292, "TableSection.Title property binding fails in XAML")]
+    public class Issue3292 : TestContentPage
+    {
+        protected override void Init()
+        {
+            var vm = new SomePageViewModel();
+            BindingContext = vm;
 
-			var tableview = new TableView ();
-			var section = new TableSection ();
-			section.SetBinding (TableSectionBase.TitleProperty, new Binding ("SectionTitle"));
-			var root = new TableRoot ();
-			root.Add (section);
-			tableview.Root = root;
+            var tableview = new TableView();
+            var section = new TableSection();
+            section.SetBinding(TableSectionBase.TitleProperty, new Binding("SectionTitle"));
+            var root = new TableRoot();
+            root.Add(section);
+            tableview.Root = root;
 
-			Content = tableview;
+            Content = tableview;
 
-			vm.Init ();
-		}
+            vm.Init();
+        }
 
-		[Preserve (AllMembers = true)]
-		public class SomePageViewModel : INotifyPropertyChanged
-		{
-			string _sectionTitle;
+        [Preserve(AllMembers = true)]
+        public class SomePageViewModel : INotifyPropertyChanged
+        {
+            string _sectionTitle;
 
-			public SomePageViewModel()
-			{
-				SectionTitle = "Hello World";
-			}
+            public SomePageViewModel()
+            {
+                SectionTitle = "Hello World";
+            }
 
-			public void Init()
-			{
-				Task.Delay(1000).ContinueWith(t =>
-					{
-						Device.BeginInvokeOnMainThread(() => {
-							SectionTitle = "Hello World Changed";
-						});
-					});
-			}
+            public void Init()
+            {
+                Task.Delay(1000)
+                    .ContinueWith(
+                        t => { Device.BeginInvokeOnMainThread(() => { SectionTitle = "Hello World Changed"; }); });
+            }
 
-			public string SectionTitle
-			{
-				get { return _sectionTitle; }
-				set
-				{
-					_sectionTitle = value;
-					OnPropertyChanged();
-				}
-			}
+            public string SectionTitle
+            {
+                get { return _sectionTitle; }
+                set
+                {
+                    _sectionTitle = value;
+                    OnPropertyChanged();
+                }
+            }
 
-			public event PropertyChangedEventHandler PropertyChanged;
+            public event PropertyChangedEventHandler PropertyChanged;
 
-			protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-			{
-				var handler = PropertyChanged;
-				if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
+            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                var handler = PropertyChanged;
+                if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
 #if UITEST
 		[Test]
@@ -80,5 +76,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Marked ("Hello World Changed"));
 		}
 #endif
-	}
+    }
 }

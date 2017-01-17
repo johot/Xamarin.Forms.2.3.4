@@ -16,15 +16,16 @@ namespace Xamarin.Forms.Controls.Issues
 #endif
 
     [Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Bugzilla, 42832, "Scrolling a ListView with active ContextAction Items causes NRE", PlatformAffected.Android)]
+    [Issue(IssueTracker.Bugzilla, 42832, "Scrolling a ListView with active ContextAction Items causes NRE",
+        PlatformAffected.Android)]
     public class Bugzilla42832 : TestContentPage
-	{
+    {
         ListView listview;
 
         protected override void Init()
         {
             var items = new List<string>();
-            for(int i=0; i<20; i++)
+            for (int i = 0; i < 20; i++)
                 items.Add($"Item #{i}");
 
             var template = new DataTemplate(typeof(TestCell));

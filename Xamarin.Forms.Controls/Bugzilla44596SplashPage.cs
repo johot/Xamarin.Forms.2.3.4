@@ -3,23 +3,21 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
-	public class Bugzilla44596SplashPage : ContentPage
-	{
-		Action FinishedLoading { get; set; }
+    public class Bugzilla44596SplashPage : ContentPage
+    {
+        Action FinishedLoading { get; set; }
 
+        public Bugzilla44596SplashPage(Action finishedLoading)
+        {
+            BackgroundColor = Color.Blue;
+            FinishedLoading = finishedLoading;
+        }
 
-		public Bugzilla44596SplashPage(Action finishedLoading)
-		{
-			BackgroundColor = Color.Blue;
-			FinishedLoading = finishedLoading;
-		}
-
-
-		protected async override void OnAppearing()
-		{
-			base.OnAppearing();
-			await Task.Delay(2000);
-			FinishedLoading?.Invoke();
-		}
-	}
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await Task.Delay(2000);
+            FinishedLoading?.Invoke();
+        }
+    }
 }

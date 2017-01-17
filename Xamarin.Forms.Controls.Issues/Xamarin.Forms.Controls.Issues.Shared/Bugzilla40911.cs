@@ -5,26 +5,30 @@ using Xamarin.Forms.Internals;
 using Xamarin.UITest;
 using NUnit.Framework;
 #endif
+
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Bugzilla, 40911, "NRE with Facebook Login", PlatformAffected.iOS)]
-	public class Bugzilla40911 : TestContentPage 
-	{
-		public StackLayout Layout { get; private set; }
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Bugzilla, 40911, "NRE with Facebook Login", PlatformAffected.iOS)]
+    public class Bugzilla40911 : TestContentPage
+    {
+        public StackLayout Layout { get; private set; }
 
-		public const string ReadyToSetUp40911Test = "ReadyToSetUp40911Test";
+        public const string ReadyToSetUp40911Test = "ReadyToSetUp40911Test";
 
-		protected override void Init ()
-		{
-			Layout = new StackLayout();
+        protected override void Init()
+        {
+            Layout = new StackLayout();
 
-			Layout.Children.Add(new Label{Text = "This is an iOS-specific issue. If you're on another platform, you can ignore this." });
+            Layout.Children.Add(new Label
+            {
+                Text = "This is an iOS-specific issue. If you're on another platform, you can ignore this."
+            });
 
-			Content = Layout;
+            Content = Layout;
 
-			MessagingCenter.Send(this, ReadyToSetUp40911Test);
-		}
+            MessagingCenter.Send(this, ReadyToSetUp40911Test);
+        }
 
 #if UITEST && __IOS__
 		[Test]
@@ -37,5 +41,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement("40911 Success");
 		}
 #endif
-	}
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms.CustomAttributes;
 using System.Collections.Generic;
 using Xamarin.Forms.Internals;
@@ -13,90 +12,96 @@ using Xamarin.UITest.iOS;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-	[Preserve (AllMembers = true)]
-	[Issue (IssueTracker.Github, 2883, "ViewCell IsEnabled set to false does not disable a cell in a TableView")]
-	public class Issue2883 : TestContentPage
-	{
-		protected override void Init ()
-		{
-			var btnCustom1 = new Button () {
-				AutomationId = "btnCustomCellTable",
-				Text = "Custom Table Cell" ,
-				HorizontalOptions = LayoutOptions.Start
-			};
-			var btnCustom1Enabled = new Button () {
-				AutomationId = "btnCustomCellTableEnabled",
-				Text = "Custom Table Cell Enabled" ,
-				HorizontalOptions = LayoutOptions.Start
-			};
+    [Preserve(AllMembers = true)]
+    [Issue(IssueTracker.Github, 2883, "ViewCell IsEnabled set to false does not disable a cell in a TableView")]
+    public class Issue2883 : TestContentPage
+    {
+        protected override void Init()
+        {
+            var btnCustom1 = new Button()
+            {
+                AutomationId = "btnCustomCellTable",
+                Text = "Custom Table Cell",
+                HorizontalOptions = LayoutOptions.Start
+            };
+            var btnCustom1Enabled = new Button()
+            {
+                AutomationId = "btnCustomCellTableEnabled",
+                Text = "Custom Table Cell Enabled",
+                HorizontalOptions = LayoutOptions.Start
+            };
 
-			var btnCustom = new Button () {
-				AutomationId = "btnCustomCellListView",
-				Text = "Custom Cell" ,
-				HorizontalOptions = LayoutOptions.Start
-			};
-		
-			var btnCustomEnabled = new Button () {
-				AutomationId = "btnCustomCellListViewEnabled",
-				Text = "Custom Cell Enabled" ,
-				HorizontalOptions = LayoutOptions.Start
-			};
+            var btnCustom = new Button()
+            {
+                AutomationId = "btnCustomCellListView",
+                Text = "Custom Cell",
+                HorizontalOptions = LayoutOptions.Start
+            };
 
-			btnCustom.Clicked += (object sender, EventArgs e) => {
-				DisplayAlert ("Clicked", "I was clicked even disabled", "ok");
-			};
-			btnCustom1.Clicked += (object sender, EventArgs e) => {
-				DisplayAlert ("Clicked", "I was clicked even disabled", "ok");
-			};
+            var btnCustomEnabled = new Button()
+            {
+                AutomationId = "btnCustomCellListViewEnabled",
+                Text = "Custom Cell Enabled",
+                HorizontalOptions = LayoutOptions.Start
+            };
 
-			btnCustom1Enabled.Clicked += (object sender, EventArgs e) => {
-				DisplayAlert ("Clicked", "I was clicked", "ok");
-			};
-			btnCustomEnabled.Clicked += (object sender, EventArgs e) => {
-				DisplayAlert ("Clicked", "I was clicked", "ok");
-			};
+            btnCustom.Clicked +=
+                (object sender, EventArgs e) => { DisplayAlert("Clicked", "I was clicked even disabled", "ok"); };
+            btnCustom1.Clicked +=
+                (object sender, EventArgs e) => { DisplayAlert("Clicked", "I was clicked even disabled", "ok"); };
 
-			var customCell = new ViewCell () {
-				IsEnabled = false,
-				View = new StackLayout { Children = { btnCustom } }
-			};
+            btnCustom1Enabled.Clicked +=
+                (object sender, EventArgs e) => { DisplayAlert("Clicked", "I was clicked", "ok"); };
+            btnCustomEnabled.Clicked +=
+                (object sender, EventArgs e) => { DisplayAlert("Clicked", "I was clicked", "ok"); };
 
-			var customCellEnabled = new ViewCell () {
-				View = new StackLayout { Children = { btnCustomEnabled } }
-			};
+            var customCell = new ViewCell()
+            {
+                IsEnabled = false,
+                View = new StackLayout { Children = { btnCustom } }
+            };
 
-			var customTableCell = new ViewCell () {
-				IsEnabled = false,
-				View = new StackLayout { Children = { btnCustom1 } }
-			};
+            var customCellEnabled = new ViewCell()
+            {
+                View = new StackLayout { Children = { btnCustomEnabled } }
+            };
 
-			var customTableCellEnabled = new ViewCell () {
-				View = new StackLayout { Children = { btnCustom1Enabled } }
-			};
+            var customTableCell = new ViewCell()
+            {
+                IsEnabled = false,
+                View = new StackLayout { Children = { btnCustom1 } }
+            };
 
-			var tableview = new TableView () {
-				Intent = TableIntent.Form,
-				Root = new TableRoot (),
-				VerticalOptions = LayoutOptions.Start
-			};
+            var customTableCellEnabled = new ViewCell()
+            {
+                View = new StackLayout { Children = { btnCustom1Enabled } }
+            };
 
-			tableview.Root.Add (new TableSection () { customTableCell, customTableCellEnabled });
+            var tableview = new TableView()
+            {
+                Intent = TableIntent.Form,
+                Root = new TableRoot(),
+                VerticalOptions = LayoutOptions.Start
+            };
 
-			var listview = new ListView { VerticalOptions = LayoutOptions.Start };
-			var listview2 = new ListView { VerticalOptions = LayoutOptions.Start };
+            tableview.Root.Add(new TableSection() { customTableCell, customTableCellEnabled });
 
-			listview.ItemTemplate = new DataTemplate (() => customCell);
-			listview2.ItemTemplate = new DataTemplate (() => customCellEnabled);
-			listview2.ItemsSource = listview.ItemsSource = new List<string> () { "1" };
-		
-			Content = new StackLayout {
-				Orientation = StackOrientation.Vertical,
-				VerticalOptions = LayoutOptions.Start,
-				Children = { tableview, listview, listview2 }
-			};
-		}
+            var listview = new ListView { VerticalOptions = LayoutOptions.Start };
+            var listview2 = new ListView { VerticalOptions = LayoutOptions.Start };
 
-		#if UITEST
+            listview.ItemTemplate = new DataTemplate(() => customCell);
+            listview2.ItemTemplate = new DataTemplate(() => customCellEnabled);
+            listview2.ItemsSource = listview.ItemsSource = new List<string>() { "1" };
+
+            Content = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                VerticalOptions = LayoutOptions.Start,
+                Children = { tableview, listview, listview2 }
+            };
+        }
+
+#if UITEST
 		[Test]
 		public void Issue2883TestDisabled ()
 		{
@@ -122,5 +127,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Tap (c => c.Marked ("ok"));
 		}
 #endif
-	}
+    }
 }
