@@ -1,9 +1,8 @@
-using Xamarin.Forms.CustomAttributes;
-using Xamarin.Forms.Internals;
-using System.Threading;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Threading;
+using Xamarin.Forms.CustomAttributes;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Maps;
 
 #if UITEST
@@ -90,17 +89,17 @@ namespace Xamarin.Forms.Controls.Issues
             Content = new StackLayout { Children = { button, gcbutton, map } };
         }
 
-        void GCbutton_Clicked(object sender, EventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine(">>>>>>>> Running Garbage Collection");
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            System.Diagnostics.Debug.WriteLine($">>>>>>>> GC.GetTotalMemory = {GC.GetTotalMemory(true):n0}");
-        }
-
         void Button_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new Bz39489Content());
+        }
+
+        void GCbutton_Clicked(object sender, EventArgs e)
+        {
+            Debug.WriteLine(">>>>>>>> Running Garbage Collection");
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Debug.WriteLine($">>>>>>>> GC.GetTotalMemory = {GC.GetTotalMemory(true):n0}");
         }
 
         ~Bz39489Content()

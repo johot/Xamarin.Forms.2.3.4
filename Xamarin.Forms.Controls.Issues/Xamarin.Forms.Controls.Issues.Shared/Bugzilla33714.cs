@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 
 namespace Xamarin.Forms.Controls.Issues
@@ -75,7 +73,7 @@ namespace Xamarin.Forms.Controls.Issues
                 _masterPage = masterPage;
                 Title = "Menu";
 
-                for (int i = 0; i < 5; i++)
+                for (var i = 0; i < 5; i++)
                 {
                     if (i == 0) _items = new List<string>();
 

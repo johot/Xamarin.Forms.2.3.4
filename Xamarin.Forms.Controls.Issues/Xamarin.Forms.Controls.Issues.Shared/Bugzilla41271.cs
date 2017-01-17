@@ -8,6 +8,17 @@ namespace Xamarin.Forms.Controls
     [Issue(IssueTracker.Bugzilla, 41271, "[UWP] Memory Leak from ListView in TabbedPage")]
     public class Bugzilla41271 : TestTabbedPage
     {
+        protected override void Init()
+        {
+            var counter = 1;
+
+            for (var x = 0; x < 10; x++)
+            {
+                Children.Add(new ListViewPage(counter.ToString()));
+                counter++;
+            }
+        }
+
         [Preserve(AllMembers = true)]
         class Person
         {
@@ -19,11 +30,11 @@ namespace Xamarin.Forms.Controls
                 State = state;
             }
 
+            public string City { get; set; }
+
             public string FirstName { get; set; }
 
             public string LastName { get; set; }
-
-            public string City { get; set; }
 
             public string State { get; set; }
         }
@@ -31,9 +42,9 @@ namespace Xamarin.Forms.Controls
         [Preserve(AllMembers = true)]
         class ListViewCell : ViewCell
         {
+            Label cityLabel = new Label();
             Label firstNameLabel = new Label();
             Label lastNameLabel = new Label();
-            Label cityLabel = new Label();
             Label stateLabel = new Label();
 
             public ListViewCell()
@@ -99,17 +110,6 @@ namespace Xamarin.Forms.Controls
                 base.OnDisappearing();
 
                 _ListView.ItemsSource = null;
-            }
-        }
-
-        protected override void Init()
-        {
-            var counter = 1;
-
-            for (var x = 0; x < 10; x++)
-            {
-                Children.Add(new ListViewPage(counter.ToString()));
-                counter++;
             }
         }
     }

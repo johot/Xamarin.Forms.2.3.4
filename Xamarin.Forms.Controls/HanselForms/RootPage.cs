@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Xamarin.Forms.Controls
 {
@@ -27,19 +26,15 @@ namespace Xamarin.Forms.Controls
 
     public class BaseModel
     {
-        public string Title { get; set; }
-
         public string Details { get; set; }
 
         public int Id { get; set; }
+
+        public string Title { get; set; }
     }
 
     public class RootPage : MasterDetailPage
     {
-        public static bool IsUWPDesktop { get; set; }
-
-        Dictionary<HMenuType, NavigationPage> Pages { get; set; }
-
         public RootPage()
         {
             Pages = new Dictionary<HMenuType, NavigationPage>();
@@ -52,6 +47,10 @@ namespace Xamarin.Forms.Controls
             };
             Navigate(HMenuType.About);
         }
+
+        public static bool IsUWPDesktop { get; set; }
+
+        Dictionary<HMenuType, NavigationPage> Pages { get; set; }
 
         public void Navigate(HMenuType id)
         {
@@ -91,8 +90,8 @@ namespace Xamarin.Forms.Controls
 
     public class MenuPage1 : ContentPage
     {
-        RootPage mdp;
         ListView ListViewMenu;
+        RootPage mdp;
         List<HomeMenuItem> menuItems;
 
         public MenuPage1(RootPage page)

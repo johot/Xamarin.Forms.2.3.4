@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Controls.Issues
             async void OnButtonClicked(object sender, EventArgs e)
             {
                 var testButton = new Button { Text = "Rotate Before Clicking", AutomationId = "btnDismissModal" };
-                testButton.Clicked += (async (snd, args) => await Navigation.PopModalAsync());
+                testButton.Clicked += async (snd, args) => await Navigation.PopModalAsync();
 
                 var testModal = new ContentPage()
                 {

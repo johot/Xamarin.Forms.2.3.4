@@ -143,7 +143,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             button1.Clicked += (sender, args) => Navigation.PopModalAsync();
 
-            int count = 0;
+            var count = 0;
             button8.Clicked += (sender, e) =>
             {
                 if (count == 0)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -13,8 +8,8 @@ namespace Xamarin.Forms.Controls
         PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone)]
     public class Issue1758 : ContentPage
     {
-        ListView _list;
         Button _button;
+        ListView _list;
 
         public Issue1758()
         {
@@ -24,29 +19,11 @@ namespace Xamarin.Forms.Controls
 
             // The same behavior happens for both Absolute and Relative layout.
             //var layout = true ? Relative() : Absolute();
-            var layout = Relative();
+            Layout layout = Relative();
 
             Animate();
 
             Content = layout;
-        }
-
-        Layout Relative()
-        {
-            var layout = new RelativeLayout();
-
-            layout.Children.Add(_list,
-                Forms.Constraint.RelativeToParent(p => p.X),
-                Forms.Constraint.RelativeToParent(p => p.Y),
-                Forms.Constraint.RelativeToParent(p => p.Width),
-                Forms.Constraint.RelativeToParent(p => p.Height)
-            );
-
-            layout.Children.Add(_button,
-                Forms.Constraint.Constant(0),
-                Forms.Constraint.Constant(300));
-
-            return layout;
         }
 
         Layout Absolute()
@@ -66,6 +43,24 @@ namespace Xamarin.Forms.Controls
             // await Task.Delay(500);
 
             await _button.LayoutTo(new Rectangle(100, 100, 100, 100), 1000);
+        }
+
+        Layout Relative()
+        {
+            var layout = new RelativeLayout();
+
+            layout.Children.Add(_list,
+                Forms.Constraint.RelativeToParent(p => p.X),
+                Forms.Constraint.RelativeToParent(p => p.Y),
+                Forms.Constraint.RelativeToParent(p => p.Width),
+                Forms.Constraint.RelativeToParent(p => p.Height)
+            );
+
+            layout.Children.Add(_button,
+                Forms.Constraint.Constant(0),
+                Forms.Constraint.Constant(300));
+
+            return layout;
         }
     }
 }

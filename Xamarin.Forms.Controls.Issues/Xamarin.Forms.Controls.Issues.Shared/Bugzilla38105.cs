@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -23,7 +22,7 @@ namespace Xamarin.Forms.Controls
             {
                 var navPage = (NavigationPage)Detail;
 
-                var rootPage = navPage.CurrentPage;
+                Page rootPage = navPage.CurrentPage;
 
                 navPage.PopToRootAsync(false);
 

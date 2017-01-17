@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
@@ -22,12 +18,12 @@ namespace Xamarin.Forms.Controls
             };
 
             double padding = 10;
-            layout.Children.Add(box1, () => new Rectangle(((layout.Width + padding) % 60) / 2, padding, 50, 50));
+            layout.Children.Add(box1, () => new Rectangle((layout.Width + padding) % 60 / 2, padding, 50, 50));
 
-            var last = box1;
-            for (int i = 0; i < 200; i++)
+            ContentView last = box1;
+            for (var i = 0; i < 200; i++)
             {
-                var relativeTo = last; // local copy
+                ContentView relativeTo = last; // local copy
                 var box = new ContentView
                 {
                     BackgroundColor = Color.Gray,

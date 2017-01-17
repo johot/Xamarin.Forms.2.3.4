@@ -44,11 +44,11 @@ namespace Xamarin.Forms.Controls.Issues
         {
             var result = new List<Task>();
 
-            for (int n = 0; n < 1000; n++)
+            for (var n = 0; n < 1000; n++)
             {
                 result.Add(Task.Run(() =>
                 {
-                    var t = Device.IsInvokeRequired;
+                    bool t = Device.IsInvokeRequired;
                 }));
             }
 

@@ -1,6 +1,6 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -8,15 +8,15 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     public class ImageCellTest
     {
-        public object Text { get; set; }
-
-        public object TextColor { get; set; }
-
         public object Detail { get; set; }
 
         public object DetailColor { get; set; }
 
         public object Image { get; set; }
+
+        public object Text { get; set; }
+
+        public object TextColor { get; set; }
     }
 
     public class ImageCellListPage : ContentPage
@@ -43,7 +43,7 @@ namespace Xamarin.Forms.Controls
             dataTemplate.SetBinding(ImageCell.ImageSourceProperty,
                 new Binding("Image", converter: stringToImageSourceConverter));
 
-            Random rand = new Random(250);
+            var rand = new Random(250);
 
             var albums = new[]
             {
@@ -96,7 +96,7 @@ namespace Xamarin.Forms.Controls
                 new Binding("Image", converter: stringToImageSourceConverter));
 
             var albums = new List<string>();
-            for (int i = 0; i < 30; i++)
+            for (var i = 0; i < 30; i++)
             {
                 albums.Add(
                     string.Format(

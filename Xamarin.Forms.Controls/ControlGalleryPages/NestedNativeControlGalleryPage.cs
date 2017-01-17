@@ -2,17 +2,7 @@ namespace Xamarin.Forms.Controls
 {
     public partial class NestedNativeControlGalleryPage : ContentPage
     {
-        public StackLayout Layout { get; set; }
-
-        public bool NativeControlsAdded { get; set; }
-
         public const string ReadyForNativeControlsMessage = "ReadyForNativeControls";
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            MessagingCenter.Send(this, ReadyForNativeControlsMessage);
-        }
 
         public NestedNativeControlGalleryPage()
         {
@@ -30,6 +20,16 @@ namespace Xamarin.Forms.Controls
             Layout.Children.Add(testLabel);
             Layout.Children.Add(button);
             Layout.Children.Add(label);
+        }
+
+        public StackLayout Layout { get; set; }
+
+        public bool NativeControlsAdded { get; set; }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Send(this, ReadyForNativeControlsMessage);
         }
     }
 }

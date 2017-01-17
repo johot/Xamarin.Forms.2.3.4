@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Controls
             var random = new Random();
             button.Clicked += (sender, args) =>
             {
-                for (int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     button.Navigation.PushAsync(new ContentPage
                     {
@@ -42,7 +42,7 @@ namespace Xamarin.Forms.Controls
                     }, random.NextDouble() > 0.5);
                 }
 
-                for (int i = 0; i < 6; i++)
+                for (var i = 0; i < 6; i++)
                 {
                     button.Navigation.PopAsync(random.NextDouble() > 0.5);
                 }

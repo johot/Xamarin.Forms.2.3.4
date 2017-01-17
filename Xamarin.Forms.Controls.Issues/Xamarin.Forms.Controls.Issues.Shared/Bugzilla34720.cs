@@ -1,8 +1,8 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -12,6 +12,8 @@ namespace Xamarin.Forms.Controls
     ]
     public class Bugzilla34720 : TestContentPage // or TestMasterDetailPage, etc ...
     {
+        ListView _list;
+
         protected override void Init()
         {
             Title = "Test Command Binding";
@@ -64,8 +66,6 @@ namespace Xamarin.Forms.Controls
             };
         }
 
-        ListView _list;
-
         [Preserve(AllMembers = true)]
         public class SampleViewCell : ViewCell
         {
@@ -98,27 +98,6 @@ namespace Xamarin.Forms.Controls
 
                 View = grid;
             }
-
-            #region Testing Code
-
-            // Note this block can be removed it is just used to observing the ViewCell creation.
-            int _counter;
-
-            protected override void OnAppearing()
-            {
-                base.OnAppearing();
-                _counter++;
-                System.Diagnostics.Debug.WriteLine("OnAppearing {0}, {1}", id, _counter);
-            }
-
-            protected override void OnDisappearing()
-            {
-                base.OnDisappearing();
-                _counter--;
-                System.Diagnostics.Debug.WriteLine("OnDisappearing {0}, {1}", id, _counter);
-            }
-
-            #endregion
 
             public class SampleHeaderView : ContentView
             {
@@ -251,18 +230,52 @@ namespace Xamarin.Forms.Controls
                     Content = overallGrid;
                 }
             }
+
+            #region Testing Code
+
+            // Note this block can be removed it is just used to observing the ViewCell creation.
+            int _counter;
+
+            protected override void OnAppearing()
+            {
+                base.OnAppearing();
+                _counter++;
+                System.Diagnostics.Debug.WriteLine("OnAppearing {0}, {1}", id, _counter);
+            }
+
+            protected override void OnDisappearing()
+            {
+                base.OnDisappearing();
+                _counter--;
+                System.Diagnostics.Debug.WriteLine("OnDisappearing {0}, {1}", id, _counter);
+            }
+
+            #endregion
         }
 
         [Preserve(AllMembers = true)]
         public class TestListViewModel : INotifyPropertyChanged
         {
-            Collection<TestViewModel> _items = new ObservableCollection<TestViewModel>();
+            public bool IsRefreshing { get; set; }
+
+            public Collection<TestViewModel> Items { get; set; } = new ObservableCollection<TestViewModel>();
+
+            public Command RefreshCommand
+            {
+                get { return new Command(OnRefresh); }
+            }
+
+            #region INotifyPropertyChanged implementation
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            #endregion
 
             public void AddTestData()
             {
-                for (int i = 0; i < 20; i++)
+                for (var i = 0; i < 20; i++)
                 {
-                    _items.Add(new TestViewModel()
+                    Items.Add(new TestViewModel()
                     {
                         Description = string.Format("Sample Description {0}", i),
                         Number = (i + 1).ToString(),
@@ -273,36 +286,6 @@ namespace Xamarin.Forms.Controls
                 RaisePropertyChanged("Items");
             }
 
-            public Collection<TestViewModel> Items
-            {
-                get { return _items; }
-                set { _items = value; }
-            }
-
-            public Command RefreshCommand
-            {
-                get { return new Command(OnRefresh); }
-            }
-
-            public bool IsRefreshing { get; set; }
-
-            async void OnRefresh()
-            {
-                IsRefreshing = true;
-                RaisePropertyChanged("IsRefreshing");
-                _items.Clear();
-                await Task.Delay(1000);
-                AddTestData();
-                IsRefreshing = false;
-                RaisePropertyChanged("IsRefreshing");
-            }
-
-            #region INotifyPropertyChanged implementation
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            #endregion
-
             protected virtual void RaisePropertyChanged(string propertyName)
             {
                 PropertyChangedEventHandler propertyChanged = PropertyChanged;
@@ -311,16 +294,30 @@ namespace Xamarin.Forms.Controls
                     propertyChanged(this, new PropertyChangedEventArgs(propertyName));
                 }
             }
+
+            async void OnRefresh()
+            {
+                IsRefreshing = true;
+                RaisePropertyChanged("IsRefreshing");
+                Items.Clear();
+                await Task.Delay(1000);
+                AddTestData();
+                IsRefreshing = false;
+                RaisePropertyChanged("IsRefreshing");
+            }
         }
 
         [Preserve(AllMembers = true)]
         public class TestViewModel
         {
-            public string Number { get; set; }
-
-            public string Description { get; set; }
-
             bool _canApprove;
+
+            bool _canDeny;
+
+            public Command ApproveCommand
+            {
+                get { return new Command(OnApprove, () => CanApprove); }
+            }
 
             public bool CanApprove
             {
@@ -332,8 +329,6 @@ namespace Xamarin.Forms.Controls
                 }
             }
 
-            bool _canDeny;
-
             public bool CanDeny
             {
                 get { return _canDeny; }
@@ -344,15 +339,14 @@ namespace Xamarin.Forms.Controls
                 }
             }
 
-            public Command ApproveCommand
-            {
-                get { return new Command(OnApprove, () => CanApprove); }
-            }
-
             public Command DenyCommand
             {
                 get { return new Command(OnDeny, () => CanDeny); }
             }
+
+            public string Description { get; set; }
+
+            public string Number { get; set; }
 
             async void OnApprove()
             {

@@ -12,20 +12,6 @@ namespace Xamarin.Forms.Controls
             get { return false; }
         }
 
-        protected override void InitializeElement(Image element)
-        {
-            //			var sourceIndex = rand.Next (0, 3);
-            //
-            //			var sources = new [] {
-            //				ImageSource.FromFile ("oasis.jpg"),
-            //				//ImageSource.FromUri (new Uri("http://www.nasa.gov/sites/default/files/styles/1600x1200_autoletterbox/public/images/298773main_EC02-0282-3_full.jpg")),
-            //				//ImageSource.FromResource ("Xamarin.Forms.Controls.ControlGalleryPages.crimson.jpg")
-            //			};
-
-            //element.Source = sources[sourceIndex];
-            element.Source = "oasissmall.jpg";
-        }
-
         protected override void Build(StackLayout stackLayout)
         {
             base.Build(stackLayout);
@@ -53,6 +39,20 @@ namespace Xamarin.Forms.Controls
             Add(isLoadingContainer);
             Add(isOpaqueContainer);
             Add(sourceContainer);
+        }
+
+        protected override void InitializeElement(Image element)
+        {
+            //			var sourceIndex = rand.Next (0, 3);
+            //
+            //			var sources = new [] {
+            //				ImageSource.FromFile ("oasis.jpg"),
+            //				//ImageSource.FromUri (new Uri("http://www.nasa.gov/sites/default/files/styles/1600x1200_autoletterbox/public/images/298773main_EC02-0282-3_full.jpg")),
+            //				//ImageSource.FromResource ("Xamarin.Forms.Controls.ControlGalleryPages.crimson.jpg")
+            //			};
+
+            //element.Source = sources[sourceIndex];
+            element.Source = "oasissmall.jpg";
         }
     }
 }

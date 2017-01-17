@@ -1,13 +1,11 @@
-using System.Diagnostics;
-
 namespace Xamarin.Forms.Controls
 {
     public class NavigationBarGallery : ContentPage
     {
         public NavigationBarGallery(NavigationPage rootNavPage)
         {
-            int toggleBarTextColor = 0;
-            int toggleBarBackgroundColor = 0;
+            var toggleBarTextColor = 0;
+            var toggleBarBackgroundColor = 0;
 
             Content = new StackLayout
             {

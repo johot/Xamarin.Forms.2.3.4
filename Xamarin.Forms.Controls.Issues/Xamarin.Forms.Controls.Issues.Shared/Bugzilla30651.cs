@@ -1,7 +1,6 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls.Issues
@@ -50,8 +49,14 @@ namespace Xamarin.Forms.Controls.Issues
 
         public class ListViewModel : ViewModelBase
         {
-            ObservableCollection<string> _items;
             int _counter = 0;
+            ObservableCollection<string> _items;
+
+            public ListViewModel()
+            {
+                Items = new ObservableCollection<string>();
+                AddMoreData();
+            }
 
             public ObservableCollection<string> Items
             {
@@ -61,12 +66,6 @@ namespace Xamarin.Forms.Controls.Issues
                     _items = value;
                     OnPropertyChanged();
                 }
-            }
-
-            public ListViewModel()
-            {
-                Items = new ObservableCollection<string>();
-                AddMoreData();
             }
 
             public void OnItemAppearing(string s)

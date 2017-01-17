@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -53,7 +50,7 @@ namespace Xamarin.Forms.Controls.Issues
         {
             base.OnAppearing();
 
-            if (!(await AttemptLogin())) //try to log in, if login fails show login screen
+            if (!await AttemptLogin()) //try to log in, if login fails show login screen
             {
                 Device.BeginInvokeOnMainThread(() => BuildLogin());
             }

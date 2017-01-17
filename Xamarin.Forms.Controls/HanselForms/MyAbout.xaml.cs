@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public partial class MyAbout : ContentPage
     {
@@ -16,7 +12,7 @@ namespace Xamarin.Forms.Controls
                     new Command(
                         async () =>
                         {
-                            await this.Navigation.PushAsync(new WebsiteView("https://m.twitter.com/shanselman",
+                            await Navigation.PushAsync(new WebsiteView("https://m.twitter.com/shanselman",
                                 "@shanselman"));
                         })
             });
@@ -27,7 +23,7 @@ namespace Xamarin.Forms.Controls
                     new Command(
                         async () =>
                         {
-                            await this.Navigation.PushAsync(new WebsiteView("https://facebook.com/scott.hanselman",
+                            await Navigation.PushAsync(new WebsiteView("https://facebook.com/scott.hanselman",
                                 "Scott @Facebook"));
                         })
             });
@@ -38,7 +34,7 @@ namespace Xamarin.Forms.Controls
                     new Command(
                         async () =>
                         {
-                            await this.Navigation.PushAsync(new WebsiteView("https://instagram.com/shanselman",
+                            await Navigation.PushAsync(new WebsiteView("https://instagram.com/shanselman",
                                 "Scott @Instagram"));
                         })
             });

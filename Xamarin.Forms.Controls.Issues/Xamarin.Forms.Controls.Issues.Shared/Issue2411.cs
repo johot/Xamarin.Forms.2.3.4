@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -97,14 +93,14 @@ namespace Xamarin.Forms.Controls.Issues
     {
         public CellTemplateScrollTo()
         {
-            Label cellLabel = new Label()
+            var cellLabel = new Label()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
             };
 
             cellLabel.SetBinding(Label.TextProperty, new Binding("Name", BindingMode.OneWay));
 
-            StackLayout root = new StackLayout()
+            var root = new StackLayout()
             {
                 Children =
                 {
@@ -128,14 +124,14 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class XamarinListViewScrollToBugPage1 : ContentPage
     {
-        ListView _listView;
         ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
+        ListView _listView;
 
         public XamarinListViewScrollToBugPage1()
         {
             Title = "Scroll To in OnAppearing";
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", i) };
                 _collection.Add(item);
@@ -168,14 +164,14 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class XamarinListViewScrollToBugPage2 : ContentPage
     {
-        ListView _listView;
         ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
+        ListView _listView;
 
         public XamarinListViewScrollToBugPage2()
         {
             Title = "Crash in ScrollToPosition.End";
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var item = new ListObj { Name = string.Format("2 {0} {0} {0} {0} {0} {0}", i) };
                 _collection.Add(item);
@@ -214,16 +210,16 @@ namespace Xamarin.Forms.Controls.Issues
 
     public class XamarinListViewScrollToBugPage3 : ContentPage
     {
-        ListView _listView;
+        public const string DontRun = "Don't run";
         ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
         int _i = 0;
-        public const string DontRun = "Don't run";
+        ListView _listView;
 
         public XamarinListViewScrollToBugPage3()
         {
             Title = "Scroll To in OnAppearing Uneven";
 
-            bool runTest = true;
+            var runTest = true;
             // This test will fail in iOS < 9 because using ScrollTo with UnevenRows with estimation is currently not working.
             // It did not previously fail because this test used `TakePerformanceHit` to turn off row estimation. However, as
             // that was never a public feature, it was never a valid fix for the test.
@@ -297,18 +293,18 @@ namespace Xamarin.Forms.Controls.Issues
             _listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, false);
         }
 
-        void BtnBottomOnClicked(object sender, EventArgs e)
-        {
-            var item = _collection.Last();
-            _listView.ScrollTo(item, ScrollToPosition.End, true);
-        }
-
         void BtnAddOnClicked(object sender, EventArgs eventArgs)
         {
-            var str = string.Format("Item {0}", _i++);
+            string str = string.Format("Item {0}", _i++);
             var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", _i) };
             _collection.Add(item);
 
+            _listView.ScrollTo(item, ScrollToPosition.End, true);
+        }
+
+        void BtnBottomOnClicked(object sender, EventArgs e)
+        {
+            ListObj item = _collection.Last();
             _listView.ScrollTo(item, ScrollToPosition.End, true);
         }
     }

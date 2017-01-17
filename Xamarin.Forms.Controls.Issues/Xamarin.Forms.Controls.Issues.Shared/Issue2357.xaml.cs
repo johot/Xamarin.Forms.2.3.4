@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Linq;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -38,55 +37,6 @@ namespace Xamarin.Forms.Controls
         }
 
         public MasterViewModel MasterViewModel { get; set; }
-
-        async void MasterViewModelOnPageSelectionChanged(object sender, NavigationEventArgs eventArgs)
-        {
-            Debug.WriteLine("MasterViewModelOnPageSelectionChanged");
-            IsPresented = false;
-            var page = eventArgs.Page;
-            await Detail.Navigation.PushAsync(page, true);
-        }
-
-        protected override async void OnAppearing()
-        {
-            await TryInitializeMasterViewModel();
-            base.OnAppearing();
-        }
-
-        protected override void OnDisappearing()
-        {
-            //MasterViewModel.PageSelectionChanged -= MasterViewModelOnPageSelectionChanged;
-            base.OnDisappearing();
-        }
-
-        async Task TryInitializeMasterViewModel()
-        {
-            while (true)
-            {
-                string errorMessage;
-                try
-                {
-                    await MasterViewModel.InitializeAsync();
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    Insights.Report(ex, Insights.Severity.Error);
-                    errorMessage = ex.Message;
-                }
-
-                if (!string.IsNullOrWhiteSpace(errorMessage))
-                {
-                    var retry = await DisplayAlert("Error", errorMessage, "Retry", "Close Application");
-                    if (retry)
-                    {
-                        continue;
-                    }
-                }
-
-                break;
-            }
-        }
 
         protected void ListViewOnItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -123,6 +73,55 @@ namespace Xamarin.Forms.Controls
                 ((ListView)sender).SelectedItem = null;
             }
         }
+
+        protected override async void OnAppearing()
+        {
+            await TryInitializeMasterViewModel();
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            //MasterViewModel.PageSelectionChanged -= MasterViewModelOnPageSelectionChanged;
+            base.OnDisappearing();
+        }
+
+        async void MasterViewModelOnPageSelectionChanged(object sender, NavigationEventArgs eventArgs)
+        {
+            Debug.WriteLine("MasterViewModelOnPageSelectionChanged");
+            IsPresented = false;
+            Page page = eventArgs.Page;
+            await Detail.Navigation.PushAsync(page, true);
+        }
+
+        async Task TryInitializeMasterViewModel()
+        {
+            while (true)
+            {
+                string errorMessage;
+                try
+                {
+                    await MasterViewModel.InitializeAsync();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Insights.Report(ex, Insights.Severity.Error);
+                    errorMessage = ex.Message;
+                }
+
+                if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    bool retry = await DisplayAlert("Error", errorMessage, "Retry", "Close Application");
+                    if (retry)
+                    {
+                        continue;
+                    }
+                }
+
+                break;
+            }
+        }
     }
 
     internal class CustomWebView : ContentPage
@@ -145,6 +144,22 @@ namespace Xamarin.Forms.Controls
             _titledWebView.BindingContext = webViewViewModel;
         }
 
+        static Uri GetSourceUrl(WebViewSource source)
+        {
+            Debug.Assert(source != null, "source cannot be null.");
+
+            var urlWebViewSource = source as UrlWebViewSource;
+            if (urlWebViewSource != null)
+            {
+                if (urlWebViewSource.Url.IsValidAbsoluteUrl())
+                {
+                    return new Uri(urlWebViewSource.Url);
+                }
+            }
+
+            throw new InvalidOperationException("WebViewSource is Invalid. Only UrlWebViewSource is accepted.");
+        }
+
         static void WebView_OnNavigating(object sender, WebNavigatingEventArgs e)
         {
             Debug.WriteLine("OS: " + Device.RuntimePlatform + " Current Url: " + GetSourceUrl(((WebView)sender).Source) +
@@ -153,7 +168,7 @@ namespace Xamarin.Forms.Controls
             if (e.Url.IsValidAbsoluteUrl())
             {
                 var destinationUri = new Uri(e.Url);
-                var sourceUri = GetSourceUrl(((WebView)sender).Source);
+                Uri sourceUri = GetSourceUrl(((WebView)sender).Source);
                 if (sourceUri.HasSameHost(destinationUri))
                 {
                     if (destinationUri == sourceUri)
@@ -175,22 +190,6 @@ namespace Xamarin.Forms.Controls
                     Device.OpenUri(new Uri(e.Url));
                 }
             }
-        }
-
-        static Uri GetSourceUrl(WebViewSource source)
-        {
-            Debug.Assert(source != null, "source cannot be null.");
-
-            var urlWebViewSource = source as UrlWebViewSource;
-            if (urlWebViewSource != null)
-            {
-                if (urlWebViewSource.Url.IsValidAbsoluteUrl())
-                {
-                    return new Uri(urlWebViewSource.Url);
-                }
-            }
-
-            throw new InvalidOperationException("WebViewSource is Invalid. Only UrlWebViewSource is accepted.");
         }
     }
 
@@ -220,17 +219,39 @@ namespace Xamarin.Forms.Controls
 
     public class MasterViewModel : ViewModelBase1
     {
-        public static event PageSelectionChanged PageSelectionChanged;
-
-        ObservableCollection<MainMenuItem> _mainMenuItems;
         Page _currentDetailPage;
+        ObservableCollection<MainMenuItem> _mainMenuItems;
 
         public MasterViewModel()
         {
             _mainMenuItems = new ObservableCollection<MainMenuItem>(Enumerable.Empty<MainMenuItem>());
         }
 
-#pragma warning disable 1998 // considered for removal
+        public Page CurrentDetailPage
+        {
+            get { return _currentDetailPage; }
+            set
+            {
+                _currentDetailPage = value;
+
+                PageSelectionChanged handler = PageSelectionChanged;
+                if (handler != null)
+                {
+                    handler(null, new NavigationEventArgs(value));
+                }
+            }
+        }
+
+        public ObservableCollection<MainMenuItem> MainMenuItems
+        {
+            get { return _mainMenuItems; }
+            set
+            {
+                _mainMenuItems = value;
+                OnPropertyChanged("MainMenuItems");
+            }
+        }
+
         public async Task InitializeAsync()
 #pragma warning restore 1998
         {
@@ -251,30 +272,7 @@ namespace Xamarin.Forms.Controls
             MainMenuItems = new ObservableCollection<MainMenuItem>(items);
         }
 
-        public ObservableCollection<MainMenuItem> MainMenuItems
-        {
-            get { return _mainMenuItems; }
-            set
-            {
-                _mainMenuItems = value;
-                OnPropertyChanged("MainMenuItems");
-            }
-        }
-
-        public Page CurrentDetailPage
-        {
-            get { return _currentDetailPage; }
-            set
-            {
-                _currentDetailPage = value;
-
-                var handler = PageSelectionChanged;
-                if (handler != null)
-                {
-                    handler(null, new NavigationEventArgs(value));
-                }
-            }
-        }
+        public static event PageSelectionChanged PageSelectionChanged;
     }
 
     public class WebViewViewModel : ViewModelBase1
@@ -336,19 +334,6 @@ namespace Xamarin.Forms.Controls
 
     public class ViewModelBase1 : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Event for when IsBusy changes
-        /// </summary>
-        public event EventHandler IsBusyChanged;
-
-        /// <summary>
-        /// Event for when IsValid changes
-        /// </summary>
-        public event EventHandler IsValidChanged;
-
-        readonly List<string> _errors = new List<string>();
         bool _isBusy;
 
         /// <summary>
@@ -361,59 +346,11 @@ namespace Xamarin.Forms.Controls
         }
 
         /// <summary>
-        /// Returns true if the current state of the ViewModel is valid
-        /// </summary>
-        public bool IsValid
-        {
-            get { return _errors.Count == 0; }
-        }
-
-        /// <summary>
-        /// A list of errors if IsValid is false
-        /// </summary>
-        protected List<string> Errors
-        {
-            get { return _errors; }
-        }
-
-        /// <summary>
         /// An aggregated error message
         /// </summary>
         public string Error
         {
-            get { return _errors.Aggregate(new StringBuilder(), (b, s) => b.AppendLine(s)).ToString().Trim(); }
-        }
-
-        /// <summary>
-        /// Protected method for validating the ViewModel
-        /// - Fires PropertyChanged for IsValid and Errors
-        /// </summary>
-        protected void Validate()
-        {
-            OnPropertyChanged("IsValid");
-            OnPropertyChanged("Errors");
-
-            var method = IsValidChanged;
-            if (method != null)
-                method(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Other viewmodels should call this when overriding Validate, to validate each property
-        /// </summary>
-        /// <param name="validate">Func to determine if a value is valid</param>
-        /// <param name="error">The error message to use if not valid</param>
-        protected void ValidateProperty(Func<bool> validate, string error)
-        {
-            if (validate())
-            {
-                if (!Errors.Contains(error))
-                    Errors.Add(error);
-            }
-            else
-            {
-                Errors.Remove(error);
-            }
+            get { return Errors.Aggregate(new StringBuilder(), (b, s) => b.AppendLine(s)).ToString().Trim(); }
         }
 
         /// <summary>
@@ -435,11 +372,36 @@ namespace Xamarin.Forms.Controls
         }
 
         /// <summary>
+        /// Returns true if the current state of the ViewModel is valid
+        /// </summary>
+        public bool IsValid
+        {
+            get { return Errors.Count == 0; }
+        }
+
+        /// <summary>
+        /// A list of errors if IsValid is false
+        /// </summary>
+        protected List<string> Errors { get; } = new List<string>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Event for when IsBusy changes
+        /// </summary>
+        public event EventHandler IsBusyChanged;
+
+        /// <summary>
+        /// Event for when IsValid changes
+        /// </summary>
+        public event EventHandler IsValidChanged;
+
+        /// <summary>
         /// Other viewmodels can override this if something should be done when busy
         /// </summary>
         protected void OnIsBusyChanged()
         {
-            var ev = IsBusyChanged;
+            EventHandler ev = IsBusyChanged;
             if (ev != null)
             {
                 ev(this, EventArgs.Empty);
@@ -448,10 +410,42 @@ namespace Xamarin.Forms.Controls
 
         protected void OnPropertyChanged(string name)
         {
-            var ev = PropertyChanged;
+            PropertyChangedEventHandler ev = PropertyChanged;
             if (ev != null)
             {
                 ev(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        /// <summary>
+        /// Protected method for validating the ViewModel
+        /// - Fires PropertyChanged for IsValid and Errors
+        /// </summary>
+        protected void Validate()
+        {
+            OnPropertyChanged("IsValid");
+            OnPropertyChanged("Errors");
+
+            EventHandler method = IsValidChanged;
+            if (method != null)
+                method(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Other viewmodels should call this when overriding Validate, to validate each property
+        /// </summary>
+        /// <param name="validate">Func to determine if a value is valid</param>
+        /// <param name="error">The error message to use if not valid</param>
+        protected void ValidateProperty(Func<bool> validate, string error)
+        {
+            if (validate())
+            {
+                if (!Errors.Contains(error))
+                    Errors.Add(error);
+            }
+            else
+            {
+                Errors.Remove(error);
             }
         }
     }

@@ -13,12 +13,6 @@ namespace Xamarin.Forms.Controls
         PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone, NavigationBehavior.PushModalAsync)]
     public class Issue1400 : ContentPage
     {
-        public static Entry Editfield { get; set; }
-
-        public static ListView List { get; set; }
-
-        public static List<MyGroup> Data { get; set; }
-
         public Issue1400()
         {
             Data = new List<MyGroup>();
@@ -54,25 +48,15 @@ namespace Xamarin.Forms.Controls
             };
         }
 
-        public static List<MyGroup> CopyList(List<MyGroup> data)
-        {
-            var newlist = new List<MyGroup>();
-            foreach (var grp in data)
-            {
-                var grpItem = new MyGroup() { Headertitle = grp.Headertitle };
-                foreach (var subItem in grp)
-                {
-                    var item = new MyData() { Title = subItem.Title };
-                    grpItem.Add(item);
-                }
-                newlist.Add(grpItem);
-            }
-            return newlist;
-        }
+        public static List<MyGroup> Data { get; set; }
+
+        public static Entry Editfield { get; set; }
+
+        public static ListView List { get; set; }
 
         public static void AddCell(MyData data)
         {
-            var newlist = CopyList(Data);
+            List<MyGroup> newlist = CopyList(Data);
 
             // just make some changes
             newlist.Last().Add(new MyData() { Title = Editfield.Text });
@@ -83,15 +67,29 @@ namespace Xamarin.Forms.Controls
 
             List.ItemsSource = newlist;
         }
+
+        public static List<MyGroup> CopyList(List<MyGroup> data)
+        {
+            var newlist = new List<MyGroup>();
+            foreach (MyGroup grp in data)
+            {
+                var grpItem = new MyGroup() { Headertitle = grp.Headertitle };
+                foreach (MyData subItem in grp)
+                {
+                    var item = new MyData() { Title = subItem.Title };
+                    grpItem.Add(item);
+                }
+                newlist.Add(grpItem);
+            }
+            return newlist;
+        }
     }
 
     public class MyData : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public const string PropTitle = "Title";
 
         string _title;
-
-        public const string PropTitle = "Title";
 
         public string Title
         {
@@ -104,6 +102,8 @@ namespace Xamarin.Forms.Controls
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null) PropertyChanged(this, e);
@@ -112,9 +112,8 @@ namespace Xamarin.Forms.Controls
 
     public class MyGroup : ObservableCollection<MyData>, INotifyPropertyChanged
     {
-        string _headertitle;
-
         public const string PropHeadertitle = "Headertitle";
+        string _headertitle;
 
         public string Headertitle
         {

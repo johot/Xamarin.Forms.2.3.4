@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -29,6 +26,10 @@ namespace Xamarin.Forms.Controls.Issues
 
         class ImageController : ViewModelBase
         {
+            string _backgroundColor;
+            string _homeImage;
+            string _localBackgroundImage;
+
             public ImageController()
             {
                 HomeImage = "http://xamarin.com/content/images/pages/forms/example-app.png";
@@ -68,10 +69,6 @@ namespace Xamarin.Forms.Controls.Issues
                     OnPropertyChanged();
                 }
             }
-
-            string _backgroundColor;
-            string _homeImage;
-            string _localBackgroundImage;
         }
 
 #if UITEST

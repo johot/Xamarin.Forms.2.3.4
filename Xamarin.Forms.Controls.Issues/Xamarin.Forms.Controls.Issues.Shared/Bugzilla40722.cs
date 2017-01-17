@@ -18,8 +18,9 @@ namespace Xamarin.Forms.Controls
         const string Instructions_Enabled =
             "Sleep the device, then wake it. If \"Disappearing!\" and/or \"Appearing!\" is NOT displayed on this screen, this test has failed.";
 
-        Label _Target = new Label();
         bool _sendEvents = true;
+
+        Label _Target = new Label();
 
         protected override void Init()
         {

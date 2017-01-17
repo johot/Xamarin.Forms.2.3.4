@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
@@ -17,9 +13,9 @@ namespace Xamarin.Forms.Controls
                 picker.Unfocus();
             };
 
-            Label testLabel = new Label { Text = "", AutomationId = "test", ClassId = "test" };
+            var testLabel = new Label { Text = "", AutomationId = "test", ClassId = "test" };
 
-            Picker p1 = new Picker { Title = "Pick a number", Items = { "0", "1", "2", "3", "4", "5", "6" } };
+            var p1 = new Picker { Title = "Pick a number", Items = { "0", "1", "2", "3", "4", "5", "6" } };
             p1.SelectedIndexChanged += (sender, e) => { testLabel.Text = "Selected Index Changed"; };
 
             Content = new ScrollView

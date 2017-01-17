@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Linq;
 using Xamarin.Forms.CustomAttributes;
-using System.Linq;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -42,7 +41,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         protected override void Init()
         {
-            CustomListView lv = new CustomListView()
+            var lv = new CustomListView()
             {
                 ItemsSource = Enumerable.Range(0, 10)
             };

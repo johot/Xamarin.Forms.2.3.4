@@ -26,7 +26,7 @@ namespace Xamarin.Forms.Controls.Issues
             {
                 Command = new Command(() => { label.Text = DateTime.Now.ToString(); })
             });
-            Image img = new Image { Source = ImageSource.FromFile("oasis.jpg"), InputTransparent = true };
+            var img = new Image { Source = ImageSource.FromFile("oasis.jpg"), InputTransparent = true };
             abs.Children.Add(img, new Rectangle(.5, .5, .5, .5), AbsoluteLayoutFlags.All);
             Content = abs;
         }

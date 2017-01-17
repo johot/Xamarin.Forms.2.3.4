@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
+﻿using System.Windows.Input;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -37,17 +28,17 @@ namespace Xamarin.Forms.Controls
 
     public class Isseu1898Vm
     {
-        public ICommand ChangeTitleOneCommand { get; set; }
-
         public ICommand ChangeIconOneCommand { get; set; }
 
         public ICommand ChangeIconOtherPageOneCommand { get; set; }
 
-        public ICommand ChangeTitleTwoCommand { get; set; }
+        public ICommand ChangeIconOtherPageTwoCommand { get; set; }
 
         public ICommand ChangeIconTwoCommand { get; set; }
 
-        public ICommand ChangeIconOtherPageTwoCommand { get; set; }
+        public ICommand ChangeTitleOneCommand { get; set; }
+
+        public ICommand ChangeTitleTwoCommand { get; set; }
     }
 #endif
 }

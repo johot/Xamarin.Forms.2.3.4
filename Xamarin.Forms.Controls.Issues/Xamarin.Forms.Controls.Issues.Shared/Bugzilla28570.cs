@@ -19,7 +19,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         protected override void Init()
         {
-            Label header = new Label
+            var header = new Label
             {
                 Text = "ScrollView Bug",
                 FontSize = 50,
@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Controls.Issues
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            Label lab1 = new Label();
+            var lab1 = new Label();
             lab1.Text = "Sometimes page content fits entirely on " +
                         "the page. That's very convenient. But " +
                         "on many occasions, the content of the page " +
@@ -79,7 +79,7 @@ namespace Xamarin.Forms.Controls.Issues
                 }
             };
 
-            Button makeBig = new Button();
+            var makeBig = new Button();
             makeBig.Text = "Tap";
             //
             // Clicking button first time does not scroll event though scrollView.Height is already set.
@@ -92,7 +92,7 @@ namespace Xamarin.Forms.Controls.Issues
             {
                 lab1.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
                 Debug.WriteLine("******** scrollView.Height= {0}", lab1.Height);
-                    // this shows the same updated size on all clicks, so this is not the problem.
+                // this shows the same updated size on all clicks, so this is not the problem.
                 ScrollView.ScrollToAsync(0, lab1.Bounds.Bottom, false);
             };
 

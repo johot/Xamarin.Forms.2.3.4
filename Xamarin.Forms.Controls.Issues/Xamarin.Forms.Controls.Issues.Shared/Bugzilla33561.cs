@@ -1,8 +1,8 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using Xamarin.Forms.Internals;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms.CustomAttributes;
+using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
@@ -11,10 +11,17 @@ namespace Xamarin.Forms.Controls
         "ListView Pull-to-Refresh ActivityIndicator animation stuck when navigating away and then back again")]
     public class Bugzilla33561 : TestTabbedPage
     {
+        protected override void Init()
+        {
+            Children.Add(new NavigationPage(new ListPage()) { Title = "page 1" });
+            Children.Add(new ContentPage() { Title = "page 2" });
+            Children.Add(new ContentPage() { Title = "page 3" });
+        }
+
         public class ListPage : ContentPage
         {
-            ListView _listView;
             bool _isRefreshing;
+            ListView _listView;
 
             public ListPage()
             {
@@ -49,13 +56,6 @@ namespace Xamarin.Forms.Controls
                     return false;
                 });
             }
-        }
-
-        protected override void Init()
-        {
-            Children.Add(new NavigationPage(new ListPage()) { Title = "page 1" });
-            Children.Add(new ContentPage() { Title = "page 2" });
-            Children.Add(new ContentPage() { Title = "page 3" });
         }
     }
 }

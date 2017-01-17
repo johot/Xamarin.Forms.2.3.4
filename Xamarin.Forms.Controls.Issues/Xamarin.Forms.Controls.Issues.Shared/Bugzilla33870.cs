@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -13,22 +10,6 @@ namespace Xamarin.Forms.Controls
     ]
     public class Bugzilla33870 : TestContentPage
     {
-        public class Section : ObservableCollection<string>
-        {
-            public Section(string title, IEnumerable<string> items = null)
-                : this(items ?? new List<string>())
-            {
-                Title = title;
-            }
-
-            public Section(IEnumerable<string> items)
-                : base(items)
-            {
-            }
-
-            public string Title { get; set; }
-        }
-
         protected override void Init()
         {
             var source = new ObservableCollection<Section>
@@ -78,6 +59,22 @@ namespace Xamarin.Forms.Controls
             };
 
             Content = stack;
+        }
+
+        public class Section : ObservableCollection<string>
+        {
+            public Section(string title, IEnumerable<string> items = null)
+                : this(items ?? new List<string>())
+            {
+                Title = title;
+            }
+
+            public Section(IEnumerable<string> items)
+                : base(items)
+            {
+            }
+
+            public string Title { get; set; }
         }
     }
 }

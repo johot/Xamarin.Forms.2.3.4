@@ -14,8 +14,8 @@ namespace Xamarin.Forms.Controls
         "Update Content in Picker's SelectedIndexChanged event causes NullReferenceException", PlatformAffected.iOS)]
     public class Bugzilla38723 : TestContentPage // or TestMasterDetailPage, etc ...
     {
-        Picker _datePicker;
         Label _dateLabel;
+        Picker _datePicker;
 
         protected override void Init()
         {

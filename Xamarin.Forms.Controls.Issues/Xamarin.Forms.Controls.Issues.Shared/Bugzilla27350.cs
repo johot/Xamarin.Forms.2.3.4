@@ -1,9 +1,9 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -29,7 +29,6 @@ namespace Xamarin.Forms.Controls
             public Recipe Recipe { get; set; }
 
             public ObservableCollection<RecipeGroup> RecipeGroups { get; set; }
-
 #pragma warning disable 1998 // considered for removal
             public async Task LoadRecipesAsync()
 #pragma warning restore 1998
@@ -51,39 +50,40 @@ namespace Xamarin.Forms.Controls
 
         class Recipe
         {
-            public string ID { get; set; }
-
-            public string Title { get; set; }
-
-            public string Subtitle { get; set; }
-
             public string Description { get; set; }
-
-            public string ImagePath { get; set; }
-
-            public string TileImagePath { get; set; }
-
-            public int PrepTime { get; set; }
 
             public string Directions { get; set; }
 
+            public string ID { get; set; }
+
+            public string ImagePath { get; set; }
+
             public List<string> Ingredients { get; set; }
+
+            public int PrepTime { get; set; }
+
+            public string Subtitle { get; set; }
+
+            public string TileImagePath { get; set; }
+
+            public string Title { get; set; }
         }
 
         class RecipeGroup : INotifyPropertyChanged
         {
-            public event PropertyChangedEventHandler PropertyChanged;
+            string _title;
 
-            void OnPropertyChanged(string caller)
-            {
-                var handler = PropertyChanged;
-                if (handler != null)
-                {
-                    handler(this, new PropertyChangedEventArgs(caller));
-                }
-            }
+            public string Description { get; set; }
+
+            public string GroupImagePath { get; set; }
 
             public string ID { get; set; }
+
+            public string ImagePath { get; set; }
+
+            public List<Recipe> Recipes { get; set; }
+
+            public string Subtitle { get; set; }
 
             public string Title
             {
@@ -95,21 +95,22 @@ namespace Xamarin.Forms.Controls
                 }
             }
 
-            string _title;
+            public event PropertyChangedEventHandler PropertyChanged;
 
-            public string Subtitle { get; set; }
-
-            public string ImagePath { get; set; }
-
-            public string GroupImagePath { get; set; }
-
-            public string Description { get; set; }
-
-            public List<Recipe> Recipes { get; set; }
+            void OnPropertyChanged(string caller)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(caller));
+                }
+            }
         }
 
         class MainPage1 : TabbedPage
         {
+            RecipeViewModel _rvm;
+
             public MainPage1()
             {
                 ItemTemplate = new DataTemplate(() =>
@@ -132,16 +133,6 @@ namespace Xamarin.Forms.Controls
                 SetBinding(ItemsSourceProperty, new Binding("RecipeGroups"));
             }
 
-            protected override async void OnAppearing()
-            {
-                base.OnAppearing();
-
-                if (BindingContext == null)
-                    BindingContext = await GetRecipeViewModelAsync();
-            }
-
-            RecipeViewModel _rvm;
-
             public async Task<RecipeViewModel> GetRecipeViewModelAsync()
             {
                 if (_rvm == null)
@@ -156,6 +147,14 @@ namespace Xamarin.Forms.Controls
                 await _rvm.LoadRecipesAsync();
 
                 return _rvm;
+            }
+
+            protected override async void OnAppearing()
+            {
+                base.OnAppearing();
+
+                if (BindingContext == null)
+                    BindingContext = await GetRecipeViewModelAsync();
             }
         }
     }

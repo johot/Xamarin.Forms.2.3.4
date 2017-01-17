@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System.Collections.Generic;
 
 #if UITEST
 using Xamarin.UITest;
@@ -49,7 +48,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
             {
-                int number = (int)item;
+                var number = (int)item;
                 switch (number)
                 {
                     default:
@@ -72,14 +71,14 @@ namespace Xamarin.Forms.Controls.Issues
         protected override void Init()
         {
             //test non-grouped DTS
-            ListView listView = new ListView(ListViewCachingStrategy.RecycleElement)
+            var listView = new ListView(ListViewCachingStrategy.RecycleElement)
             {
                 ItemsSource = Enumerable.Range(0, 2),
                 ItemTemplate = new MyDataTemplateSelector()
             };
 
             //test grouped DTS
-            ListView groupedListView = new ListView(ListViewCachingStrategy.RecycleElement)
+            var groupedListView = new ListView(ListViewCachingStrategy.RecycleElement)
             {
                 ItemsSource = new List<List<int>> { Enumerable.Range(2, 2).ToList(), Enumerable.Range(4, 2).ToList() },
                 IsGroupingEnabled = true,

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     internal sealed class SwapRootButton : Button
     {
-        public string PageStyleId { get; private set; }
-
         public SwapRootButton(string hierarchyDescription, Command command)
         {
             AutomationId = hierarchyDescription + "ButtonId";
@@ -17,6 +9,8 @@ namespace Xamarin.Forms.Controls
 
             Command = command;
         }
+
+        public string PageStyleId { get; private set; }
     }
 
     internal class SwapHierachyStackLayout : ScrollView
@@ -127,7 +121,7 @@ namespace Xamarin.Forms.Controls
 
             layout.Children.Add(new Label { Text = heirarchy });
 
-            foreach (var button in buttons)
+            foreach (SwapRootButton button in buttons)
             {
                 layout.Children.Add(button);
             }

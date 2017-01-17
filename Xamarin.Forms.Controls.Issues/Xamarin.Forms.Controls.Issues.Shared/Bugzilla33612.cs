@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -57,7 +56,7 @@ namespace Xamarin.Forms.Controls.Issues
                 {
                     int numPagesToRemove = Navigation.NavigationStack.Count;
 
-                    Page3 page3 = new Page3();
+                    var page3 = new Page3();
                     await Navigation.PushAsync(page3);
 
                     var fake = new FakePage();
@@ -65,7 +64,7 @@ namespace Xamarin.Forms.Controls.Issues
 
                     // Remove all the previous pages on the stack (i.e., Page 1)
                     // This should work fine
-                    for (int i = 0; i < numPagesToRemove; i++)
+                    for (var i = 0; i < numPagesToRemove; i++)
                     {
                         Page p = Navigation.NavigationStack.ElementAt(0);
                         Navigation.RemovePage(p);
@@ -111,7 +110,7 @@ namespace Xamarin.Forms.Controls.Issues
                     // was never actually run through SwitchContentAsync
                     // which means that it never had its renderer set.
                     // But now it should work just fine
-                    for (int i = 0; i < numPagesToRemove - 1; i++)
+                    for (var i = 0; i < numPagesToRemove - 1; i++)
                     {
                         Page p = Navigation.NavigationStack.ElementAt(0);
                         Navigation.RemovePage(p);

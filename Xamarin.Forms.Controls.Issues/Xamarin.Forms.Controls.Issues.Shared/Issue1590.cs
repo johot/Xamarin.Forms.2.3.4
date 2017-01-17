@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -69,20 +65,20 @@ namespace Xamarin.Forms.Controls.TestCasesPages
     [Preserve(AllMembers = true)]
     public class MediaListSection : ObservableCollection<FooViewModel>
     {
-        public string SectionName { get; private set; }
-
         public MediaListSection(string sectionName)
         {
             SectionName = sectionName;
         }
+
+        public string SectionName { get; private set; }
     }
 
     [Preserve(AllMembers = true)]
     public class FooViewModel
     {
-        public string Title { get; set; }
-
         public string Description { get; set; }
+
+        public string Title { get; set; }
     }
 
     [Preserve(AllMembers = true)]

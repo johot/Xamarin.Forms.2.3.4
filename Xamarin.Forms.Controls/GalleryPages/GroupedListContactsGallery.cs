@@ -11,29 +11,25 @@ namespace Xamarin.Forms.Controls
     public class GroupedListContactsGallery
         : ContentPage
     {
-        internal class Contact
+        const string Chars = "abcdefghijklmnopqrstuvwxyz";
+
+        readonly List<Contact> _contacts = new List<Contact>
         {
-            public string FirstName { get; set; }
-
-            public string LastName { get; set; }
-
-            public string FullName
-            {
-                get { return FirstName + " " + LastName; }
-            }
-
-            public string Title { get; set; }
-        }
+            new Contact { FirstName = "Jason", LastName = "Smith", Title = "Software Engineer" },
+            new Contact { FirstName = "Eric", LastName = "Maupin", Title = "Software Engineer" },
+            new Contact { FirstName = "Seth", LastName = "Rosetter", Title = "Software Engineer" },
+            new Contact { FirstName = "Stephane", LastName = "Delcroix", Title = "Software Engineer" }
+        };
 
         readonly ListView _list = new ListView
         {
             ItemTemplate = new DataTemplate(() =>
             {
-                Label name = new Label();
+                var name = new Label();
                 name.SetBinding(Label.TextProperty, "FullName");
 
 #pragma warning disable 618
-                Label title = new Label { Font = Font.SystemFontOfSize(NamedSize.Micro) };
+                var title = new Label { Font = Font.SystemFontOfSize(NamedSize.Micro) };
 #pragma warning restore 618
                 title.SetBinding(Label.TextProperty, "Title");
 
@@ -54,27 +50,7 @@ namespace Xamarin.Forms.Controls
             IsGroupingEnabled = true
         };
 
-        readonly List<Contact> _contacts = new List<Contact>
-        {
-            new Contact { FirstName = "Jason", LastName = "Smith", Title = "Software Engineer" },
-            new Contact { FirstName = "Eric", LastName = "Maupin", Title = "Software Engineer" },
-            new Contact { FirstName = "Seth", LastName = "Rosetter", Title = "Software Engineer" },
-            new Contact { FirstName = "Stephane", LastName = "Delcroix", Title = "Software Engineer" }
-        };
-
         readonly Random _rand = new Random(42);
-
-        [Preserve(AllMembers = true)]
-        internal class Group
-            : ObservableCollection<Contact>
-        {
-            public Group(string key)
-            {
-                Key = key;
-            }
-
-            public string Key { get; private set; }
-        }
 
         bool _sortedByFirst = true;
         ObservableCollection<Group> _sortedContacts;
@@ -160,25 +136,14 @@ namespace Xamarin.Forms.Controls
             _list.ItemsSource = _sortedContacts;
         }
 
-        const string Chars = "abcdefghijklmnopqrstuvwxyz";
-
-        void SetupContacts()
-        {
-            var coll = new ObservableCollection<Group>();
-            foreach (var contact in _contacts)
-                AddContact(coll, contact);
-
-            _sortedContacts = coll;
-        }
-
         void AddContact(ObservableCollection<Group> contactGroups, Contact contact)
         {
             char sortChar = GetSortChar(contact);
 
-            var collection = contactGroups.FirstOrDefault(col =>
+            Group collection = contactGroups.FirstOrDefault(col =>
             {
-                var c = col.First();
-                return (GetSortChar(c) == sortChar);
+                Contact c = col.First();
+                return GetSortChar(c) == sortChar;
             });
 
             if (collection == null)
@@ -190,9 +155,48 @@ namespace Xamarin.Forms.Controls
                 InsertBasedOnSort(collection, contact, c => GetSortString(c)[0]);
         }
 
+        Contact GetRandomContact()
+        {
+            var contact = new Contact();
+
+            int firstLen = _rand.Next(3, 7);
+
+            var builder = new StringBuilder(firstLen);
+            for (var i = 0; i < firstLen; i++)
+            {
+                char c = Chars[_rand.Next(0, Chars.Length)];
+                builder.Append(i != 0 ? c : char.ToUpper(c));
+            }
+
+            contact.FirstName = builder.ToString();
+
+            int lastLen = _rand.Next(3, 7);
+            builder.Clear();
+            for (var i = 0; i < lastLen; i++)
+            {
+                char c = Chars[_rand.Next(0, Chars.Length)];
+                builder.Append(i != 0 ? c : char.ToUpper(c));
+            }
+
+            contact.LastName = builder.ToString();
+            contact.Title = "Software Engineer";
+
+            return contact;
+        }
+
+        char GetSortChar(Contact contact)
+        {
+            return GetSortString(contact)[0];
+        }
+
+        string GetSortString(Contact contact)
+        {
+            return _sortedByFirst ? contact.FirstName : contact.LastName;
+        }
+
         int IndexOf<T>(IEnumerable<T> elements, T element)
         {
-            int i = 0;
+            var i = 0;
             foreach (T e in elements)
             {
                 if (Equals(e, element))
@@ -206,49 +210,45 @@ namespace Xamarin.Forms.Controls
 
         void InsertBasedOnSort<T, TSort>(IList<T> items, T item, Func<T, TSort> sortBy)
         {
-            List<T> newItems = new List<T>(items);
+            var newItems = new List<T>(items);
             newItems.Add(item);
             int index = IndexOf(newItems.OrderBy(sortBy), item);
             items.Insert(index, item);
         }
 
-        char GetSortChar(Contact contact)
+        void SetupContacts()
         {
-            return GetSortString(contact)[0];
+            var coll = new ObservableCollection<Group>();
+            foreach (Contact contact in _contacts)
+                AddContact(coll, contact);
+
+            _sortedContacts = coll;
         }
 
-        string GetSortString(Contact contact)
+        internal class Contact
         {
-            return (_sortedByFirst) ? contact.FirstName : contact.LastName;
+            public string FirstName { get; set; }
+
+            public string FullName
+            {
+                get { return FirstName + " " + LastName; }
+            }
+
+            public string LastName { get; set; }
+
+            public string Title { get; set; }
         }
 
-        Contact GetRandomContact()
+        [Preserve(AllMembers = true)]
+        internal class Group
+            : ObservableCollection<Contact>
         {
-            Contact contact = new Contact();
-
-            int firstLen = _rand.Next(3, 7);
-
-            var builder = new StringBuilder(firstLen);
-            for (int i = 0; i < firstLen; i++)
+            public Group(string key)
             {
-                char c = Chars[_rand.Next(0, Chars.Length)];
-                builder.Append((i != 0) ? c : char.ToUpper(c));
+                Key = key;
             }
 
-            contact.FirstName = builder.ToString();
-
-            int lastLen = _rand.Next(3, 7);
-            builder.Clear();
-            for (int i = 0; i < lastLen; i++)
-            {
-                char c = Chars[_rand.Next(0, Chars.Length)];
-                builder.Append((i != 0) ? c : char.ToUpper(c));
-            }
-
-            contact.LastName = builder.ToString();
-            contact.Title = "Software Engineer";
-
-            return contact;
+            public string Key { get; private set; }
         }
     }
 }

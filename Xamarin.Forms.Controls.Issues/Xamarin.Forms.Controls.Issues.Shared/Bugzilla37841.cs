@@ -60,6 +60,15 @@ The EntryCell should display '112358' and the TextCell should display '48151623'
         [Preserve(AllMembers = true)]
         public class _37841ViewModel : INotifyPropertyChanged
         {
+            readonly IEnumerator<int> _numberList = new SomeNumbers().GetEnumerator();
+
+            Command _getNextNumbersCommand;
+            int _value1;
+            int _value2;
+
+            public Command GetNextNumbersCommand
+                => _getNextNumbersCommand ?? (_getNextNumbersCommand = new Command(ExecuteGenerateRandomCommand));
+
             public int Value1
             {
                 get { return _value1; }
@@ -86,29 +95,11 @@ The EntryCell should display '112358' and the TextCell should display '48151623'
                 }
             }
 
-            public Command GetNextNumbersCommand
-                => _getNextNumbersCommand ?? (_getNextNumbersCommand = new Command(ExecuteGenerateRandomCommand));
+            #region INotifyPropertyChanged implementation
 
-            class SomeNumbers : IEnumerable<int>
-            {
-                public IEnumerator<int> GetEnumerator()
-                {
-                    while (true)
-                    {
-                        yield return 12345;
-                        yield return 6789;
-                        yield return 112358;
-                        yield return 48151623;
-                    }
-                }
+            public event PropertyChangedEventHandler PropertyChanged;
 
-                IEnumerator IEnumerable.GetEnumerator()
-                {
-                    return GetEnumerator();
-                }
-            }
-
-            readonly IEnumerator<int> _numberList = new SomeNumbers().GetEnumerator();
+            #endregion
 
             void ExecuteGenerateRandomCommand()
             {
@@ -125,15 +116,24 @@ The EntryCell should display '112358' and the TextCell should display '48151623'
                 handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
 
-            #region INotifyPropertyChanged implementation
+            class SomeNumbers : IEnumerable<int>
+            {
+                IEnumerator IEnumerable.GetEnumerator()
+                {
+                    return GetEnumerator();
+                }
 
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            #endregion
-
-            Command _getNextNumbersCommand;
-            int _value1;
-            int _value2;
+                public IEnumerator<int> GetEnumerator()
+                {
+                    while (true)
+                    {
+                        yield return 12345;
+                        yield return 6789;
+                        yield return 112358;
+                        yield return 48151623;
+                    }
+                }
+            }
         }
 
 #if UITEST

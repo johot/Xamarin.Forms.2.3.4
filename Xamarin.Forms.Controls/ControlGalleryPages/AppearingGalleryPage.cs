@@ -1,7 +1,5 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace Xamarin.Forms.Controls
 {
@@ -102,8 +100,8 @@ namespace Xamarin.Forms.Controls
 
         class AppearingPage : ContentPage
         {
-            int _theId;
             ListView _listMessages;
+            int _theId;
 
             public AppearingPage(int id)
             {

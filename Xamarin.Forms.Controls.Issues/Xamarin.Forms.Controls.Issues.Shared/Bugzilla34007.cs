@@ -1,5 +1,4 @@
 using System;
-using System.Xml.Linq;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -39,7 +38,7 @@ namespace Xamarin.Forms.Controls.Issues
             Action reorder = () =>
             {
                 // Get the last item in the grid
-                var item = grid.Children[1];
+                View item = grid.Children[1];
 
                 // Remove it
                 grid.Children.RemoveAt(1);

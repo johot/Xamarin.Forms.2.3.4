@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Controls
             if (Device.RuntimePlatform == Device.iOS && Device.Idiom == TargetIdiom.Tablet)
                 Padding = new Thickness(0, 0, 0, 60);
 
-            int timesEntered = 1;
+            var timesEntered = 1;
 
             var entryCell = new EntryCell { Label = "Enter text", Placeholder = "I am a placeholder" };
             entryCell.Completed += (sender, args) =>

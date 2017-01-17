@@ -8,9 +8,9 @@ namespace Xamarin.Forms.Controls
     {
         public string Label { get; set; }
 
-        public string Placeholder { get; set; }
-
         public Color LabelColor { get; set; }
+
+        public string Placeholder { get; set; }
 
         public Color PlaceholderColor { get; set; }
     }

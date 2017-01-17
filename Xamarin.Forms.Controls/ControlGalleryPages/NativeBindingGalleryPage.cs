@@ -5,19 +5,7 @@ namespace Xamarin.Forms.Controls
 {
     public class NativeBindingGalleryPage : ContentPage
     {
-        public StackLayout Layout { get; set; }
-
-        public bool NativeControlsAdded { get; set; }
-
-        NestedNativeViewModel ViewModel { get; set; }
-
         public const string ReadyForNativeBindingsMessage = "ReadyForNativeBindings";
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            MessagingCenter.Send(this, ReadyForNativeBindingsMessage);
-        }
 
         public NativeBindingGalleryPage()
         {
@@ -33,7 +21,7 @@ namespace Xamarin.Forms.Controls
             buttonNav.Clicked +=
                 (object sender, EventArgs e) =>
                 {
-                    App.Current.MainPage = new ContentPage { Content = new Label { Text = "New page" } };
+                    Application.Current.MainPage = new ContentPage { Content = new Label { Text = "New page" } };
                 };
 
             var button = new Button { Text = "Change BindingContext " };
@@ -50,7 +38,7 @@ namespace Xamarin.Forms.Controls
             };
 
             var boxView = new BoxView { HeightRequest = 50 };
-            boxView.SetBinding(BoxView.BackgroundColorProperty, "NativeLabelColor");
+            boxView.SetBinding(BackgroundColorProperty, "NativeLabelColor");
 
             var label = new Label();
             label.SetBinding(Label.TextProperty, "FormsLabel");
@@ -68,51 +56,31 @@ namespace Xamarin.Forms.Controls
 
             Content = new ScrollView { Content = Layout };
         }
+
+        public StackLayout Layout { get; set; }
+
+        public bool NativeControlsAdded { get; set; }
+
+        NestedNativeViewModel ViewModel { get; set; }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Send(this, ReadyForNativeBindingsMessage);
+        }
     }
 
     [Preserve(AllMembers = true)]
     public class NestedNativeViewModel : ViewModelBase
     {
+        int _age;
         string _formsLabel;
-
-        public string FormsLabel
-        {
-            get { return _formsLabel; }
-            set
-            {
-                if (_formsLabel == value) return;
-                _formsLabel = value;
-                OnPropertyChanged();
-            }
-        }
 
         string _nativeLabel;
 
-        public string NativeLabel
-        {
-            get { return _nativeLabel; }
-            set
-            {
-                if (_nativeLabel == value) return;
-                _nativeLabel = value;
-                OnPropertyChanged();
-            }
-        }
-
         Color _nativeLabelColor;
 
-        public Color NativeLabelColor
-        {
-            get { return _nativeLabelColor; }
-            set
-            {
-                if (_nativeLabelColor == value) return;
-                _nativeLabelColor = value;
-                OnPropertyChanged();
-            }
-        }
-
-        int _age;
+        bool _selected;
 
         public int Age
         {
@@ -125,7 +93,38 @@ namespace Xamarin.Forms.Controls
             }
         }
 
-        bool _selected;
+        public string FormsLabel
+        {
+            get { return _formsLabel; }
+            set
+            {
+                if (_formsLabel == value) return;
+                _formsLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string NativeLabel
+        {
+            get { return _nativeLabel; }
+            set
+            {
+                if (_nativeLabel == value) return;
+                _nativeLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Color NativeLabelColor
+        {
+            get { return _nativeLabelColor; }
+            set
+            {
+                if (_nativeLabelColor == value) return;
+                _nativeLabelColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool Selected
         {

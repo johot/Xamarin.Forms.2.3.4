@@ -19,6 +19,21 @@ namespace Xamarin.Forms.Controls
             MainPage = navPage1;
         }
 
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
+
+        protected override void OnStart()
+        {
+            // Handle when your app starts
+        }
+
         async void Btn_Clicked(object sender, EventArgs e)
         {
             await navPage1.PushAsync(new ContentPage() { Content = new Label() { Text = "Page 2" } });
@@ -40,21 +55,6 @@ namespace Xamarin.Forms.Controls
             await navPage1.PopAsync();
 
             await navPage1.PushAsync(new ContentPage() { Content = new Label() { Text = "Page 3a" } });
-        }
-
-        protected override void OnStart()
-        {
-            // Handle when your app starts
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
         }
     }
 }

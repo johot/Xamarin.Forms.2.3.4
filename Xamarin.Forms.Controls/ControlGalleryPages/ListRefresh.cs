@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -91,7 +90,29 @@ namespace Xamarin.Forms.Controls
 
         public class FooViewModel
         {
+            bool _canExecute;
+
+            Command _refreshThingsCommand;
             List<Group<string>> _things;
+
+            public bool CanExecute
+            {
+                get { return _canExecute; }
+                set
+                {
+                    _canExecute = value;
+                    RefreshThingsCommand.ChangeCanExecute();
+                }
+            }
+
+            public Command RefreshThingsCommand
+            {
+                get
+                {
+                    return _refreshThingsCommand ??
+                           (_refreshThingsCommand = new Command(BeginRefreshThings, () => _canExecute));
+                }
+            }
 
             public List<Group<string>> Things
             {
@@ -108,29 +129,6 @@ namespace Xamarin.Forms.Controls
                             Name = "Numbers"
                         }
                     });
-                }
-            }
-
-            bool _canExecute;
-
-            public bool CanExecute
-            {
-                get { return _canExecute; }
-                set
-                {
-                    _canExecute = value;
-                    RefreshThingsCommand.ChangeCanExecute();
-                }
-            }
-
-            Command _refreshThingsCommand;
-
-            public Command RefreshThingsCommand
-            {
-                get
-                {
-                    return _refreshThingsCommand ??
-                           (_refreshThingsCommand = new Command(BeginRefreshThings, () => _canExecute));
                 }
             }
 

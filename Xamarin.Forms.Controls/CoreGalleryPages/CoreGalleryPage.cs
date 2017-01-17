@@ -1,9 +1,6 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Threading;
+using System.Linq;
 using Xamarin.Forms.CustomAttributes;
 
 namespace Xamarin.Forms.Controls
@@ -11,33 +8,28 @@ namespace Xamarin.Forms.Controls
     internal class CoreGalleryPage<T> : ContentPage
         where T : View, new()
     {
-        List<View> _views;
-        int _currentIndex;
-        Picker _picker;
-        StackLayout _moveNextStack;
-
         ViewContainer<T> _backgroundColorViewContainer;
+        int _currentIndex;
+        EventViewContainer<T> _focusedEventViewContainer;
+
+        StateViewContainer<T> _focusStateViewContainer;
+
+        EventViewContainer<T> _gestureRecognizerEventViewContainer;
+
+        LayeredViewContainer<T> _inputTransparentViewContainer;
+        StateViewContainer<T> _isFocusedStateViewContainer;
+        StateViewContainer<T> _isVisibleStateViewContainer;
+        StackLayout _moveNextStack;
         ViewContainer<T> _opacityViewContainer;
+        Picker _picker;
         ViewContainer<T> _rotationViewContainer;
         ViewContainer<T> _rotationXViewContainer;
         ViewContainer<T> _rotationYViewContainer;
         ViewContainer<T> _scaleViewContainer;
         ViewContainer<T> _translationXViewContainer;
         ViewContainer<T> _translationYViewContainer;
-
-        StateViewContainer<T> _focusStateViewContainer;
-        StateViewContainer<T> _isFocusedStateViewContainer;
-        StateViewContainer<T> _isVisibleStateViewContainer;
-
-        EventViewContainer<T> _gestureRecognizerEventViewContainer;
-        EventViewContainer<T> _focusedEventViewContainer;
         EventViewContainer<T> _unfocusedEventViewContainer;
-
-        LayeredViewContainer<T> _inputTransparentViewContainer;
-
-        protected StateViewContainer<T> IsEnabledStateViewContainer { get; private set; }
-
-        protected StackLayout Layout { get; private set; }
+        List<View> _views;
 
         internal CoreGalleryPage()
         {
@@ -58,8 +50,24 @@ namespace Xamarin.Forms.Controls
             Content = new ScrollView { AutomationId = "GalleryScrollView", Content = Layout };
         }
 
-        protected virtual void InitializeElement(T element)
+        protected StateViewContainer<T> IsEnabledStateViewContainer { get; private set; }
+
+        protected StackLayout Layout { get; private set; }
+
+        protected virtual bool SupportsFocus
         {
+            get { return true; }
+        }
+
+        protected virtual bool SupportsTapGestureRecognizer
+        {
+            get { return true; }
+        }
+
+        protected void Add(ViewContainer<T> view)
+        {
+            _views.Add(view.ContainerLayout);
+            _picker.Items.Add(view.TitleLabel.Text);
         }
 
         protected virtual void Build(StackLayout stackLayout)
@@ -152,7 +160,7 @@ namespace Xamarin.Forms.Controls
             };
 
             _picker = new Picker();
-            foreach (var container in viewContainers)
+            foreach (ViewContainer<T> container in viewContainers)
             {
                 _picker.Items.Add(container.TitleLabel.Text);
             }
@@ -176,8 +184,12 @@ namespace Xamarin.Forms.Controls
             if (!SupportsTapGestureRecognizer)
                 stackLayout.Children.Remove(_gestureRecognizerEventViewContainer.ContainerLayout);
 
-            foreach (var element in viewContainers)
+            foreach (ViewContainer<T> element in viewContainers)
                 InitializeElement(element.View);
+        }
+
+        protected virtual void InitializeElement(T element)
+        {
         }
 
         void PickerSelectedIndexChanged(object sender, EventArgs eventArgs)
@@ -185,22 +197,6 @@ namespace Xamarin.Forms.Controls
             _currentIndex = _picker.SelectedIndex;
             _moveNextStack.Children.RemoveAt(2);
             _moveNextStack.Children.Add(_views[_currentIndex]);
-        }
-
-        protected virtual bool SupportsTapGestureRecognizer
-        {
-            get { return true; }
-        }
-
-        protected virtual bool SupportsFocus
-        {
-            get { return true; }
-        }
-
-        protected void Add(ViewContainer<T> view)
-        {
-            _views.Add(view.ContainerLayout);
-            _picker.Items.Add(view.TitleLabel.Text);
         }
     }
 }

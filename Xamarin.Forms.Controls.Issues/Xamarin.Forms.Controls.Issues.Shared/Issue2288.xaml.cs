@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using System.ComponentModel;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -14,6 +10,8 @@ namespace Xamarin.Forms.Controls
     {
         int _count = 0;
 
+        string _mainText;
+
         public Issue2288()
         {
             InitializeComponent();
@@ -22,8 +20,6 @@ namespace Xamarin.Forms.Controls
 
             BindingContext = this;
         }
-
-        string _mainText;
 
         public string MainText
         {

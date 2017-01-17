@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -32,10 +29,6 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class MyViewModel
         {
-            public ObservableCollection<MyItemViewModel> Items { get; private set; }
-
-            public Command<MyItemViewModel> ButtonTapped { get; private set; }
-
             public MyViewModel()
             {
                 ButtonTapped = new Command<MyItemViewModel>(OnItemTapped);
@@ -46,6 +39,10 @@ namespace Xamarin.Forms.Controls.Issues
                 Items.Add(new MyItemViewModel { Name = "B", IsStarted = false });
                 Items.Add(new MyItemViewModel { Name = "C", IsStarted = false });
             }
+
+            public Command<MyItemViewModel> ButtonTapped { get; private set; }
+
+            public ObservableCollection<MyItemViewModel> Items { get; private set; }
 
             void OnItemTapped(MyItemViewModel model)
             {
@@ -63,9 +60,19 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class MyItemViewModel : INotifyPropertyChanged
         {
-            public event PropertyChangedEventHandler PropertyChanged;
+            bool _isStarted;
 
             string _name;
+
+            public bool IsStarted
+            {
+                get { return _isStarted; }
+                set
+                {
+                    _isStarted = value;
+                    OnPropertyChanged("IsStarted");
+                }
+            }
 
             public string Name
             {
@@ -77,17 +84,7 @@ namespace Xamarin.Forms.Controls.Issues
                 }
             }
 
-            bool _isStarted;
-
-            public bool IsStarted
-            {
-                get { return _isStarted; }
-                set
-                {
-                    _isStarted = value;
-                    OnPropertyChanged("IsStarted");
-                }
-            }
+            public event PropertyChangedEventHandler PropertyChanged;
 
             void OnPropertyChanged(string propertyName)
             {

@@ -1,6 +1,6 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.Generic;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -60,9 +60,9 @@ namespace Xamarin.Forms.Controls
                 Homeimages = images;
             }
 
-            public string Name { private set; get; }
-
             public string Homeimages { private set; get; }
+
+            public string Name { private set; get; }
 
             public override string ToString()
             {
@@ -102,8 +102,6 @@ namespace Xamarin.Forms.Controls
         [Preserve(AllMembers = true)]
         public class MenuPage : ContentPage
         {
-            public ListView Menu { get; set; }
-
             public MenuPage()
             {
                 Icon = "bank.png";
@@ -132,6 +130,8 @@ namespace Xamarin.Forms.Controls
 
                 Content = layout;
             }
+
+            public ListView Menu { get; set; }
         }
 
         [Preserve(AllMembers = true)]
@@ -197,13 +197,13 @@ namespace Xamarin.Forms.Controls
         [Preserve(AllMembers = true)]
         public class MenuItem
         {
-            public string Title { get; set; }
-
             public string IconSource { get; set; }
 
             public Type TargetType { get; set; }
 
             public Color TextColor { get; set; }
+
+            public string Title { get; set; }
         }
 
         [Preserve(AllMembers = true)]

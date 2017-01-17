@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Xamarin.Forms;
 using Xamarin.Forms.ControlGallery.WindowsUniversal;
 using Xamarin.Forms.Controls;
 using Xamarin.Forms.Platform.UWP;

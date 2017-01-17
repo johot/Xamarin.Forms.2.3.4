@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace App2
@@ -32,19 +28,18 @@ namespace App2
             }
         }
 
-        void OverRide_Clicked(object sender, EventArgs e)
+        //protected override void OnPropertyChanged(string propertyName = null)
+        //{
+        //    base.OnPropertyChanged(propertyName);
+        //    if(propertyName == ViewCell.BindingContextProperty.PropertyName)
+        //    {
+        //        setContextActions();
+        //    }
+        //}
+        protected override void OnBindingContextChanged()
         {
-            try
-            {
-                var obj = (CheckListDetails)((MenuItem)sender).BindingContext;
-                obj.ChecklistStatus = CheckListStatus.OverRide;
-
-                SetContextActions();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            base.OnBindingContextChanged();
+            SetContextActions();
         }
 
         void Checklist_tapped(object sender, EventArgs e)
@@ -66,18 +61,19 @@ namespace App2
             }
         }
 
-        //protected override void OnPropertyChanged(string propertyName = null)
-        //{
-        //    base.OnPropertyChanged(propertyName);
-        //    if(propertyName == ViewCell.BindingContextProperty.PropertyName)
-        //    {
-        //        setContextActions();
-        //    }
-        //}
-        protected override void OnBindingContextChanged()
+        void OverRide_Clicked(object sender, EventArgs e)
         {
-            base.OnBindingContextChanged();
-            SetContextActions();
+            try
+            {
+                var obj = (CheckListDetails)((MenuItem)sender).BindingContext;
+                obj.ChecklistStatus = CheckListStatus.OverRide;
+
+                SetContextActions();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         void SetContextActions()

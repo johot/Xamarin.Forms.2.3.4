@@ -43,8 +43,7 @@ namespace Xamarin.Forms.Controls.TestCasesPages
 
         public class TestListViewModel
         {
-            //public ObservableCollection<ObservableCollection<Row>> Rows {
-            public ObservableCollection<Row> Rows { get; set; }
+            Command _command;
 
             public TestListViewModel()
             {
@@ -52,18 +51,19 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                 Rows = new ObservableCollection<Row>();
             }
 
-            Command _command;
-
             public Command LoadDataCommand
             {
                 get { return _command ?? (_command = new Command(LoadData)); }
             }
 
+            //public ObservableCollection<ObservableCollection<Row>> Rows {
+            public ObservableCollection<Row> Rows { get; set; }
+
             void LoadData()
             {
                 Rows.Clear();
 
-                foreach (var row in new[] { new Row { Name = "one" }, new Row { Name = "Two" } })
+                foreach (Row row in new[] { new Row { Name = "one" }, new Row { Name = "Two" } })
                 {
                     Rows.Add(row);
                 }

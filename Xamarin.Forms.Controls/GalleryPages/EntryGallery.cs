@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class EntryGallery : ContentPage
     {
@@ -81,7 +75,7 @@ namespace Xamarin.Forms.Controls
                 numericPassword.IsPassword = !numericPassword.IsPassword;
             };
 
-            int i = 1;
+            var i = 1;
             changePlaceholderButton.Clicked += (sender, e) => { normal.Placeholder = "Placeholder " + i++.ToString(); };
 
             focusNormalButton.Clicked += (sender, args) => normal.Focus();

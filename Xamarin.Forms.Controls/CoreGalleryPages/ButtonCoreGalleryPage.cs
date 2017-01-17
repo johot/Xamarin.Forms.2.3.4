@@ -4,19 +4,14 @@ namespace Xamarin.Forms.Controls
 {
     internal class ButtonCoreGalleryPage : CoreGalleryPage<Button>
     {
-        protected override bool SupportsTapGestureRecognizer
-        {
-            get { return false; }
-        }
-
         protected override bool SupportsFocus
         {
             get { return false; }
         }
 
-        protected override void InitializeElement(Button element)
+        protected override bool SupportsTapGestureRecognizer
         {
-            element.Text = "Button";
+            get { return false; }
         }
 
         protected override void Build(StackLayout stackLayout)
@@ -114,6 +109,11 @@ namespace Xamarin.Forms.Controls
             Add(textContainer);
             Add(textColorContainer);
             //stackLayout.Children.Add (textColorContainer);
+        }
+
+        protected override void InitializeElement(Button element)
+        {
+            element.Text = "Button";
         }
     }
 }

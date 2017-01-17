@@ -7,8 +7,8 @@ namespace Xamarin.Forms.Controls
     internal class TemplatedCarouselGallery
         : CarouselPage
     {
-        ObservableCollection<Item> _items;
         int _count = 0;
+        ObservableCollection<Item> _items;
 
         public TemplatedCarouselGallery()
         {
@@ -52,7 +52,7 @@ namespace Xamarin.Forms.Controls
                 var change = new Button();
                 change.SetBinding(Button.TextProperty, "ChangeTitleText");
                 change.Clicked +=
-                    (sender, args) => ((Item)change.BindingContext).Title = (new Random().Next().ToString());
+                    (sender, args) => ((Item)change.BindingContext).Title = new Random().Next().ToString();
                 layout.Children.Add(change);
 
                 var remove = new Button();

@@ -2,13 +2,13 @@ namespace Xamarin.Forms.Controls
 {
     public class MainPageLifeCycleTests : ContentPage
     {
-        int _numTimesStarted;
-        int _numTimesSlept;
-        int _numTimesResumed;
+        readonly StackLayout _numTimesResumedLayout;
+        readonly StackLayout _numTimesSleptLayout;
 
         readonly StackLayout _numTimesStartedLayout;
-        readonly StackLayout _numTimesSleptLayout;
-        readonly StackLayout _numTimesResumedLayout;
+        int _numTimesResumed;
+        int _numTimesSlept;
+        int _numTimesStarted;
 
         public MainPageLifeCycleTests()
         {
@@ -50,6 +50,16 @@ namespace Xamarin.Forms.Controls
             Content = layout;
         }
 
+        public void UpdateLabels()
+        {
+            ((Label)_numTimesStartedLayout.Children[1]).Text =
+                ((int)Application.Current.Properties["TimesStarted"]).ToString();
+            ((Label)_numTimesSleptLayout.Children[1]).Text =
+                ((int)Application.Current.Properties["TimesSlept"]).ToString();
+            ((Label)_numTimesResumedLayout.Children[1]).Text =
+                ((int)Application.Current.Properties["TimesResumed"]).ToString();
+        }
+
         StackLayout BuildLabelLayout(string title, int property)
         {
             var labelTitle = new Label
@@ -70,16 +80,6 @@ namespace Xamarin.Forms.Controls
                     valueLabel
                 }
             };
-        }
-
-        public void UpdateLabels()
-        {
-            ((Label)_numTimesStartedLayout.Children[1]).Text =
-                ((int)Application.Current.Properties["TimesStarted"]).ToString();
-            ((Label)_numTimesSleptLayout.Children[1]).Text =
-                ((int)Application.Current.Properties["TimesSlept"]).ToString();
-            ((Label)_numTimesResumedLayout.Children[1]).Text =
-                ((int)Application.Current.Properties["TimesResumed"]).ToString();
         }
     }
 }

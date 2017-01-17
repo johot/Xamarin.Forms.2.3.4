@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls.TestCasesPages
@@ -14,9 +9,9 @@ namespace Xamarin.Forms.Controls.TestCasesPages
         PlatformAffected.Android)]
     public class Bugzilla21368 : ContentPage
     {
-        ScrollView _scrollView;
-        StackLayout _buttonsStack;
         Grid _buttonsGrid;
+        StackLayout _buttonsStack;
+        ScrollView _scrollView;
 
         public Bugzilla21368()
         {
@@ -69,6 +64,12 @@ namespace Xamarin.Forms.Controls.TestCasesPages
             get { return (StackLayout)_scrollView.Content; }
         }
 
+        void ForceRelayout()
+        {
+            ScrollStackLayout.ForceLayout();
+            _scrollView.ForceLayout();
+        }
+
         void OnAddControl()
         {
             ScrollStackLayout.Children.Add(new Button { Text = "hello" });
@@ -91,12 +92,6 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                 ScrollStackLayout.Children.RemoveAt(0);
                 ForceRelayout();
             }
-        }
-
-        void ForceRelayout()
-        {
-            ScrollStackLayout.ForceLayout();
-            _scrollView.ForceLayout();
         }
     }
 }

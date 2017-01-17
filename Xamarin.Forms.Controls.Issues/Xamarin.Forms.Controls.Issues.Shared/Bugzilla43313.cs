@@ -13,7 +13,6 @@ namespace Xamarin.Forms.Controls
     {
         public static int ItemCount = 20;
         readonly ListView _listView;
-        protected abstract DataTemplate CellTemplate();
 
         protected Bugzilla43313_Template()
         {
@@ -70,6 +69,8 @@ namespace Xamarin.Forms.Controls
             };
         }
 
+        protected abstract DataTemplate CellTemplate();
+
         void BtnAddOnClicked(object sender, EventArgs eventArgs)
         {
             string str = $"Item {ItemCount++}";
@@ -100,7 +101,7 @@ namespace Xamarin.Forms.Controls
             {
                 ListViewContent = new ObservableCollection<_43313Model>();
 
-                for (int n = 0; n < ItemCount; n++)
+                for (var n = 0; n < ItemCount; n++)
                 {
                     _listViewContent.Add(new _43313Model { Name = $"Item {n}" });
                 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -229,7 +228,7 @@ namespace Xamarin.Forms.Controls
 
                 #endregion
 
-                string breakText =
+                var breakText =
                     "_______________________________________________________________________________________________________________________________________________________________________________";
                 var lblBreakLine = new Label { LineBreakMode = LineBreakMode.NoWrap, TextColor = Color.Red };
                 lblBreakLine.Text = breakText;
@@ -255,7 +254,7 @@ namespace Xamarin.Forms.Controls
                         parent.Height));
 
                 rl.Children.Add(addFrame,
-                    Forms.Constraint.RelativeToParent((parent) => (parent.Width * .25) / 2),
+                    Forms.Constraint.RelativeToParent((parent) => parent.Width * .25 / 2),
                     Forms.Constraint.Constant(Device.RuntimePlatform == Device.iOS ? 60 : 40),
                     Forms.Constraint.RelativeToParent((parent) => parent.Width * .75));
 
@@ -263,12 +262,6 @@ namespace Xamarin.Forms.Controls
             }
 
             void cancelButton_Clicked(object sender, EventArgs e)
-            {
-                _firstNameEntry.Focus();
-                _firstNameEntry.Unfocus(); // done to remove focus from an entry field so keyboard will go away
-            }
-
-            void doneButton_Clicked(object sender, EventArgs e)
             {
                 _firstNameEntry.Focus();
                 _firstNameEntry.Unfocus(); // done to remove focus from an entry field so keyboard will go away
@@ -419,6 +412,12 @@ namespace Xamarin.Forms.Controls
                     };
                 });
                 return dt;
+            }
+
+            void doneButton_Clicked(object sender, EventArgs e)
+            {
+                _firstNameEntry.Focus();
+                _firstNameEntry.Unfocus(); // done to remove focus from an entry field so keyboard will go away
             }
         }
     }

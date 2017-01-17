@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -15,30 +13,14 @@ namespace Xamarin.Forms.Controls.TestCasesPages
     public class Issue1895
         : ContentPage
     {
+        static List<WeakReference> s_pageRefs = new List<WeakReference>();
+        static FakeProvider s_fakeProvider = new FakeProvider();
+
         public Issue1895()
         {
             var button = new Button { Text = "Push weak page" };
             button.Clicked += async (sender, args) => await Navigation.PushAsync(CreateWeakReferencedPage());
             Content = button;
-        }
-
-        static List<WeakReference> s_pageRefs = new List<WeakReference>();
-        static FakeProvider s_fakeProvider = new FakeProvider();
-
-        static Page CreateWeakReferencedPage()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-
-            var result = CreatePage();
-            s_pageRefs.Add(new WeakReference(result));
-
-            return result;
-        }
-
-        class WeakReferencedPage : ContentPage
-        {
         }
 
         static Page CreatePage()
@@ -66,10 +48,24 @@ namespace Xamarin.Forms.Controls.TestCasesPages
             return page;
         }
 
+        static Page CreateWeakReferencedPage()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            Page result = CreatePage();
+            s_pageRefs.Add(new WeakReference(result));
+
+            return result;
+        }
+
+        class WeakReferencedPage : ContentPage
+        {
+        }
+
         class FakeProvider
         {
-            public ObservableCollection<string> Items { get; private set; }
-
             public FakeProvider()
             {
                 Items = new ObservableCollection<string>();
@@ -78,6 +74,8 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                 Items.Add("Item 3");
                 Items.Add("Item 4");
             }
+
+            public ObservableCollection<string> Items { get; private set; }
         }
     }
 }

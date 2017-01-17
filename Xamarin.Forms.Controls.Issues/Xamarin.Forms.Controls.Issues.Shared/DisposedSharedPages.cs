@@ -1,23 +1,9 @@
 ﻿using System;
-using Xamarin.Forms;
 
 namespace Xamarin.Forms.Controls
 {
     public class DisposePage : ContentPage
     {
-        public event EventHandler RendererDisposed;
-
-        public void SendRendererDisposed()
-        {
-            var handler = RendererDisposed;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
-        public int DisposedLabelCount { get; private set; }
-
-        public Action PopAction { get; set; }
-
         public DisposePage()
         {
             var popButton = new Button { Text = "Pop" };
@@ -55,6 +41,19 @@ namespace Xamarin.Forms.Controls
                 }
             };
         }
+
+        public int DisposedLabelCount { get; private set; }
+
+        public Action PopAction { get; set; }
+
+        public event EventHandler RendererDisposed;
+
+        public void SendRendererDisposed()
+        {
+            EventHandler handler = RendererDisposed;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
     }
 
     public class DisposeLabel : Label
@@ -63,7 +62,7 @@ namespace Xamarin.Forms.Controls
 
         public void SendRendererDisposed()
         {
-            var handler = RendererDisposed;
+            EventHandler handler = RendererDisposed;
             if (handler != null)
                 handler(this, EventArgs.Empty);
         }

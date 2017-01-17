@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -18,7 +16,7 @@ namespace Xamarin.Forms.Controls.Issues
     {
         protected override void Init()
         {
-            ScrollView scrollView = new ScrollView()
+            var scrollView = new ScrollView()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,

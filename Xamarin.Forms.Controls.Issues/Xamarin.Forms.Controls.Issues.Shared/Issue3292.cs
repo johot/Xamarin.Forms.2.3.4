@@ -1,8 +1,7 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -43,13 +42,6 @@ namespace Xamarin.Forms.Controls.Issues
                 SectionTitle = "Hello World";
             }
 
-            public void Init()
-            {
-                Task.Delay(1000)
-                    .ContinueWith(
-                        t => { Device.BeginInvokeOnMainThread(() => { SectionTitle = "Hello World Changed"; }); });
-            }
-
             public string SectionTitle
             {
                 get { return _sectionTitle; }
@@ -62,9 +54,16 @@ namespace Xamarin.Forms.Controls.Issues
 
             public event PropertyChangedEventHandler PropertyChanged;
 
+            public void Init()
+            {
+                Task.Delay(1000)
+                    .ContinueWith(
+                        t => { Device.BeginInvokeOnMainThread(() => { SectionTitle = "Hello World Changed"; }); });
+            }
+
             protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
             {
-                var handler = PropertyChanged;
+                PropertyChangedEventHandler handler = PropertyChanged;
                 if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls.TestCasesPages
@@ -58,7 +53,7 @@ namespace Xamarin.Forms.Controls.TestCasesPages
 
             removePageBtn.Clicked += (sender, args) =>
             {
-                Element parent = ((Element)sender);
+                var parent = (Element)sender;
                 NavigationPage navPage = null;
                 while (navPage == null && parent != null)
                 {

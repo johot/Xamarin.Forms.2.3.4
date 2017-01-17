@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.ComponentModel;
 using System.Diagnostics;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -85,15 +85,7 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class SliderMenuItem : INotifyPropertyChanged
         {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            void NotifyPropertyChanged(string info)
-            {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(info));
-                }
-            }
+            bool _isSelected;
 
             public SliderMenuItem(string title, Type targetType)
             {
@@ -101,9 +93,7 @@ namespace Xamarin.Forms.Controls.Issues
                 TargetType = targetType;
             }
 
-            public string Title { get; set; }
-
-            bool _isSelected;
+            public Color Background { get; private set; }
 
             public bool IsSelected
             {
@@ -121,17 +111,25 @@ namespace Xamarin.Forms.Controls.Issues
 
             public Type TargetType { get; set; }
 
-            public Color Background { get; private set; }
+            public string Title { get; set; }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            void NotifyPropertyChanged(string info)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(info));
+                }
+            }
         }
 
         [Preserve(AllMembers = true)]
         public class SliderMenuPage : ContentPage
         {
-            public ListView MenuListView { get; set; }
-
             public SliderMenuPage()
             {
-                var data = GetData();
+                SliderMenuItem[] data = GetData();
                 MenuListView = new ListView
                 {
                     HorizontalOptions = LayoutOptions.StartAndExpand,
@@ -156,7 +154,7 @@ namespace Xamarin.Forms.Controls.Issues
                     Children = { logoImg }
                 };
 
-                var paddingTop = Device.RuntimePlatform == Device.iOS ? 40 : 2;
+                int paddingTop = Device.RuntimePlatform == Device.iOS ? 40 : 2;
                 Content = new StackLayout
                 {
                     Spacing = 0,
@@ -171,6 +169,8 @@ namespace Xamarin.Forms.Controls.Issues
                     }
                 };
             }
+
+            public ListView MenuListView { get; set; }
 
             SliderMenuItem[] GetData()
             {
@@ -268,7 +268,7 @@ namespace Xamarin.Forms.Controls.Issues
         {
             public MenuCell()
             {
-                Label textLabel = new Label
+                var textLabel = new Label
                 {
                     FontSize = 18,
                 };

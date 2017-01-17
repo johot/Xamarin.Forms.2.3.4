@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class WebViewGallery : ContentPage
     {
-        class ViewModel
-        {
-            public string Html { get; set; } = "<html><body><p>This is a WebView!</p></body></html>";
-
-            public string Url { get; set; } = "http://xamarin.com";
-        }
-
         public WebViewGallery()
         {
             var htmlWebView = new WebView
@@ -48,6 +35,13 @@ namespace Xamarin.Forms.Controls
                     urlWebView
                 }
             };
+        }
+
+        class ViewModel
+        {
+            public string Html { get; set; } = "<html><body><p>This is a WebView!</p></body></html>";
+
+            public string Url { get; set; } = "http://xamarin.com";
         }
     }
 }

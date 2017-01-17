@@ -1,6 +1,7 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -56,24 +57,24 @@ namespace Xamarin.Forms.Controls.Issues
             System.Diagnostics.Debug.WriteLine($"OnButtonClicked {sender.ToString()}");
 
             int j = -1;
-            var properties = Application.Current.Properties;
-            int seed = 13;
+            IDictionary<string, object> properties = Application.Current.Properties;
+            var seed = 13;
             while (++j < 300)
             {
-                seed = ((seed * 257) + 41) % 65536;
+                seed = (seed * 257 + 41) % 65536;
                 int i = seed % 20;
 
                 int previousClickTotal = -1;
                 if (properties.ContainsKey("PreviousClickTotal" + i.ToString()))
-                    previousClickTotal = (int)(Application.Current.Properties["PreviousClickTotal" + i.ToString()]);
+                    previousClickTotal = (int)Application.Current.Properties["PreviousClickTotal" + i.ToString()];
 
-                string clickTotal = "0";
+                var clickTotal = "0";
                 if (properties.ContainsKey("ClickTotal" + i.ToString()))
                     clickTotal = (string)Application.Current.Properties["ClickTotal" + i.ToString()];
 
-                double nextClickTotal = 1.0;
+                var nextClickTotal = 1.0;
                 if (properties.ContainsKey("NextClickTotal" + i.ToString()))
-                    nextClickTotal = (double)(Application.Current.Properties["NextClickTotal" + i.ToString()]);
+                    nextClickTotal = (double)Application.Current.Properties["NextClickTotal" + i.ToString()];
 
                 Application.Current.Properties["PreviousClickTotal" + i.ToString()] = ++previousClickTotal;
                 Application.Current.Properties["ClickTotal" + i.ToString()] = previousClickTotal.ToString();

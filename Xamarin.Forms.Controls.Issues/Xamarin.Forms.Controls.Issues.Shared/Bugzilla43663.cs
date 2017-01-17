@@ -1,7 +1,5 @@
 ﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System;
-using System.Runtime.CompilerServices;
 
 #if UITEST
 using Xamarin.UITest;
@@ -80,14 +78,14 @@ namespace Xamarin.Forms.Controls.Issues
             Navigation.InsertPageBefore(insertedPage, initialPage);
         }
 
-        void ModalPushed(object sender, ModalPushedEventArgs e)
-        {
-            DisplayAlert("Pushed", "Message", "Cancel");
-        }
-
         void ModalPopped(object sender, ModalPoppedEventArgs e)
         {
             DisplayAlert("Popped", "Message", "Cancel");
+        }
+
+        void ModalPushed(object sender, ModalPushedEventArgs e)
+        {
+            DisplayAlert("Pushed", "Message", "Cancel");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -24,7 +24,7 @@ namespace Xamarin.Forms.Controls.Issues
         {
             Padding = new Thickness(0, 20, 0, 0);
 
-            var source = SetupList();
+            ObservableCollection<Issue2777.ListItemCollection> source = SetupList();
 
             var list = new ListView
             {
@@ -79,10 +79,10 @@ namespace Xamarin.Forms.Controls.Issues
         {
             var allListItemGroups = new ObservableCollection<Issue2777.ListItemCollection>();
 
-            foreach (var item in Issue2777.ListItemCollection.GetSortedData())
+            foreach (Issue2777.ListItemValue item in Issue2777.ListItemCollection.GetSortedData())
             {
                 // Attempt to find any existing groups where theg group title matches the first char of our ListItem's name.
-                var listItemGroup = allListItemGroups.FirstOrDefault(g => g.Title == item.Label);
+                Issue2777.ListItemCollection listItemGroup = allListItemGroups.FirstOrDefault(g => g.Title == item.Label);
 
                 // If the list group does not exist, we create it.
                 if (listItemGroup == null)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Xamarin.Forms.Controls.Issues;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -72,17 +70,17 @@ namespace Xamarin.Forms.Controls
                 masterPageItems.Add(new MasterPageItem
                 {
                     Title = Page1Title,
-                    TargetType = typeof(Bugzilla42329._42329_FrameWithListView)
+                    TargetType = typeof(_42329_FrameWithListView)
                 });
                 masterPageItems.Add(new MasterPageItem
                 {
                     Title = Page2Title,
-                    TargetType = typeof(Bugzilla42329._42329_Page2)
+                    TargetType = typeof(_42329_Page2)
                 });
                 masterPageItems.Add(new MasterPageItem
                 {
                     Title = Page3Title,
-                    TargetType = typeof(Bugzilla42329._42329_Page3)
+                    TargetType = typeof(_42329_Page3)
                 });
 
                 ListView.ItemsSource = masterPageItems;

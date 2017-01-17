@@ -80,8 +80,8 @@ namespace Xamarin.Forms.Controls.Issues
 
         static async Task Translate(BoxView box)
         {
-            var currentX = box.X;
-            var currentY = box.Y;
+            double currentX = box.X;
+            double currentY = box.Y;
 
             await box.TranslateTo(currentX, currentY + 100);
             await box.TranslateTo(currentX, currentY);

@@ -2,11 +2,10 @@
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Xamarin.Forms.Controls;
-using WControls = Windows.UI.Xaml.Controls;
 using Xamarin.Forms.Platform.WinRT;
+using WControls = Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -41,7 +40,7 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
 
             // Create and add a native TextBlock
             var originalText = "I am a native TextBlock";
-            var textBlock = new TextBlock
+            var textBlock = new WControls.TextBlock
             {
                 Text = originalText,
                 FontSize = 14,
@@ -82,7 +81,7 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
                     frameworkElement.Measure(finalSize);
 
                     // The broken control tries sizes itself to be the width of the screen
-                    var wrongSize = Window.Current.Bounds.Width * (int)DisplayProperties.ResolutionScale / 100;
+                    double wrongSize = Window.Current.Bounds.Width * (int)DisplayProperties.ResolutionScale / 100;
 
                     // The broken control always sizes itself to be 600 wide
                     // We can re-center it by offsetting it during the Arrange call

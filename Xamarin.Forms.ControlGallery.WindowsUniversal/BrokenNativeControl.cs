@@ -10,6 +10,12 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
 {
     internal class BrokenNativeControl : Panel
     {
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text", typeof(string), typeof(BrokenNativeControl),
+            new PropertyMetadata(default(string), PropertyChangedCallback));
+
+        readonly TextBlock _textBlock;
+
         public BrokenNativeControl()
         {
             _textBlock = new TextBlock
@@ -33,24 +39,11 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
                     }, 0);
         }
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(BrokenNativeControl),
-            new PropertyMetadata(default(string), PropertyChangedCallback));
-
-        static void PropertyChangedCallback(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            ((BrokenNativeControl)dependencyObject)._textBlock.Text =
-                (string)dependencyPropertyChangedEventArgs.NewValue;
-        }
-
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-
-        readonly TextBlock _textBlock;
 
         protected override Windows.Foundation.Size ArrangeOverride(Windows.Foundation.Size finalSize)
         {
@@ -68,6 +61,13 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
             var size = new Size(bounds.Width * scaleFactor, bounds.Height * scaleFactor);
 
             return new Windows.Foundation.Size(size.Width, _textBlock.DesiredSize.Height);
+        }
+
+        static void PropertyChangedCallback(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            ((BrokenNativeControl)dependencyObject)._textBlock.Text =
+                (string)dependencyPropertyChangedEventArgs.NewValue;
         }
     }
 }

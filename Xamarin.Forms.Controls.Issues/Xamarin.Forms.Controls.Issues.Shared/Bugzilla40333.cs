@@ -126,24 +126,24 @@ namespace Xamarin.Forms.Controls.Issues
                     };
                 }
 
-                async void OnItemTapped(object sender, EventArgs e)
-                {
-                    var masterNav = ((MasterDetailPage)this.Parent.Parent).Master.Navigation;
-
-                    var newTitle = $"{Title}.{_listView.SelectedItem}";
-                    await masterNav.PushAsync(new _40333NavPusher(newTitle));
-                }
-
                 protected override async void OnAppearing()
                 {
                     base.OnAppearing();
 
                     var newPage = new _40333DetailPage(Title);
 
-                    var detailNav = ((MasterDetailPage)this.Parent.Parent).Detail.Navigation;
-                    var currentRoot = detailNav.NavigationStack[0];
+                    INavigation detailNav = ((MasterDetailPage)Parent.Parent).Detail.Navigation;
+                    Page currentRoot = detailNav.NavigationStack[0];
                     detailNav.InsertPageBefore(newPage, currentRoot);
                     await detailNav.PopToRootAsync();
+                }
+
+                async void OnItemTapped(object sender, EventArgs e)
+                {
+                    INavigation masterNav = ((MasterDetailPage)Parent.Parent).Master.Navigation;
+
+                    string newTitle = $"{Title}.{_listView.SelectedItem}";
+                    await masterNav.PushAsync(new _40333NavPusher(newTitle));
                 }
             }
 
@@ -186,24 +186,24 @@ namespace Xamarin.Forms.Controls.Issues
                     };
                 }
 
-                async void OnItemTapped(object sender, EventArgs e)
-                {
-                    var masterNav = ((MasterDetailPage)this.Parent.Parent).Master.Navigation;
-
-                    var newTitle = $"{Title}.{_listView.SelectedItem}";
-                    await masterNav.PushAsync(new _40333TabPusher(newTitle));
-                }
-
                 protected override void OnAppearing()
                 {
                     base.OnAppearing();
 
                     var newPage = new _40333DetailPage(Title);
 
-                    var detailTab = (TabbedPage)((MasterDetailPage)this.Parent.Parent).Detail;
+                    var detailTab = (TabbedPage)((MasterDetailPage)Parent.Parent).Detail;
 
                     detailTab.Children.Add(newPage);
                     detailTab.CurrentPage = newPage;
+                }
+
+                async void OnItemTapped(object sender, EventArgs e)
+                {
+                    INavigation masterNav = ((MasterDetailPage)Parent.Parent).Master.Navigation;
+
+                    string newTitle = $"{Title}.{_listView.SelectedItem}";
+                    await masterNav.PushAsync(new _40333TabPusher(newTitle));
                 }
             }
         }

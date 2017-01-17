@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -12,18 +7,40 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     internal class AbsolutePositioningExplorationViewModel : INotifyPropertyChanged
     {
+        double _rectangleHeight = 0.5;
+        double _rectangleWidth = 0.5;
         double _rectangleX = 0.5;
         double _rectangleY = 0.5;
-        double _rectangleWidth = 0.5;
-        double _rectangleHeight = 0.5;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public Rectangle Rectangle
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            get { return new Rectangle(RectangleX, RectangleY, RectangleWidth, RectangleHeight); }
+        }
+
+        public double RectangleHeight
+        {
+            get { return _rectangleHeight; }
+            set
+            {
+                if (_rectangleHeight == value)
+                    return;
+                _rectangleHeight = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Rectangle");
+            }
+        }
+
+        public double RectangleWidth
+        {
+            get { return _rectangleWidth; }
+            set
+            {
+                if (_rectangleWidth == value)
+                    return;
+                _rectangleWidth = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Rectangle");
+            }
         }
 
         public double RectangleX
@@ -52,35 +69,13 @@ namespace Xamarin.Forms.Controls
             }
         }
 
-        public double RectangleWidth
-        {
-            get { return _rectangleWidth; }
-            set
-            {
-                if (_rectangleWidth == value)
-                    return;
-                _rectangleWidth = value;
-                OnPropertyChanged();
-                OnPropertyChanged("Rectangle");
-            }
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public double RectangleHeight
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            get { return _rectangleHeight; }
-            set
-            {
-                if (_rectangleHeight == value)
-                    return;
-                _rectangleHeight = value;
-                OnPropertyChanged();
-                OnPropertyChanged("Rectangle");
-            }
-        }
-
-        public Rectangle Rectangle
-        {
-            get { return new Rectangle(RectangleX, RectangleY, RectangleWidth, RectangleHeight); }
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

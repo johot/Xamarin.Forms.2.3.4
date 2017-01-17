@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -42,14 +38,14 @@ namespace Xamarin.Forms.Controls
             };
         }
 
-        void ListView_ItemTapped(object sender, ItemTappedEventArgs args)
-        {
-            DisplayAlert("Alert", "List item tapped", "OK", "Cancel");
-        }
-
         void Button_Clicked(object sender, EventArgs args)
         {
             DisplayAlert("Alert", ((Button)sender).Text + " clicked", "OK", "Cancel");
+        }
+
+        void ListView_ItemTapped(object sender, ItemTappedEventArgs args)
+        {
+            DisplayAlert("Alert", "List item tapped", "OK", "Cancel");
         }
     }
 }

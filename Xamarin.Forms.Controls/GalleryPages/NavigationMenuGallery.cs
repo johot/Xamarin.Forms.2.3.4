@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace Xamarin.Forms.Controls
 {
     public class NavigationMenuGallery : ContentPage

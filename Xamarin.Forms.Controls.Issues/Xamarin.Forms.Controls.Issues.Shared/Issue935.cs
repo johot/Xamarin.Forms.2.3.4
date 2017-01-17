@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -11,19 +10,19 @@ namespace Xamarin.Forms.Controls.Issues
 {
     public class Person
     {
-        public string Name { get; set; }
-
         public Person(string name)
         {
             Name = name;
         }
+
+        public string Name { get; set; }
     }
 
     public class CustomViewCell : ViewCell
     {
         public CustomViewCell()
         {
-            int tapsFired = 0;
+            var tapsFired = 0;
 
             Height = 50;
 

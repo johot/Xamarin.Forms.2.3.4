@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Xamarin.Forms.Controls
 {
     public class GridGallery : ContentPage
@@ -181,7 +175,7 @@ namespace Xamarin.Forms.Controls
                 Text = "ChangeWidth",
                 Command = new Command(() =>
                 {
-                    var t = col0.Width;
+                    GridLength t = col0.Width;
                     col0.Width = col1.Width;
                     col1.Width = t;
                 })

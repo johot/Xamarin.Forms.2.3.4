@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -50,32 +50,9 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class ListViewModel : ViewModel
         {
-            public void Init()
-            {
-                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
-                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
-                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
-            }
-
-            public ObservableCollection<ListItemViewModel> Items { get; } =
-                new ObservableCollection<ListItemViewModel>();
+            ICommand _addItemCommand;
 
             ICommand _disabledCommand;
-
-            public ICommand DisabledCommand
-            {
-                get
-                {
-                    if (_disabledCommand == null)
-                    {
-                        _disabledCommand = new Command(() => { }, () => false);
-                    }
-
-                    return _disabledCommand;
-                }
-            }
-
-            ICommand _addItemCommand;
 
             public ICommand AddItemCommand
             {
@@ -95,13 +72,40 @@ namespace Xamarin.Forms.Controls.Issues
                     return _addItemCommand;
                 }
             }
+
+            public ICommand DisabledCommand
+            {
+                get
+                {
+                    if (_disabledCommand == null)
+                    {
+                        _disabledCommand = new Command(() => { }, () => false);
+                    }
+
+                    return _disabledCommand;
+                }
+            }
+
+            public ObservableCollection<ListItemViewModel> Items { get; } =
+                new ObservableCollection<ListItemViewModel>();
+
+            public void Init()
+            {
+                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
+                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
+                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
+            }
         }
 
         [Preserve(AllMembers = true)]
         public class ListItemViewModel : ViewModel
         {
-            public bool CanExecute = false;
             readonly ListViewModel _listViewModel;
+
+            ICommand _deleteItemCommand;
+
+            ICommand _otherCommand;
+            public bool CanExecute = false;
 
             public ListItemViewModel(ListViewModel listViewModel)
             {
@@ -111,10 +115,6 @@ namespace Xamarin.Forms.Controls.Issues
                 }
                 _listViewModel = listViewModel;
             }
-
-            public string Title { get; set; }
-
-            ICommand _deleteItemCommand;
 
             public ICommand DeleteItemCommand
             {
@@ -129,8 +129,6 @@ namespace Xamarin.Forms.Controls.Issues
                 }
             }
 
-            ICommand _otherCommand;
-
             public ICommand OtherCommand
             {
                 get
@@ -143,6 +141,8 @@ namespace Xamarin.Forms.Controls.Issues
                     return _otherCommand;
                 }
             }
+
+            public string Title { get; set; }
         }
 
 #if UITEST

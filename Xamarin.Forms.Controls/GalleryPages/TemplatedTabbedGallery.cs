@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Internals;
@@ -10,37 +9,10 @@ namespace Xamarin.Forms.Controls
     internal class Item
         : INotifyPropertyChanged
     {
-        string _title;
         string _content;
-
-        public string InsertTabText { get; set; }
+        string _title;
 
         public string ChangeTitleText { get; set; }
-
-        public string MoveTabText { get; set; }
-
-        public string RemoveTabText { get; set; }
-
-        public string ResetAllTabsText { get; set; }
-
-        public string NextPageText { get; set; }
-
-        public string DelayedResetText { get; set; }
-
-        public string Icon { get; set; }
-
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                if (_title == value)
-                    return;
-
-                _title = value;
-                OnPropertyChanged();
-            }
-        }
 
         public string Content
         {
@@ -51,6 +23,33 @@ namespace Xamarin.Forms.Controls
                     return;
 
                 _content = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DelayedResetText { get; set; }
+
+        public string Icon { get; set; }
+
+        public string InsertTabText { get; set; }
+
+        public string MoveTabText { get; set; }
+
+        public string NextPageText { get; set; }
+
+        public string RemoveTabText { get; set; }
+
+        public string ResetAllTabsText { get; set; }
+
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                if (_title == value)
+                    return;
+
+                _title = value;
                 OnPropertyChanged();
             }
         }
@@ -67,8 +66,8 @@ namespace Xamarin.Forms.Controls
 
     internal class TemplatedTabbedGallery : TabbedPage
     {
-        ObservableCollection<Item> _items;
         int _count = 0;
+        ObservableCollection<Item> _items;
 
         public TemplatedTabbedGallery()
         {
@@ -102,7 +101,7 @@ namespace Xamarin.Forms.Controls
                 var titleNum = 0;
                 var change = new Button();
                 change.SetBinding(Button.TextProperty, "ChangeTitleText");
-                change.Clicked += (sender, args) => ((Item)change.BindingContext).Title = ("Title: " + titleNum++);
+                change.Clicked += (sender, args) => ((Item)change.BindingContext).Title = "Title: " + titleNum++;
                 layout.Children.Add(change);
 
                 var move = new Button();

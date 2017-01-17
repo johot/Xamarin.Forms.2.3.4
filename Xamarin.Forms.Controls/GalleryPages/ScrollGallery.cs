@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
@@ -10,8 +7,8 @@ namespace Xamarin.Forms.Controls
     {
         readonly ScrollView _scrollview;
         readonly StackLayout _stack;
-        ScrollOrientation _orientation;
         List<Button> _buttons = new List<Button>();
+        ScrollOrientation _orientation;
         Button _toNavigateTo;
 
         public ScrollGallery(ScrollOrientation orientation = ScrollOrientation.Vertical)
@@ -150,7 +147,7 @@ namespace Xamarin.Forms.Controls
 
         void PopulateStack(StackLayout stack)
         {
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var newButton = new Button { Text = "Foo Bar", AutomationId = string.Format("btn_{0}", i) };
                 if (i == 49)

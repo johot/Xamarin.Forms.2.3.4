@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         protected override void Init()
         {
-            AbsoluteLayout layout = new AbsoluteLayout
+            var layout = new AbsoluteLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,

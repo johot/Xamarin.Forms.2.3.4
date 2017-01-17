@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Controls
 
         public Issue260()
         {
-            var items = Enumerable.Range(0, 50).Select(i => new TextCell
+            List<TextCell> items = Enumerable.Range(0, 50).Select(i => new TextCell
             {
                 Text = i.ToString(),
                 Detail = i.ToString()

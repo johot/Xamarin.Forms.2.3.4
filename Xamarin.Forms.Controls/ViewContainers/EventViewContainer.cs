@@ -5,8 +5,8 @@ namespace Xamarin.Forms.Controls
     internal class EventViewContainer<T> : ViewContainer<T>
         where T : View
     {
-        string _formsMember;
         Label _eventLabel;
+        string _formsMember;
         int _numberOfTimesFired;
 
         public EventViewContainer(Enum formsMember, T view) : base(formsMember, view)

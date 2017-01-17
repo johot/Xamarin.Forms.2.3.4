@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls.GalleryPages
 {
     public class LayoutPerformanceGallery : ContentPage
     {
+        int _count = 0;
+        int _cycle = 0;
+        bool _flip = true;
+        List<Label> _labelList = new List<Label>();
+
+        Label _mainLabel = null;
+        Random _r = new Random(34269027);
+        bool _repeat = false;
+        Stopwatch _sw = new Stopwatch();
+        long _ticks = 0;
+
         public LayoutPerformanceGallery()
         {
-            int size = 3;
+            var size = 3;
 
             var grid = new Grid
             {
@@ -30,9 +38,9 @@ namespace Xamarin.Forms.Controls.GalleryPages
                 }
             };
 
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (var j = 0; j < size; j++)
                 {
                     var g = new Grid
                     {
@@ -50,9 +58,9 @@ namespace Xamarin.Forms.Controls.GalleryPages
                         }
                     };
 
-                    for (int k = 0; k < size; k++)
+                    for (var k = 0; k < size; k++)
                     {
-                        for (int l = 0; l < size; l++)
+                        for (var l = 0; l < size; l++)
                         {
                             var label = new Label { Text = "10" };
                             g.Children.Add(label, k, l);
@@ -74,16 +82,6 @@ namespace Xamarin.Forms.Controls.GalleryPages
             };
         }
 
-        Label _mainLabel = null;
-        List<Label> _labelList = new List<Label>();
-        Stopwatch _sw = new Stopwatch();
-        long _ticks = 0;
-        int _count = 0;
-        int _cycle = 0;
-        bool _flip = true;
-        Random _r = new Random(34269027);
-        bool _repeat = false;
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -91,7 +89,7 @@ namespace Xamarin.Forms.Controls.GalleryPages
             Device.StartTimer(TimeSpan.FromMilliseconds(10), () =>
             {
                 _sw.Start();
-                foreach (var label in _labelList)
+                foreach (Label label in _labelList)
                 {
                     if (_flip)
                     {

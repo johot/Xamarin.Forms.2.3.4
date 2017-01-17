@@ -9,13 +9,6 @@ namespace Xamarin.Forms.Controls
             get { return false; }
         }
 
-        protected override void InitializeElement(ProgressBar element)
-        {
-            base.InitializeElement(element);
-
-            element.Progress = 1;
-        }
-
         protected override void Build(StackLayout stackLayout)
         {
             base.Build(stackLayout);
@@ -23,6 +16,13 @@ namespace Xamarin.Forms.Controls
             var progressContainer = new ViewContainer<ProgressBar>(Test.ProgressBar.Progress,
                 new ProgressBar { Progress = 0.5 });
             Add(progressContainer);
+        }
+
+        protected override void InitializeElement(ProgressBar element)
+        {
+            base.InitializeElement(element);
+
+            element.Progress = 1;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -15,6 +14,31 @@ namespace Xamarin.Forms.Controls
     [Issue(IssueTracker.Bugzilla, 31029, "[Windows Phone 8.1]Generating an Image via MemoryStream does not appear")]
     public class Bugzilla31029 : TestContentPage // or TestMasterDetailPage, etc ...
     {
+        public ImageSource GenerateBmp(int rows, int cols, Color color)
+        {
+            var bmpMaker = new BmpMaker(rows, cols);
+            //background color to white
+            for (var i = 0; i < rows; i++)
+            {
+                for (var j = 0; j < cols; j++)
+                {
+                    bmpMaker.SetPixel(i, j, Color.White);
+                }
+            }
+            //draw a square
+            int marginX = rows / 10;
+            int marginY = cols / 10;
+            for (int row = marginX; row < rows - marginX; row++)
+            {
+                for (int col = marginY; col < cols - marginY; col++)
+                {
+                    bmpMaker.SetPixel(row, col, color);
+                }
+            }
+            ImageSource resultImage = bmpMaker.Generate();
+            return resultImage;
+        }
+
         protected override void Init()
         {
             var generatedImage = new Image { Aspect = Aspect.AspectFit };
@@ -23,7 +47,7 @@ namespace Xamarin.Forms.Controls
 
             btn.Clicked += (sender, e) =>
             {
-                var source = GenerateBmp(60, 60, Color.Red);
+                ImageSource source = GenerateBmp(60, 60, Color.Red);
                 generatedImage.Source = source;
             };
 
@@ -42,31 +66,6 @@ namespace Xamarin.Forms.Controls
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             };
         }
-
-        public ImageSource GenerateBmp(int rows, int cols, Color color)
-        {
-            BmpMaker bmpMaker = new BmpMaker(rows, cols);
-            //background color to white
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    bmpMaker.SetPixel(i, j, Color.White);
-                }
-            }
-            //draw a square
-            int marginX = rows / 10;
-            int marginY = cols / 10;
-            for (int row = marginX; row < (rows - marginX); row++)
-            {
-                for (int col = marginY; col < (cols - marginY); col++)
-                {
-                    bmpMaker.SetPixel(row, col, color);
-                }
-            }
-            ImageSource resultImage = bmpMaker.Generate();
-            return resultImage;
-        }
     }
 
     public class BmpMaker
@@ -83,9 +82,9 @@ namespace Xamarin.Forms.Controls
             int fileSize = HeaderSize + numPixelBytes;
             _buffer = new byte[fileSize];
             // Write headers in MemoryStream and hence the buffer. 
-            using (MemoryStream memoryStream = new MemoryStream(_buffer))
+            using (var memoryStream = new MemoryStream(_buffer))
             {
-                using (BinaryWriter writer = new BinaryWriter(memoryStream, Encoding.UTF8))
+                using (var writer = new BinaryWriter(memoryStream, Encoding.UTF8))
                 {
                     // Construct BMP header (14 bytes). 
                     writer.Write(new char[] { 'B', 'M' }); // Signature 
@@ -109,9 +108,16 @@ namespace Xamarin.Forms.Controls
             }
         }
 
+        public int Height { get; private set; }
+
         public int Width { get; private set; }
 
-        public int Height { get; private set; }
+        public ImageSource Generate()
+        {
+            Stream memoryStream = new MemoryStream(_buffer);
+            ImageSource imageSource = ImageSource.FromStream(() => { return memoryStream; });
+            return imageSource;
+        }
 
         public void SetPixel(int row, int col, Color color)
         {
@@ -128,13 +134,6 @@ namespace Xamarin.Forms.Controls
             _buffer[index + 1] = (byte)g;
             _buffer[index + 2] = (byte)r;
             _buffer[index + 3] = (byte)a;
-        }
-
-        public ImageSource Generate()
-        {
-            Stream memoryStream = new MemoryStream(_buffer);
-            ImageSource imageSource = ImageSource.FromStream(() => { return memoryStream; });
-            return imageSource;
         }
     }
 }

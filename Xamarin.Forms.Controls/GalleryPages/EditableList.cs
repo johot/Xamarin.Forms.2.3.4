@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -38,17 +38,51 @@ namespace Xamarin.Forms.Controls
             Move = new Command(() => MessagingCenter.Send(this, "MoveMessage", this));
         }
 
-        public string Subject { get; set; }
+        public ICommand Delete { get; private set; }
 
         public string MessagePreview { get; set; }
 
-        public ICommand Delete { get; private set; }
-
         public ICommand Move { get; private set; }
+
+        public string Subject { get; set; }
     }
 
     internal class ContextActionsGallery : ContentPage
     {
+        public ContextActionsGallery(bool tableView = false)
+        {
+            BindingContext = new MessagesViewModel();
+
+            View list;
+            if (!tableView)
+            {
+                list = new ListView();
+                list.SetBinding(ListView.ItemsSourceProperty, "Messages");
+                ((ListView)list).ItemTemplate = new DataTemplate(typeof(MessageCell));
+            }
+            else
+            {
+                var section = new TableSection();
+                section.Add(new TextCell { Text = "I have no ContextActions", Detail = "Sup" });
+                foreach (MessageViewModel msg in ((MessagesViewModel)BindingContext).Messages)
+                {
+                    section.Add(new MessageCell { BindingContext = msg });
+                }
+
+                list = new TableView();
+                ((TableView)list).Root = new TableRoot { section };
+            }
+
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    new Label { Text = "Email" },
+                    list
+                }
+            };
+        }
+
         class MessageCell : TextCell
         {
             public MessageCell()
@@ -72,40 +106,6 @@ namespace Xamarin.Forms.Controls
                 clear.Clicked += (sender, args) => ContextActions.Clear();
                 ContextActions.Add(clear);
             }
-        }
-
-        public ContextActionsGallery(bool tableView = false)
-        {
-            BindingContext = new MessagesViewModel();
-
-            View list;
-            if (!tableView)
-            {
-                list = new ListView();
-                list.SetBinding(ListView.ItemsSourceProperty, "Messages");
-                ((ListView)list).ItemTemplate = new DataTemplate(typeof(MessageCell));
-            }
-            else
-            {
-                var section = new TableSection();
-                section.Add(new TextCell { Text = "I have no ContextActions", Detail = "Sup" });
-                foreach (var msg in ((MessagesViewModel)BindingContext).Messages)
-                {
-                    section.Add(new MessageCell { BindingContext = msg });
-                }
-
-                list = new TableView();
-                ((TableView)list).Root = new TableRoot { section };
-            }
-
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    new Label { Text = "Email" },
-                    list
-                }
-            };
         }
     }
 }

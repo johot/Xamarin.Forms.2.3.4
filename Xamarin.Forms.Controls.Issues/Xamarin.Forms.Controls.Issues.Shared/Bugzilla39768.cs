@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using System;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System;
 
 #if UITEST
 using Xamarin.UITest;
@@ -14,48 +14,9 @@ namespace Xamarin.Forms.Controls
         "PanGestureRecognizer sometimes won't fire completed event when dragging very slowly")]
     public class Bugzilla39768 : TestContentPage
     {
+        const string ImageName = "image";
         Image _Image;
         Label _Label;
-        const string ImageName = "image";
-
-        [Preserve(AllMembers = true)]
-        public class PanContainer : ContentView
-        {
-            double x, y;
-
-            public EventHandler<PanUpdatedEventArgs> Panning;
-            public EventHandler<PanUpdatedEventArgs> PanningCompleted;
-
-            public PanContainer()
-            {
-                var panGesture = new PanGestureRecognizer();
-                panGesture.PanUpdated += OnPanUpdated;
-                GestureRecognizers.Add(panGesture);
-            }
-
-            void OnPanUpdated(object sender, PanUpdatedEventArgs e)
-            {
-                switch (e.StatusType)
-                {
-                    case GestureStatus.Started:
-                        break;
-
-                    case GestureStatus.Running:
-                        Content.TranslationX = x + e.TotalX;
-                        Content.TranslationY = y + e.TotalY;
-
-                        Panning?.Invoke(sender, e);
-                        break;
-
-                    case GestureStatus.Completed:
-                        x = Content.TranslationX;
-                        y = Content.TranslationY;
-
-                        PanningCompleted?.Invoke(sender, e);
-                        break;
-                }
-            }
-        }
 
         protected override void Init()
         {
@@ -87,6 +48,44 @@ namespace Xamarin.Forms.Controls
                     _Label
                 }
             };
+        }
+
+        [Preserve(AllMembers = true)]
+        public class PanContainer : ContentView
+        {
+            public EventHandler<PanUpdatedEventArgs> Panning;
+            public EventHandler<PanUpdatedEventArgs> PanningCompleted;
+            double x, y;
+
+            public PanContainer()
+            {
+                var panGesture = new PanGestureRecognizer();
+                panGesture.PanUpdated += OnPanUpdated;
+                GestureRecognizers.Add(panGesture);
+            }
+
+            void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+            {
+                switch (e.StatusType)
+                {
+                    case GestureStatus.Started:
+                        break;
+
+                    case GestureStatus.Running:
+                        Content.TranslationX = x + e.TotalX;
+                        Content.TranslationY = y + e.TotalY;
+
+                        Panning?.Invoke(sender, e);
+                        break;
+
+                    case GestureStatus.Completed:
+                        x = Content.TranslationX;
+                        y = Content.TranslationY;
+
+                        PanningCompleted?.Invoke(sender, e);
+                        break;
+                }
+            }
         }
     }
 }

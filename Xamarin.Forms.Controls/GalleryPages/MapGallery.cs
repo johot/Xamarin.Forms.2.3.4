@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.Maps;
 
 namespace Xamarin.Forms.Controls
@@ -17,7 +15,7 @@ namespace Xamarin.Forms.Controls
             if (Device.RuntimePlatform == Device.iOS && Device.Idiom == TargetIdiom.Tablet)
                 Padding = new Thickness(0, 0, 0, 60);
 
-            var map = MakeMap();
+            Map map = MakeMap();
 
             map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(41.890202, 12.492049), Distance.FromMiles(0.5)));
 
@@ -25,15 +23,15 @@ namespace Xamarin.Forms.Controls
 
             searchAddress.SearchButtonPressed += async (e, a) =>
             {
-                var addressQuery = searchAddress.Text;
+                string addressQuery = searchAddress.Text;
                 searchAddress.Text = "";
                 searchAddress.Unfocus();
 
-                var positions = (await (new Geocoder()).GetPositionsForAddressAsync(addressQuery)).ToList();
+                List<Position> positions = (await new Geocoder().GetPositionsForAddressAsync(addressQuery)).ToList();
                 if (!positions.Any())
                     return;
 
-                var position = positions.First();
+                Position position = positions.First();
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(position,
                     Distance.FromMeters(4000)));
                 map.Pins.Add(new Pin
@@ -47,9 +45,9 @@ namespace Xamarin.Forms.Controls
             var buttonAddressFromPosition = new Button { Text = "Address From Position" };
             buttonAddressFromPosition.Clicked += async (e, a) =>
             {
-                var addresses =
-                    (await (new Geocoder()).GetAddressesForPositionAsync(new Position(41.8902, 12.4923))).ToList();
-                foreach (var ad in addresses)
+                List<string> addresses =
+                    (await new Geocoder().GetAddressesForPositionAsync(new Position(41.8902, 12.4923))).ToList();
+                foreach (string ad in addresses)
                     Debug.WriteLine(ad);
             };
 
@@ -62,7 +60,7 @@ namespace Xamarin.Forms.Controls
             var mapTypeButton = new Button { Text = "Map Type" };
             mapTypeButton.Clicked += async (e, a) =>
             {
-                var result = await DisplayActionSheet("Select Map Type", null, null, "Street", "Satellite", "Hybrid");
+                string result = await DisplayActionSheet("Select Map Type", null, null, "Street", "Satellite", "Hybrid");
                 switch (result)
                 {
                     case "Street":

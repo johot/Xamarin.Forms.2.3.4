@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -34,6 +28,8 @@ namespace Xamarin.Forms.Controls.Issues
     {
         string _name;
 
+        bool _selected;
+
         public string Name
         {
             get { return _name; }
@@ -43,8 +39,6 @@ namespace Xamarin.Forms.Controls.Issues
                 OnPropertyChanged();
             }
         }
-
-        bool _selected;
 
         public bool Selected
         {
@@ -60,9 +54,15 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class Issue2470MainViewModel : Issue2470ViewModelBase
     {
-        public ObservableCollection<EntryViewModel> Entries { get; private set; }
-
         double _desiredCount;
+
+        bool _twoOrFive;
+
+        public Issue2470MainViewModel()
+        {
+            Entries = new ObservableCollection<EntryViewModel>();
+            TwoOrFive = false; // prime
+        }
 
         public double DesiredCount
         {
@@ -75,7 +75,7 @@ namespace Xamarin.Forms.Controls.Issues
             }
         }
 
-        bool _twoOrFive;
+        public ObservableCollection<EntryViewModel> Entries { get; private set; }
 
         public bool TwoOrFive
         {
@@ -86,12 +86,6 @@ namespace Xamarin.Forms.Controls.Issues
                 OnPropertyChanged();
                 DesiredCount = _twoOrFive ? 5 : 2;
             }
-        }
-
-        public Issue2470MainViewModel()
-        {
-            Entries = new ObservableCollection<EntryViewModel>();
-            TwoOrFive = false; // prime
         }
 
         void GenerateEntries()

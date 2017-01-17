@@ -8,13 +8,17 @@ namespace Xamarin.Forms.Controls.Issues
 #if APP
     [Preserve(AllMembers = true)]
     [Issue(IssueTracker.Bugzilla, 32842,
-            "[WinRT] ItemSelected Not Ignored When a ListView Item Contains a TapGestureRecognizer", PlatformAffected.WinRT)
+            "[WinRT] ItemSelected Not Ignored When a ListView Item Contains a TapGestureRecognizer",
+            PlatformAffected.WinRT)
     ]
     public partial class Bugzilla32842 : ContentPage
     {
+        int _boxTaps;
+        int _listSelections;
+
         public Bugzilla32842()
         {
-            List<string> items = new List<string> { "item1", "item2", "item3" };
+            var items = new List<string> { "item1", "item2", "item3" };
 
             InitializeComponent();
 
@@ -22,8 +26,12 @@ namespace Xamarin.Forms.Controls.Issues
             MainList.ItemSelected += MainListSelectionChanged;
         }
 
-        int _boxTaps;
-        int _listSelections;
+        void BoxTapped(object sender, EventArgs args)
+        {
+            _boxTaps += 1;
+
+            BoxResults.Text = $"Box Taps = {_boxTaps}";
+        }
 
         void MainListSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
@@ -35,13 +43,6 @@ namespace Xamarin.Forms.Controls.Issues
             _listSelections += 1;
 
             ListResults.Text = $"Selections = {_listSelections}";
-        }
-
-        void BoxTapped(object sender, EventArgs args)
-        {
-            _boxTaps += 1;
-
-            BoxResults.Text = $"Box Taps = {_boxTaps}";
         }
     }
 #endif

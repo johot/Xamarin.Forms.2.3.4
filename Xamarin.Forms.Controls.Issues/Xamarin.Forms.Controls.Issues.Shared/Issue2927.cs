@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using Xamarin.Forms.Controls;
+﻿using System.ComponentModel;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -18,23 +16,14 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class Issue2927Cell : TextCell, INotifyPropertyChanged
         {
+            string _cellId;
             int _numberOfTimesTapped;
             string _text;
-            string _cellId;
 
             public Issue2927Cell(string id)
             {
                 _cellId = id;
                 NumberOfTimesTapped = 0;
-            }
-
-            void OnPropertyChanged(string prop)
-            {
-                var handler = PropertyChanged;
-                if (handler != null)
-                {
-                    handler(this, new PropertyChangedEventArgs(prop));
-                }
             }
 
             public int NumberOfTimesTapped
@@ -58,6 +47,15 @@ namespace Xamarin.Forms.Controls.Issues
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
+
+            void OnPropertyChanged(string prop)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(prop));
+                }
+            }
         }
 
         protected override void Init()

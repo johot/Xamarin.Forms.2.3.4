@@ -1,25 +1,24 @@
 ﻿using System;
-using Android.Widget;
-using Android.App;
 using System.Collections.Generic;
-using Android.Views;
-using System.Collections;
 using System.ComponentModel;
 using System.Linq;
-using Xamarin.Forms.Controls;
-using Xamarin.Forms.Platform.Android;
-using Xamarin.Forms;
-using Xamarin.Forms.ControlGallery.Android;
-using Android.Graphics.Drawables;
+using System.Reflection;
 using System.Threading.Tasks;
+using Android.App;
 using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.OS;
 using Android.Runtime;
 using Android.Util;
+using Android.Views;
+using Android.Widget;
+using Xamarin.Forms;
+using Xamarin.Forms.ControlGallery.Android;
+using Xamarin.Forms.Controls.Issues;
+using Xamarin.Forms.Platform.Android;
 using AButton = Android.Widget.Button;
 using AView = Android.Views.View;
-using Android.OS;
-using System.Reflection;
-using Xamarin.Forms.Controls.Issues;
 
 [assembly: ExportRenderer(typeof(Bugzilla31395.CustomContentView), typeof(CustomContentRenderer))]
 [assembly: ExportRenderer(typeof(NativeListView), typeof(NativeListViewRenderer))]
@@ -34,33 +33,30 @@ using Xamarin.Forms.Controls.Issues;
 
 namespace Xamarin.Forms.ControlGallery.Android
 {
-    public class NativeDroidMasterDetail : Xamarin.Forms.Platform.Android.AppCompat.MasterDetailPageRenderer
+    public class NativeDroidMasterDetail : Platform.Android.AppCompat.MasterDetailPageRenderer
     {
-        MasterDetailPage _page;
         bool _disposed;
+        MasterDetailPage _page;
 
-        protected override void OnElementChanged(VisualElement oldElement, VisualElement newElement)
+        public void pChange()
         {
-            base.OnElementChanged(oldElement, newElement);
-
-            if (newElement == null)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
-                return;
+                AView drawer = GetChildAt(1);
+                AView detail = GetChildAt(0);
+
+                PropertyInfo padding = detail.GetType().GetRuntimeProperty("TopPadding");
+
+                try
+                {
+                    var value = (int)padding.GetValue(detail);
+                    padding.SetValue(drawer, value);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-
-            _page = newElement as MasterDetailPage;
-            _page.PropertyChanged += Page_PropertyChanged;
-            _page.LayoutChanged += Page_LayoutChanged;
-        }
-
-        void Page_PropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            pChange();
-        }
-
-        void Page_LayoutChanged(object sender, EventArgs e)
-        {
-            pChange();
         }
 
         protected override void Dispose(bool disposing)
@@ -82,25 +78,28 @@ namespace Xamarin.Forms.ControlGallery.Android
             base.Dispose(disposing);
         }
 
-        public void pChange()
+        protected override void OnElementChanged(VisualElement oldElement, VisualElement newElement)
         {
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            base.OnElementChanged(oldElement, newElement);
+
+            if (newElement == null)
             {
-                var drawer = GetChildAt(1);
-                var detail = GetChildAt(0);
-
-                var padding = detail.GetType().GetRuntimeProperty("TopPadding");
-
-                try
-                {
-                    int value = (int)padding.GetValue(detail);
-                    padding.SetValue(drawer, value);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                return;
             }
+
+            _page = newElement as MasterDetailPage;
+            _page.PropertyChanged += Page_PropertyChanged;
+            _page.LayoutChanged += Page_LayoutChanged;
+        }
+
+        void Page_LayoutChanged(object sender, EventArgs e)
+        {
+            pChange();
+        }
+
+        void Page_PropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            pChange();
         }
     }
 
@@ -139,12 +138,7 @@ namespace Xamarin.Forms.ControlGallery.Android
             }
         }
 
-        void Clicked(object sender, AdapterView.ItemClickEventArgs e)
-        {
-            Element.NotifyItemSelected(Element.Items.ToList()[e.Position]);
-        }
-
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
             if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
@@ -154,6 +148,11 @@ namespace Xamarin.Forms.ControlGallery.Android
                 Control.Adapter = new NativeListViewAdapter(Forms.Context as Activity, Element);
             }
         }
+
+        void Clicked(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            Element.NotifyItemSelected(Element.Items.ToList()[e.Position]);
+        }
     }
 
     public class NativeListViewAdapter : BaseAdapter<string>
@@ -161,25 +160,10 @@ namespace Xamarin.Forms.ControlGallery.Android
         readonly Activity _context;
         IList<string> _tableItems = new List<string>();
 
-        public IEnumerable<string> Items
-        {
-            set { _tableItems = value.ToList(); }
-        }
-
         public NativeListViewAdapter(Activity context, NativeListView view)
         {
             _context = context;
             _tableItems = view.Items.ToList();
-        }
-
-        public override string this[int position]
-        {
-            get { return _tableItems[position]; }
-        }
-
-        public override long GetItemId(int position)
-        {
-            return position;
         }
 
         public override int Count
@@ -187,13 +171,28 @@ namespace Xamarin.Forms.ControlGallery.Android
             get { return _tableItems.Count; }
         }
 
+        public override string this[int position]
+        {
+            get { return _tableItems[position]; }
+        }
+
+        public IEnumerable<string> Items
+        {
+            set { _tableItems = value.ToList(); }
+        }
+
+        public override long GetItemId(int position)
+        {
+            return position;
+        }
+
         public override global::Android.Views.View GetView(int position, global::Android.Views.View convertView,
             ViewGroup parent)
         {
             // Get our object for this position
-            var item = _tableItems[position];
+            string item = _tableItems[position];
 
-            var view = convertView;
+            AView view = convertView;
             if (view == null)
             {
                 // no view to re-use, create new
@@ -221,7 +220,7 @@ namespace Xamarin.Forms.ControlGallery.Android
         {
             var x = (NativeCell)item;
 
-            var view = convertView;
+            AView view = convertView;
 
             if (view == null)
             {
@@ -260,7 +259,7 @@ namespace Xamarin.Forms.ControlGallery.Android
             {
                 context.Resources.GetBitmapAsync(x.ImageFilename).ContinueWith((t) =>
                 {
-                    var bitmap = t.Result;
+                    Bitmap bitmap = t.Result;
                     if (bitmap != null)
                     {
                         view.FindViewById<ImageView>(Resource.Id.Image).SetImageBitmap(bitmap);
@@ -312,17 +311,7 @@ namespace Xamarin.Forms.ControlGallery.Android
             }
         }
 
-        //		public override void Layout (int l, int t, int r, int b)
-        //		{
-        //			base.Layout (l, t, r, b);
-        //		}
-
-        void Clicked(object sender, AdapterView.ItemClickEventArgs e)
-        {
-            Element.NotifyItemSelected(Element.Items.ToList()[e.Position]);
-        }
-
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
             if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
@@ -331,6 +320,16 @@ namespace Xamarin.Forms.ControlGallery.Android
 
                 Control.Adapter = new NativeAndroidListViewAdapter(Forms.Context as Activity, Element);
             }
+        }
+
+        //		public override void Layout (int l, int t, int r, int b)
+        //		{
+        //			base.Layout (l, t, r, b);
+        //		}
+
+        void Clicked(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            Element.NotifyItemSelected(Element.Items.ToList()[e.Position]);
         }
     }
 
@@ -343,25 +342,10 @@ namespace Xamarin.Forms.ControlGallery.Android
         readonly Activity _context;
         IList<DataSource> _tableItems = new List<DataSource>();
 
-        public IEnumerable<DataSource> Items
-        {
-            set { _tableItems = value.ToList(); }
-        }
-
         public NativeAndroidListViewAdapter(Activity context, NativeListView2 view)
         {
             _context = context;
             _tableItems = view.Items.ToList();
-        }
-
-        public override DataSource this[int position]
-        {
-            get { return _tableItems[position]; }
-        }
-
-        public override long GetItemId(int position)
-        {
-            return position;
         }
 
         public override int Count
@@ -369,12 +353,27 @@ namespace Xamarin.Forms.ControlGallery.Android
             get { return _tableItems.Count; }
         }
 
+        public override DataSource this[int position]
+        {
+            get { return _tableItems[position]; }
+        }
+
+        public IEnumerable<DataSource> Items
+        {
+            set { _tableItems = value.ToList(); }
+        }
+
+        public override long GetItemId(int position)
+        {
+            return position;
+        }
+
         public override global::Android.Views.View GetView(int position, global::Android.Views.View convertView,
             ViewGroup parent)
         {
-            var item = _tableItems[position];
+            DataSource item = _tableItems[position];
 
-            var view = convertView;
+            AView view = convertView;
             if (view == null)
             {
                 // no view to re-use, create new
@@ -411,7 +410,7 @@ namespace Xamarin.Forms.ControlGallery.Android
             {
                 _context.Resources.GetBitmapAsync(item.ImageFilename).ContinueWith((t) =>
                 {
-                    var bitmap = t.Result;
+                    Bitmap bitmap = t.Result;
                     if (bitmap != null)
                     {
                         view.FindViewById<ImageView>(Resource.Id.Image).SetImageBitmap(bitmap);
@@ -481,7 +480,7 @@ namespace Xamarin.Forms.ControlGallery.Android
         {
             if (Control == null)
             {
-                CustomNativeButton b = (CustomNativeButton)CreateNativeControl();
+                var b = (CustomNativeButton)CreateNativeControl();
                 SetNativeControl(b);
             }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -21,94 +20,6 @@ namespace Xamarin.Forms.Controls
             Children.Add(EntryPage());
             Children.Add(PasswordPage());
             Children.Add(SearchBarPage());
-        }
-
-        static ContentPage PasswordPage()
-        {
-            var passwordColorDefaultToggle = new Entry() { IsPassword = true, Text = "Default Password Color" };
-            var passwordColorInit = new Entry() { IsPassword = true, Text = "Should Be Red", TextColor = Color.Red };
-            var passwordToggleButton = new Button() { Text = "Toggle Password Box (Default)" };
-            passwordToggleButton.Clicked += (sender, args) =>
-            {
-                if (passwordColorDefaultToggle.TextColor.IsDefault)
-                {
-                    passwordColorDefaultToggle.TextColor = Color.Red;
-                    passwordToggleButton.Text = "Toggle Password Box (Red)";
-                }
-                else
-                {
-                    passwordColorDefaultToggle.TextColor = Color.Default;
-                    passwordToggleButton.Text = "Toggle Password Box (Default)";
-                }
-            };
-
-            return new ContentPage
-            {
-                Title = "Password",
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Fill,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    Children =
-                    {
-                        passwordColorDefaultToggle,
-                        passwordToggleButton,
-                        passwordColorInit
-                    }
-                }
-            };
-        }
-
-        static ContentPage SearchBarPage()
-        {
-            var searchbarTextColorDefaultToggle = new SearchBar() { Text = "Default SearchBar Text Color" };
-            var searchbarTextColorToggleButton = new Button() { Text = "Toggle SearchBar Color" };
-            searchbarTextColorToggleButton.Clicked += (sender, args) =>
-            {
-                if (searchbarTextColorDefaultToggle.TextColor.IsDefault)
-                {
-                    searchbarTextColorDefaultToggle.TextColor = Color.Fuchsia;
-                    searchbarTextColorDefaultToggle.Text = "Should Be Fuchsia";
-                }
-                else
-                {
-                    searchbarTextColorDefaultToggle.TextColor = Color.Default;
-                    searchbarTextColorDefaultToggle.Text = "Default SearchBar Text Color";
-                }
-            };
-
-            var searchbarPlaceholderColorDefaultToggle = new SearchBar() { Placeholder = "Default Placeholder Color" };
-            var searchbarPlaceholderToggleButton = new Button() { Text = "Toggle Placeholder Color" };
-            searchbarPlaceholderToggleButton.Clicked += (sender, args) =>
-            {
-                if (searchbarPlaceholderColorDefaultToggle.PlaceholderColor.IsDefault)
-                {
-                    searchbarPlaceholderColorDefaultToggle.PlaceholderColor = Color.Lime;
-                    searchbarPlaceholderColorDefaultToggle.Placeholder = "Should Be Lime";
-                }
-                else
-                {
-                    searchbarPlaceholderColorDefaultToggle.PlaceholderColor = Color.Default;
-                    searchbarPlaceholderColorDefaultToggle.Placeholder = "Default Placeholder Color";
-                }
-            };
-
-            return new ContentPage
-            {
-                Title = "SearchBar",
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Fill,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    Children =
-                    {
-                        searchbarTextColorDefaultToggle,
-                        searchbarTextColorToggleButton,
-                        searchbarPlaceholderColorDefaultToggle,
-                        searchbarPlaceholderToggleButton
-                    }
-                }
-            };
         }
 
         static ContentPage ButtonPage()
@@ -184,49 +95,72 @@ namespace Xamarin.Forms.Controls
             };
         }
 
-        static ContentPage LabelPage()
+        static ContentPage DatePickerPage()
         {
-            const string defaultText = "Default Label Color (Tap To Toggle)";
+            var pickerInit = new DatePicker { Date = new DateTime(1978, 12, 24), TextColor = Color.Red };
+            var pickerColorDefaultToggle = new DatePicker { Date = new DateTime(1978, 12, 24) };
 
-            var labelColorDefaultToggle = new Label
-            {
-                Text = defaultText
-            };
+            var defaultText = "Should have default color text";
+            var pickerColorLabel = new Label { Text = defaultText };
 
-            var labelColorInitted = new Label
+            var toggleButton = new Button { Text = "Toggle DatePicker Text Color" };
+            toggleButton.Clicked += (sender, args) =>
             {
-                Text = "Should Always Be Blue",
-                TextColor = Color.Blue
-            };
-
-            labelColorDefaultToggle.GestureRecognizers.Add(new TapGestureRecognizer
-            {
-                Command = new Command(o =>
+                if (pickerColorDefaultToggle.TextColor.IsDefault)
                 {
-                    if (labelColorDefaultToggle.TextColor == Color.Default)
-                    {
-                        labelColorDefaultToggle.TextColor = Color.Green;
-                        labelColorDefaultToggle.Text = "Custom Label Color (Tap To Toggle)";
-                    }
-                    else
-                    {
-                        labelColorDefaultToggle.TextColor = Color.Default;
-                        labelColorDefaultToggle.Text = defaultText;
-                    }
-                })
-            });
+                    pickerColorDefaultToggle.TextColor = Color.Fuchsia;
+                    pickerColorLabel.Text = "Should have fuchsia text";
+                }
+                else
+                {
+                    pickerColorDefaultToggle.TextColor = Color.Default;
+                    pickerColorLabel.Text = defaultText;
+                }
+            };
+
+            const string disabledText = "DatePicker is Disabled; Should have default disabled color.";
+            var pickerDisabledlabel = new Label { Text = disabledText };
+            var pickerColorDisabled = new DatePicker
+            {
+                IsEnabled = false,
+                TextColor = Color.Green
+            };
+
+            var buttonToggleEnabled = new Button()
+            {
+                Text = "Toggle IsEnabled"
+            };
+
+            buttonToggleEnabled.Clicked += (sender, args) =>
+            {
+                pickerColorDisabled.IsEnabled = !pickerColorDisabled.IsEnabled;
+                if (!pickerColorDisabled.IsEnabled)
+                {
+                    pickerDisabledlabel.Text = disabledText;
+                }
+                else
+                {
+                    pickerDisabledlabel.Text = "DatePicker is Enabled; Should Be Green";
+                }
+            };
 
             return new ContentPage
             {
-                Title = "Label",
+                Title = "DatePicker",
+                Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(0, 20, 0, 0) : new Thickness(0),
                 Content = new StackLayout
                 {
                     VerticalOptions = LayoutOptions.Fill,
                     HorizontalOptions = LayoutOptions.Fill,
                     Children =
                     {
-                        labelColorDefaultToggle,
-                        labelColorInitted
+                        pickerColorLabel,
+                        pickerColorDefaultToggle,
+                        toggleButton,
+                        pickerInit,
+                        pickerDisabledlabel,
+                        pickerColorDisabled,
+                        buttonToggleEnabled
                     }
                 }
             };
@@ -297,143 +231,85 @@ namespace Xamarin.Forms.Controls
             };
         }
 
-        static ContentPage TimePickerPage()
+        static ContentPage LabelPage()
         {
-            var timePickerInit = new TimePicker { Time = new TimeSpan(11, 34, 00), TextColor = Color.Red };
-            var timePickerColorDefaultToggle = new TimePicker { Time = new TimeSpan(11, 34, 00) };
+            const string defaultText = "Default Label Color (Tap To Toggle)";
 
-            var defaultText = "Should have default color text";
-            var timePickerColorLabel = new Label() { Text = defaultText };
-
-            var toggleButton = new Button { Text = "Toggle TimePicker Text Color" };
-            toggleButton.Clicked += (sender, args) =>
+            var labelColorDefaultToggle = new Label
             {
-                if (timePickerColorDefaultToggle.TextColor.IsDefault)
-                {
-                    timePickerColorDefaultToggle.TextColor = Color.Fuchsia;
-                    timePickerColorLabel.Text = "Should have fuchsia text";
-                }
-                else
-                {
-                    timePickerColorDefaultToggle.TextColor = Color.Default;
-                    timePickerColorLabel.Text = defaultText;
-                }
+                Text = defaultText
             };
 
-            const string disabledText = "TimePicker is Disabled; Should have default disabled color.";
-            var timePickerDisabledlabel = new Label { Text = disabledText };
-            var timePickerColorDisabled = new TimePicker
+            var labelColorInitted = new Label
             {
-                IsEnabled = false,
-                TextColor = Color.Green
+                Text = "Should Always Be Blue",
+                TextColor = Color.Blue
             };
 
-            var buttonToggleEnabled = new Button()
+            labelColorDefaultToggle.GestureRecognizers.Add(new TapGestureRecognizer
             {
-                Text = "Toggle IsEnabled"
-            };
-
-            buttonToggleEnabled.Clicked += (sender, args) =>
-            {
-                timePickerColorDisabled.IsEnabled = !timePickerColorDisabled.IsEnabled;
-                if (!timePickerColorDisabled.IsEnabled)
+                Command = new Command(o =>
                 {
-                    timePickerDisabledlabel.Text = disabledText;
-                }
-                else
-                {
-                    timePickerDisabledlabel.Text = "TimePicker is Enabled; Should Be Green";
-                }
-            };
+                    if (labelColorDefaultToggle.TextColor == Color.Default)
+                    {
+                        labelColorDefaultToggle.TextColor = Color.Green;
+                        labelColorDefaultToggle.Text = "Custom Label Color (Tap To Toggle)";
+                    }
+                    else
+                    {
+                        labelColorDefaultToggle.TextColor = Color.Default;
+                        labelColorDefaultToggle.Text = defaultText;
+                    }
+                })
+            });
 
             return new ContentPage
             {
-                Title = "TimePicker",
-                Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(0, 20, 0, 0) : new Thickness(0),
+                Title = "Label",
                 Content = new StackLayout
                 {
                     VerticalOptions = LayoutOptions.Fill,
                     HorizontalOptions = LayoutOptions.Fill,
                     Children =
                     {
-                        timePickerColorLabel,
-                        timePickerColorDefaultToggle,
-                        toggleButton,
-                        timePickerInit,
-                        timePickerDisabledlabel,
-                        timePickerColorDisabled,
-                        buttonToggleEnabled
+                        labelColorDefaultToggle,
+                        labelColorInitted
                     }
                 }
             };
         }
 
-        static ContentPage DatePickerPage()
+        static ContentPage PasswordPage()
         {
-            var pickerInit = new DatePicker { Date = new DateTime(1978, 12, 24), TextColor = Color.Red };
-            var pickerColorDefaultToggle = new DatePicker { Date = new DateTime(1978, 12, 24) };
-
-            var defaultText = "Should have default color text";
-            var pickerColorLabel = new Label { Text = defaultText };
-
-            var toggleButton = new Button { Text = "Toggle DatePicker Text Color" };
-            toggleButton.Clicked += (sender, args) =>
+            var passwordColorDefaultToggle = new Entry() { IsPassword = true, Text = "Default Password Color" };
+            var passwordColorInit = new Entry() { IsPassword = true, Text = "Should Be Red", TextColor = Color.Red };
+            var passwordToggleButton = new Button() { Text = "Toggle Password Box (Default)" };
+            passwordToggleButton.Clicked += (sender, args) =>
             {
-                if (pickerColorDefaultToggle.TextColor.IsDefault)
+                if (passwordColorDefaultToggle.TextColor.IsDefault)
                 {
-                    pickerColorDefaultToggle.TextColor = Color.Fuchsia;
-                    pickerColorLabel.Text = "Should have fuchsia text";
+                    passwordColorDefaultToggle.TextColor = Color.Red;
+                    passwordToggleButton.Text = "Toggle Password Box (Red)";
                 }
                 else
                 {
-                    pickerColorDefaultToggle.TextColor = Color.Default;
-                    pickerColorLabel.Text = defaultText;
-                }
-            };
-
-            const string disabledText = "DatePicker is Disabled; Should have default disabled color.";
-            var pickerDisabledlabel = new Label { Text = disabledText };
-            var pickerColorDisabled = new DatePicker
-            {
-                IsEnabled = false,
-                TextColor = Color.Green
-            };
-
-            var buttonToggleEnabled = new Button()
-            {
-                Text = "Toggle IsEnabled"
-            };
-
-            buttonToggleEnabled.Clicked += (sender, args) =>
-            {
-                pickerColorDisabled.IsEnabled = !pickerColorDisabled.IsEnabled;
-                if (!pickerColorDisabled.IsEnabled)
-                {
-                    pickerDisabledlabel.Text = disabledText;
-                }
-                else
-                {
-                    pickerDisabledlabel.Text = "DatePicker is Enabled; Should Be Green";
+                    passwordColorDefaultToggle.TextColor = Color.Default;
+                    passwordToggleButton.Text = "Toggle Password Box (Default)";
                 }
             };
 
             return new ContentPage
             {
-                Title = "DatePicker",
-                Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(0, 20, 0, 0) : new Thickness(0),
+                Title = "Password",
                 Content = new StackLayout
                 {
                     VerticalOptions = LayoutOptions.Fill,
                     HorizontalOptions = LayoutOptions.Fill,
                     Children =
                     {
-                        pickerColorLabel,
-                        pickerColorDefaultToggle,
-                        toggleButton,
-                        pickerInit,
-                        pickerDisabledlabel,
-                        pickerColorDisabled,
-                        buttonToggleEnabled
+                        passwordColorDefaultToggle,
+                        passwordToggleButton,
+                        passwordColorInit
                     }
                 }
             };
@@ -512,6 +388,129 @@ namespace Xamarin.Forms.Controls
                         pickerInit,
                         pickerDisabledlabel,
                         pickerColorDisabled,
+                        buttonToggleEnabled
+                    }
+                }
+            };
+        }
+
+        static ContentPage SearchBarPage()
+        {
+            var searchbarTextColorDefaultToggle = new SearchBar() { Text = "Default SearchBar Text Color" };
+            var searchbarTextColorToggleButton = new Button() { Text = "Toggle SearchBar Color" };
+            searchbarTextColorToggleButton.Clicked += (sender, args) =>
+            {
+                if (searchbarTextColorDefaultToggle.TextColor.IsDefault)
+                {
+                    searchbarTextColorDefaultToggle.TextColor = Color.Fuchsia;
+                    searchbarTextColorDefaultToggle.Text = "Should Be Fuchsia";
+                }
+                else
+                {
+                    searchbarTextColorDefaultToggle.TextColor = Color.Default;
+                    searchbarTextColorDefaultToggle.Text = "Default SearchBar Text Color";
+                }
+            };
+
+            var searchbarPlaceholderColorDefaultToggle = new SearchBar() { Placeholder = "Default Placeholder Color" };
+            var searchbarPlaceholderToggleButton = new Button() { Text = "Toggle Placeholder Color" };
+            searchbarPlaceholderToggleButton.Clicked += (sender, args) =>
+            {
+                if (searchbarPlaceholderColorDefaultToggle.PlaceholderColor.IsDefault)
+                {
+                    searchbarPlaceholderColorDefaultToggle.PlaceholderColor = Color.Lime;
+                    searchbarPlaceholderColorDefaultToggle.Placeholder = "Should Be Lime";
+                }
+                else
+                {
+                    searchbarPlaceholderColorDefaultToggle.PlaceholderColor = Color.Default;
+                    searchbarPlaceholderColorDefaultToggle.Placeholder = "Default Placeholder Color";
+                }
+            };
+
+            return new ContentPage
+            {
+                Title = "SearchBar",
+                Content = new StackLayout
+                {
+                    VerticalOptions = LayoutOptions.Fill,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    Children =
+                    {
+                        searchbarTextColorDefaultToggle,
+                        searchbarTextColorToggleButton,
+                        searchbarPlaceholderColorDefaultToggle,
+                        searchbarPlaceholderToggleButton
+                    }
+                }
+            };
+        }
+
+        static ContentPage TimePickerPage()
+        {
+            var timePickerInit = new TimePicker { Time = new TimeSpan(11, 34, 00), TextColor = Color.Red };
+            var timePickerColorDefaultToggle = new TimePicker { Time = new TimeSpan(11, 34, 00) };
+
+            var defaultText = "Should have default color text";
+            var timePickerColorLabel = new Label() { Text = defaultText };
+
+            var toggleButton = new Button { Text = "Toggle TimePicker Text Color" };
+            toggleButton.Clicked += (sender, args) =>
+            {
+                if (timePickerColorDefaultToggle.TextColor.IsDefault)
+                {
+                    timePickerColorDefaultToggle.TextColor = Color.Fuchsia;
+                    timePickerColorLabel.Text = "Should have fuchsia text";
+                }
+                else
+                {
+                    timePickerColorDefaultToggle.TextColor = Color.Default;
+                    timePickerColorLabel.Text = defaultText;
+                }
+            };
+
+            const string disabledText = "TimePicker is Disabled; Should have default disabled color.";
+            var timePickerDisabledlabel = new Label { Text = disabledText };
+            var timePickerColorDisabled = new TimePicker
+            {
+                IsEnabled = false,
+                TextColor = Color.Green
+            };
+
+            var buttonToggleEnabled = new Button()
+            {
+                Text = "Toggle IsEnabled"
+            };
+
+            buttonToggleEnabled.Clicked += (sender, args) =>
+            {
+                timePickerColorDisabled.IsEnabled = !timePickerColorDisabled.IsEnabled;
+                if (!timePickerColorDisabled.IsEnabled)
+                {
+                    timePickerDisabledlabel.Text = disabledText;
+                }
+                else
+                {
+                    timePickerDisabledlabel.Text = "TimePicker is Enabled; Should Be Green";
+                }
+            };
+
+            return new ContentPage
+            {
+                Title = "TimePicker",
+                Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(0, 20, 0, 0) : new Thickness(0),
+                Content = new StackLayout
+                {
+                    VerticalOptions = LayoutOptions.Fill,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    Children =
+                    {
+                        timePickerColorLabel,
+                        timePickerColorDefaultToggle,
+                        toggleButton,
+                        timePickerInit,
+                        timePickerDisabledlabel,
+                        timePickerColorDisabled,
                         buttonToggleEnabled
                     }
                 }

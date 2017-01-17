@@ -17,13 +17,13 @@ namespace Xamarin.Forms.Controls
     {
         protected override void Init()
         {
-            TextCell cell1 = new TextCell
+            var cell1 = new TextCell
             {
                 Text = "ListView: TextCell"
             };
             cell1.Tapped +=
                 async delegate(object sender, EventArgs e) { await Navigation.PushAsync(new ListViewTextCellPage()); };
-            TextCell cell2 = new TextCell
+            var cell2 = new TextCell
             {
                 Text = "ListView: CustomCell"
             };
@@ -32,13 +32,13 @@ namespace Xamarin.Forms.Controls
                 {
                     await Navigation.PushAsync(new ListViewCustomCellPage(ListViewCachingStrategy.RetainElement));
                 };
-            TextCell cell3 = new TextCell
+            var cell3 = new TextCell
             {
                 Text = "TableView: TextCell"
             };
             cell3.Tapped +=
                 async delegate(object sender, EventArgs e) { await Navigation.PushAsync(new TableViewTextCellPage()); };
-            TextCell cell4 = new TextCell
+            var cell4 = new TextCell
             {
                 Text = "TableView: CustomCell"
             };
@@ -48,7 +48,7 @@ namespace Xamarin.Forms.Controls
                     await Navigation.PushAsync(new TableViewCustomCellPage());
                 };
 
-            TextCell cell5 = new TextCell
+            var cell5 = new TextCell
             {
                 Text = "ListView: CustomCell RecycleElement"
             };
@@ -57,7 +57,7 @@ namespace Xamarin.Forms.Controls
                 {
                     await Navigation.PushAsync(new ListViewCustomCellPage(ListViewCachingStrategy.RecycleElement));
                 };
-            TableView tableV = new TableView
+            var tableV = new TableView
             {
                 Root = new TableRoot
                 {
@@ -74,12 +74,42 @@ namespace Xamarin.Forms.Controls
             Content = tableV;
         }
 
+        static List<CustomData> GetData()
+        {
+            var retVal = new List<CustomData>(new CustomData[]
+            {
+                new CustomData
+                {
+                    Title = "One",
+                    SubTitle = "Short"
+                },
+                new CustomData
+                {
+                    Title = "Two",
+                    SubTitle =
+                        "Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country."
+                },
+                new CustomData
+                {
+                    Title = "Three",
+                    SubTitle = "Short"
+                },
+                new CustomData
+                {
+                    Title = "Four",
+                    SubTitle =
+                        "Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country."
+                }
+            });
+            return retVal;
+        }
+
         class TableViewTextCellPage : ContentPage
         {
             public TableViewTextCellPage()
             {
-                TableSection ts = new TableSection();
-                TableView tableV = new TableView
+                var ts = new TableSection();
+                var tableV = new TableView
                 {
                     HasUnevenRows = true,
                     Root = new TableRoot
@@ -103,8 +133,8 @@ namespace Xamarin.Forms.Controls
         {
             public TableViewCustomCellPage()
             {
-                TableSection ts = new TableSection();
-                TableView tableV = new TableView
+                var ts = new TableSection();
+                var tableV = new TableView
                 {
                     HasUnevenRows = true,
                     Root = new TableRoot
@@ -128,10 +158,10 @@ namespace Xamarin.Forms.Controls
         {
             public ListViewTextCellPage()
             {
-                DataTemplate it = new DataTemplate(typeof(TextCell));
+                var it = new DataTemplate(typeof(TextCell));
                 it.SetBinding(TextCell.TextProperty, "Title");
                 it.SetBinding(TextCell.DetailProperty, "SubTitle");
-                ListView listV = new ListView
+                var listV = new ListView
                 {
                     HasUnevenRows = true,
                     ItemTemplate = it,
@@ -145,10 +175,10 @@ namespace Xamarin.Forms.Controls
         {
             public ListViewCustomCellPage(ListViewCachingStrategy strategy)
             {
-                DataTemplate it = new DataTemplate(typeof(CustomCell));
+                var it = new DataTemplate(typeof(CustomCell));
                 it.SetBinding(CustomCell.TextProperty, "Title");
                 it.SetBinding(CustomCell.DetailProperty, "SubTitle");
-                ListView listV = new ListView(strategy)
+                var listV = new ListView(strategy)
                 {
                     HasUnevenRows = true,
                     ItemTemplate = it,
@@ -176,28 +206,9 @@ namespace Xamarin.Forms.Controls
                     view.Detail = newValue.ToString();
                 });
 
-            public string Text
-            {
-                get { return (string)GetValue(TextProperty); }
-                set
-                {
-                    SetValue(TextProperty, value);
-                    _textL.Text = value;
-                }
-            }
-
-            public string Detail
-            {
-                get { return (string)GetValue(DetailProperty); }
-                set
-                {
-                    SetValue(DetailProperty, value);
-                    _detailL.Text = value;
-                }
-            }
+            private Label _detailL = null;
 
             private Label _textL = null;
-            private Label _detailL = null;
 
             public CustomCell()
             {
@@ -206,7 +217,7 @@ namespace Xamarin.Forms.Controls
                 {
                     FontSize = _textL.FontSize * 0.75f
                 };
-                StackLayout mainSL = new StackLayout
+                var mainSL = new StackLayout
                 {
                     Orientation = StackOrientation.Vertical,
                     Padding = new Thickness(15, 10),
@@ -219,43 +230,33 @@ namespace Xamarin.Forms.Controls
                 };
                 View = mainSL;
             }
-        }
 
-        static List<CustomData> GetData()
-        {
-            List<CustomData> retVal = new List<CustomData>(new CustomData[]
+            public string Detail
             {
-                new CustomData
+                get { return (string)GetValue(DetailProperty); }
+                set
                 {
-                    Title = "One",
-                    SubTitle = "Short"
-                },
-                new CustomData
-                {
-                    Title = "Two",
-                    SubTitle =
-                        "Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country."
-                },
-                new CustomData
-                {
-                    Title = "Three",
-                    SubTitle = "Short"
-                },
-                new CustomData
-                {
-                    Title = "Four",
-                    SubTitle =
-                        "Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country.  Now is the time for all good men to come to the aid of their country."
+                    SetValue(DetailProperty, value);
+                    _detailL.Text = value;
                 }
-            });
-            return (retVal);
+            }
+
+            public string Text
+            {
+                get { return (string)GetValue(TextProperty); }
+                set
+                {
+                    SetValue(TextProperty, value);
+                    _textL.Text = value;
+                }
+            }
         }
 
         class CustomData
         {
-            public string Title { get; set; }
-
             public string SubTitle { get; set; }
+
+            public string Title { get; set; }
         }
     }
 }

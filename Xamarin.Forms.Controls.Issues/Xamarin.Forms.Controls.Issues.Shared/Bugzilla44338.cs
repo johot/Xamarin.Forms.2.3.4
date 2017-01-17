@@ -15,7 +15,7 @@ namespace Xamarin.Forms.Controls.Issues
     {
         protected override void Init()
         {
-            string[] items = new string[] { "A", "B", "C" };
+            var items = new string[] { "A", "B", "C" };
             Content = new ListView
             {
                 ItemsSource = items,

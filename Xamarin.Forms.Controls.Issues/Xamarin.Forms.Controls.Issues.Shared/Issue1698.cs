@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Controls
     {
         public Issue1698()
         {
-            Button btn = new Button
+            var btn = new Button
             {
                 Text = "Display ActionSheet"
             };

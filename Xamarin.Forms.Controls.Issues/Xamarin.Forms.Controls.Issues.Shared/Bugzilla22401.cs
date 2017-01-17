@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                 ItemTemplate = new DataTemplate(() =>
                 {
                     // Create views with bindings for displaying each property.
-                    Label nameLabel = new Label();
+                    var nameLabel = new Label();
                     nameLabel.SetBinding(Label.TextProperty, "Name");
 
                     // Return an assembled ViewCell.
@@ -64,9 +64,37 @@ namespace Xamarin.Forms.Controls.TestCasesPages
             listView.SelectedItem = people.First();
         }
 
+        static Page CreateDetailPage(string text)
+        {
+            var page = new ContentPage
+            {
+                Title = text,
+                Content = new StackLayout
+                {
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = text,
+                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                            HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        }
+                    }
+                }
+            };
+
+            var tbiBank = new ToolbarItem { Command = new Command(() => { }), Icon = "bank.png" };
+            var tbiCalc = new ToolbarItem { Command = new Command(() => { }), Icon = "calculator.png" };
+
+            page.ToolbarItems.Add(tbiBank);
+            page.ToolbarItems.Add(tbiCalc);
+
+            return new NavigationPage(page);
+        }
+
         static List<Person> GetDemoData()
         {
-            List<Person> people = new List<Person>
+            var people = new List<Person>
             {
                 new Person("Abigail"),
                 new Person("Bob"),
@@ -96,34 +124,6 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                 new Person("Zachary"),
             };
             return people;
-        }
-
-        static Page CreateDetailPage(string text)
-        {
-            var page = new ContentPage
-            {
-                Title = text,
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        new Label
-                        {
-                            Text = text,
-                            VerticalOptions = LayoutOptions.CenterAndExpand,
-                            HorizontalOptions = LayoutOptions.CenterAndExpand,
-                        }
-                    }
-                }
-            };
-
-            var tbiBank = new ToolbarItem { Command = new Command(() => { }), Icon = "bank.png" };
-            var tbiCalc = new ToolbarItem { Command = new Command(() => { }), Icon = "calculator.png" };
-
-            page.ToolbarItems.Add(tbiBank);
-            page.ToolbarItems.Add(tbiCalc);
-
-            return new NavigationPage(page);
         }
     }
 }

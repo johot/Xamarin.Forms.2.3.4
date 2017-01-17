@@ -5,13 +5,9 @@ namespace Xamarin.Forms.Controls
     internal class StateViewContainer<T> : ViewContainer<T>
         where T : View
     {
-        public Button StateChangeButton { get; private set; }
-
-        public Label ViewInteractionLabel { get; private set; }
-
         public StateViewContainer(Enum formsMember, T view) : base(formsMember, view)
         {
-            var name = formsMember.ToString();
+            string name = formsMember.ToString();
 
             var stateTitleLabel = new Label
             {
@@ -52,5 +48,9 @@ namespace Xamarin.Forms.Controls
             ContainerLayout.Children.Add(labelLayout);
             ContainerLayout.Children.Add(StateChangeButton);
         }
+
+        public Button StateChangeButton { get; private set; }
+
+        public Label ViewInteractionLabel { get; private set; }
     }
 }

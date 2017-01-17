@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -13,27 +9,27 @@ namespace Xamarin.Forms.Controls.TestCasesPages
         PlatformAffected.WinPhone)]
     public class Issue1777 : ContentPage
     {
-        Picker _pickerTable = null;
         Picker _pickerNormal = null;
+        Picker _pickerTable = null;
 
         public Issue1777()
         {
-            StackLayout stackLayout = new StackLayout();
+            var stackLayout = new StackLayout();
             Content = stackLayout;
 
-            TableView tableView = new TableView();
+            var tableView = new TableView();
             stackLayout.Children.Add(tableView);
 
-            TableRoot tableRoot = new TableRoot();
+            var tableRoot = new TableRoot();
             tableView.Root = tableRoot;
 
-            TableSection tableSection = new TableSection("Table");
+            var tableSection = new TableSection("Table");
             tableRoot.Add(tableSection);
 
-            ViewCell viewCell = new ViewCell();
+            var viewCell = new ViewCell();
             tableSection.Add(viewCell);
 
-            ContentView contentView = new ContentView();
+            var contentView = new ContentView();
             contentView.HorizontalOptions = LayoutOptions.FillAndExpand;
             viewCell.View = contentView;
 
@@ -41,14 +37,14 @@ namespace Xamarin.Forms.Controls.TestCasesPages
             _pickerTable.HorizontalOptions = LayoutOptions.FillAndExpand;
             contentView.Content = _pickerTable;
 
-            Label label = new Label();
+            var label = new Label();
             label.Text = "Normal";
             stackLayout.Children.Add(label);
 
             _pickerNormal = new Picker();
             stackLayout.Children.Add(_pickerNormal);
 
-            Button button = new Button();
+            var button = new Button();
             button.Clicked += button_Clicked;
             button.Text = "do magic";
             stackLayout.Children.Add(button);

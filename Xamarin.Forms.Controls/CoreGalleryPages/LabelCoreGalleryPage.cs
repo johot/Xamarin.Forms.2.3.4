@@ -9,11 +9,6 @@ namespace Xamarin.Forms.Controls
             get { return false; }
         }
 
-        protected override void InitializeElement(Label element)
-        {
-            element.Text = "I am a label's text.";
-        }
-
         protected override void Build(StackLayout stackLayout)
         {
             base.Build(stackLayout);
@@ -219,6 +214,11 @@ namespace Xamarin.Forms.Controls
             Add(styleSubtitleContainer);
             Add(styleBodyContainer);
             Add(styleCaptionContainer);
+        }
+
+        protected override void InitializeElement(Label element)
+        {
+            element.Text = "I am a label's text.";
         }
     }
 }

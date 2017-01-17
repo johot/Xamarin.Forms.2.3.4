@@ -36,18 +36,18 @@ namespace Xamarin.Forms.Controls
                         Text = "Add pins",
                         Command = new Command(() =>
                         {
-                            foreach (var pin in map.Pins)
+                            foreach (Pin pin in map.Pins)
                             {
                                 pin.Clicked -= PinClicked;
                             }
 
                             map.Pins.Clear();
 
-                            for (int i = 0; i < 100; i++)
+                            for (var i = 0; i < 100; i++)
                             {
                                 var rnd = new Random();
-                                var lat = rnd.NextDouble() / 10;
-                                var lng = rnd.NextDouble() / 10;
+                                double lat = rnd.NextDouble() / 10;
+                                double lng = rnd.NextDouble() / 10;
 
                                 if (i % 2 == 0)
                                 {

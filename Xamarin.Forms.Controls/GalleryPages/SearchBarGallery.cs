@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
@@ -54,7 +50,7 @@ namespace Xamarin.Forms.Controls
                 Command = new Command(async () => await Navigation.PushAsync(new SearchBarGalleryPageTwo()))
             };
 
-            int i = 1;
+            var i = 1;
             activation.SearchButtonPressed += (sender, e) =>
             {
                 activation.Text = "";

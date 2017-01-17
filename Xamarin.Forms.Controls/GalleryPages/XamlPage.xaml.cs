@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public partial class XamlPage : ContentPage
     {

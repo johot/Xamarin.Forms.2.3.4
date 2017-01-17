@@ -1,8 +1,6 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using System.Collections.Generic;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System.Collections.Generic;
-using System;
-using System.Threading.Tasks;
 
 #if UITEST
 using Xamarin.UITest;
@@ -17,42 +15,6 @@ namespace Xamarin.Forms.Controls
     public class Bugzilla28650 : TestContentPage
     {
         const string caret_image = "caret_r.png";
-
-        [Preserve(AllMembers = true)]
-        internal class MyTextCell : ViewCell
-        {
-            StackLayout _viewLayout;
-            Label _descriptionLabel;
-            Image _caret;
-
-            public MyTextCell()
-            {
-                _descriptionLabel = new Label
-                {
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    FontSize = 14,
-                };
-                _descriptionLabel.SetBinding(Label.TextProperty, ".");
-
-                _caret = new Image
-                {
-                    HorizontalOptions = LayoutOptions.End,
-                    Source = ImageSource.FromFile(caret_image),
-                    HeightRequest = 20,
-                    Aspect = Aspect.AspectFit,
-                    BackgroundColor = Color.Green
-                };
-
-                _viewLayout = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    Children = { _descriptionLabel, _caret },
-                };
-
-                View = _viewLayout;
-            }
-        }
 
         protected override void Init()
         {
@@ -78,7 +40,7 @@ namespace Xamarin.Forms.Controls
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 300 });
 
             const int column = 0;
-            int currentRow = 0;
+            var currentRow = 0;
             grid.AddChild(new Label { Text = "If the carets do not ALL align, this test has failed." }, column,
                 currentRow++, columnspan: 2);
             grid.AddChild(menuView, column, currentRow++);
@@ -178,6 +140,42 @@ namespace Xamarin.Forms.Controls
                     }
                 },
             };
+        }
+
+        [Preserve(AllMembers = true)]
+        internal class MyTextCell : ViewCell
+        {
+            Image _caret;
+            Label _descriptionLabel;
+            StackLayout _viewLayout;
+
+            public MyTextCell()
+            {
+                _descriptionLabel = new Label
+                {
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    FontSize = 14,
+                };
+                _descriptionLabel.SetBinding(Label.TextProperty, ".");
+
+                _caret = new Image
+                {
+                    HorizontalOptions = LayoutOptions.End,
+                    Source = ImageSource.FromFile(caret_image),
+                    HeightRequest = 20,
+                    Aspect = Aspect.AspectFit,
+                    BackgroundColor = Color.Green
+                };
+
+                _viewLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    Children = { _descriptionLabel, _caret },
+                };
+
+                View = _viewLayout;
+            }
         }
     }
 }

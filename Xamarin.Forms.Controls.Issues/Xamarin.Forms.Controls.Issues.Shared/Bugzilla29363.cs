@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -27,7 +25,7 @@ namespace Xamarin.Forms.Controls.Issues
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
 
-            Button modal = new Button
+            var modal = new Button
             {
                 Text = "Modal Push Pop Test",
                 Font = Font.SystemFontOfSize(25, FontAttributes.Bold),

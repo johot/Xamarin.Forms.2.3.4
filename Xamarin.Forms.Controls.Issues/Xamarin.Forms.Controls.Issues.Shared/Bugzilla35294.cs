@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Controls
 
         protected override void Init()
         {
-            Label header = new Label
+            var header = new Label
             {
                 Text = "Should not see blue",
 #pragma warning disable 618
@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Controls
                 TextColor = Color.Black
             };
 
-            StackLayout stack = new StackLayout
+            var stack = new StackLayout
             {
                 BackgroundColor = Color.White,
                 VerticalOptions = LayoutOptions.FillAndExpand,

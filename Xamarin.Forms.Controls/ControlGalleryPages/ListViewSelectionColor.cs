@@ -1,75 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
     internal sealed class ListViewSelectionColor : ContentPage
     {
-        [Preserve(AllMembers = true)]
-        internal sealed class GroupHeaderTemplate : ViewCell
-        {
-            public GroupHeaderTemplate()
-            {
-                var label = new Label { BackgroundColor = Color.Red };
-                label.SetBinding(Label.TextProperty, "Key");
-                View = label;
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        internal sealed class GroupItemTemplate : ViewCell
-        {
-            public GroupItemTemplate()
-            {
-                var label = new Label { BackgroundColor = Color.Green };
-                label.SetBinding(Label.TextProperty, "Name");
-                View = label;
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        internal sealed class ItemTemplate : ViewCell
-        {
-            public ItemTemplate()
-            {
-                var label = new Label { BackgroundColor = Color.Green };
-                label.SetBinding(Label.TextProperty, "Name");
-                View = label;
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        internal sealed class Artist
-        {
-            public string Name { get; private set; }
-
-            public Artist(string name)
-            {
-                Name = name;
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        internal sealed class Grouping<K, T> : ObservableCollection<T>
-        {
-            public K Key { get; private set; }
-
-            public Grouping(K key, IEnumerable<T> values)
-            {
-                Key = key;
-
-                foreach (T value in values)
-                {
-                    Items.Add(value);
-                }
-            }
-        }
-
         Button _swapListButton;
 
         [Preserve(AllMembers = true)]
@@ -113,7 +49,7 @@ namespace Xamarin.Forms.Controls
                 ItemsSource = groupedItemSource
             };
 
-            var currentList = normalList;
+            ListView currentList = normalList;
             _swapListButton = new Button
             {
                 Text = "Swap List Type",
@@ -166,6 +102,66 @@ namespace Xamarin.Forms.Controls
                     list
                 }
             };
+        }
+
+        [Preserve(AllMembers = true)]
+        internal sealed class GroupHeaderTemplate : ViewCell
+        {
+            public GroupHeaderTemplate()
+            {
+                var label = new Label { BackgroundColor = Color.Red };
+                label.SetBinding(Label.TextProperty, "Key");
+                View = label;
+            }
+        }
+
+        [Preserve(AllMembers = true)]
+        internal sealed class GroupItemTemplate : ViewCell
+        {
+            public GroupItemTemplate()
+            {
+                var label = new Label { BackgroundColor = Color.Green };
+                label.SetBinding(Label.TextProperty, "Name");
+                View = label;
+            }
+        }
+
+        [Preserve(AllMembers = true)]
+        internal sealed class ItemTemplate : ViewCell
+        {
+            public ItemTemplate()
+            {
+                var label = new Label { BackgroundColor = Color.Green };
+                label.SetBinding(Label.TextProperty, "Name");
+                View = label;
+            }
+        }
+
+        [Preserve(AllMembers = true)]
+        internal sealed class Artist
+        {
+            public Artist(string name)
+            {
+                Name = name;
+            }
+
+            public string Name { get; private set; }
+        }
+
+        [Preserve(AllMembers = true)]
+        internal sealed class Grouping<K, T> : ObservableCollection<T>
+        {
+            public Grouping(K key, IEnumerable<T> values)
+            {
+                Key = key;
+
+                foreach (T value in values)
+                {
+                    Items.Add(value);
+                }
+            }
+
+            public K Key { get; private set; }
         }
     }
 }

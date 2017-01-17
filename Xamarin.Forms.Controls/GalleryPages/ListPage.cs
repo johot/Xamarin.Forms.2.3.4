@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -29,6 +26,36 @@ namespace Xamarin.Forms.Controls
 
     public class ListScreen
     {
+        public ListScreen()
+        {
+            View = new ListView(ListViewCachingStrategy.RecycleElement);
+
+            View.RowHeight = 30;
+
+            var n = 500;
+            List<A> items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+            View.ItemsSource = items;
+
+            View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
+
+            View.ItemSelected += (sender, e) =>
+            {
+                var cell = e.SelectedItem as A;
+                if (cell == null)
+                    return;
+                int x = int.Parse(cell.Text);
+                if (x == 5)
+                {
+                    n += 10;
+                    View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+                }
+                else
+                {
+                    cell.Text = (x + 1).ToString();
+                }
+            };
+        }
+
         public ListView View { get; private set; }
 
         internal class A : INotifyPropertyChanged
@@ -89,36 +116,6 @@ namespace Xamarin.Forms.Controls
                 Debug.WriteLine("Disappearing: " + (BindingContext as A)?.Text + " : " + s_inc);
                 s_inc++;
             }
-        }
-
-        public ListScreen()
-        {
-            View = new ListView(ListViewCachingStrategy.RecycleElement);
-
-            View.RowHeight = 30;
-
-            var n = 500;
-            var items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
-            View.ItemsSource = items;
-
-            View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
-
-            View.ItemSelected += (sender, e) =>
-            {
-                var cell = (e.SelectedItem as A);
-                if (cell == null)
-                    return;
-                var x = int.Parse(cell.Text);
-                if (x == 5)
-                {
-                    n += 10;
-                    View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
-                }
-                else
-                {
-                    cell.Text = (x + 1).ToString();
-                }
-            };
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Xamarin.Forms.Controls.Issues
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
-                _items.Add((BugPage.Livecount).ToString());
+                _items.Add(BugPage.Livecount.ToString());
                 await Navigation.PushAsync(new BugPage(_items));
             }
         }

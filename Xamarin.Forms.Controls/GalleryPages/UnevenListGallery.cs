@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class UnevenListGallery : ContentPage
     {
@@ -17,7 +11,7 @@ namespace Xamarin.Forms.Controls
                 HasUnevenRows = true
             };
 
-            bool next = true;
+            var next = true;
             list.ItemTemplate = new DataTemplate(() =>
             {
                 bool tall = next;
@@ -25,7 +19,7 @@ namespace Xamarin.Forms.Controls
 
                 var cell = new TextCell
                 {
-                    Height = (tall) ? 88 : 44
+                    Height = tall ? 88 : 44
                 };
 
                 cell.SetBinding(TextCell.TextProperty, ".");

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 #if HAVE_OPENTK
 using OpenTK.Graphics;
 using OpenTK.Graphics.ES20;

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using System.Collections.ObjectModel;
 using Xamarin.Forms.CustomAttributes;
-using System.Collections.ObjectModel;
 
 namespace Xamarin.Forms.Controls.Issues
 {

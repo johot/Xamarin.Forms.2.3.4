@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -37,10 +33,6 @@ namespace Xamarin.Forms.Controls
 
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public string Title { get; set; }
-
-        public bool IsInitialized { get; set; }
-
         bool _isBusy;
 
         /// <summary>
@@ -56,6 +48,10 @@ namespace Xamarin.Forms.Controls
             }
         }
 
+        public bool IsInitialized { get; set; }
+
+        public string Title { get; set; }
+
         //INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -70,6 +66,14 @@ namespace Xamarin.Forms.Controls
 
     public class ArtistsViewModel : BaseViewModel
     {
+        static readonly Artist[] ArtistsToLoad = new Artist[]
+        {
+            new Artist { Name = "Metallica", ListenerCount = "100", PlayCount = "5000" },
+            new Artist { Name = "Epica", ListenerCount = "50", PlayCount = "1000" }
+        };
+
+        Command _loadCommand;
+
         public ArtistsViewModel()
         {
             Title = "Artists";
@@ -81,8 +85,6 @@ namespace Xamarin.Forms.Controls
         /// </summary>
         public ObservableCollection<Artist> Artists { get; private set; }
 
-        Command _loadCommand;
-
         /// <summary>
         /// Command to load/refresh artitists
         /// </summary>
@@ -90,12 +92,6 @@ namespace Xamarin.Forms.Controls
         {
             get { return _loadCommand ?? (_loadCommand = new Command(async () => await ExecuteLoadCommand())); }
         }
-
-        static readonly Artist[] ArtistsToLoad = new Artist[]
-        {
-            new Artist { Name = "Metallica", ListenerCount = "100", PlayCount = "5000" },
-            new Artist { Name = "Epica", ListenerCount = "50", PlayCount = "1000" }
-        };
 
         async Task ExecuteLoadCommand()
         {
@@ -117,17 +113,17 @@ namespace Xamarin.Forms.Controls
 
     public class Artist
     {
-        public string Name { get; set; }
-
-        public string PlayCount { get; set; }
-
         public string ListenerCount { get; set; }
 
         public string Mbid { get; set; }
 
-        public string Url { get; set; }
+        public string Name { get; set; }
+
+        public string PlayCount { get; set; }
 
         public string Streamable { get; set; }
+
+        public string Url { get; set; }
     }
 #endif
 }

@@ -28,8 +28,6 @@ namespace Xamarin.Forms.Controls.Issues
 
     public class ListWithLongPress : ContentPage
     {
-        public ObservableCollection<string> MyCollection { get; set; }
-
         public ListWithLongPress()
         {
             MyCollection = new ObservableCollection<string>();
@@ -95,6 +93,8 @@ namespace Xamarin.Forms.Controls.Issues
 
             Content = stackLayout;
         }
+
+        public ObservableCollection<string> MyCollection { get; set; }
 
         void PopulateCollection()
         {

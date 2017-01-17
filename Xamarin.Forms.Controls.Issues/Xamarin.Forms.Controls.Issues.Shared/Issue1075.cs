@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -22,7 +21,7 @@ namespace Xamarin.Forms.Controls
         // BoxView doesn't update color
         public Issue1075()
         {
-            Label header = new Label
+            var header = new Label
             {
                 Text = "Picker",
 #pragma warning disable 618
@@ -31,7 +30,7 @@ namespace Xamarin.Forms.Controls
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            Picker picker = new Picker
+            var picker = new Picker
             {
                 Title = "Color",
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -49,7 +48,7 @@ namespace Xamarin.Forms.Controls
             }
 
             // Create BoxView for displaying pickedColor
-            BoxView boxView = new BoxView
+            var boxView = new BoxView
             {
                 WidthRequest = 150,
                 HeightRequest = 150,

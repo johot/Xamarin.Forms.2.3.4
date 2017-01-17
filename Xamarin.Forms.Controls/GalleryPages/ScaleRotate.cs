@@ -1,13 +1,10 @@
-﻿using System;
-using Xamarin.Forms;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     internal class ScaleRotate : ContentPage
     {
         public ScaleRotate()
         {
-            Label label = new Label
+            var label = new Label
             {
                 Text = "SCALE AND\nROTATE",
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -16,14 +13,14 @@ namespace Xamarin.Forms.Controls
             };
 
             // Label and Slider for Scale property.
-            Label scaleSliderValue = new Label
+            var scaleSliderValue = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
             Grid.SetRow(scaleSliderValue, 0);
             Grid.SetColumn(scaleSliderValue, 0);
 
-            Slider scaleSlider = new Slider
+            var scaleSlider = new Slider
             {
                 Maximum = 10
             };
@@ -40,14 +37,14 @@ namespace Xamarin.Forms.Controls
                 new Binding("Scale", BindingMode.TwoWay));
 
             // Label and Slider for Rotation property.
-            Label rotationSliderValue = new Label
+            var rotationSliderValue = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
             Grid.SetRow(rotationSliderValue, 1);
             Grid.SetColumn(rotationSliderValue, 0);
 
-            Slider rotationSlider = new Slider
+            var rotationSlider = new Slider
             {
                 Maximum = 360
             };
@@ -64,14 +61,14 @@ namespace Xamarin.Forms.Controls
                 new Binding("Rotation", BindingMode.TwoWay));
 
             // Label and Slider for AnchorX property.
-            Label anchorxStepperValue = new Label
+            var anchorxStepperValue = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
             Grid.SetRow(anchorxStepperValue, 2);
             Grid.SetColumn(anchorxStepperValue, 0);
 
-            Stepper anchorxStepper = new Stepper
+            var anchorxStepper = new Stepper
             {
                 Maximum = 2,
                 Minimum = -1,
@@ -90,14 +87,14 @@ namespace Xamarin.Forms.Controls
                 new Binding("AnchorX", BindingMode.TwoWay));
 
             // Label and Slider for AnchorY property.
-            Label anchoryStepperValue = new Label
+            var anchoryStepperValue = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
             Grid.SetRow(anchoryStepperValue, 3);
             Grid.SetColumn(anchoryStepperValue, 0);
 
-            Stepper anchoryStepper = new Stepper
+            var anchoryStepper = new Stepper
             {
                 Maximum = 2,
                 Minimum = -1,

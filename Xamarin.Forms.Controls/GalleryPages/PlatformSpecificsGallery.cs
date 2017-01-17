@@ -55,6 +55,17 @@ namespace Xamarin.Forms.Controls
             };
         }
 
+        void RestoreOriginal()
+        {
+            if (_originalRoot == null)
+            {
+                return;
+            }
+
+            var app = Application.Current as App;
+            app?.SetMainPage(_originalRoot);
+        }
+
         void SetRoot(Page page)
         {
             var app = Application.Current as App;
@@ -65,17 +76,6 @@ namespace Xamarin.Forms.Controls
 
             _originalRoot = app.MainPage;
             app.SetMainPage(page);
-        }
-
-        void RestoreOriginal()
-        {
-            if (_originalRoot == null)
-            {
-                return;
-            }
-
-            var app = Application.Current as App;
-            app?.SetMainPage(_originalRoot);
         }
     }
 }

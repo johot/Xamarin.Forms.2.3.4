@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -11,6 +10,8 @@ namespace Xamarin.Forms.Controls
     [Issue(IssueTracker.Github, 1766, "Editor.IsEnabled = false", PlatformAffected.WinPhone)]
     public partial class Issue1766 : ContentPage
     {
+        List<MyItem> _myItems;
+
         public Issue1766()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace Xamarin.Forms.Controls
 
             var myListViewList = this.FindByName<ListView>("MyListViewList");
 
-            foreach (var item in myListViewList.ItemTemplate.Values)
+            foreach (KeyValuePair<BindableProperty, object> item in myListViewList.ItemTemplate.Values)
             {
                 System.Diagnostics.Debug.WriteLine("item: {0}", item);
             }
@@ -33,8 +34,6 @@ namespace Xamarin.Forms.Controls
 
             BindingContext = this;
         }
-
-        List<MyItem> _myItems;
 
         public List<MyItem> MyItems
         {

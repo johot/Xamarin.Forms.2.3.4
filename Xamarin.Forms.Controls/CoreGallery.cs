@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms.Controls.GalleryPages;
 using Xamarin.Forms.CustomAttributes;
@@ -52,7 +46,7 @@ namespace Xamarin.Forms.Controls
             var masterPage = new ContentPage { Title = "Menu", Icon = "bank.png", Content = toCrashButton };
             var detailPage = new CoreRootPage(this, NavigationBehavior.PushModalAsync) { Title = "DetailPage" };
 
-            bool toggle = false;
+            var toggle = false;
             toCrashButton.Clicked += (sender, args) =>
             {
                 if (toggle)
@@ -180,15 +174,15 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     internal class CoreViewContainer
     {
-        public string Name { get; private set; }
-
-        public Type PageType { get; private set; }
-
         public CoreViewContainer(string name, Type pageType)
         {
             Name = name;
             PageType = pageType;
         }
+
+        public string Name { get; private set; }
+
+        public Type PageType { get; private set; }
     }
 
     public class CoreRootView : ListView
@@ -228,24 +222,7 @@ namespace Xamarin.Forms.Controls
 
     internal class CorePageView : ListView
     {
-        internal class GalleryPageFactory
-        {
-            public GalleryPageFactory(Func<Page> create, string title)
-            {
-                Realize = () =>
-                {
-                    var p = create();
-                    p.Title = title;
-                    return p;
-                };
-
-                Title = title;
-            }
-
-            public Func<Page> Realize { get; set; }
-
-            public string Title { get; set; }
-        }
+        readonly Dictionary<string, GalleryPageFactory> _titleToPage;
 
         List<GalleryPageFactory> _pages = new List<GalleryPageFactory>
         {
@@ -353,6 +330,8 @@ namespace Xamarin.Forms.Controls
             new GalleryPageFactory(() => new WebViewGallery(), "WebView Gallery - Legacy"),
         };
 
+        NavigationBehavior navigationBehavior;
+
         public CorePageView(Page rootPage, NavigationBehavior navigationBehavior = NavigationBehavior.PushAsync)
         {
             _titleToPage = _pages.ToDictionary(o => o.Title);
@@ -376,7 +355,7 @@ namespace Xamarin.Forms.Controls
                 if (SelectedItem == null)
                     return;
 
-                var item = args.SelectedItem;
+                object item = args.SelectedItem;
                 var page = item as GalleryPageFactory;
                 if (page != null)
                     await PushPage(page.Realize());
@@ -385,7 +364,24 @@ namespace Xamarin.Forms.Controls
             };
         }
 
-        NavigationBehavior navigationBehavior;
+        public async Task PushPage(string pageTitle)
+        {
+            GalleryPageFactory pageFactory = null;
+            if (!_titleToPage.TryGetValue(pageTitle, out pageFactory))
+                return;
+
+            Page page = pageFactory.Realize();
+
+            if (Insights.IsInitialized)
+            {
+                Insights.Track("Navigation", new Dictionary<string, string>
+                {
+                    { "Pushing", page.GetType().Name }
+                });
+            }
+
+            await PushPage(page);
+        }
 
         async Task PushPage(Page contentPage)
         {
@@ -407,25 +403,23 @@ namespace Xamarin.Forms.Controls
             }
         }
 
-        readonly Dictionary<string, GalleryPageFactory> _titleToPage;
-
-        public async Task PushPage(string pageTitle)
+        internal class GalleryPageFactory
         {
-            GalleryPageFactory pageFactory = null;
-            if (!_titleToPage.TryGetValue(pageTitle, out pageFactory))
-                return;
-
-            var page = pageFactory.Realize();
-
-            if (Insights.IsInitialized)
+            public GalleryPageFactory(Func<Page> create, string title)
             {
-                Insights.Track("Navigation", new Dictionary<string, string>
+                Realize = () =>
                 {
-                    { "Pushing", page.GetType().Name }
-                });
+                    Page p = create();
+                    p.Title = title;
+                    return p;
+                };
+
+                Title = title;
             }
 
-            await PushPage(page);
+            public Func<Page> Realize { get; set; }
+
+            public string Title { get; set; }
         }
     }
 
@@ -433,7 +427,7 @@ namespace Xamarin.Forms.Controls
     {
         public CoreRootPage(Page rootPage, NavigationBehavior navigationBehavior = NavigationBehavior.PushAsync)
         {
-            IStringProvider stringProvider = DependencyService.Get<IStringProvider>();
+            var stringProvider = DependencyService.Get<IStringProvider>();
 
             Title = stringProvider.CoreGalleryTitle;
 

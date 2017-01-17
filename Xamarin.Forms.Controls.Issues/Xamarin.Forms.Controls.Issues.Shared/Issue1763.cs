@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -86,7 +82,7 @@ namespace Xamarin.Forms.Controls
         public Group(string name, IEnumerable<TItem> items)
         {
             Name = name;
-            foreach (var item in items)
+            foreach (TItem item in items)
                 Add(item);
         }
 

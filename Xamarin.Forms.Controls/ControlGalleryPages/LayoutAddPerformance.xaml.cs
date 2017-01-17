@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace Xamarin.Forms.Controls
 {
@@ -23,14 +18,14 @@ namespace Xamarin.Forms.Controls
 
             await Task.Delay(2000);
 
-            Stopwatch sw = new Stopwatch();
+            var sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < 500; i++)
+            for (var i = 0; i < 500; i++)
             {
                 layout.Children.Add(new Label { Text = i.ToString() });
             }
             sw.Stop();
-            this.timingLabel.Text = sw.ElapsedMilliseconds.ToString();
+            timingLabel.Text = sw.ElapsedMilliseconds.ToString();
         }
     }
 }

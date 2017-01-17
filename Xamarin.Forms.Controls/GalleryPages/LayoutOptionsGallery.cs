@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Xamarin.Forms.Controls
 {
@@ -31,7 +26,7 @@ namespace Xamarin.Forms.Controls
             changeOrientationButton.Clicked +=
                 (sender, args) =>
                     mainLayout.Orientation =
-                        (mainLayout.Orientation == StackOrientation.Horizontal)
+                        mainLayout.Orientation == StackOrientation.Horizontal
                             ? StackOrientation.Vertical
                             : StackOrientation.Horizontal;
 
@@ -43,30 +38,6 @@ namespace Xamarin.Forms.Controls
                     mainLayout
                 }
             };
-        }
-
-        LayoutOptions StringToLayoutOptions(string options)
-        {
-            switch (options)
-            {
-                case "Start":
-                    return LayoutOptions.Start;
-                case "StartAndExpand":
-                    return LayoutOptions.StartAndExpand;
-                case "Center":
-                    return LayoutOptions.Center;
-                case "CenterAndExpand":
-                    return LayoutOptions.CenterAndExpand;
-                case "End":
-                    return LayoutOptions.End;
-                case "EndAndExpand":
-                    return LayoutOptions.EndAndExpand;
-                case "Fill":
-                    return LayoutOptions.Fill;
-                case "FillAndExpand":
-                    return LayoutOptions.FillAndExpand;
-            }
-            throw new InvalidDataException();
         }
 
         View BuildLayoutRegion()
@@ -98,7 +69,7 @@ namespace Xamarin.Forms.Controls
 
             horizontalButton.Clicked += async (sender, args) =>
             {
-                var selection = await DisplayActionSheet("Select Horizontal Options", null, null,
+                string selection = await DisplayActionSheet("Select Horizontal Options", null, null,
                     "Start", "StartAndExpand",
                     "Center", "CenterAndExpand",
                     "End", "EndAndExpand",
@@ -109,7 +80,7 @@ namespace Xamarin.Forms.Controls
 
             verticalButton.Clicked += async (sender, args) =>
             {
-                var selection = await DisplayActionSheet("Select Horizontal Options", null, null,
+                string selection = await DisplayActionSheet("Select Horizontal Options", null, null,
                     "Start", "StartAndExpand",
                     "Center", "CenterAndExpand",
                     "End", "EndAndExpand",
@@ -119,6 +90,30 @@ namespace Xamarin.Forms.Controls
             };
 
             return result;
+        }
+
+        LayoutOptions StringToLayoutOptions(string options)
+        {
+            switch (options)
+            {
+                case "Start":
+                    return LayoutOptions.Start;
+                case "StartAndExpand":
+                    return LayoutOptions.StartAndExpand;
+                case "Center":
+                    return LayoutOptions.Center;
+                case "CenterAndExpand":
+                    return LayoutOptions.CenterAndExpand;
+                case "End":
+                    return LayoutOptions.End;
+                case "EndAndExpand":
+                    return LayoutOptions.EndAndExpand;
+                case "Fill":
+                    return LayoutOptions.Fill;
+                case "FillAndExpand":
+                    return LayoutOptions.FillAndExpand;
+            }
+            throw new InvalidDataException();
         }
     }
 }

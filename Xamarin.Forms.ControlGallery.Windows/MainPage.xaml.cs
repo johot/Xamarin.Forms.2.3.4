@@ -80,7 +80,7 @@ namespace Xamarin.Forms.ControlGallery.Windows
                     frameworkElement.Measure(finalSize);
 
                     // The broken control tries sizes itself to be the width of the screen
-                    var wrongSize = Window.Current.Bounds.Width * (int)DisplayProperties.ResolutionScale / 100;
+                    double wrongSize = Window.Current.Bounds.Width * (int)DisplayProperties.ResolutionScale / 100;
 
                     // We can re-center it by offsetting it during the Arrange call
                     double diff = Math.Abs(finalSize.Width - wrongSize) / -2;

@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.Controls.Issues;
+﻿using Xamarin.Forms.Controls.Issues;
 
 namespace Xamarin.Forms.Controls
 {

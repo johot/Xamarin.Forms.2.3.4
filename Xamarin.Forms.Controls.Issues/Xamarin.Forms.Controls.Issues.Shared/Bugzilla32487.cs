@@ -30,12 +30,12 @@ namespace Xamarin.Forms.Controls
                 Text = "tap and rotate device after ",
                 Command = new Command(async () =>
                 {
-                    ContentPage cp2 = new ContentPage();
+                    var cp2 = new ContentPage();
                     cp.Title = "rotation";
                     var grd = new Grid();
                     grd.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                     grd.RowDefinitions.Add(new RowDefinition());
-                    WebView wv1 = new WebView { Source = "http://xamarin.com" };
+                    var wv1 = new WebView { Source = "http://xamarin.com" };
                     Grid.SetRow(wv1, 1);
                     grd.Children.Add(wv1);
                     grd.Children.Add(new Button

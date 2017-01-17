@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -18,18 +17,18 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class Person
         {
-            public string Name { private set; get; }
-
-            public DateTime Birthday { private set; get; }
-
-            public Color FavoriteColor { private set; get; }
-
             public Person(string name, DateTime birthday, Color favoriteColor)
             {
                 Name = name;
                 Birthday = birthday;
                 FavoriteColor = favoriteColor;
             }
+
+            public DateTime Birthday { private set; get; }
+
+            public Color FavoriteColor { private set; get; }
+
+            public string Name { private set; get; }
         };
 
         int _count = 1;
@@ -136,7 +135,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             buttonScrollToBottom.Clicked += (sender, e) =>
             {
-                var person = people[people.Count - 1];
+                Person person = people[people.Count - 1];
 
                 listView.ScrollTo(person, ScrollToPosition.End, true);
             };

@@ -1,7 +1,5 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
-using System.Collections.Generic;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -13,9 +11,21 @@ namespace Xamarin.Forms.Controls
         NavigationBehavior.SetApplicationRoot)]
     public class Issue2266 : ContentPage
     {
+        static MasterDetailNavigation s_masterDetailHost;
+
         public Issue2266()
         {
             InitPageContent();
+        }
+
+        public static MasterDetailNavigation MasterDetailHost
+        {
+            get
+            {
+                if (s_masterDetailHost == null)
+                    s_masterDetailHost = new MasterDetailNavigation();
+                return s_masterDetailHost;
+            }
         }
 
         void InitPageContent()
@@ -64,26 +74,14 @@ namespace Xamarin.Forms.Controls
                          e.SelectedItem.Equals(listItems[3]))
                 {
                     // MasterDetail Navigation - direct page open
-                    var item = e.SelectedItem.ToString();
-                    var index = int.Parse(item.Substring(item.Length - 1)) - 1;
+                    string item = e.SelectedItem.ToString();
+                    int index = int.Parse(item.Substring(item.Length - 1)) - 1;
                     Application.Current.MainPage = MasterDetailHost;
                     MasterDetailHost.OpenPage(index);
                 }
 
                 listView.SelectedItem = null;
             };
-        }
-
-        static MasterDetailNavigation s_masterDetailHost;
-
-        public static MasterDetailNavigation MasterDetailHost
-        {
-            get
-            {
-                if (s_masterDetailHost == null)
-                    s_masterDetailHost = new MasterDetailNavigation();
-                return s_masterDetailHost;
-            }
         }
     }
 
@@ -133,11 +131,21 @@ namespace Xamarin.Forms.Controls
             };
         }
 
+        public void OpenPage(int index)
+        {
+            if (index >= _pages.Count)
+            {
+                // Index out of range
+                return;
+            }
+            Detail = _pages[index];
+        }
+
         void InitPages()
         {
             _pages = new List<NavigationPage>();
 
-            for (int i = 1; i <= 10; i++)
+            for (var i = 1; i <= 10; i++)
             {
                 var btnSubPage = new Button
                 {
@@ -161,16 +169,6 @@ namespace Xamarin.Forms.Controls
                     delegate { Application.Current.MainPage = App.MenuPage; }));
                 _pages.Add(new NavigationPage(page) { Title = page.Title });
             }
-        }
-
-        public void OpenPage(int index)
-        {
-            if (index >= _pages.Count)
-            {
-                // Index out of range
-                return;
-            }
-            Detail = _pages[index];
         }
 
         async void OpenSubPage(string text)

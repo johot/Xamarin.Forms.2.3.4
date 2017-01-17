@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -17,7 +14,7 @@ namespace Xamarin.Forms.Controls
 
         public Issue1259()
         {
-            StackLayout st = new StackLayout();
+            var st = new StackLayout();
             st.HorizontalOptions = LayoutOptions.FillAndExpand;
             st.VerticalOptions = LayoutOptions.FillAndExpand;
 
@@ -94,7 +91,7 @@ namespace Xamarin.Forms.Controls
 
             st.Children.Add(_table);
 
-            Button next = new Button
+            var next = new Button
             {
                 Text = "Ok",
             };
@@ -107,7 +104,7 @@ namespace Xamarin.Forms.Controls
 
         void next_Clicked(object sender, EventArgs e)
         {
-            var sw = _table.Root[0].OfType<SwitchCell>().First();
+            SwitchCell sw = _table.Root[0].OfType<SwitchCell>().First();
             sw.On = !sw.On;
         }
     }

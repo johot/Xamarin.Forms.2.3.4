@@ -1,6 +1,6 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Text;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -16,6 +16,20 @@ namespace Xamarin.Forms.Controls
     )]
     public class Bugzilla27642 : TestContentPage // or TestMasterDetailPage, etc ...
     {
+        const string Description = "A view containing a ScrollView cannot be re-used (same instance, Singleton) \n\n\n"
+                                   + "Steps to reproduce: \n\n" + "View1a contains a ScrollView \n"
+                                   + "Click: View1A -> View2 -> View1A => Exception\n\n"
+                                   +
+                                   "View1b also contains a ScrollView, but its Content (including ScrollView!) will be re-generated during activation.\n"
+                                   + "Click: View1B -> View2 -> View1B => Exception\n\n"
+                                   +
+                                   "View2 doesn't contain a ScrollView and therefore can be called again without problems.\n\n"
+                                   +
+                                   "The Error-Message-View contains a ScrollView, too but will be re-created every time.";
+
+        readonly View1A _view1A = new View1A(); // always same instance, simulates Singleton from IoC
+        readonly View1B _view1B = new View1B(); // -"-
+        readonly View2 _view2 = new View2(); // -"-
         ContentView _mainContent;
 
         protected override void Init()
@@ -50,21 +64,6 @@ namespace Xamarin.Forms.Controls
 
             Content = rootGrid;
         }
-
-        const string Description = "A view containing a ScrollView cannot be re-used (same instance, Singleton) \n\n\n"
-                                   + "Steps to reproduce: \n\n" + "View1a contains a ScrollView \n"
-                                   + "Click: View1A -> View2 -> View1A => Exception\n\n"
-                                   +
-                                   "View1b also contains a ScrollView, but its Content (including ScrollView!) will be re-generated during activation.\n"
-                                   + "Click: View1B -> View2 -> View1B => Exception\n\n"
-                                   +
-                                   "View2 doesn't contain a ScrollView and therefore can be called again without problems.\n\n"
-                                   +
-                                   "The Error-Message-View contains a ScrollView, too but will be re-created every time.";
-
-        readonly View1A _view1A = new View1A(); // always same instance, simulates Singleton from IoC
-        readonly View1B _view1B = new View1B(); // -"-
-        readonly View2 _view2 = new View2(); // -"-
 
         void ShowView(ExtendedContentView view)
         {

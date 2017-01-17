@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 
 namespace Xamarin.Forms.Controls
@@ -22,7 +21,7 @@ namespace Xamarin.Forms.Controls
 
             var layout = new StackLayout();
 
-            foreach (var keyboardType in keyboardTypes)
+            foreach (Keyboard keyboardType in keyboardTypes)
             {
                 var viewContainer = new ViewContainer<Entry>(Test.Entry.Keyboard,
                     new Entry { Placeholder = keyboardType.ToString(), Keyboard = keyboardType });
@@ -47,7 +46,7 @@ namespace Xamarin.Forms.Controls
                 Tuple.Create("All", Keyboard.Create(KeyboardFlags.All)),
             };
 
-            foreach (var customKeyboard in customKeyboards)
+            foreach (Tuple<string, Keyboard> customKeyboard in customKeyboards)
             {
                 var viewContainer = new ViewContainer<Entry>(Test.Entry.Keyboard,
                     new Entry { Placeholder = customKeyboard.Item1, Keyboard = customKeyboard.Item2 });

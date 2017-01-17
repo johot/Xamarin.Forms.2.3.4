@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
@@ -46,7 +42,7 @@ namespace Xamarin.Forms.Controls
                     break;
             }
 
-            var font = Font.OfSize(fontName, NamedSize.Medium);
+            Font font = Font.OfSize(fontName, NamedSize.Medium);
 
             var themedButton = new Button
             {
@@ -80,24 +76,24 @@ namespace Xamarin.Forms.Controls
             alertSingle.Clicked += (sender, args) => DisplayAlert("Foo", "Bar", "Cancel");
 
             disabled.IsEnabled = false;
-            int i = 1;
+            var i = 1;
             click.Clicked += (sender, e) => { click.Text = "Clicked " + i++; };
             rotate.Clicked += (sender, e) => rotate.RelRotateTo(180);
             transparent.Opacity = .5;
 
-            int j = 1;
+            var j = 1;
             timer.Clicked += (sender, args) => Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 timer.Text = "Timer Elapsed " + j++;
                 return j < 4;
             });
 
-            bool isBusy = false;
+            var isBusy = false;
             busy.Clicked += (sender, args) => IsBusy = isBusy = !isBusy;
 
             alert.Clicked += async (sender, args) =>
             {
-                var result = await DisplayAlert("User Alert", "This is a user alert. This is only a user alert.",
+                bool result = await DisplayAlert("User Alert", "This is a user alert. This is only a user alert.",
                     "Accept", "Cancel");
                 alert.Text = result ? "Accepted" : "Cancelled";
             };

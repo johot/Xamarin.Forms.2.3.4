@@ -28,7 +28,7 @@ namespace Xamarin.Forms.Controls.Issues
                     HeightRequest = 50
                 };
 
-                Label label = new Label { Text = "Click the image to resize", VerticalOptions = LayoutOptions.Center };
+                var label = new Label { Text = "Click the image to resize", VerticalOptions = LayoutOptions.Center };
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Tapped += (object sender, EventArgs e) =>
@@ -59,7 +59,7 @@ namespace Xamarin.Forms.Controls.Issues
             protected override void OnBindingContextChanged()
             {
                 base.OnBindingContextChanged();
-                var item = BindingContext?.ToString();
+                string item = BindingContext?.ToString();
                 if (string.IsNullOrWhiteSpace(item))
                     return;
 

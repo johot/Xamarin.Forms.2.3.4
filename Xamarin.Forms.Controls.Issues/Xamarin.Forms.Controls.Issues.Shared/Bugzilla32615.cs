@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.Threading.Tasks;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -55,16 +53,16 @@ namespace Xamarin.Forms.Controls.Issues
                 Content = btnPop;
             }
 
-            protected override void OnDisappearing()
-            {
-                System.Diagnostics.Debug.WriteLine("Disappearing Modal");
-                base.OnDisappearing();
-            }
-
             protected override void OnAppearing()
             {
                 System.Diagnostics.Debug.WriteLine("Appearing Modal");
                 base.OnAppearing();
+            }
+
+            protected override void OnDisappearing()
+            {
+                System.Diagnostics.Debug.WriteLine("Disappearing Modal");
+                base.OnDisappearing();
             }
         }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 
 namespace Xamarin.Forms.Controls.Issues
@@ -25,6 +20,8 @@ namespace Xamarin.Forms.Controls.Issues
 
     public class DemoViewModel : ViewModelBase
     {
+        List<string> _dataList;
+
         public DemoViewModel()
         {
             DataList = new List<string>();
@@ -33,8 +30,6 @@ namespace Xamarin.Forms.Controls.Issues
             DataList.Add("Listenelement 3");
             DataList.Add("Listenelement 4");
         }
-
-        List<string> _dataList;
 
         public List<string> DataList
         {

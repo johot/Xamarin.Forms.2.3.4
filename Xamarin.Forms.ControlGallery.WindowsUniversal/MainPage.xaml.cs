@@ -35,6 +35,48 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
             LoadApplication(app);
         }
 
+        void AddNativeBindings(NativeBindingGalleryPage page)
+        {
+            if (page.NativeControlsAdded)
+                return;
+
+            StackLayout sl = page.Layout;
+
+            var txbLabel = new TextBlock
+            {
+                FontSize = 14,
+                FontFamily = new FontFamily("HelveticaNeue")
+            };
+
+            var txbBox = new TextBox
+            {
+                FontSize = 14,
+                FontFamily = new FontFamily("HelveticaNeue")
+            };
+
+            var btnColor = new Windows.UI.Xaml.Controls.Button { Content = "Toggle Label Color", Height = 80 };
+            btnColor.Click += (sender, args) => txbLabel.Foreground = new SolidColorBrush(Windows.UI.Colors.Pink);
+
+            var btnTextBox = new Windows.UI.Xaml.Controls.Button { Content = "Change text textbox", Height = 80 };
+            btnTextBox.Click += (sender, args) => txbBox.Text = "Hello 2 way native";
+
+            txbLabel.SetBinding("Text", new Binding("NativeLabel"));
+            txbBox.SetBinding("Text", new Binding("NativeLabel", BindingMode.TwoWay), "TextChanged");
+            txbLabel.SetBinding("Foreground",
+                new Binding("NativeLabelColor", BindingMode.TwoWay, new ColorToBrushNativeBindingConverter()));
+
+            var grd = new StackPanel();
+            grd.Children.Add(txbLabel);
+            grd.Children.Add(btnColor);
+
+            sl?.Children.Add(grd.ToView());
+
+            sl?.Children.Add(txbBox);
+            sl?.Children.Add(btnTextBox.ToView());
+
+            page.NativeControlsAdded = true;
+        }
+
         void AddNativeControls(NestedNativeControlGalleryPage page)
         {
             if (page.NativeControlsAdded)
@@ -108,48 +150,6 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
             page.NativeControlsAdded = true;
         }
 
-        void AddNativeBindings(NativeBindingGalleryPage page)
-        {
-            if (page.NativeControlsAdded)
-                return;
-
-            StackLayout sl = page.Layout;
-
-            var txbLabel = new TextBlock
-            {
-                FontSize = 14,
-                FontFamily = new FontFamily("HelveticaNeue")
-            };
-
-            var txbBox = new TextBox
-            {
-                FontSize = 14,
-                FontFamily = new FontFamily("HelveticaNeue")
-            };
-
-            var btnColor = new Windows.UI.Xaml.Controls.Button { Content = "Toggle Label Color", Height = 80 };
-            btnColor.Click += (sender, args) => txbLabel.Foreground = new SolidColorBrush(Windows.UI.Colors.Pink);
-
-            var btnTextBox = new Windows.UI.Xaml.Controls.Button { Content = "Change text textbox", Height = 80 };
-            btnTextBox.Click += (sender, args) => txbBox.Text = "Hello 2 way native";
-
-            txbLabel.SetBinding("Text", new Binding("NativeLabel"));
-            txbBox.SetBinding("Text", new Binding("NativeLabel", BindingMode.TwoWay), "TextChanged");
-            txbLabel.SetBinding("Foreground",
-                new Binding("NativeLabelColor", BindingMode.TwoWay, new ColorToBrushNativeBindingConverter()));
-
-            var grd = new StackPanel();
-            grd.Children.Add(txbLabel);
-            grd.Children.Add(btnColor);
-
-            sl?.Children.Add(grd.ToView());
-
-            sl?.Children.Add(txbBox);
-            sl?.Children.Add(btnTextBox.ToView());
-
-            page.NativeControlsAdded = true;
-        }
-
         class ColorToBrushNativeBindingConverter : IValueConverter
         {
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -168,15 +168,15 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
                 return null;
             }
 
+            public static Color ToColor(Windows.UI.Color color)
+            {
+                return Color.FromRgba(color.R, color.G, color.B, color.A);
+            }
+
             public static Windows.UI.Color ToWindowsColor(Color color)
             {
                 return Windows.UI.Color.FromArgb((byte)(color.A * 255), (byte)(color.R * 255), (byte)(color.G * 255),
                     (byte)(color.B * 255));
-            }
-
-            public static Color ToColor(Windows.UI.Color color)
-            {
-                return Color.FromRgba(color.R, color.G, color.B, color.A);
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Controls.Issues
     {
         protected override void Init()
         {
-            Label header = new Label
+            var header = new Label
             {
                 Text = "Search Bar",
                 FontAttributes = FontAttributes.Bold,
@@ -17,13 +17,13 @@ namespace Xamarin.Forms.Controls.Issues
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            SearchBar searchBar = new SearchBar
+            var searchBar = new SearchBar
             {
                 Placeholder = "Enter anything",
                 CancelButtonColor = Color.Red
             };
 
-            Label reproSteps = new Label
+            var reproSteps = new Label
             {
                 Text =
                     "Tap on the search bar and enter some text. The 'Cancel' button should appear. If the 'Cancel' button is not red, this is broken.",

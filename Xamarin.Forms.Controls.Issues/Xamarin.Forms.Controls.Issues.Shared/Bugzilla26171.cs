@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
-using Xamarin.Forms.Maps;
-using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
+using Xamarin.Forms.Maps;
 
 #if UITEST
 using Xamarin.UITest;
@@ -18,7 +17,7 @@ namespace Xamarin.Forms.Controls.Issues
     {
         protected override void Init()
         {
-            var map = MakeMap();
+            Map map = MakeMap();
 
             var label = new Label { AutomationId = "lblValue" };
 

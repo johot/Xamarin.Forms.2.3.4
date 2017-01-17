@@ -46,52 +46,6 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             page.ToolbarItems.Add(tb4);
         }
 
-        public static Layout CreateChanger(Type enumType, string defaultOption, Action<Picker> selectedIndexChanged,
-            string label)
-        {
-            var picker = new Picker();
-            string[] options = Enum.GetNames(enumType);
-            foreach (string option in options)
-            {
-                picker.Items.Add(option);
-            }
-
-            picker.SelectedIndex = options.IndexOf(defaultOption);
-
-            picker.SelectedIndexChanged += (sender, args) => { selectedIndexChanged(picker); };
-
-            var changerLabel = new Label { Text = label, VerticalOptions = LayoutOptions.Center };
-
-            var layout = new Grid
-            {
-                HorizontalOptions = LayoutOptions.Center,
-                ColumnDefinitions = new ColumnDefinitionCollection
-                {
-                    new ColumnDefinition { Width = 150 },
-                    new ColumnDefinition { Width = 100 }
-                },
-                Children = { changerLabel, picker }
-            };
-
-            Grid.SetColumn(changerLabel, 0);
-            Grid.SetColumn(picker, 1);
-
-            return layout;
-        }
-
-        public static Layout CreateToolbarPlacementChanger(Page page)
-        {
-            Type enumType = typeof(ToolbarPlacement);
-
-            return CreateChanger(enumType,
-                Enum.GetName(enumType, page.On<Windows>().GetToolbarPlacement()),
-                picker =>
-                {
-                    page.On<Windows>()
-                        .SetToolbarPlacement((ToolbarPlacement)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
-                }, "Select Toolbar Placement");
-        }
-
         public static Layout CreateAddRemoveToolBarItemButtons(Page page)
         {
             var layout = new StackLayout
@@ -142,6 +96,52 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             };
 
             return layout;
+        }
+
+        public static Layout CreateChanger(Type enumType, string defaultOption, Action<Picker> selectedIndexChanged,
+            string label)
+        {
+            var picker = new Picker();
+            string[] options = Enum.GetNames(enumType);
+            foreach (string option in options)
+            {
+                picker.Items.Add(option);
+            }
+
+            picker.SelectedIndex = options.IndexOf(defaultOption);
+
+            picker.SelectedIndexChanged += (sender, args) => { selectedIndexChanged(picker); };
+
+            var changerLabel = new Label { Text = label, VerticalOptions = LayoutOptions.Center };
+
+            var layout = new Grid
+            {
+                HorizontalOptions = LayoutOptions.Center,
+                ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition { Width = 150 },
+                    new ColumnDefinition { Width = 100 }
+                },
+                Children = { changerLabel, picker }
+            };
+
+            Grid.SetColumn(changerLabel, 0);
+            Grid.SetColumn(picker, 1);
+
+            return layout;
+        }
+
+        public static Layout CreateToolbarPlacementChanger(Page page)
+        {
+            Type enumType = typeof(ToolbarPlacement);
+
+            return CreateChanger(enumType,
+                Enum.GetName(enumType, page.On<Windows>().GetToolbarPlacement()),
+                picker =>
+                {
+                    page.On<Windows>()
+                        .SetToolbarPlacement((ToolbarPlacement)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
+                }, "Select Toolbar Placement");
         }
     }
 }

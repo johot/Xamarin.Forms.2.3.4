@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -50,44 +49,9 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         internal class _47971ViewModel : INotifyPropertyChanged
         {
-            _47971ItemModel _selectedModel;
-            Command<_47971ItemModel> _modelSelectedCommand;
             ObservableCollection<_47971ItemModel> _models;
-
-            public ObservableCollection<_47971ItemModel> Models
-            {
-                get { return _models; }
-                set
-                {
-                    _models = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public _47971ItemModel SelectedModel
-            {
-                get { return _selectedModel; }
-                set
-                {
-                    _selectedModel = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public Command<_47971ItemModel> ModelSelectedCommand => _modelSelectedCommand ??
-                                                                    (_modelSelectedCommand =
-                                                                        new Command<_47971ItemModel>(
-                                                                            ModelSelectedCommandExecute, CanExecute));
-
-            bool CanExecute(_47971ItemModel itemModel)
-            {
-                return true;
-            }
-
-            void ModelSelectedCommandExecute(_47971ItemModel model)
-            {
-                System.Diagnostics.Debug.WriteLine(model.Name);
-            }
+            Command<_47971ItemModel> _modelSelectedCommand;
+            _47971ItemModel _selectedModel;
 
             public _47971ViewModel()
             {
@@ -100,11 +64,46 @@ namespace Xamarin.Forms.Controls.Issues
                     });
             }
 
+            public ObservableCollection<_47971ItemModel> Models
+            {
+                get { return _models; }
+                set
+                {
+                    _models = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public Command<_47971ItemModel> ModelSelectedCommand => _modelSelectedCommand ??
+                                                                    (_modelSelectedCommand =
+                                                                        new Command<_47971ItemModel>(
+                                                                            ModelSelectedCommandExecute, CanExecute));
+
+            public _47971ItemModel SelectedModel
+            {
+                get { return _selectedModel; }
+                set
+                {
+                    _selectedModel = value;
+                    OnPropertyChanged();
+                }
+            }
+
             public event PropertyChangedEventHandler PropertyChanged;
 
             protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            bool CanExecute(_47971ItemModel itemModel)
+            {
+                return true;
+            }
+
+            void ModelSelectedCommandExecute(_47971ItemModel model)
+            {
+                System.Diagnostics.Debug.WriteLine(model.Name);
             }
         }
 

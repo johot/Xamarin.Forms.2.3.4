@@ -47,11 +47,11 @@ namespace Xamarin.Forms.Controls
             tableHeaderSection.Add(viewHeaderCell);
             tableView.Root.Add(tableHeaderSection);
 
-            for (int sectionNumber = 1; sectionNumber < 11; sectionNumber++)
+            for (var sectionNumber = 1; sectionNumber < 11; sectionNumber++)
             {
                 var tableSection = new TableSection("Section #" + sectionNumber);
 
-                for (int cellNumber = 1; cellNumber < 11; cellNumber++)
+                for (var cellNumber = 1; cellNumber < 11; cellNumber++)
                 {
                     var viewCell = new ViewCell();
                     var viewCellLayout = new StackLayout();

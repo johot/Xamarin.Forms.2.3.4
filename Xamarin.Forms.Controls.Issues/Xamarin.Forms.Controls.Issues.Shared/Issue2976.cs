@@ -1,6 +1,6 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.Generic;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -65,7 +65,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             var fasterListView = new NativeListView(); // CUSTOM RENDERER using a native control
             fasterListView.VerticalOptions = LayoutOptions.FillAndExpand;
-                // REQUIRED: To share a scrollable view with other views in a StackLayout, it should have a VerticalOptions of FillAndExpand.
+            // REQUIRED: To share a scrollable view with other views in a StackLayout, it should have a VerticalOptions of FillAndExpand.
             fasterListView.Items = tableItems;
             fasterListView.ItemSelected +=
                 async (sender, e) => { await Navigation.PushModalAsync(new DetailPage(e.SelectedItem)); };
@@ -103,6 +103,10 @@ namespace Xamarin.Forms.Controls.Issues
         public static readonly BindableProperty ItemsProperty =
             BindableProperty.Create("Items", typeof(IEnumerable<string>), typeof(NativeListView), new List<string>());
 
+        public NativeListView()
+        {
+        }
+
         public IEnumerable<string> Items
         {
             get { return (IEnumerable<string>)GetValue(ItemsProperty); }
@@ -115,10 +119,6 @@ namespace Xamarin.Forms.Controls.Issues
         {
             if (ItemSelected != null)
                 ItemSelected(this, new SelectedItemChangedEventArgs(item));
-        }
-
-        public NativeListView()
-        {
         }
     }
 
@@ -219,22 +219,19 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class NativeCell : ViewCell
     {
+        public static readonly BindableProperty NameProperty =
+            BindableProperty.Create("Name", typeof(string), typeof(NativeCell), "");
+
+        public static readonly BindableProperty CategoryProperty =
+            BindableProperty.Create("Category", typeof(string), typeof(NativeCell), "");
+
+        public static readonly BindableProperty ImageFilenameProperty =
+            BindableProperty.Create("ImageFilename", typeof(string), typeof(NativeCell), "");
+
         public NativeCell()
         {
             //View = new ContentView ();
         }
-
-        public static readonly BindableProperty NameProperty =
-            BindableProperty.Create("Name", typeof(string), typeof(NativeCell), "");
-
-        public string Name
-        {
-            get { return (string)GetValue(NameProperty); }
-            set { SetValue(NameProperty, value); }
-        }
-
-        public static readonly BindableProperty CategoryProperty =
-            BindableProperty.Create("Category", typeof(string), typeof(NativeCell), "");
 
         public string Category
         {
@@ -242,13 +239,16 @@ namespace Xamarin.Forms.Controls.Issues
             set { SetValue(CategoryProperty, value); }
         }
 
-        public static readonly BindableProperty ImageFilenameProperty =
-            BindableProperty.Create("ImageFilename", typeof(string), typeof(NativeCell), "");
-
         public string ImageFilename
         {
             get { return (string)GetValue(ImageFilenameProperty); }
             set { SetValue(ImageFilenameProperty, value); }
+        }
+
+        public string Name
+        {
+            get { return (string)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
         }
     }
 
@@ -304,7 +304,7 @@ namespace Xamarin.Forms.Controls.Issues
             var nativeListView2 = new NativeListView2(); // CUSTOM RENDERER using a native control
 
             nativeListView2.VerticalOptions = LayoutOptions.FillAndExpand;
-                // REQUIRED: To share a scrollable view with other views in a StackLayout, it should have a VerticalOptions of FillAndExpand.
+            // REQUIRED: To share a scrollable view with other views in a StackLayout, it should have a VerticalOptions of FillAndExpand.
 
             nativeListView2.Items = DataSource.GetList();
 
@@ -348,6 +348,10 @@ namespace Xamarin.Forms.Controls.Issues
             BindableProperty.Create("Items", typeof(IEnumerable<DataSource>), typeof(NativeListView2),
                 new List<DataSource>());
 
+        public NativeListView2()
+        {
+        }
+
         public IEnumerable<DataSource> Items
         {
             get { return (IEnumerable<DataSource>)GetValue(ItemsProperty); }
@@ -361,21 +365,11 @@ namespace Xamarin.Forms.Controls.Issues
             if (ItemSelected != null)
                 ItemSelected(this, new SelectedItemChangedEventArgs(item));
         }
-
-        public NativeListView2()
-        {
-        }
     }
 
     [Preserve(AllMembers = true)]
     public class DataSource
     {
-        public string Name { get; set; }
-
-        public string Category { get; set; }
-
-        public string ImageFilename { get; set; }
-
         public DataSource()
         {
         }
@@ -386,6 +380,12 @@ namespace Xamarin.Forms.Controls.Issues
             Category = category;
             ImageFilename = imageFilename;
         }
+
+        public string Category { get; set; }
+
+        public string ImageFilename { get; set; }
+
+        public string Name { get; set; }
 
         public static List<DataSource> GetList()
         {

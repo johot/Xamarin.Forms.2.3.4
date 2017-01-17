@@ -54,7 +54,7 @@ namespace Xamarin.Forms.Controls.Issues
         {
             public StartPage()
             {
-                Button button = new Button
+                var button = new Button
                 {
                     AutomationId = "btn",
                     Text = "Click"

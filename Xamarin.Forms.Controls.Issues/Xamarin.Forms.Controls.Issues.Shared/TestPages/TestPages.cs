@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using Xamarin.Forms.CustomAttributes;
-
+﻿
 #if UITEST
 using NUnit.Framework;
 using Xamarin.UITest;

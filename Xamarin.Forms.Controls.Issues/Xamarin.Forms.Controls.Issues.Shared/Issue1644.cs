@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -16,7 +15,7 @@ namespace Xamarin.Forms.Controls
 
         public Issue1644()
         {
-            for (int i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
             {
                 Collection.Add(DateTime.Now.ToString());
             }

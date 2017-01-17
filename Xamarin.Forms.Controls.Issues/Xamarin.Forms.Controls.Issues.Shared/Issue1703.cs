@@ -23,19 +23,6 @@ namespace Xamarin.Forms.Controls
             return CreateWeakReferencedPage();
         }
 
-        static Page CreateWeakReferencedPage()
-        {
-            GC.Collect();
-            var result = CreatePage();
-            s_pageRefs.Add(new WeakReference(result));
-
-            // Add a second unreferenced page to prove that the problem only exists
-            // when pages are actually navigated to/from
-            s_pageRefs.Add(new WeakReference(CreatePage()));
-            GC.Collect();
-            return result;
-        }
-
         static Page CreatePage()
         {
             var page = new ContentPage();
@@ -58,6 +45,19 @@ namespace Xamarin.Forms.Controls
 
             page.Content = contents;
             return page;
+        }
+
+        static Page CreateWeakReferencedPage()
+        {
+            GC.Collect();
+            Page result = CreatePage();
+            s_pageRefs.Add(new WeakReference(result));
+
+            // Add a second unreferenced page to prove that the problem only exists
+            // when pages are actually navigated to/from
+            s_pageRefs.Add(new WeakReference(CreatePage()));
+            GC.Collect();
+            return result;
         }
     }
 }

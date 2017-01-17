@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -14,32 +9,6 @@ namespace Xamarin.Forms.Controls
         PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone, NavigationBehavior.PushModalAsync)]
     public class Issue1685 : ContentPage
     {
-        class Test : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            decimal _entryValue = decimal.Zero;
-
-            public decimal EntryValue
-            {
-                get { return _entryValue; }
-                set
-                {
-                    _entryValue = value;
-                    OnPropertyChanged("EntryValue");
-                }
-            }
-
-            void OnPropertyChanged(string caller)
-            {
-                var handler = PropertyChanged;
-                if (handler != null)
-                {
-                    handler(this, new PropertyChangedEventArgs(caller));
-                }
-            }
-        }
-
         public Issue1685()
         {
             Title = "EntryBindingBug";
@@ -75,6 +44,32 @@ namespace Xamarin.Forms.Controls
             };
 
             Content = root;
+        }
+
+        class Test : INotifyPropertyChanged
+        {
+            decimal _entryValue = decimal.Zero;
+
+            public decimal EntryValue
+            {
+                get { return _entryValue; }
+                set
+                {
+                    _entryValue = value;
+                    OnPropertyChanged("EntryValue");
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            void OnPropertyChanged(string caller)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(caller));
+                }
+            }
         }
     }
 }

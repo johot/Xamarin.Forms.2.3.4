@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -17,15 +14,15 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     public class CellNavigation
     {
-        public string CellType { get; set; }
-
-        public ContentPage Page { get; set; }
-
         public CellNavigation(string type, ContentPage page)
         {
             CellType = type;
             Page = page;
         }
+
+        public string CellType { get; set; }
+
+        public ContentPage Page { get; set; }
     }
 
     public class CellTypeList : ListView

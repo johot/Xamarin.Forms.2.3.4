@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Controls
     {
         protected override void Init()
         {
-            List<GroupedData> groups = new List<GroupedData>();
+            var groups = new List<GroupedData>();
 
             var group1 = new GroupedData { GroupName = "Group #1" };
             group1.Add(new GroupItem { DisplayText = "Text for ListView item 1.1" });

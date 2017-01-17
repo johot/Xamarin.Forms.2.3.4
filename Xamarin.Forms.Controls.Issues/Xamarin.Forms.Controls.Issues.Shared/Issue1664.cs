@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -10,8 +9,8 @@ namespace Xamarin.Forms.Controls
     {
         public Issue1664()
         {
-            NavigationPage nav1 = new NavigationPage(new ContentPage { Title = "Page1" });
-            NavigationPage nav2 = new NavigationPage(new PageTwo());
+            var nav1 = new NavigationPage(new ContentPage { Title = "Page1" });
+            var nav2 = new NavigationPage(new PageTwo());
 
             nav1.Title = "Tab 1";
             nav2.Title = "Tab 2";

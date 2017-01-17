@@ -1,7 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class ToolbarItems : ContentPage
     {

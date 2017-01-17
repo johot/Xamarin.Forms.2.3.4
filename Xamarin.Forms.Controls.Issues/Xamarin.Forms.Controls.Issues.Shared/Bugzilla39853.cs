@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -8,7 +7,12 @@ namespace Xamarin.Forms.Controls
     [Issue(IssueTracker.Bugzilla, 39853, "BorderRadius ignored on UWP", PlatformAffected.WinRT)]
     public class Bugzilla39853 : TestContentPage
     {
-        public class RoundedButton : Xamarin.Forms.Button
+        protected override void Init()
+        {
+            Content = new RoundedButton(100);
+        }
+
+        public class RoundedButton : Button
         {
             public RoundedButton(int radius)
             {
@@ -36,18 +40,6 @@ namespace Xamarin.Forms.Controls
                 }
             }
 
-            public new double WidthRequest
-            {
-                get { return base.WidthRequest; }
-
-                set
-                {
-                    base.WidthRequest = value;
-                    base.HeightRequest = value;
-                    base.BorderRadius = ((int)value) / 2;
-                }
-            }
-
             public new double HeightRequest
             {
                 get { return base.HeightRequest; }
@@ -56,14 +48,21 @@ namespace Xamarin.Forms.Controls
                 {
                     base.WidthRequest = value;
                     base.HeightRequest = value;
-                    base.BorderRadius = ((int)value) / 2;
+                    base.BorderRadius = (int)value / 2;
                 }
             }
-        }
 
-        protected override void Init()
-        {
-            Content = new RoundedButton(100);
+            public new double WidthRequest
+            {
+                get { return base.WidthRequest; }
+
+                set
+                {
+                    base.WidthRequest = value;
+                    base.HeightRequest = value;
+                    base.BorderRadius = (int)value / 2;
+                }
+            }
         }
     }
 }

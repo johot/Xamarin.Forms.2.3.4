@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -87,7 +82,7 @@ namespace Xamarin.Forms.Controls
             button.Clicked += (sender, e) =>
             {
                 var b = (Button)sender;
-                var t = b.CommandParameter;
+                object t = b.CommandParameter;
 #pragma warning disable 618
                 ((ContentPage)((ListView)((StackLayout)b.ParentView).ParentView).ParentView).DisplayAlert("Clicked",
 #pragma warning restore 618
@@ -95,19 +90,19 @@ namespace Xamarin.Forms.Controls
                 Debug.WriteLine("clicked" + t);
             };
 
-            Image imgProdCount = new Image
+            var imgProdCount = new Image
             {
                 Aspect = Aspect.AspectFit,
                 Source = s_mImgProdCount,
             };
 
-            Image imgEndTime = new Image
+            var imgEndTime = new Image
             {
                 Aspect = Aspect.AspectFit,
                 Source = s_mImgEndTime,
             };
 
-            Image imgRenewal = new Image
+            var imgRenewal = new Image
             {
                 Aspect = Aspect.AspectFit,
                 Source = s_mImgRenewal,

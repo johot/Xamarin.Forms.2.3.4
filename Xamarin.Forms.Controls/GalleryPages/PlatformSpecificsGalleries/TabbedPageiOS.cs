@@ -47,7 +47,7 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 
             togglePrefersStatusBarHiddenButton.Command = new Command(() =>
             {
-                var mode = On<iOS>().PrefersStatusBarHidden();
+                StatusBarHiddenMode mode = On<iOS>().PrefersStatusBarHidden();
                 if (mode == StatusBarHiddenMode.Default)
                     On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.True);
                 else if (mode == StatusBarHiddenMode.True)
@@ -58,7 +58,7 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 
             togglePrefersStatusBarHiddenForPageButton.Command = new Command(() =>
             {
-                var mode = page.On<iOS>().PrefersStatusBarHidden();
+                StatusBarHiddenMode mode = page.On<iOS>().PrefersStatusBarHidden();
                 if (mode == StatusBarHiddenMode.Default)
                     page.On<iOS>().SetPrefersStatusBarHidden(StatusBarHiddenMode.True);
                 else if (mode == StatusBarHiddenMode.True)
@@ -69,7 +69,7 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 
             togglePreferredStatusBarUpdateAnimationButton.Command = new Command(() =>
             {
-                var animation = page.On<iOS>().PreferredStatusBarUpdateAnimation();
+                UIStatusBarAnimation animation = page.On<iOS>().PreferredStatusBarUpdateAnimation();
                 if (animation == UIStatusBarAnimation.Fade)
                     page.On<iOS>().SetPreferredStatusBarUpdateAnimation(UIStatusBarAnimation.Slide);
                 else if (animation == UIStatusBarAnimation.Slide)

@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Controls.Issues
             public MySwitch()
             {
                 IsEnabled = false;
-                SetBinding(SwitchCell.TextProperty, new Binding("."));
+                SetBinding(TextProperty, new Binding("."));
                 OnChanged += (sender, e) => Text = "FAIL";
             }
         }

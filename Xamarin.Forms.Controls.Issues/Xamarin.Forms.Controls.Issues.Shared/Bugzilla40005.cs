@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -29,7 +28,7 @@ namespace Xamarin.Forms.Controls
 
             public Page1()
             {
-                Button btn = new Button()
+                var btn = new Button()
                 {
                     Text = "Go to Page 2"
                 };

@@ -1,10 +1,10 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -53,7 +53,7 @@ namespace Xamarin.Forms.Controls.Issues
             _searchBtn = new Button() { Text = "Search" };
             _searchBtn.Clicked += (object sender, EventArgs e) => _contactsListView.BeginRefresh();
 
-            Grid grd = new Grid();
+            var grd = new Grid();
             grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             grd.RowDefinitions.Add(new RowDefinition());
             grd.Children.Add(_searchBtn);
@@ -82,14 +82,14 @@ namespace Xamarin.Forms.Controls.Issues
                 {
                     // If we want to filter the data, GetItems by expression
                     IList<Contact1> contactEntities = new List<Contact1>();
-                    List<ContactViewModel1> data = new List<ContactViewModel1>();
+                    var data = new List<ContactViewModel1>();
 
                     if (contactEntities == null || contactEntities.Count == 0)
                     {
                         // Fill with dummy contacts
-                        for (int i = 0; i < 20; i++)
+                        for (var i = 0; i < 20; i++)
                         {
-                            Contact1 contact = new Contact1()
+                            var contact = new Contact1()
                             {
                                 FirstName = "Contact" + i,
                                 LastName = "LastName",
@@ -102,7 +102,7 @@ namespace Xamarin.Forms.Controls.Issues
                     // Create Contact items for the listView
                     foreach (Contact1 contact in contactEntities)
                     {
-                        ContactViewModel1 contactItem = new ContactViewModel1()
+                        var contactItem = new ContactViewModel1()
                         {
                             FirstName = contact.FirstName,
                             LastName = contact.LastName,
@@ -114,7 +114,7 @@ namespace Xamarin.Forms.Controls.Issues
                     }
 
                     // Sort, order and group the contacts
-                    var contacts = from contact in data
+                    IEnumerable<Grouping1<string, ContactViewModel1>> contacts = from contact in data
                         orderby contact.LastName, contact.FirstName
                         group contact by contact.FirstNameSort
                         into contactGroup
@@ -130,8 +130,6 @@ namespace Xamarin.Forms.Controls.Issues
 
         public class Grouping1<K, T> : ObservableCollection<T>
         {
-            public K Key { get; private set; }
-
             public Grouping1(K key, IEnumerable<T> items)
             {
                 Key = key;
@@ -140,20 +138,16 @@ namespace Xamarin.Forms.Controls.Issues
                     Items.Add(item);
                 }
             }
+
+            public K Key { get; private set; }
         }
 
         [Preserve(AllMembers = true)]
         public class ContactViewModel1
         {
-            public string FirstName { get; set; }
-
-            public string LastName { get; set; }
-
-            public string FullName { get; set; }
-
             public string Company { get; set; }
 
-            public ImageSource IconSource { get; set; }
+            public string FirstName { get; set; }
 
             public string FirstNameSort
             {
@@ -167,32 +161,38 @@ namespace Xamarin.Forms.Controls.Issues
                     return FirstName[0].ToString().ToUpper();
                 }
             }
+
+            public string FullName { get; set; }
+
+            public ImageSource IconSource { get; set; }
+
+            public string LastName { get; set; }
         }
 
         [Preserve(AllMembers = true)]
         public class Contact1
         {
+            public string City { get; set; }
+
+            public string Company { get; set; }
+
+            public string CountryCode { get; set; }
+
+            public string Email { get; set; }
+
             public string FirstName { get; set; }
 
             public string LastName { get; set; }
 
-            public string Company { get; set; }
+            public string Mobile { get; set; }
 
             public byte[] ProfilePicture { get; set; }
-
-            public string Email { get; set; }
-
-            public string Mobile { get; set; }
 
             public string RoomNumber { get; set; }
 
             public string Street { get; set; }
 
             public string Zip { get; set; }
-
-            public string City { get; set; }
-
-            public string CountryCode { get; set; }
         }
 
         [Preserve(AllMembers = true)]
@@ -202,7 +202,7 @@ namespace Xamarin.Forms.Controls.Issues
             {
                 Height = 23;
 
-                Label title = new Label
+                var title = new Label
                 {
                     TextColor = Color.White,
                     VerticalOptions = LayoutOptions.Center

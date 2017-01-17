@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Xamarin.Forms.CustomAttributes;
 
 namespace Xamarin.Forms.Controls
@@ -14,17 +13,6 @@ namespace Xamarin.Forms.Controls
             get { return false; }
         }
 
-        protected override void InitializeElement(BoxView element)
-        {
-            lock (SyncLock)
-            {
-                var red = Rand.NextDouble();
-                var green = Rand.NextDouble();
-                var blue = Rand.NextDouble();
-                element.Color = new Color(red, green, blue);
-            }
-        }
-
         protected override void Build(StackLayout stackLayout)
         {
             base.Build(stackLayout);
@@ -32,6 +20,17 @@ namespace Xamarin.Forms.Controls
             var colorContainer = new ViewContainer<BoxView>(Test.BoxView.Color, new BoxView { Color = Color.Pink });
 
             Add(colorContainer);
+        }
+
+        protected override void InitializeElement(BoxView element)
+        {
+            lock (SyncLock)
+            {
+                double red = Rand.NextDouble();
+                double green = Rand.NextDouble();
+                double blue = Rand.NextDouble();
+                element.Color = new Color(red, green, blue);
+            }
         }
     }
 }

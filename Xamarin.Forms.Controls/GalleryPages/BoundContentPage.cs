@@ -8,6 +8,21 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     public class BoundContentPage : ContentPage
     {
+        public BoundContentPage()
+        {
+            Title = "Bound Gallery";
+
+            BindingContext = new BoundContentPageViewModel();
+
+            var button = new Button();
+            button.SetBinding(Button.TextProperty, "ButtonText");
+            button.SetBinding(Button.CommandProperty, "ButtonCommand");
+
+            SetBinding(NavigationProperty, new Binding("Navigation", converter: new NavWrapperConverter()));
+
+            Content = button;
+        }
+
         internal class NavWrapperConverter : IValueConverter
         {
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -54,34 +69,19 @@ namespace Xamarin.Forms.Controls
         [Preserve(AllMembers = true)]
         internal class BoundContentPageViewModel
         {
+            public BoundContentPageViewModel()
+            {
+                ButtonCommand = new Command(() => Navigation.WrappedPush());
+            }
+
+            public ICommand ButtonCommand { get; set; }
+
             public string ButtonText
             {
                 get { return "Click Me!"; }
             }
 
-            public ICommand ButtonCommand { get; set; }
-
             public NavigationWrapper Navigation { get; set; }
-
-            public BoundContentPageViewModel()
-            {
-                ButtonCommand = new Command(() => Navigation.WrappedPush());
-            }
-        }
-
-        public BoundContentPage()
-        {
-            Title = "Bound Gallery";
-
-            BindingContext = new BoundContentPageViewModel();
-
-            var button = new Button();
-            button.SetBinding(Button.TextProperty, "ButtonText");
-            button.SetBinding(Button.CommandProperty, "ButtonCommand");
-
-            SetBinding(NavigationProperty, new Binding("Navigation", converter: new NavWrapperConverter()));
-
-            Content = button;
         }
     }
 }

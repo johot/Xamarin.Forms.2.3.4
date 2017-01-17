@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class StepperGallery : ContentPage
     {

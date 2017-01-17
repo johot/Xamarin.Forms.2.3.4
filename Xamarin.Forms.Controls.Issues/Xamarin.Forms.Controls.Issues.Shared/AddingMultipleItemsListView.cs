@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -20,6 +19,8 @@ namespace Xamarin.Forms.Controls
     {
         Dictionary<string, object> _properties = new Dictionary<string, object>();
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         protected T GetProperty<T>([CallerMemberName] string name = null)
         {
             object value = null;
@@ -30,6 +31,15 @@ namespace Xamarin.Forms.Controls
             return default(T);
         }
 
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         protected void SetProperty<T>(T value, [CallerMemberName] string name = null)
         {
             if (Equals(value, GetProperty<T>(name)))
@@ -38,17 +48,6 @@ namespace Xamarin.Forms.Controls
             }
             _properties[name] = value;
             OnPropertyChanged(name);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 
@@ -84,13 +83,29 @@ namespace Xamarin.Forms.Controls
 
     public class ViewModelBase : PropertyChangedBase
     {
+        readonly List<ViewModelError> _errors;
+
+        bool _isBusy = false;
+
         public ViewModelBase()
         {
             _errors = new List<ViewModelError>();
             Validate();
         }
 
-        readonly List<ViewModelError> _errors;
+        public virtual bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    OnPropertyChanged("IsBusy");
+                    OnIsBusyChanged();
+                }
+            }
+        }
 
         public virtual bool IsValid
         {
@@ -102,16 +117,25 @@ namespace Xamarin.Forms.Controls
             get { return _errors; }
         }
 
+        public event EventHandler IsBusyChanged;
+
         public event EventHandler IsValidChanged;
 
-        public event EventHandler IsBusyChanged;
+        protected virtual void OnIsBusyChanged()
+        {
+            // Some models might want to have a validation thet depends on the busy state.
+            Validate();
+            EventHandler method = IsBusyChanged;
+            if (method != null)
+                IsBusyChanged(this, EventArgs.Empty);
+        }
 
         protected virtual void Validate()
         {
             OnPropertyChanged("IsValid");
             OnPropertyChanged("Errors");
 
-            var callback = IsValidChanged;
+            EventHandler callback = IsValidChanged;
             if (callback != null)
             {
                 callback(this, EventArgs.Empty);
@@ -121,7 +145,7 @@ namespace Xamarin.Forms.Controls
             if (_errors != null && _errors.Count > 0)
             {
                 Debug.WriteLine("Errors:");
-                foreach (var error in _errors)
+                foreach (ViewModelError error in _errors)
                 {
                     Debug.WriteLine(error);
                 }
@@ -139,39 +163,12 @@ namespace Xamarin.Forms.Controls
                 _errors.Add(error);
             }
         }
-
-        public virtual bool IsBusy
-        {
-            get { return _isBusy; }
-            set
-            {
-                if (_isBusy != value)
-                {
-                    _isBusy = value;
-                    OnPropertyChanged("IsBusy");
-                    OnIsBusyChanged();
-                }
-            }
-        }
-
-        bool _isBusy = false;
-
-        protected virtual void OnIsBusyChanged()
-        {
-            // Some models might want to have a validation thet depends on the busy state.
-            Validate();
-            var method = IsBusyChanged;
-            if (method != null)
-                IsBusyChanged(this, EventArgs.Empty);
-        }
     }
 
     public class DelegateCommand : ICommand
     {
         readonly Predicate<object> _canExecute;
         readonly Action<object> _execute;
-
-        public event EventHandler CanExecuteChanged;
 
         public DelegateCommand(Action<object> execute)
             : this(execute, null)
@@ -194,6 +191,8 @@ namespace Xamarin.Forms.Controls
             return _canExecute(parameter);
         }
 
+        public event EventHandler CanExecuteChanged;
+
         public void Execute(object parameter)
         {
             _execute(parameter);
@@ -201,7 +200,7 @@ namespace Xamarin.Forms.Controls
 
         public void RaiseCanExecuteChanged()
         {
-            var handler = CanExecuteChanged;
+            EventHandler handler = CanExecuteChanged;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);
@@ -212,33 +211,9 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     public class ExampleViewModel : ViewModelBase
     {
-        [Preserve(AllMembers = true)]
-        public class Job : ViewModelBase
-        {
-            public string JobId
-            {
-                get { return GetProperty<string>(); }
-                set { SetProperty(value); }
-            }
+        ICommand _addOneCommand;
 
-            public string JobName
-            {
-                get { return GetProperty<string>(); }
-                set { SetProperty(value); }
-            }
-
-            public double? Hours
-            {
-                get { return GetProperty<double?>(); }
-                set { SetProperty(value); }
-            }
-
-            public bool Locked
-            {
-                get { return GetProperty<bool>(); }
-                set { SetProperty(value); }
-            }
-        }
+        ICommand _addTwoCommand;
 
         public ExampleViewModel()
         {
@@ -249,8 +224,6 @@ namespace Xamarin.Forms.Controls
                 new Job() { JobId = "3672-41", JobName = "Add On Job", Hours = 23 },
             };
         }
-
-        public ObservableCollection<Job> Jobs { get; set; }
 
         public ICommand AddOneCommand
         {
@@ -266,8 +239,6 @@ namespace Xamarin.Forms.Controls
                 return _addOneCommand;
             }
         }
-
-        ICommand _addOneCommand;
 
         public ICommand AddTwoCommand
         {
@@ -285,7 +256,7 @@ namespace Xamarin.Forms.Controls
             }
         }
 
-        ICommand _addTwoCommand;
+        public ObservableCollection<Job> Jobs { get; set; }
 
         public void GetHours()
         {
@@ -295,8 +266,36 @@ namespace Xamarin.Forms.Controls
                 new Job() { JobId = "6289", JobName = "MGA Life Cycle Flexible Test System", Hours = 2 },
             };
 
-            foreach (var x in results)
+            foreach (Job x in results)
                 Jobs.Add(x);
+        }
+
+        [Preserve(AllMembers = true)]
+        public class Job : ViewModelBase
+        {
+            public double? Hours
+            {
+                get { return GetProperty<double?>(); }
+                set { SetProperty(value); }
+            }
+
+            public string JobId
+            {
+                get { return GetProperty<string>(); }
+                set { SetProperty(value); }
+            }
+
+            public string JobName
+            {
+                get { return GetProperty<string>(); }
+                set { SetProperty(value); }
+            }
+
+            public bool Locked
+            {
+                get { return GetProperty<bool>(); }
+                set { SetProperty(value); }
+            }
         }
     }
 

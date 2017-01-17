@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
@@ -19,6 +14,26 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             Children.Add(CreateAdditonalPage());
             Children.Add(CreateAdditonalPage());
             On<Android>().SetOffscreenPageLimit(2);
+        }
+
+        static Page CreateAdditonalPage()
+        {
+            var cp = new ContentPage { Title = "Additional Page" };
+
+            cp.Content = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
+                Children =
+                {
+                    new Entry
+                    {
+                        Placeholder = "Enter some text"
+                    }
+                }
+            };
+
+            return cp;
         }
 
         ContentPage CreateFirstPage(ICommand restore)
@@ -49,26 +64,6 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             page.Content = content;
 
             return page;
-        }
-
-        static Page CreateAdditonalPage()
-        {
-            var cp = new ContentPage { Title = "Additional Page" };
-
-            cp.Content = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.Fill,
-                Children =
-                {
-                    new Entry
-                    {
-                        Placeholder = "Enter some text"
-                    }
-                }
-            };
-
-            return cp;
         }
     }
 }

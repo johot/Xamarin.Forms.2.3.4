@@ -7,8 +7,21 @@ namespace Xamarin.Forms.Controls.TestCasesPages
     [Issue(IssueTracker.Bugzilla, 34072, "Inconsistent Disabled Button behavior between Forms for Android & iOS")]
     public class Bugzilla34072 : TestContentPage
     {
-        Button _testButton;
         Label _reproStepsLabel;
+        Button _testButton;
+
+        public void SwitchState()
+        {
+            if (_testButton.IsEnabled)
+            {
+                _testButton.IsEnabled = false;
+                _testButton.Text = "Disabled";
+                return;
+            }
+
+            _testButton.IsEnabled = true;
+            _testButton.Text = "Enabled";
+        }
 
         protected override void Init()
         {
@@ -44,19 +57,6 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                     _reproStepsLabel
                 }
             };
-        }
-
-        public void SwitchState()
-        {
-            if (_testButton.IsEnabled)
-            {
-                _testButton.IsEnabled = false;
-                _testButton.Text = "Disabled";
-                return;
-            }
-
-            _testButton.IsEnabled = true;
-            _testButton.Text = "Enabled";
         }
     }
 }

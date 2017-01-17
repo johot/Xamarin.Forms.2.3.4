@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
@@ -110,6 +109,29 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             return adjustCollapsedWidthSection;
         }
 
+        static NavigationPage CreateNavigationPage()
+        {
+            var page = new NavigationPage { Title = "This is the Navigation Page Title" };
+
+            page.PushAsync(CreateNavSubPage());
+
+            return page;
+        }
+
+        static ContentPage CreateNavSubPage()
+        {
+            var page = new ContentPage();
+
+            var label = new Label { Text = "This is content in a nav page" };
+            var button = new Button() { Text = "Push Another Page" };
+
+            button.Clicked += (sender, args) => page.Navigation.PushAsync(CreateNavSubPage());
+
+            page.Content = new StackLayout { Children = { label, button } };
+
+            return page;
+        }
+
         public class NavItem
         {
             public NavItem(string text, string icon, ICommand command)
@@ -172,29 +194,6 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
                     return cell;
                 });
             }
-        }
-
-        static NavigationPage CreateNavigationPage()
-        {
-            var page = new NavigationPage { Title = "This is the Navigation Page Title" };
-
-            page.PushAsync(CreateNavSubPage());
-
-            return page;
-        }
-
-        static ContentPage CreateNavSubPage()
-        {
-            var page = new ContentPage();
-
-            var label = new Label { Text = "This is content in a nav page" };
-            var button = new Button() { Text = "Push Another Page" };
-
-            button.Clicked += (sender, args) => page.Navigation.PushAsync(CreateNavSubPage());
-
-            page.Content = new StackLayout { Children = { label, button } };
-
-            return page;
         }
     }
 }

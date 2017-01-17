@@ -1,7 +1,6 @@
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -10,6 +9,12 @@ namespace Xamarin.Forms.ControlGallery.Windows
 {
     internal class BrokenNativeControl : Panel
     {
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text", typeof(string), typeof(BrokenNativeControl),
+            new PropertyMetadata(default(string), PropertyChangedCallback));
+
+        readonly TextBlock _textBlock;
+
         public BrokenNativeControl()
         {
             _textBlock = new TextBlock
@@ -33,24 +38,11 @@ namespace Xamarin.Forms.ControlGallery.Windows
                     }, 0);
         }
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(BrokenNativeControl),
-            new PropertyMetadata(default(string), PropertyChangedCallback));
-
-        static void PropertyChangedCallback(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            ((BrokenNativeControl)dependencyObject)._textBlock.Text =
-                (string)dependencyPropertyChangedEventArgs.NewValue;
-        }
-
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-
-        readonly TextBlock _textBlock;
 
         protected override global::Windows.Foundation.Size ArrangeOverride(global::Windows.Foundation.Size finalSize)
         {
@@ -63,9 +55,16 @@ namespace Xamarin.Forms.ControlGallery.Windows
             _textBlock.Measure(availableSize);
 
             // This deliberately does something wrong so we can demo fixing it
-            var width = Window.Current.Bounds.Width * (int)DisplayProperties.ResolutionScale / 100;
+            double width = Window.Current.Bounds.Width * (int)DisplayProperties.ResolutionScale / 100;
 
             return new global::Windows.Foundation.Size(width, _textBlock.DesiredSize.Height);
+        }
+
+        static void PropertyChangedCallback(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            ((BrokenNativeControl)dependencyObject)._textBlock.Text =
+                (string)dependencyPropertyChangedEventArgs.NewValue;
         }
     }
 }

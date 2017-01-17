@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -9,6 +8,10 @@ namespace Xamarin.Forms.Controls
         PlatformAffected.Android, NavigationBehavior.PushModalAsync)]
     public class Bugzilla32034 : NavigationPage
     {
+        public Bugzilla32034() : base(new ButtonPage())
+        {
+        }
+
         public class ButtonPage : ContentPage
         {
             public ButtonPage()
@@ -30,10 +33,6 @@ namespace Xamarin.Forms.Controls
                     },
                 };
             }
-        }
-
-        public Bugzilla32034() : base(new ButtonPage())
-        {
         }
     }
 }

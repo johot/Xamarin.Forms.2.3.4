@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -14,7 +13,7 @@ namespace Xamarin.Forms.Controls
 
         public Issue1538()
         {
-            StackLayout sl = new StackLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
+            var sl = new StackLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
             sl.Children.Add(_sv = new ScrollView() { HeightRequest = 100 });
             Content = sl;
 

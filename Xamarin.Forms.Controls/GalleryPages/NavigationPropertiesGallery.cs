@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class NavigationPropertiesGallery
         : ContentPage
@@ -19,7 +13,7 @@ namespace Xamarin.Forms.Controls
             var toggleBackButton = new Button { Text = "Toggle Back Button" };
             toggleBackButton.Clicked += (sender, e) =>
             {
-                var hasBack = NavigationPage.GetHasBackButton(noBack);
+                bool hasBack = NavigationPage.GetHasBackButton(noBack);
                 if (hasBack)
                     NavigationPage.SetHasBackButton(noBack, false);
                 else

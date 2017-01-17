@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -19,7 +18,7 @@ namespace Xamarin.Forms.Controls.Issues
         protected override void Init()
         {
             var presidents = new List<President>();
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 presidents.Add(new President($"Presidente {44 - i}", 1,
                     $"http://static.c-span.org/assets/images/series/americanPresidents/{43 - i}_400.png"));
@@ -59,11 +58,11 @@ namespace Xamarin.Forms.Controls.Issues
                 Image = image;
             }
 
+            public string Image { private set; get; }
+
             public string Name { private set; get; }
 
             public int Position { private set; get; }
-
-            public string Image { private set; get; }
         }
 
         [Preserve(AllMembers = true)]

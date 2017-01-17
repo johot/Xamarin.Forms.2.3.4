@@ -11,8 +11,8 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             var restoreButton = new Button { Text = "Back To Gallery" };
             restoreButton.Clicked += (sender, args) => restore.Execute(null);
 
-            var button1 = GetButton(WindowSoftInputModeAdjust.Pan);
-            var button2 = GetButton(WindowSoftInputModeAdjust.Resize);
+            Button button1 = GetButton(WindowSoftInputModeAdjust.Pan);
+            Button button2 = GetButton(WindowSoftInputModeAdjust.Resize);
             var buttons = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
@@ -31,9 +31,9 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
                 HorizontalOptions = LayoutOptions.Center,
             };
             layout.Children.Add(buttons,
-                yConstraint: Xamarin.Forms.Constraint.RelativeToParent(parent => { return parent.Y; }));
+                yConstraint: Forms.Constraint.RelativeToParent(parent => { return parent.Y; }));
             layout.Children.Add(entry,
-                yConstraint: Xamarin.Forms.Constraint.RelativeToParent(parent => { return parent.Height - 100; }));
+                yConstraint: Forms.Constraint.RelativeToParent(parent => { return parent.Height - 100; }));
 
             Content = layout;
             Title = "Application Features";

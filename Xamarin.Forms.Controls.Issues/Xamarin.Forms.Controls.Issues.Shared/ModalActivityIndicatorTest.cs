@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
-using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -41,23 +40,13 @@ namespace Xamarin.Forms.Controls
         [Preserve(AllMembers = true)]
         public class ModalActivityIndicatorModel : INotifyPropertyChanged
         {
-            bool _isBusy;
             string _busyText;
             Color _color;
+            bool _isBusy;
 
             public ModalActivityIndicatorModel()
             {
                 _color = Color.Default;
-            }
-
-            public bool IsBusy
-            {
-                get { return _isBusy; }
-                set
-                {
-                    _isBusy = value;
-                    OnPropertyChanged();
-                }
             }
 
             public string BusyText
@@ -76,6 +65,16 @@ namespace Xamarin.Forms.Controls
                 set
                 {
                     _color = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public bool IsBusy
+            {
+                get { return _isBusy; }
+                set
+                {
+                    _isBusy = value;
                     OnPropertyChanged();
                 }
             }
@@ -133,7 +132,7 @@ namespace Xamarin.Forms.Controls
                     heightConstraint: Forms.Constraint.RelativeToParent((parent) => { return parent.Width / 3; }),
                     xConstraint: Forms.Constraint.RelativeToParent((parent) => { return parent.Width / 4; }),
                     yConstraint:
-                    Forms.Constraint.RelativeToParent((parent) => { return (parent.Height / 2) - (parent.Width / 6); })
+                    Forms.Constraint.RelativeToParent((parent) => { return parent.Height / 2 - parent.Width / 6; })
                 );
             }
         }

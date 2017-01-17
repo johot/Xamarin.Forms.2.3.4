@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -13,199 +12,9 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     internal class ListViewCoreGalleryPage : CoreGalleryPage<ListView>
     {
-        internal class Employee : INotifyPropertyChanged
-        {
-            string _name;
-
-            public string Name
-            {
-                get { return _name; }
-                set
-                {
-                    if (value != null && value != _name)
-                    {
-                        _name = value;
-                        OnPropertyChanged();
-                    }
-                }
-            }
-
-            TimeSpan _daysWorked;
-
-            public TimeSpan DaysWorked
-            {
-                get { return _daysWorked; }
-                set
-                {
-                    if (value != null && value != _daysWorked)
-                    {
-                        _daysWorked = value;
-                        OnPropertyChanged();
-                    }
-                }
-            }
-
-            int _rowHeight;
-
-            public int RowHeight
-            {
-                get { return _rowHeight; }
-                set
-                {
-                    if (value != null && value != _rowHeight)
-                    {
-                        _rowHeight = value;
-                        OnPropertyChanged();
-                    }
-                }
-            }
-
-            public Employee(string name, TimeSpan daysWorked, int rowHeight)
-            {
-                _name = name;
-                _daysWorked = daysWorked;
-                _rowHeight = rowHeight;
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChangedEventHandler handler = PropertyChanged;
-                if (handler != null)
-                    handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        internal class Grouping<K, T> : ObservableCollection<T>
-        {
-            public K Key { get; private set; }
-
-            public Grouping(K key, IEnumerable<T> items)
-            {
-                Key = key;
-                foreach (T item in items)
-                {
-                    Items.Add(item);
-                }
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        public class HeaderCell : ViewCell
-        {
-            public HeaderCell()
-            {
-                Height = 60;
-                var title = new Label
-                {
-                    HeightRequest = 60,
-                    BackgroundColor = Color.Navy,
-                    TextColor = Color.White
-                };
-
-                title.SetBinding(Label.TextProperty, new Binding("Key"));
-
-                View = new StackLayout
-                {
-                    BackgroundColor = Color.Pink,
-                    Children = { title }
-                };
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        class UnevenCell : ViewCell
-        {
-            public UnevenCell()
-            {
-                SetBinding(HeightProperty, new Binding("RowHeight"));
-
-                var label = new Label();
-                label.SetBinding(Label.TextProperty, new Binding("Name"));
-
-                var layout = new StackLayout
-                {
-                    BackgroundColor = Color.Red,
-                    Children =
-                    {
-                        label
-                    }
-                };
-
-                View = layout;
-            }
-        }
-
-        [Preserve(AllMembers = true)]
-        internal class ListViewViewModel
-        {
-            public ObservableCollection<Grouping<string, Employee>> CategorizedEmployees { get; private set; }
-
-            public ObservableCollection<Employee> Employees { get; private set; }
-
-            public ListViewViewModel()
-            {
-                CategorizedEmployees = new ObservableCollection<Grouping<string, Employee>>
-                {
-                    new Grouping<string, Employee>(
-                        "Engineer",
-                        new[]
-                        {
-                            new Employee("Seth", TimeSpan.FromDays(10), 60),
-                            new Employee("Jason", TimeSpan.FromDays(100), 100),
-                            new Employee("Eric", TimeSpan.FromDays(1000), 160),
-                        }
-                    ),
-                    new Grouping<string, Employee>(
-                        "Sales",
-                        new[]
-                        {
-                            new Employee("Andrew 1", TimeSpan.FromDays(10), 160),
-                            new Employee("Andrew 2", TimeSpan.FromDays(100), 100),
-                            new Employee("Andrew 3", TimeSpan.FromDays(1000), 60),
-                        }
-                    ),
-                };
-
-                Employees = new ObservableCollection<Employee>
-                {
-                    new Employee("Seth", TimeSpan.FromDays(10), 60),
-                    new Employee("Jason", TimeSpan.FromDays(100), 100),
-                    new Employee("Eric", TimeSpan.FromDays(1000), 160),
-                    new Employee("Andrew 1", TimeSpan.FromDays(10), 160),
-                    new Employee("Andrew 2", TimeSpan.FromDays(100), 100),
-                    new Employee("Andrew 3", TimeSpan.FromDays(1000), 60),
-                };
-
-                Enumerable.Range(0, 9000)
-                    .Select(e => new Employee(e.ToString(), TimeSpan.FromDays(1), 60))
-                    .ForEach(e => Employees.Add(e));
-            }
-        }
-
         protected override bool SupportsFocus
         {
             get { return false; }
-        }
-
-        protected override void InitializeElement(ListView element)
-        {
-            element.HeightRequest = 350;
-            element.RowHeight = 60;
-
-            var viewModel = new ListViewViewModel();
-            element.BindingContext = viewModel;
-
-            element.ItemsSource = viewModel.Employees;
-
-            var template = new DataTemplate(typeof(TextCell));
-            template.SetBinding(TextCell.TextProperty, "Name");
-            template.SetBinding(TextCell.DetailProperty,
-                new Binding("DaysWorked", converter: new GenericValueConverter(time => time.ToString())));
-
-            element.ItemTemplate = template;
         }
 
         protected override void Build(StackLayout stackLayout)
@@ -287,6 +96,195 @@ namespace Xamarin.Forms.Controls
             Add(itemTappedContainer);
             Add(rowHeightContainer);
             Add(selectedItemContainer);
+        }
+
+        protected override void InitializeElement(ListView element)
+        {
+            element.HeightRequest = 350;
+            element.RowHeight = 60;
+
+            var viewModel = new ListViewViewModel();
+            element.BindingContext = viewModel;
+
+            element.ItemsSource = viewModel.Employees;
+
+            var template = new DataTemplate(typeof(TextCell));
+            template.SetBinding(TextCell.TextProperty, "Name");
+            template.SetBinding(TextCell.DetailProperty,
+                new Binding("DaysWorked", converter: new GenericValueConverter(time => time.ToString())));
+
+            element.ItemTemplate = template;
+        }
+
+        internal class Employee : INotifyPropertyChanged
+        {
+            TimeSpan _daysWorked;
+            string _name;
+
+            int _rowHeight;
+
+            public Employee(string name, TimeSpan daysWorked, int rowHeight)
+            {
+                _name = name;
+                _daysWorked = daysWorked;
+                _rowHeight = rowHeight;
+            }
+
+            public TimeSpan DaysWorked
+            {
+                get { return _daysWorked; }
+                set
+                {
+                    if (value != null && value != _daysWorked)
+                    {
+                        _daysWorked = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+
+            public string Name
+            {
+                get { return _name; }
+                set
+                {
+                    if (value != null && value != _name)
+                    {
+                        _name = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+
+            public int RowHeight
+            {
+                get { return _rowHeight; }
+                set
+                {
+                    if (value != null && value != _rowHeight)
+                    {
+                        _rowHeight = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                if (handler != null)
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        [Preserve(AllMembers = true)]
+        internal class Grouping<K, T> : ObservableCollection<T>
+        {
+            public Grouping(K key, IEnumerable<T> items)
+            {
+                Key = key;
+                foreach (T item in items)
+                {
+                    Items.Add(item);
+                }
+            }
+
+            public K Key { get; private set; }
+        }
+
+        [Preserve(AllMembers = true)]
+        public class HeaderCell : ViewCell
+        {
+            public HeaderCell()
+            {
+                Height = 60;
+                var title = new Label
+                {
+                    HeightRequest = 60,
+                    BackgroundColor = Color.Navy,
+                    TextColor = Color.White
+                };
+
+                title.SetBinding(Label.TextProperty, new Binding("Key"));
+
+                View = new StackLayout
+                {
+                    BackgroundColor = Color.Pink,
+                    Children = { title }
+                };
+            }
+        }
+
+        [Preserve(AllMembers = true)]
+        class UnevenCell : ViewCell
+        {
+            public UnevenCell()
+            {
+                SetBinding(HeightProperty, new Binding("RowHeight"));
+
+                var label = new Label();
+                label.SetBinding(Label.TextProperty, new Binding("Name"));
+
+                var layout = new StackLayout
+                {
+                    BackgroundColor = Color.Red,
+                    Children =
+                    {
+                        label
+                    }
+                };
+
+                View = layout;
+            }
+        }
+
+        [Preserve(AllMembers = true)]
+        internal class ListViewViewModel
+        {
+            public ListViewViewModel()
+            {
+                CategorizedEmployees = new ObservableCollection<Grouping<string, Employee>>
+                {
+                    new Grouping<string, Employee>(
+                        "Engineer",
+                        new[]
+                        {
+                            new Employee("Seth", TimeSpan.FromDays(10), 60),
+                            new Employee("Jason", TimeSpan.FromDays(100), 100),
+                            new Employee("Eric", TimeSpan.FromDays(1000), 160),
+                        }
+                    ),
+                    new Grouping<string, Employee>(
+                        "Sales",
+                        new[]
+                        {
+                            new Employee("Andrew 1", TimeSpan.FromDays(10), 160),
+                            new Employee("Andrew 2", TimeSpan.FromDays(100), 100),
+                            new Employee("Andrew 3", TimeSpan.FromDays(1000), 60),
+                        }
+                    ),
+                };
+
+                Employees = new ObservableCollection<Employee>
+                {
+                    new Employee("Seth", TimeSpan.FromDays(10), 60),
+                    new Employee("Jason", TimeSpan.FromDays(100), 100),
+                    new Employee("Eric", TimeSpan.FromDays(1000), 160),
+                    new Employee("Andrew 1", TimeSpan.FromDays(10), 160),
+                    new Employee("Andrew 2", TimeSpan.FromDays(100), 100),
+                    new Employee("Andrew 3", TimeSpan.FromDays(1000), 60),
+                };
+
+                Enumerable.Range(0, 9000)
+                    .Select(e => new Employee(e.ToString(), TimeSpan.FromDays(1), 60))
+                    .ForEach(e => Employees.Add(e));
+            }
+
+            public ObservableCollection<Grouping<string, Employee>> CategorizedEmployees { get; private set; }
+
+            public ObservableCollection<Employee> Employees { get; private set; }
         }
     }
 }

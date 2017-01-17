@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -48,8 +47,8 @@ namespace Xamarin.Forms.Controls.Issues
                     }
                 }
             };
-            Label label = new Label { Text = "Switch 3", HorizontalOptions = LayoutOptions.StartAndExpand };
-            Switch switchie = new Switch
+            var label = new Label { Text = "Switch 3", HorizontalOptions = LayoutOptions.StartAndExpand };
+            var switchie = new Switch
             {
                 AutomationId = "switch3",
                 HorizontalOptions = LayoutOptions.End,

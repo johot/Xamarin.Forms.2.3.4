@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -60,11 +59,11 @@ namespace Xamarin.Forms.Controls.Issues
         public async void OnDelete(object sender, EventArgs e)
 #pragma warning restore 1998
         {
-            var mi = ((MenuItem)sender);
+            var mi = (MenuItem)sender;
             if (mi.CommandParameter == null)
                 return;
 
-            var articlelistingitem = mi.CommandParameter;
+            object articlelistingitem = mi.CommandParameter;
 
             if (articlelistingitem != null)
                 DisplayAlert("Alert", "I'm not deleting just refreshing...", "Ok");
@@ -83,7 +82,7 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class FavoritesViewModel : BaseViewModelF
         {
-            public ObservableCollection<ArticleListing> FavoriteArticles { get; set; }
+            Command _loadFavoritesCommand;
 
             public FavoritesViewModel()
             {
@@ -91,7 +90,7 @@ namespace Xamarin.Forms.Controls.Issues
                 FavoriteArticles = new ObservableCollection<ArticleListing>();
             }
 
-            Command _loadFavoritesCommand;
+            public ObservableCollection<ArticleListing> FavoriteArticles { get; set; }
 
             public Command LoadFavoritesCommand
             {
@@ -102,7 +101,6 @@ namespace Xamarin.Forms.Controls.Issues
                                new Command(async () => { await ExecuteFavoritesCommand(); }, () => { return !IsBusy; }));
                 }
             }
-
 #pragma warning disable 1998 // considered for removal
             public async Task ExecuteFavoritesCommand()
 #pragma warning restore 1998
@@ -129,7 +127,7 @@ namespace Xamarin.Forms.Controls.Issues
                     }
                 };
                 var templist = new ObservableCollection<ArticleListing>();
-                foreach (var article in articles)
+                foreach (ArticleListing article in articles)
                 {
                     //templist.Add(article);
                     FavoriteArticles.Add(article);
@@ -144,12 +142,65 @@ namespace Xamarin.Forms.Controls.Issues
 
     public class BaseViewModelF : INotifyPropertyChanged
     {
+        public const string TitlePropertyName = "Title";
+
+        /// <summary>
+        /// Gets or sets the "Subtitle" property
+        /// </summary>
+        public const string SubtitlePropertyName = "Subtitle";
+
+        /// <summary>
+        /// Gets or sets the "Icon" of the viewmodel
+        /// </summary>
+        public const string IconPropertyName = "Icon";
+
+        /// <summary>
+        /// Gets or sets if the view is busy.
+        /// </summary>
+        public const string IsBusyPropertyName = "IsBusy";
+
+        /// <summary>
+        /// Gets or sets if we can load more.
+        /// </summary>
+        public const string CanLoadMorePropertyName = "CanLoadMore";
+
+        bool _canLoadMore = true;
+
+        string _icon = null;
+
+        bool _isBusy;
+
+        string _subTitle = string.Empty;
+
+        string _title = string.Empty;
+
         public BaseViewModelF()
         {
         }
 
-        string _title = string.Empty;
-        public const string TitlePropertyName = "Title";
+        public bool CanLoadMore
+        {
+            get { return _canLoadMore; }
+            set { SetProperty(ref _canLoadMore, value, CanLoadMorePropertyName); }
+        }
+
+        public string Icon
+        {
+            get { return _icon; }
+            set { SetProperty(ref _icon, value, IconPropertyName); }
+        }
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value, IsBusyPropertyName); }
+        }
+
+        public string Subtitle
+        {
+            get { return _subTitle; }
+            set { SetProperty(ref _subTitle, value, SubtitlePropertyName); }
+        }
 
         /// <summary>
         /// Gets or sets the "Title" property
@@ -161,56 +212,18 @@ namespace Xamarin.Forms.Controls.Issues
             set { SetProperty(ref _title, value, TitlePropertyName); }
         }
 
-        string _subTitle = string.Empty;
+        #region INotifyPropertyChanged implementation
 
-        /// <summary>
-        /// Gets or sets the "Subtitle" property
-        /// </summary>
-        public const string SubtitlePropertyName = "Subtitle";
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Subtitle
+        #endregion
+
+        public void OnPropertyChanged(string propertyName)
         {
-            get { return _subTitle; }
-            set { SetProperty(ref _subTitle, value, SubtitlePropertyName); }
-        }
+            if (PropertyChanged == null)
+                return;
 
-        string _icon = null;
-
-        /// <summary>
-        /// Gets or sets the "Icon" of the viewmodel
-        /// </summary>
-        public const string IconPropertyName = "Icon";
-
-        public string Icon
-        {
-            get { return _icon; }
-            set { SetProperty(ref _icon, value, IconPropertyName); }
-        }
-
-        bool _isBusy;
-
-        /// <summary>
-        /// Gets or sets if the view is busy.
-        /// </summary>
-        public const string IsBusyPropertyName = "IsBusy";
-
-        public bool IsBusy
-        {
-            get { return _isBusy; }
-            set { SetProperty(ref _isBusy, value, IsBusyPropertyName); }
-        }
-
-        bool _canLoadMore = true;
-
-        /// <summary>
-        /// Gets or sets if we can load more.
-        /// </summary>
-        public const string CanLoadMorePropertyName = "CanLoadMore";
-
-        public bool CanLoadMore
-        {
-            get { return _canLoadMore; }
-            set { SetProperty(ref _canLoadMore, value, CanLoadMorePropertyName); }
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected void SetProperty<T>(
@@ -228,20 +241,6 @@ namespace Xamarin.Forms.Controls.Issues
 
             OnPropertyChanged(propertyName);
         }
-
-        #region INotifyPropertyChanged implementation
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        public void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged == null)
-                return;
-
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 
     [Preserve(AllMembers = true)]
@@ -253,7 +252,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         public string ArticleTitle { get; set; }
 
-        public string ShortArticleTitle { get; set; }
+        public string ArticleUrl { get; set; }
 
         public string AuthorString { get; set; }
 
@@ -261,13 +260,13 @@ namespace Xamarin.Forms.Controls.Issues
 
         public string KickerName { get; set; }
 
-        public string ArticleUrl { get; set; }
+        public string ShortArticleTitle { get; set; }
     }
 
     public class YearOloArticleList
     {
-        public string Year { get; set; }
-
         public List<ArticleListing> ListArticleListing { get; set; }
+
+        public string Year { get; set; }
     }
 }

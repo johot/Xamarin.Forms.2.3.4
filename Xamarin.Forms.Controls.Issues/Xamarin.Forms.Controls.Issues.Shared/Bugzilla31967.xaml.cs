@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using Xamarin.Forms.CustomAttributes;
-using Xamarin.Forms;
-using System.ComponentModel;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -20,12 +17,12 @@ namespace Xamarin.Forms.Controls
 
         public class Bugzilla31967Vm : INotifyPropertyChanged
         {
+            GridLength _toolbarHeight;
+
             public Command Fire
             {
                 get { return new Command(() => ToolbarHeight = 50); }
             }
-
-            GridLength _toolbarHeight;
 
             public GridLength ToolbarHeight
             {
@@ -37,14 +34,14 @@ namespace Xamarin.Forms.Controls
                 }
             }
 
+            public event PropertyChangedEventHandler PropertyChanged;
+
             protected void OnPropertyChanged(string propertyName)
             {
-                var handler = PropertyChanged;
+                PropertyChangedEventHandler handler = PropertyChanged;
                 if (handler != null)
                     handler(this, new PropertyChangedEventArgs(propertyName));
             }
-
-            public event PropertyChangedEventHandler PropertyChanged;
         }
     }
 #endif

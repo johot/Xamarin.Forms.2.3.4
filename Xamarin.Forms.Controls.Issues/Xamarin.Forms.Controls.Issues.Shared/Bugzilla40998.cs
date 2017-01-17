@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -30,7 +29,7 @@ namespace Xamarin.Forms.Controls.Issues
                         Text = "Click to display ActionSheet",
                         Command = new Command(async () =>
                         {
-                            var result = await DisplayActionSheet("Test ActionSheet", "Cancel", "Destroy",
+                            string result = await DisplayActionSheet("Test ActionSheet", "Cancel", "Destroy",
                                 new string[] { "Test Button" });
                             resultLabel.Text = result;
                         })

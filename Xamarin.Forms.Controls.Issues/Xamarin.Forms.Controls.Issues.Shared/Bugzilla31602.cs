@@ -1,8 +1,8 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -19,7 +19,8 @@ namespace Xamarin.Forms.Controls.Issues
 
     [Preserve(AllMembers = true)]
     [Issue(IssueTracker.Bugzilla, 31602,
-            "not possible to programmatically open master page after iPad landscape -> portrait rotation, also tests 31664")
+            "not possible to programmatically open master page after iPad landscape -> portrait rotation, also tests 31664"
+        )
     ]
     public class Bugzilla31602 : TestMasterDetailPage
     {
@@ -75,19 +76,14 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class MasterViewModel1 : INotifyPropertyChanged
         {
+            bool _isMenuOpen;
             public MasterDetailPage MasterPage;
 
-            public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            public MasterViewModel1()
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
+                IsMenuOpen = true;
+                OpenSideMenuCommand = new Command(OpenSideMenu);
             }
-
-            bool _isMenuOpen;
 
             public bool IsMenuOpen
             {
@@ -105,10 +101,14 @@ namespace Xamarin.Forms.Controls.Issues
 
             public ICommand OpenSideMenuCommand { get; private set; }
 
-            public MasterViewModel1()
+            public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
             {
-                IsMenuOpen = true;
-                OpenSideMenuCommand = new Command(OpenSideMenu);
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
             }
 
             void OpenSideMenu()

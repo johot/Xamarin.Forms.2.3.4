@@ -8,8 +8,30 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     public class CellForceUpdateSizeGalleryPage : TabbedPage
     {
+        public CellForceUpdateSizeGalleryPage()
+        {
+            Children.Add(new ViewCellPage());
+            Children.Add(new ImageCellPage());
+            Children.Add(new TextCellPage());
+            Children.Add(new EntryCellPage());
+            Children.Add(new SwitchCellPage());
+        }
+
         public class ViewCellPage : ContentPage
         {
+            public ViewCellPage()
+            {
+                var listview = new ListView
+                {
+                    HasUnevenRows = true,
+                };
+                IEnumerable<int> items = Enumerable.Range(0, 10);
+                listview.ItemsSource = items;
+                listview.ItemTemplate = new DataTemplate(typeof(MyViewCell));
+                Content = listview;
+                Title = "View Cell";
+            }
+
             [Preserve(AllMembers = true)]
             public class MyViewCell : ViewCell
             {
@@ -40,23 +62,23 @@ namespace Xamarin.Forms.Controls
                     View = new StackLayout { Orientation = StackOrientation.Horizontal, Children = { image, button } };
                 }
             }
+        }
 
-            public ViewCellPage()
+        public class ImageCellPage : ContentPage
+        {
+            public ImageCellPage()
             {
                 var listview = new ListView
                 {
                     HasUnevenRows = true,
                 };
-                var items = Enumerable.Range(0, 10);
+                IEnumerable<int> items = Enumerable.Range(0, 10);
                 listview.ItemsSource = items;
-                listview.ItemTemplate = new DataTemplate(typeof(MyViewCell));
+                listview.ItemTemplate = new DataTemplate(typeof(MyImageCell));
                 Content = listview;
-                Title = "View Cell";
+                Title = "Image Cell";
             }
-        }
 
-        public class ImageCellPage : ContentPage
-        {
             [Preserve(AllMembers = true)]
             public class MyImageCell : ImageCell
             {
@@ -71,23 +93,23 @@ namespace Xamarin.Forms.Controls
                     });
                 }
             }
+        }
 
-            public ImageCellPage()
+        public class TextCellPage : ContentPage
+        {
+            public TextCellPage()
             {
                 var listview = new ListView
                 {
                     HasUnevenRows = true,
                 };
-                var items = Enumerable.Range(0, 10);
+                IEnumerable<int> items = Enumerable.Range(0, 10);
                 listview.ItemsSource = items;
-                listview.ItemTemplate = new DataTemplate(typeof(MyImageCell));
+                listview.ItemTemplate = new DataTemplate(typeof(MyTextCell));
                 Content = listview;
-                Title = "Image Cell";
+                Title = "Text Cell";
             }
-        }
 
-        public class TextCellPage : ContentPage
-        {
             [Preserve(AllMembers = true)]
             public class MyTextCell : TextCell
             {
@@ -102,23 +124,23 @@ namespace Xamarin.Forms.Controls
                     });
                 }
             }
+        }
 
-            public TextCellPage()
+        public class EntryCellPage : ContentPage
+        {
+            public EntryCellPage()
             {
                 var listview = new ListView
                 {
                     HasUnevenRows = true,
                 };
-                var items = Enumerable.Range(0, 10);
+                IEnumerable<int> items = Enumerable.Range(0, 10);
                 listview.ItemsSource = items;
-                listview.ItemTemplate = new DataTemplate(typeof(MyTextCell));
+                listview.ItemTemplate = new DataTemplate(typeof(MyEntryCell));
                 Content = listview;
-                Title = "Text Cell";
+                Title = "Entry Cell";
             }
-        }
 
-        public class EntryCellPage : ContentPage
-        {
             [Preserve(AllMembers = true)]
             public class MyEntryCell : EntryCell
             {
@@ -138,23 +160,23 @@ namespace Xamarin.Forms.Controls
                     };
                 }
             }
+        }
 
-            public EntryCellPage()
+        public class SwitchCellPage : ContentPage
+        {
+            public SwitchCellPage()
             {
                 var listview = new ListView
                 {
                     HasUnevenRows = true,
                 };
-                var items = Enumerable.Range(0, 10);
+                IEnumerable<int> items = Enumerable.Range(0, 10);
                 listview.ItemsSource = items;
-                listview.ItemTemplate = new DataTemplate(typeof(MyEntryCell));
+                listview.ItemTemplate = new DataTemplate(typeof(MySwitchCell));
                 Content = listview;
-                Title = "Entry Cell";
+                Title = "Switch Cell";
             }
-        }
 
-        public class SwitchCellPage : ContentPage
-        {
             [Preserve(AllMembers = true)]
             public class MySwitchCell : SwitchCell
             {
@@ -174,28 +196,6 @@ namespace Xamarin.Forms.Controls
                     };
                 }
             }
-
-            public SwitchCellPage()
-            {
-                var listview = new ListView
-                {
-                    HasUnevenRows = true,
-                };
-                var items = Enumerable.Range(0, 10);
-                listview.ItemsSource = items;
-                listview.ItemTemplate = new DataTemplate(typeof(MySwitchCell));
-                Content = listview;
-                Title = "Switch Cell";
-            }
-        }
-
-        public CellForceUpdateSizeGalleryPage()
-        {
-            Children.Add(new ViewCellPage());
-            Children.Add(new ImageCellPage());
-            Children.Add(new TextCellPage());
-            Children.Add(new EntryCellPage());
-            Children.Add(new SwitchCellPage());
         }
     }
 }

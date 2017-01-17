@@ -1,7 +1,6 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.Generic;
-using System.Threading;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -160,8 +159,6 @@ namespace Xamarin.Forms.Controls.Issues
 
         public class MenuPage : ContentPage
         {
-            public ListView Menu { get; set; }
-
             public MenuPage()
             {
                 Title = "Menu";
@@ -189,6 +186,8 @@ namespace Xamarin.Forms.Controls.Issues
 
                 Content = layout;
             }
+
+            public ListView Menu { get; set; }
         }
 
         void NavigateTo(MenuItem menu)
@@ -201,11 +200,11 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class MenuItem
         {
-            public string Title { get; set; }
-
             public string IconSource { get; set; }
 
             public Type TargetType { get; set; }
+
+            public string Title { get; set; }
         }
 
 #if UITEST

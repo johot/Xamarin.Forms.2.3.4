@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -13,8 +12,8 @@ namespace Xamarin.Forms.Controls
 {
     public class GenericValueConverter : IValueConverter
     {
-        Func<object, object> _convert;
         Func<object, object> _back;
+        Func<object, object> _convert;
 
         public GenericValueConverter(Func<object, object> convert, Func<object, object> back = null)
         {
@@ -40,15 +39,15 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class Expense
     {
-        public string Name { get; private set; }
-
-        public decimal Amount { get; private set; }
-
         public Expense(string name, decimal amount)
         {
             Name = name;
             Amount = amount;
         }
+
+        public decimal Amount { get; private set; }
+
+        public string Name { get; private set; }
     }
 
     [Preserve(AllMembers = true)]
@@ -60,7 +59,7 @@ namespace Xamarin.Forms.Controls.Issues
             expenseNameLabel.SetBinding(Label.TextProperty, "Name");
 
             var expenseAmountLabel = new Label();
-            var expenseAmountToStringConverter = new GenericValueConverter(obj => string.Format("{0:C}", ((decimal)obj)));
+            var expenseAmountToStringConverter = new GenericValueConverter(obj => string.Format("{0:C}", (decimal)obj));
             expenseAmountLabel.SetBinding(Label.TextProperty,
                 new Binding("Amount", converter: expenseAmountToStringConverter));
 
@@ -106,7 +105,7 @@ namespace Xamarin.Forms.Controls.Issues
             listView.ItemTemplate = new DataTemplate(typeof(ExpenseListViewCell));
 
             var layout = new StackLayout();
-            int numberAdded = 3;
+            var numberAdded = 3;
 
             var label = new Label
             {

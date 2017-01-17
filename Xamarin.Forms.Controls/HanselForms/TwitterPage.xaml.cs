@@ -7,11 +7,6 @@ namespace Xamarin.Forms.Controls
 {
     public partial class TwitterPage : ContentPage
     {
-        private TwitterViewModel ViewModel
-        {
-            get { return BindingContext as TwitterViewModel; }
-        }
-
         public TwitterPage()
         {
             InitializeComponent();
@@ -22,10 +17,15 @@ namespace Xamarin.Forms.Controls
                 if (listView.SelectedItem == null)
                     return;
                 var tweet = listView.SelectedItem as Tweet;
-                this.Navigation.PushAsync(new WebsiteView("http://m.twitter.com/shanselman/status/" + tweet.StatusID,
+                Navigation.PushAsync(new WebsiteView("http://m.twitter.com/shanselman/status/" + tweet.StatusID,
                     tweet.Date));
                 listView.SelectedItem = null;
             };
+        }
+
+        private TwitterViewModel ViewModel
+        {
+            get { return BindingContext as TwitterViewModel; }
         }
 
         protected override void OnAppearing()
@@ -40,7 +40,7 @@ namespace Xamarin.Forms.Controls
 
     public class TwitterViewModel : HBaseViewModel
     {
-        public ObservableCollection<Tweet> Tweets { get; set; }
+        private Command loadTweetsCommand;
 
         public TwitterViewModel()
         {
@@ -48,8 +48,6 @@ namespace Xamarin.Forms.Controls
             Icon = "slideout.png";
             Tweets = new ObservableCollection<Tweet>();
         }
-
-        private Command loadTweetsCommand;
 
         public Command LoadTweetsCommand
         {
@@ -60,6 +58,8 @@ namespace Xamarin.Forms.Controls
                            new Command(async () => { await ExecuteLoadTweetsCommand(); }, () => { return !IsBusy; }));
             }
         }
+
+        public ObservableCollection<Tweet> Tweets { get; set; }
 
         public async Task ExecuteLoadTweetsCommand()
         {
@@ -138,11 +138,9 @@ namespace Xamarin.Forms.Controls
         {
         }
 
-        public ulong StatusID { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public string ScreenName { get; set; }
-
-        public string Text { get; set; }
+        public ulong CurrentUserRetweet { get; set; }
 
         //[JsonIgnore]
         public string Date
@@ -150,22 +148,24 @@ namespace Xamarin.Forms.Controls
             get { return CreatedAt.ToString("g"); }
         }
 
+        public string Image { get; set; }
+
         //[JsonIgnore]
         public string RTCount
         {
             get { return CurrentUserRetweet == 0 ? string.Empty : CurrentUserRetweet + " RT"; }
         }
 
-        public string Image { get; set; }
+        public string ScreenName { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public ulong StatusID { get; set; }
 
-        public ulong CurrentUserRetweet { get; set; }
+        public string Text { get; set; }
     }
 
     public interface ITweetStore
     {
-        void Save(System.Collections.Generic.List<Tweet> tweets);
+        void Save(List<Tweet> tweets);
         //System.Collections.Generic.List<Hanselman.Shared.Tweet> Load ();
     }
 }

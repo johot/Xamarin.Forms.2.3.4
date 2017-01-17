@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -33,7 +28,7 @@ namespace Xamarin.Forms.Controls
 
             public SwitchDemoPage()
             {
-                Label header = new Label
+                var header = new Label
                 {
                     Text = "Switch",
 #pragma warning disable 618
@@ -42,7 +37,7 @@ namespace Xamarin.Forms.Controls
                     HorizontalOptions = LayoutOptions.Center
                 };
 
-                Switch switcher = new Switch
+                var switcher = new Switch
                 {
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.CenterAndExpand

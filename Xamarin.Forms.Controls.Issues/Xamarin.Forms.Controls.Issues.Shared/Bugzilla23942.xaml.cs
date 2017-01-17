@@ -1,5 +1,4 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -39,7 +38,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         private void InitializeView()
         {
-            TestViewModel vm = new TestViewModel() { DoesItWork = "initial binding works" };
+            var vm = new TestViewModel() { DoesItWork = "initial binding works" };
             BindingContext = vm;
             vm.DoesItWork = "success";
         }

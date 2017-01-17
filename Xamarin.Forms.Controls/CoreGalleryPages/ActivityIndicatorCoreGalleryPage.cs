@@ -9,11 +9,6 @@ namespace Xamarin.Forms.Controls
             get { return true; }
         }
 
-        protected override void InitializeElement(ActivityIndicator element)
-        {
-            element.IsRunning = true;
-        }
-
         protected override void Build(StackLayout stackLayout)
         {
             base.Build(stackLayout);
@@ -36,6 +31,11 @@ namespace Xamarin.Forms.Controls
 
             Add(colorContainer);
             Add(isRunningContainer);
+        }
+
+        protected override void InitializeElement(ActivityIndicator element)
+        {
+            element.IsRunning = true;
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -96,8 +95,8 @@ In the DatePicker below, change the date to May 25, 1977. If the selection immed
     {
         public CustomCell()
         {
-            StackLayout cellWrapper = new StackLayout();
-            StackLayout stack = new StackLayout();
+            var cellWrapper = new StackLayout();
+            var stack = new StackLayout();
 
             var picker = new Picker();
             var datePicker = new DatePicker();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -15,7 +10,7 @@ namespace Xamarin.Forms.Controls
     {
         public Issue2783()
         {
-            Frame frPatientInfo = new Frame
+            var frPatientInfo = new Frame
             {
                 OutlineColor = Color.Black,
                 BackgroundColor = Color.White,

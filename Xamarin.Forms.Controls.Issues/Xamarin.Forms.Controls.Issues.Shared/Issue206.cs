@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms.CustomAttributes;
@@ -53,6 +54,36 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class Issue206ListScreen
     {
+        public Issue206ListScreen()
+        {
+            View = new ListView();
+
+            View.RowHeight = 30;
+
+            var n = 50;
+            List<A> items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+            View.ItemsSource = items;
+
+            View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
+
+            View.ItemSelected += (sender, e) =>
+            {
+                var cell = e.SelectedItem as A;
+                if (cell == null)
+                    return;
+                int x = int.Parse(cell.Text);
+                if (x == 5)
+                {
+                    n += 10;
+                    View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+                }
+                else
+                {
+                    cell.Text = (x + 1).ToString();
+                }
+            };
+        }
+
         public ListView View { get; private set; }
 
         internal class A : INotifyPropertyChanged
@@ -113,36 +144,6 @@ namespace Xamarin.Forms.Controls.Issues
                 Debug.WriteLine("Disappearing: " + ((A)BindingContext).Text + " : " + s_inc);
                 s_inc++;
             }
-        }
-
-        public Issue206ListScreen()
-        {
-            View = new ListView();
-
-            View.RowHeight = 30;
-
-            var n = 50;
-            var items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
-            View.ItemsSource = items;
-
-            View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
-
-            View.ItemSelected += (sender, e) =>
-            {
-                var cell = (e.SelectedItem as A);
-                if (cell == null)
-                    return;
-                var x = int.Parse(cell.Text);
-                if (x == 5)
-                {
-                    n += 10;
-                    View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
-                }
-                else
-                {
-                    cell.Text = (x + 1).ToString();
-                }
-            };
         }
     }
 }

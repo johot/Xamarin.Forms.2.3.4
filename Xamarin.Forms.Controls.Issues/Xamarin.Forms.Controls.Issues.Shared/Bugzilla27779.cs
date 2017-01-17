@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.Generic;
 using Xamarin.Forms.Controls.Issues;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -15,59 +15,8 @@ namespace Xamarin.Forms.Controls
     [Issue(IssueTracker.Bugzilla, 27779, "Xamarin.Forms.ReadOnlyListAdapter.IndexOf throws NotImplementedExcpetion ")]
     public class Bugzilla27779 : TestContentPage // or TestMasterDetailPage, etc ...
     {
-        ListView _listview;
         IReadOnlyList<Person> _itemsSource;
-
-        public class Source : IReadOnlyList<Person>
-        {
-            List<Person> _items;
-
-            public Source()
-            {
-                _items = new List<Person>();
-
-                for (int i = 0; i < 100; i++)
-                {
-                    _items.Add(new Person("Person #" + i));
-                }
-            }
-
-            #region IEnumerable implementation
-
-            public IEnumerator<Person> GetEnumerator()
-            {
-                return _items.GetEnumerator();
-            }
-
-            #endregion
-
-            #region IEnumerable implementation
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return _items.GetEnumerator();
-            }
-
-            #endregion
-
-            #region IReadOnlyList implementation
-
-            public Person this[int index]
-            {
-                get { return _items[index]; }
-            }
-
-            #endregion
-
-            #region IReadOnlyCollection implementation
-
-            public int Count
-            {
-                get { return _items.Count; }
-            }
-
-            #endregion
-        }
+        ListView _listview;
 
         protected override void Init()
         {
@@ -87,6 +36,57 @@ namespace Xamarin.Forms.Controls
         protected override void OnAppearing()
         {
             base.OnAppearing();
+        }
+
+        public class Source : IReadOnlyList<Person>
+        {
+            List<Person> _items;
+
+            public Source()
+            {
+                _items = new List<Person>();
+
+                for (var i = 0; i < 100; i++)
+                {
+                    _items.Add(new Person("Person #" + i));
+                }
+            }
+
+            #region IEnumerable implementation
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return _items.GetEnumerator();
+            }
+
+            #endregion
+
+            #region IEnumerable implementation
+
+            public IEnumerator<Person> GetEnumerator()
+            {
+                return _items.GetEnumerator();
+            }
+
+            #endregion
+
+            #region IReadOnlyCollection implementation
+
+            public int Count
+            {
+                get { return _items.Count; }
+            }
+
+            #endregion
+
+            #region IReadOnlyList implementation
+
+            public Person this[int index]
+            {
+                get { return _items[index]; }
+            }
+
+            #endregion
         }
     }
 }

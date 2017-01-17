@@ -1,6 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
 using Xamarin.Forms.CustomAttributes;
-using System;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -12,12 +11,12 @@ namespace Xamarin.Forms.Controls.Issues
 {
     internal class PageNameObject
     {
-        public string PageName { get; private set; }
-
         public PageNameObject(string pageName)
         {
             PageName = pageName;
         }
+
+        public string PageName { get; private set; }
     }
 
     [Preserve(AllMembers = true)]
@@ -53,7 +52,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             listView.ItemTapped += (sender, e) =>
             {
-                var cellName = ((PageNameObject)e.Item).PageName;
+                string cellName = ((PageNameObject)e.Item).PageName;
 
                 if (cellName == "Close Master")
                 {
@@ -124,8 +123,6 @@ namespace Xamarin.Forms.Controls.Issues
 
     internal class CustomDetailPage : TabbedPage
     {
-        public event EventHandler PresentMaster;
-
         public CustomDetailPage(string pageName)
         {
             Title = pageName;
@@ -165,7 +162,7 @@ namespace Xamarin.Forms.Controls.Issues
                             Text = "Present Master",
                             Command = new Command(() =>
                             {
-                                var handler = PresentMaster;
+                                EventHandler handler = PresentMaster;
                                 if (handler != null)
                                     handler(this, EventArgs.Empty);
                             })
@@ -174,5 +171,7 @@ namespace Xamarin.Forms.Controls.Issues
                 }
             });
         }
+
+        public event EventHandler PresentMaster;
     }
 }

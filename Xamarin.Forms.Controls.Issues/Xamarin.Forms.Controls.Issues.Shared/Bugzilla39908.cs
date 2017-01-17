@@ -44,7 +44,7 @@ namespace Xamarin.Forms.Controls
 
         private ContentPage NewPage()
         {
-            var label = Navigation != null ? "Page " + (Navigation.NavigationStack.Count - 1) : "Root Page";
+            string label = Navigation != null ? "Page " + (Navigation.NavigationStack.Count - 1) : "Root Page";
 
             return new ContentPage
             {

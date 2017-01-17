@@ -1,6 +1,6 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
 using System.Collections.ObjectModel;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -78,13 +78,13 @@ namespace Xamarin.Forms.Controls.Issues
         {
             isBusy = true;
 
-            Random random = new Random(DateTime.Now.Millisecond);
+            var random = new Random(DateTime.Now.Millisecond);
 
             int count = random.Next(20, 30);
 
             _items.Clear();
 
-            for (int i = 0; i < count - 1; i++)
+            for (var i = 0; i < count - 1; i++)
             {
                 var newItem = new ListItem()
                 {
@@ -121,35 +121,11 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class ListItem
         {
-            public string Id { get; set; }
-
-            public string PrimaryText { get; set; }
-
-            public string SecondaryText { get; set; }
-
-            public string TertiaryText { get; set; }
-
-            public string OtherText { get; set; }
-
-            public string ListControl { get; set; }
-
-            public string Icon { get; set; }
-
-            public string Params { get; set; }
-
-            public string BackgroundColor { get; set; }
-
-            public string TextColor { get; set; }
-
-            public string CircleColor { get; set; }
-
-            public long EntityTypeId { get; set; }
-
-            public bool SupportsQuickComplete { get; set; }
-
             public ListItem()
             {
             }
+
+            public string BackgroundColor { get; set; }
 
             public string BackgroundColorColor
             {
@@ -163,48 +139,69 @@ namespace Xamarin.Forms.Controls.Issues
                 }
             }
 
+            public string CircleColor { get; set; }
+
+            public long EntityTypeId { get; set; }
+
+            public string Icon { get; set; }
+
+            public string Id { get; set; }
+
+            public string ListControl { get; set; }
+
+            public string OtherLabelText
+            {
+                get { return OtherText; }
+            }
+
+            public string OtherText { get; set; }
+
+            public string Params { get; set; }
+
             public string PrimaryLabelText
             {
                 get { return PrimaryText; }
             }
+
+            public string PrimaryText { get; set; }
 
             public string SecondaryLabelText
             {
                 get { return SecondaryText; }
             }
 
-            public string OtherLabelText
-            {
-                get { return OtherText; }
-            }
+            public string SecondaryText { get; set; }
+
+            public bool SupportsQuickComplete { get; set; }
+
+            public string TertiaryText { get; set; }
+
+            public string TextColor { get; set; }
         }
 
         public class ListItemEventArgs : EventArgs
         {
-            public ListItem ListItem { get; set; }
-
             public ListItemEventArgs(ListItem item)
             {
                 ListItem = item;
             }
+
+            public ListItem ListItem { get; set; }
         }
 
         [Preserve(AllMembers = true)]
         public class TaskItemTemplate : ViewCell
         {
-            Image _photo;
-            Label _mainLabel;
-            Label _secondaryLabel;
             Label _distanceLabel;
-            Label _statusCircle;
-            StackLayout _stackLayout;
-            StackLayout _primaryContent;
-            StackLayout _secondaryContent;
+            Label _mainLabel;
             AbsoluteLayout _masterLayout;
-
+            Image _photo;
+            StackLayout _primaryContent;
             MenuItem _quickCompleteMenu;
-
-            public static event EventHandler<ListItemEventArgs> RefreshFromQuickComplete;
+            StackLayout _secondaryContent;
+            Label _secondaryLabel;
+            StackLayout _stackLayout;
+            Label _statusCircle;
 
             public TaskItemTemplate()
             {
@@ -214,6 +211,68 @@ namespace Xamarin.Forms.Controls.Issues
             public TaskItemTemplate(bool fast = true)
             {
                 Init(fast);
+            }
+
+            public static event EventHandler<ListItemEventArgs> RefreshFromQuickComplete;
+
+            protected override void OnBindingContextChanged()
+            {
+                try
+                {
+                    base.OnBindingContextChanged();
+                    var item = BindingContext as ListItem;
+                    if (item != null)
+                    {
+                        Color transformedColor;
+
+                        if (!string.IsNullOrWhiteSpace(item.TextColor))
+                        {
+                            transformedColor = Color.FromHex(item.TextColor);
+
+                            _mainLabel.TextColor = transformedColor;
+                            _secondaryLabel.TextColor = transformedColor;
+                            _distanceLabel.TextColor = transformedColor;
+                        }
+
+                        if (string.IsNullOrEmpty(item.Icon))
+                            item.Icon =
+                                "https://beehive.blob.core.windows.net/staticimages/FeatureImages/MutantLizard01.png";
+
+                        _photo.Source = new UriImageSource()
+                        {
+                            Uri = new Uri(item.Icon),
+                            CachingEnabled = true,
+                            CacheValidity = new TimeSpan(30, 0, 0, 0),
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(item.BackgroundColor))
+                        {
+                            transformedColor = Color.FromHex(item.BackgroundColor);
+                            View.BackgroundColor = transformedColor;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(item.CircleColor))
+                        {
+                            _statusCircle.Text = "\u25CF "; // ascii circle
+                            _statusCircle.TextColor = Color.FromHex(item.CircleColor);
+                            _statusCircle.FontSize = 30;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+
+            protected override void OnPropertyChanged(string propertyName = null)
+            {
+                base.OnPropertyChanged(propertyName);
+                if (propertyName == "BackgroundColor")
+                {
+                    var item = BindingContext as ListItem;
+                    if (item != null && !string.IsNullOrEmpty(item.BackgroundColor))
+                        View.BackgroundColor = Color.FromHex(item.BackgroundColor);
+                }
             }
 
             void Init(bool fast)
@@ -321,67 +380,6 @@ namespace Xamarin.Forms.Controls.Issues
                     View = _masterLayout;
                 }
             }
-
-            protected override void OnPropertyChanged(string propertyName = null)
-            {
-                base.OnPropertyChanged(propertyName);
-                if (propertyName == "BackgroundColor")
-                {
-                    var item = BindingContext as ListItem;
-                    if (item != null && !string.IsNullOrEmpty(item.BackgroundColor))
-                        View.BackgroundColor = Color.FromHex(item.BackgroundColor);
-                }
-            }
-
-            protected override void OnBindingContextChanged()
-            {
-                try
-                {
-                    base.OnBindingContextChanged();
-                    var item = BindingContext as ListItem;
-                    if (item != null)
-                    {
-                        Color transformedColor;
-
-                        if (!string.IsNullOrWhiteSpace(item.TextColor))
-                        {
-                            transformedColor = Color.FromHex(item.TextColor);
-
-                            _mainLabel.TextColor = transformedColor;
-                            _secondaryLabel.TextColor = transformedColor;
-                            _distanceLabel.TextColor = transformedColor;
-                        }
-
-                        if (string.IsNullOrEmpty(item.Icon))
-                            item.Icon =
-                                "https://beehive.blob.core.windows.net/staticimages/FeatureImages/MutantLizard01.png";
-
-                        _photo.Source = new UriImageSource()
-                        {
-                            Uri = new Uri(item.Icon),
-                            CachingEnabled = true,
-                            CacheValidity = new TimeSpan(30, 0, 0, 0),
-                        };
-
-                        if (!string.IsNullOrWhiteSpace(item.BackgroundColor))
-                        {
-                            transformedColor = Color.FromHex(item.BackgroundColor);
-                            View.BackgroundColor = transformedColor;
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(item.CircleColor))
-                        {
-                            _statusCircle.Text = "\u25CF "; // ascii circle
-                            _statusCircle.TextColor = Color.FromHex(item.CircleColor);
-                            _statusCircle.FontSize = 30;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-
 #pragma warning disable 1998 // considered for removal
             async void FastCompleteForCmd(object sender)
 #pragma warning restore 1998
@@ -390,7 +388,7 @@ namespace Xamarin.Forms.Controls.Issues
                 {
                     {
                         var item = BindingContext as ListItem;
-                        bool success = true; // await _taskListManager.FastComplete(item);
+                        var success = true; // await _taskListManager.FastComplete(item);
 
                         if (success)
                             RefreshFromQuickComplete(this, new ListItemEventArgs(item));

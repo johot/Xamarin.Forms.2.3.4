@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -26,7 +25,7 @@ namespace Xamarin.Forms.Controls.Issues
             lstView.GroupShortNameBinding = new Binding("ShortName");
 
             lstView.ItemTemplate = new DataTemplate(typeof(DemoTextCell));
-            lstView.ItemTemplate.SetBinding(DemoTextCell.TextProperty, "Name");
+            lstView.ItemTemplate.SetBinding(TextCell.TextProperty, "Name");
 
             Content = lstView;
         }
@@ -75,13 +74,13 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class VeggieModel
         {
-            public string Name { get; set; }
-
             public string Comment { get; set; }
+
+            public string Image { get; set; }
 
             public bool IsReallyAVeggie { get; set; }
 
-            public string Image { get; set; }
+            public string Name { get; set; }
         }
 
         [Preserve(AllMembers = true)]

@@ -1,5 +1,4 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -42,7 +41,7 @@ namespace Xamarin.Forms.Controls
 
         protected void Delete(object parameters)
         {
-            int rowId = (int)parameters;
+            var rowId = (int)parameters;
             _dataSection.RemoveAt(rowId);
         }
     }

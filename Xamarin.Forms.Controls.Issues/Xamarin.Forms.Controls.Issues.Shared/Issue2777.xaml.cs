@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms.CustomAttributes;
@@ -21,7 +20,7 @@ namespace Xamarin.Forms.Controls.Issues
         {
 #if APP
             InitializeComponent();
-            var list = SetupList();
+            ObservableCollection<ListItemCollection> list = SetupList();
             itemListView.ItemsSource = list;
 #endif
         }
@@ -40,10 +39,10 @@ namespace Xamarin.Forms.Controls.Issues
         {
             var allListItemGroups = new ObservableCollection<ListItemCollection>();
 
-            foreach (var item in ListItemCollection.GetSortedData())
+            foreach (ListItemValue item in ListItemCollection.GetSortedData())
             {
                 // Attempt to find any existing groups where theg group title matches the first char of our ListItem's name.
-                var listItemGroup = allListItemGroups.FirstOrDefault(g => g.Title == item.Label);
+                ListItemCollection listItemGroup = allListItemGroups.FirstOrDefault(g => g.Title == item.Label);
 
                 // If the list group does not exist, we create it.
                 if (listItemGroup == null)
@@ -65,25 +64,6 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class ListItemCollection : ObservableCollection<ListItemValue>
         {
-            public string Title { get; private set; }
-
-            public string LongTitle
-            {
-                get { return "The letter " + Title; }
-            }
-
-            public ListItemCollection(string title)
-            {
-                Title = title;
-            }
-
-            public static List<ListItemValue> GetSortedData()
-            {
-                var items = ListItems;
-                items.Sort();
-                return items;
-            }
-
             // Data used to populate our list.
             static readonly List<ListItemValue> ListItems = new List<ListItemValue>()
             {
@@ -99,27 +79,46 @@ namespace Xamarin.Forms.Controls.Issues
                 new ListItemValue("Dewey"),
                 new ListItemValue("Erdős"),
             };
+
+            public ListItemCollection(string title)
+            {
+                Title = title;
+            }
+
+            public string LongTitle
+            {
+                get { return "The letter " + Title; }
+            }
+
+            public string Title { get; private set; }
+
+            public static List<ListItemValue> GetSortedData()
+            {
+                List<ListItemValue> items = ListItems;
+                items.Sort();
+                return items;
+            }
         }
 
         // Represents one item in our list.
         [Preserve(AllMembers = true)]
         public class ListItemValue : IComparable<ListItemValue>
         {
-            public string Name { get; private set; }
-
             public ListItemValue(string name)
             {
                 Name = name;
             }
 
-            int IComparable<ListItemValue>.CompareTo(ListItemValue value)
-            {
-                return Name.CompareTo(value.Name);
-            }
-
             public string Label
             {
                 get { return Name[0].ToString(); }
+            }
+
+            public string Name { get; private set; }
+
+            int IComparable<ListItemValue>.CompareTo(ListItemValue value)
+            {
+                return Name.CompareTo(value.Name);
             }
         }
 

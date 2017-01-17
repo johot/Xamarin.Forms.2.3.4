@@ -6,13 +6,13 @@ namespace Xamarin.Forms.Controls
     [Preserve(AllMembers = true)]
     public class TextCellTest
     {
-        public object Text { get; set; }
-
-        public object TextColor { get; set; }
-
         public object Detail { get; set; }
 
         public object DetailColor { get; set; }
+
+        public object Text { get; set; }
+
+        public object TextColor { get; set; }
     }
 
     public class TextCellListPage : ContentPage

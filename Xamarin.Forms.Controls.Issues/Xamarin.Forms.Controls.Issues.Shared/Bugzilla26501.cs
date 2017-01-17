@@ -13,16 +13,6 @@ namespace Xamarin.Forms.Controls.Issues
     [Preserve(AllMembers = true)]
     public class FamilyViewModel
     {
-        public Guid ProfileId { get; set; }
-
-        public string DisplayName { get; set; }
-
-        public string ImageFilename { get; set; }
-
-        public string BonusBalance { get; set; }
-
-        public string MemberNo { get; set; }
-
         public FamilyViewModel()
         {
             ProfileId = Guid.Empty;
@@ -31,6 +21,16 @@ namespace Xamarin.Forms.Controls.Issues
             MemberNo = "";
             ImageFilename = "";
         }
+
+        public string BonusBalance { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public string ImageFilename { get; set; }
+
+        public string MemberNo { get; set; }
+
+        public Guid ProfileId { get; set; }
     }
 
     [Preserve(AllMembers = true)]

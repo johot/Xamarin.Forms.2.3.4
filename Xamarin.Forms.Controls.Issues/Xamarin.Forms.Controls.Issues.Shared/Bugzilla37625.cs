@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Controls.Issues
     {
         protected override async void Init()
         {
-            int retry = 5;
+            var retry = 5;
             while (retry-- >= 0)
             {
                 var imageUri = new Uri("https://xamarin.com/content/images/pages/products/platform.png");

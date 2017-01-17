@@ -1,9 +1,7 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -35,16 +33,6 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class VM : ViewModel
         {
-            public void Load()
-            {
-                var list = new List<string>();
-                for (int i = 0; i < 20; i++)
-                {
-                    list.Add("second " + i.ToString());
-                }
-                SearchResults = new ObservableCollection<string>(list);
-            }
-
             ObservableCollection<string> _list = null;
 
             public ObservableCollection<string> SearchResults
@@ -56,6 +44,16 @@ namespace Xamarin.Forms.Controls.Issues
                     _list = value;
                     OnPropertyChanged();
                 }
+            }
+
+            public void Load()
+            {
+                var list = new List<string>();
+                for (var i = 0; i < 20; i++)
+                {
+                    list.Add("second " + i.ToString());
+                }
+                SearchResults = new ObservableCollection<string>(list);
             }
         }
 

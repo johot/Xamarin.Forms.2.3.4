@@ -1,7 +1,6 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using System.Collections.ObjectModel;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System.Linq;
-using System.Collections.ObjectModel;
 
 #if UITEST
 using Xamarin.Forms.Core.UITests;
@@ -56,7 +55,7 @@ namespace Xamarin.Forms.Controls.Issues
             var grp1 = new GroupedItem() { LongName = "Group 1", ShortName = "1" };
             var grp2 = new GroupedItem() { LongName = "Group 2", ShortName = "2" };
 
-            for (int i = 1; i < 4; i++)
+            for (var i = 1; i < 4; i++)
             {
                 grp1.Add($"Item #{i}");
                 grp2.Add($"Item #{i}");

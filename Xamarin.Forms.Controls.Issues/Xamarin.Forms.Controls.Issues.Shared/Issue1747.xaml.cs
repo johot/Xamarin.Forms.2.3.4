@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -10,19 +8,8 @@ namespace Xamarin.Forms.Controls
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        bool _shouldBeToggled;
-
-        public bool ShouldBeToggled
-        {
-            get { return _shouldBeToggled; }
-            set
-            {
-                _shouldBeToggled = value;
-                OnPropertyChanged();
-            }
-        }
-
         bool _shouldBeEnabled;
+        bool _shouldBeToggled;
 
         public bool ShouldBeEnabled
         {
@@ -30,6 +17,16 @@ namespace Xamarin.Forms.Controls
             set
             {
                 _shouldBeEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShouldBeToggled
+        {
+            get { return _shouldBeToggled; }
+            set
+            {
+                _shouldBeToggled = value;
                 OnPropertyChanged();
             }
         }

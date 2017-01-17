@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
+﻿using System.Diagnostics;
 
 namespace Xamarin.Forms.Controls.Issues
 {
@@ -29,11 +27,11 @@ namespace Xamarin.Forms.Controls.Issues
 #endif
         }
 
+        public FileImageSource ImageWhichChanges { get; set; }
+
         ~Bugzilla42069_Page()
         {
             Debug.WriteLine(DestructorMessage);
         }
-
-        public FileImageSource ImageWhichChanges { get; set; }
     }
 }

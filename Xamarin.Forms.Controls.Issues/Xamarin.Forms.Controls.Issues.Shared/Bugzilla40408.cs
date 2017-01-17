@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using System;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System;
 
 #if UITEST
 using Xamarin.UITest;
@@ -74,14 +74,19 @@ namespace Xamarin.Forms.Controls.Issues
             PushAsync(contentPage1);
         }
 
+        void ContentPage2_Appearing(object sender, EventArgs e)
+        {
+            DisplayAlert("Appearing", "ContentPage", "OK");
+        }
+
         void ContentPage2_Disappearing(object sender, EventArgs e)
         {
             DisplayAlert("Disappearing", "ContentPage", "OK");
         }
 
-        void TabbedPage1_Disappearing(object sender, EventArgs e)
+        void MasterDetailPage1_Appearing(object sender, EventArgs e)
         {
-            DisplayAlert("Disappearing", "TabbedPage", "OK");
+            DisplayAlert("Appearing", "MasterDetailPage", "OK");
         }
 
         void MasterDetailPage1_Disappearing(object sender, EventArgs e)
@@ -94,14 +99,9 @@ namespace Xamarin.Forms.Controls.Issues
             DisplayAlert("Appearing", "TabbedPage", "OK");
         }
 
-        void ContentPage2_Appearing(object sender, EventArgs e)
+        void TabbedPage1_Disappearing(object sender, EventArgs e)
         {
-            DisplayAlert("Appearing", "ContentPage", "OK");
-        }
-
-        void MasterDetailPage1_Appearing(object sender, EventArgs e)
-        {
-            DisplayAlert("Appearing", "MasterDetailPage", "OK");
+            DisplayAlert("Disappearing", "TabbedPage", "OK");
         }
     }
 }

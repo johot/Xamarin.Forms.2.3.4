@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using System.Collections.ObjectModel;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -15,6 +9,8 @@ namespace Xamarin.Forms.Controls.TestCasesPages
     [Issue(IssueTracker.Github, 2282, "ListView ItemTapped issue on Windows phone", PlatformAffected.WinPhone)]
     public partial class Issue2282 : ContentPage
     {
+        int _counter = 0;
+
         public Issue2282()
         {
             Items = new ObservableCollection<string>();
@@ -26,8 +22,6 @@ namespace Xamarin.Forms.Controls.TestCasesPages
         }
 
         public ObservableCollection<string> Items { get; set; }
-
-        int _counter = 0;
 
         protected override void OnAppearing()
         {

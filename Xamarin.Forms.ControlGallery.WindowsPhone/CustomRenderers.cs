@@ -44,7 +44,7 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
             m_Canvas.Children.Add(ellipse);
 
             //text
-            TextBlock text = new TextBlock()
+            var text = new TextBlock()
             {
                 FontSize = 50,
                 FontWeight = global::Windows.UI.Text.FontWeights.Normal,

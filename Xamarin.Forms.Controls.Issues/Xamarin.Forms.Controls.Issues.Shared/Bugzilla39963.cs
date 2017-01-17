@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -29,7 +28,7 @@ namespace Xamarin.Forms.Controls.Issues
 						</body></html>";
 
             // Initialize ui here instead of ctor
-            WebView webView = new WebView
+            var webView = new WebView
             {
                 //Source = new UrlWebViewSource {
                 //	Url = "https://blog.xamarin.com/",

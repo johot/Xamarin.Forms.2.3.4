@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
+﻿using System.Diagnostics;
 using System.Windows.Input;
-using System.Diagnostics;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST

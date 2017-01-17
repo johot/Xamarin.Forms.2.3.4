@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
@@ -23,6 +22,10 @@ namespace Xamarin.Forms.Controls.Issues
         [Preserve(AllMembers = true)]
         public class Model31333 : INotifyPropertyChanged
         {
+            string _data;
+
+            bool _isFocused = false;
+
             public string Data
             {
                 get { return _data; }
@@ -32,9 +35,6 @@ namespace Xamarin.Forms.Controls.Issues
                     OnPropertyChanged();
                 }
             }
-
-            bool _isFocused = false;
-            string _data;
 
             public bool IsFocused
             {
@@ -72,6 +72,11 @@ namespace Xamarin.Forms.Controls.Issues
                 set { SetValue(IsControlFocusedProperty, value); }
             }
 
+            public void SetBinding()
+            {
+                this.SetBinding(IsControlFocusedProperty, "IsFocused");
+            }
+
             protected override void OnPropertyChanged(string propertyName = null)
             {
                 base.OnPropertyChanged(propertyName);
@@ -86,11 +91,6 @@ namespace Xamarin.Forms.Controls.Issues
                         Unfocus();
                     }
                 }
-            }
-
-            public void SetBinding()
-            {
-                this.SetBinding(IsControlFocusedProperty, "IsFocused");
             }
         }
 
@@ -106,6 +106,11 @@ namespace Xamarin.Forms.Controls.Issues
                 set { SetValue(IsControlFocusedProperty, value); }
             }
 
+            public void SetBinding()
+            {
+                this.SetBinding(IsControlFocusedProperty, "IsFocused");
+            }
+
             protected override void OnPropertyChanged(string propertyName = null)
             {
                 base.OnPropertyChanged(propertyName);
@@ -120,11 +125,6 @@ namespace Xamarin.Forms.Controls.Issues
                         Unfocus();
                     }
                 }
-            }
-
-            public void SetBinding()
-            {
-                this.SetBinding(IsControlFocusedProperty, "IsFocused");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         StackLayout CreateListViewTestSection(Type controlType)
         {
-            var name = controlType.GenericTypeArguments[0].Name;
+            string name = controlType.GenericTypeArguments[0].Name;
             name = name.Replace("Extended", "");
 
             var button = new Button() { Text = $"Focus {name} in ListView" };
@@ -167,7 +167,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             button.Clicked += (sender, args) =>
             {
-                var item = data[0];
+                Model31333 item = data[0];
                 if (item != null)
                 {
                     item.IsFocused = !item.IsFocused;
@@ -179,7 +179,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         StackLayout CreateTableViewTestSection<T>() where T : View, IHaveControlFocusedProperty
         {
-            var name = typeof(T).Name;
+            string name = typeof(T).Name;
             name = name.Replace("Extended", "");
 
             var button = new Button() { Text = $"Focus {name} in Table" };
@@ -204,7 +204,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             button.Clicked += (sender, args) =>
             {
-                var item = data;
+                Model31333 item = data;
                 if (item != null)
                 {
                     item.IsFocused = !item.IsFocused;
@@ -216,11 +216,11 @@ namespace Xamarin.Forms.Controls.Issues
 
         protected override void Init()
         {
-            var entrySection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEntry>));
-            var editorSection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEditor>));
+            StackLayout entrySection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEntry>));
+            StackLayout editorSection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEditor>));
 
-            var entryTableSection = CreateTableViewTestSection<ExtendedEntry>();
-            var editorTableSection = CreateTableViewTestSection<ExtendedEditor>();
+            StackLayout entryTableSection = CreateTableViewTestSection<ExtendedEntry>();
+            StackLayout editorTableSection = CreateTableViewTestSection<ExtendedEditor>();
 
             Content = new StackLayout()
             {

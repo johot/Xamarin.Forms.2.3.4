@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms.CustomAttributes;
+﻿using System.Linq;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
-using System.Linq;
 
 #if UITEST
 using Xamarin.UITest;
@@ -31,29 +31,6 @@ namespace Xamarin.Forms.Controls.Issues
             view.SetValue(AttachBehaviorProperty, value);
         }
 
-        static void OnAttachBehaviorChanged(BindableObject view, object oldValue, object newValue)
-        {
-            var entry = view as Entry;
-            if (entry == null)
-            {
-                return;
-            }
-
-            bool attachBehavior = (bool)newValue;
-            if (attachBehavior)
-            {
-                entry.Behaviors.Add(new Bugzilla41054NumericValidationBehavior());
-            }
-            else
-            {
-                var toRemove = entry.Behaviors.FirstOrDefault(b => b is Bugzilla41054NumericValidationBehavior);
-                if (toRemove != null)
-                {
-                    entry.Behaviors.Remove(toRemove);
-                }
-            }
-        }
-
         protected override void OnAttachedTo(Entry entry)
         {
             entry.TextChanged += OnEntryTextChanged;
@@ -64,6 +41,29 @@ namespace Xamarin.Forms.Controls.Issues
         {
             entry.TextChanged -= OnEntryTextChanged;
             base.OnDetachingFrom(entry);
+        }
+
+        static void OnAttachBehaviorChanged(BindableObject view, object oldValue, object newValue)
+        {
+            var entry = view as Entry;
+            if (entry == null)
+            {
+                return;
+            }
+
+            var attachBehavior = (bool)newValue;
+            if (attachBehavior)
+            {
+                entry.Behaviors.Add(new Bugzilla41054NumericValidationBehavior());
+            }
+            else
+            {
+                Behavior toRemove = entry.Behaviors.FirstOrDefault(b => b is Bugzilla41054NumericValidationBehavior);
+                if (toRemove != null)
+                {
+                    entry.Behaviors.Remove(toRemove);
+                }
+            }
         }
 
         void OnEntryTextChanged(object sender, TextChangedEventArgs args)

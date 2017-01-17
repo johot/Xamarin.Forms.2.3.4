@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class LabelGallery : ContentPage
     {
@@ -104,7 +98,7 @@ namespace Xamarin.Forms.Controls
                     fontName = "Comic Sans MS";
                     break;
             }
-            var font = Font.OfSize(fontName, NamedSize.Medium);
+            Font font = Font.OfSize(fontName, NamedSize.Medium);
 #pragma warning disable 618
             customFont.Font = font;
 #pragma warning restore 618
@@ -133,7 +127,7 @@ namespace Xamarin.Forms.Controls
 #pragma warning restore 618
             center.HorizontalTextAlignment = TextAlignment.Center;
             right.HorizontalTextAlignment = TextAlignment.End;
-            int i = 1;
+            var i = 1;
             click.GestureRecognizers.Add(new TapGestureRecognizer
             {
                 Command = new Command(o => click.Text = "Clicked " + i++)
@@ -157,7 +151,7 @@ namespace Xamarin.Forms.Controls
                 })
             });
 
-            Thickness padding = new Thickness(20);
+            var padding = new Thickness(20);
             // Padding Adjust for iPad
             if (Device.RuntimePlatform == Device.iOS && Device.Idiom == TargetIdiom.Tablet)
                 Padding = new Thickness(20, 20, 20, 60);

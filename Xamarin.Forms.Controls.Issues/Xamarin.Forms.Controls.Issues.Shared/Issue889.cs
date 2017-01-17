@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -40,7 +39,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             listView.ItemTapped += (sender, e) =>
             {
-                var cellName = ((NavPageNameObject)e.Item).PageName;
+                string cellName = ((NavPageNameObject)e.Item).PageName;
                 Detail = new CustomNavTabDetailPage(cellName);
             };
 

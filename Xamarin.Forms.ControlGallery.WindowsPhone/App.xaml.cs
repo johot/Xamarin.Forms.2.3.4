@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -82,7 +70,7 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
                 if (rootFrame.ContentTransitions != null)
                 {
                     _transitions = new TransitionCollection();
-                    foreach (var c in rootFrame.ContentTransitions)
+                    foreach (Transition c in rootFrame.ContentTransitions)
                     {
                         _transitions.Add(c);
                     }
@@ -105,6 +93,21 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
         }
 
         /// <summary>
+        /// Invoked when application execution is being suspended.  Application state is saved
+        /// without knowing whether the application will be terminated or resumed with the contents
+        /// of memory still intact.
+        /// </summary>
+        /// <param name="sender">The source of the suspend request.</param>
+        /// <param name="e">Details about the suspend request.</param>
+        void OnSuspending(object sender, SuspendingEventArgs e)
+        {
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
+
+            // TODO: Save application state and stop any background activity
+            deferral.Complete();
+        }
+
+        /// <summary>
         /// Restores the content transitions after the app has launched.
         /// </summary>
         /// <param name="sender">The object where the handler is attached.</param>
@@ -115,21 +118,6 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
             rootFrame.ContentTransitions = _transitions ??
                                            new TransitionCollection() { new NavigationThemeTransition() };
             rootFrame.Navigated -= RootFrame_FirstNavigated;
-        }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-
-            // TODO: Save application state and stop any background activity
-            deferral.Complete();
         }
     }
 }

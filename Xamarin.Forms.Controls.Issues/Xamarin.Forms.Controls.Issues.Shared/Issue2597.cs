@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -12,13 +11,13 @@ namespace Xamarin.Forms.Controls
 
         public Issue2597()
         {
-            Label header = new Label
+            var header = new Label
             {
                 Text = "Stepper",
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            Stepper stepper = new Stepper
+            var stepper = new Stepper
             {
                 Minimum = 0,
                 Maximum = 10,

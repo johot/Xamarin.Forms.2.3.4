@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -20,7 +19,7 @@ namespace Xamarin.Forms.Controls.Issues
 
         protected override void Init()
         {
-            MasterDetailPage page = new MasterDetailPage();
+            var page = new MasterDetailPage();
             page.Master = new Page() { Title = "Master", BackgroundColor = Color.Red };
             _lbl = new Label();
 

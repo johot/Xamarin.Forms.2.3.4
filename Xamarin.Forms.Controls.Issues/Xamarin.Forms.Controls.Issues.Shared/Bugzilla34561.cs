@@ -1,8 +1,6 @@
 ﻿using System;
-using Xamarin.Forms.CustomAttributes;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -47,7 +45,7 @@ namespace Xamarin.Forms.Controls.Issues
         {
             public ContextActionTemplate()
             {
-                MenuItem newMenuItem = new MenuItem { Text = "Click" };
+                var newMenuItem = new MenuItem { Text = "Click" };
                 newMenuItem.Clicked += NewMenuItem_Clicked;
                 ContextActions.Add(newMenuItem);
 

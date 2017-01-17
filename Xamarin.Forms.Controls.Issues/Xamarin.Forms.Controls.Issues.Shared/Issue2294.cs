@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -50,7 +49,7 @@ namespace Xamarin.Forms.Controls
             {
                 Content = layout,
             };
-            double counter = 0.0;
+            var counter = 0.0;
             Device.StartTimer(TimeSpan.FromSeconds(0.02), () =>
             {
                 counter += 0.02;

@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Xamarin.Forms.Controls
 {
     public class PinchToZoomContainer : ContentView
     {
+        double _currentScale = 1;
+
         public PinchToZoomContainer()
         {
         }
+
+        public bool AlwaysZoomCenter { get; set; }
 
         public void AddPinch()
         {
@@ -29,18 +32,18 @@ namespace Xamarin.Forms.Controls
                     _currentScale += (e.Scale - 1) * startScale;
                     _currentScale = Math.Max(1, _currentScale);
 
-                    var renderedX = Content.X + xOffset;
-                    var deltaX = renderedX / Width;
-                    var deltaWidth = Width / (Content.Width * startScale);
-                    var originX = (e.ScaleOrigin.X - deltaX) * deltaWidth;
+                    double renderedX = Content.X + xOffset;
+                    double deltaX = renderedX / Width;
+                    double deltaWidth = Width / (Content.Width * startScale);
+                    double originX = (e.ScaleOrigin.X - deltaX) * deltaWidth;
 
-                    var renderedY = Content.Y + yOffset;
-                    var deltaY = renderedY / Height;
-                    var deltaHeight = Height / (Content.Height * startScale);
-                    var originY = (e.ScaleOrigin.Y - deltaY) * deltaHeight;
+                    double renderedY = Content.Y + yOffset;
+                    double deltaY = renderedY / Height;
+                    double deltaHeight = Height / (Content.Height * startScale);
+                    double originY = (e.ScaleOrigin.Y - deltaY) * deltaHeight;
 
-                    double targetX = xOffset - (originX * Content.Width) * (_currentScale - startScale);
-                    double targetY = yOffset - (originY * Content.Height) * (_currentScale - startScale);
+                    double targetX = xOffset - originX * Content.Width * (_currentScale - startScale);
+                    double targetY = yOffset - originY * Content.Height * (_currentScale - startScale);
 
                     Content.TranslationX = targetX.Clamp(-Content.Width * (_currentScale - 1), 0);
                     Content.TranslationY = targetY.Clamp(-Content.Height * (_currentScale - 1), 0);
@@ -56,14 +59,12 @@ namespace Xamarin.Forms.Controls
 
             GestureRecognizers.Add(pinch);
         }
-
-        public bool AlwaysZoomCenter { get; set; }
-
-        double _currentScale = 1;
     }
 
     public class PinchGestureTestPage : ContentPage
     {
+        double _currentScale = 1;
+
         public PinchGestureTestPage()
         {
             var stack = new StackLayout
@@ -111,7 +112,5 @@ namespace Xamarin.Forms.Controls
                 Children = { btn, btnRemove, new Grid { Children = { zoomContainer }, Padding = new Thickness(20) } }
             };
         }
-
-        double _currentScale = 1;
     }
 }

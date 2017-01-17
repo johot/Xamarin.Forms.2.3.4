@@ -18,8 +18,7 @@ namespace Xamarin.Forms.Controls
                 Title = "Detail",
             };
             Detail.ToolbarItems.Add(new ToolbarItem("ToolbarItem2", "Icon.png", ()
-                => {
-            }));
+                => { }));
         }
     }
 

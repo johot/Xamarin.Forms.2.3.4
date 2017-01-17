@@ -10,13 +10,6 @@ namespace Xamarin.Forms.Controls
             get { return false; }
         }
 
-        protected override void InitializeElement(Frame element)
-        {
-            element.HeightRequest = 50;
-            element.WidthRequest = 100;
-            element.OutlineColor = Color.Olive;
-        }
-
         protected override void Build(StackLayout stackLayout)
         {
             base.Build(stackLayout);
@@ -33,6 +26,13 @@ namespace Xamarin.Forms.Controls
             Add(hasShadowContainer);
             Add(outlineColorContainer);
             Add(viewContainer);
+        }
+
+        protected override void InitializeElement(Frame element)
+        {
+            element.HeightRequest = 50;
+            element.WidthRequest = 100;
+            element.OutlineColor = Color.Olive;
         }
     }
 }

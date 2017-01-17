@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
@@ -16,7 +13,7 @@ namespace Xamarin.Forms.Controls
         {
             InitializeComponent();
 
-            for (int i = 0; i < 40; i++)
+            for (var i = 0; i < 40; i++)
                 addonGroupStack.Children.Add(new Label { Text = "Testing 123" });
         }
     }

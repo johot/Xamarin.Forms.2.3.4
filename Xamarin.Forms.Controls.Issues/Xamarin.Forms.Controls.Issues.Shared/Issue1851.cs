@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -35,7 +31,7 @@ namespace Xamarin.Forms.Controls.TestCasesPages
                 GroupDisplayBinding = new Binding("Key")
             };
             var groupbtn = new Button() { Text = "add/remove group" };
-            bool group = true;
+            var group = true;
             groupbtn.Clicked += (sender, args) =>
             {
                 listview.GroupShortNameBinding = new Binding("Key");
@@ -83,7 +79,7 @@ namespace Xamarin.Forms.Controls.TestCasesPages
         public Grouping(TKey key, IEnumerable<TElement> items)
         {
             Key = key;
-            foreach (var item in items)
+            foreach (TElement item in items)
                 Items.Add(item);
         }
 

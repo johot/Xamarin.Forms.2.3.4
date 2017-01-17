@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -22,14 +21,14 @@ namespace Xamarin.Forms.Controls
 
         public Issue1762()
         {
-            StackLayout stack = new StackLayout
+            var stack = new StackLayout
                 { };
             stack.Children.Add(new ListView
             {
                 ItemsSource = Objs,
                 ItemTemplate = new DataTemplate(() =>
                 {
-                    SwitchCell cell = new SwitchCell();
+                    var cell = new SwitchCell();
                     cell.SetBinding(SwitchCell.TextProperty, "DisplayText");
                     cell.SetBinding(SwitchCell.OnProperty, "IsSelected");
                     return cell;
@@ -37,13 +36,13 @@ namespace Xamarin.Forms.Controls
                 IsGroupingEnabled = true,
                 GroupDisplayBinding = new Binding("Key")
             });
-            Button b = new Button
+            var b = new Button
             {
                 Text = "add"
             };
             b.Clicked += (sender, e) =>
             {
-                Random r = new Random();
+                var r = new Random();
                 Objs.Add(new MyObj
                 {
                     DisplayText = r.Next().ToString(),
@@ -58,12 +57,10 @@ namespace Xamarin.Forms.Controls
 
     public class Grouping<K, T> : ObservableCollection<T>, IGroupingCollection<K, T> where T : INotifyPropertyChanged
     {
-        public K Key { get; private set; }
-
         public Grouping(K key, IEnumerable<T> items)
         {
             Key = key;
-            foreach (var item in items)
+            foreach (T item in items)
                 Items.Add(item);
         }
 
@@ -72,13 +69,15 @@ namespace Xamarin.Forms.Controls
             Key = key;
             Items.Add(item);
         }
+
+        public K Key { get; private set; }
     }
 
     public static class Extensions
     {
         public static IEnumerable<T> Enumerate<T>(this IEnumerable<IEnumerable<T>> listOfList)
         {
-            foreach (var list in listOfList)
+            foreach (IEnumerable<T> list in listOfList)
             {
                 foreach (T item in list)
                     yield return item;
@@ -97,19 +96,19 @@ namespace Xamarin.Forms.Controls
 
     public class MyObj : ObservableObject, ISortingKey<bool>
     {
+        string _displayText;
+
+        bool _isSelected;
+
         public MyObj()
         {
         }
-
-        string _displayText;
 
         public string DisplayText
         {
             get { return _displayText; }
             set { SetProperty(ref _displayText, value); }
         }
-
-        bool _isSelected;
 
         public bool IsSelected
         {
@@ -142,9 +141,35 @@ namespace Xamarin.Forms.Controls
             _equalityComparer = equalityComparer;
             if (items != null)
             {
-                foreach (var propChangeItem in items.Enumerate())
+                foreach (T propChangeItem in items.Enumerate())
                     SetupPropertyChanged(propChangeItem, equalityComparer);
             }
+        }
+
+        public ObservableGroupCollection(IGroupingCollection<K, T> item, Func<K, K, bool> equalityComparer)
+        {
+            _equalityComparer = equalityComparer;
+            if (item != null)
+            {
+                foreach (T t in item)
+                    SetupPropertyChanged(t, equalityComparer);
+            }
+        }
+
+        public void Add(T item)
+        {
+            SetupPropertyChanged(item, _equalityComparer);
+            foreach (IGroupingCollection<K, T> group in Items)
+            {
+                if (_equalityComparer(group.Key, item.SortingKey))
+                {
+                    group.Add(item);
+                    return;
+                }
+            }
+            var newGroup = new Grouping<K, T>(item.SortingKey, item);
+            Items.Add(newGroup);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, newGroup));
         }
 
         void SetupPropertyChanged(T propChangeItem, Func<K, K, bool> equalityComparer)
@@ -155,13 +180,13 @@ namespace Xamarin.Forms.Controls
                 {
                     //using (BlockReentrancy())
                     {
-                        T changedItem = (T)sender;
+                        var changedItem = (T)sender;
                         IGroupingCollection<K, T> oldGroup = null, newGroup = null;
-                        foreach (var group in Items) //go through all groups to find item
+                        foreach (IGroupingCollection<K, T> group in Items) //go through all groups to find item
                         {
                             if (oldGroup == null /* || newGroup == null*/)
                             {
-                                foreach (var item2 in group)
+                                foreach (T item2 in group)
                                 {
                                     if (oldGroup == null && item2 == changedItem)
                                         oldGroup = group;
@@ -192,7 +217,7 @@ namespace Xamarin.Forms.Controls
                         }
                         else
                         {
-                            foreach (var item in newGroup)
+                            foreach (T item in newGroup)
                             {
                                 if (item == changedItem)
                                     return;
@@ -202,32 +227,6 @@ namespace Xamarin.Forms.Controls
                     }
                 }
             };
-        }
-
-        public ObservableGroupCollection(IGroupingCollection<K, T> item, Func<K, K, bool> equalityComparer)
-        {
-            _equalityComparer = equalityComparer;
-            if (item != null)
-            {
-                foreach (T t in item)
-                    SetupPropertyChanged(t, equalityComparer);
-            }
-        }
-
-        public void Add(T item)
-        {
-            SetupPropertyChanged(item, _equalityComparer);
-            foreach (IGroupingCollection<K, T> group in Items)
-            {
-                if (_equalityComparer(group.Key, item.SortingKey))
-                {
-                    group.Add(item);
-                    return;
-                }
-            }
-            Grouping<K, T> newGroup = new Grouping<K, T>(item.SortingKey, item);
-            Items.Add(newGroup);
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, newGroup));
         }
 
         /*protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
@@ -261,7 +260,7 @@ namespace Xamarin.Forms.Controls
 
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            var eventHandler = PropertyChanged;
+            PropertyChangedEventHandler eventHandler = PropertyChanged;
             if (eventHandler != null)
             {
                 try
@@ -277,7 +276,7 @@ namespace Xamarin.Forms.Controls
 
         protected bool SetProperty<T>(ref T storage, T value, Expression<Func<T>> propertyExpression)
         {
-            var propertyName = GetPropertyName(propertyExpression);
+            string propertyName = GetPropertyName(propertyExpression);
             return SetProperty<T>(ref storage, value, propertyName);
         }
 

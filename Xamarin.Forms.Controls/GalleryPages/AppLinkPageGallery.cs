@@ -4,9 +4,13 @@ namespace Xamarin.Forms.Controls
 {
     public class AppLinkPageGallery : ContentPage
     {
+        Label _lbl;
+
+        bool _showlabel;
+
         public AppLinkPageGallery()
         {
-            _linkEntry = GetEntry();
+            LinkEntry = GetEntry();
             _lbl = new Label
             {
                 Text = "You are on a demo page via app url",
@@ -33,16 +37,6 @@ namespace Xamarin.Forms.Controls
             Content = new StackLayout { Children = { _lbl, btnRegister, btnRemove, btnClearAll } };
         }
 
-        protected override void OnAppearing()
-        {
-            LinkEntry.IsLinkActive = true;
-        }
-
-        protected override void OnDisappearing()
-        {
-            LinkEntry.IsLinkActive = false;
-        }
-
         public bool ShowLabel
         {
             get { return _showlabel; }
@@ -53,21 +47,24 @@ namespace Xamarin.Forms.Controls
             }
         }
 
-        internal IAppLinkEntry LinkEntry
+        internal IAppLinkEntry LinkEntry { get; }
+
+        protected override void OnAppearing()
         {
-            get { return _linkEntry; }
+            LinkEntry.IsLinkActive = true;
         }
 
-        bool _showlabel;
-        IAppLinkEntry _linkEntry;
-        Label _lbl;
+        protected override void OnDisappearing()
+        {
+            LinkEntry.IsLinkActive = false;
+        }
 
         AppLinkEntry GetEntry()
         {
             if (string.IsNullOrEmpty(Title))
                 Title = "App Link Page Gallery";
 
-            var type = GetType().ToString();
+            string type = GetType().ToString();
             var entry = new AppLinkEntry
             {
                 Title = Title,

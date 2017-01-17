@@ -1,7 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-
-namespace Xamarin.Forms.Controls
+﻿namespace Xamarin.Forms.Controls
 {
     public class AlertGallery : ContentPage
     {
@@ -19,7 +16,8 @@ namespace Xamarin.Forms.Controls
             var btn2 = new Button { Text = "Alert Override2", AutomationId = "test2" };
             btn2.Clicked += async (sender, e) =>
             {
-                var result = await DisplayAlert("TheAlertTitle", "TheAlertMessage", "TheAcceptButton", "TheCancelButton");
+                bool result = await DisplayAlert("TheAlertTitle", "TheAlertMessage", "TheAcceptButton",
+                    "TheCancelButton");
                 lblResult.Text = string.Format("Result: {0}", result);
             };
 

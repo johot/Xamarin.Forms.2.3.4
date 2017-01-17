@@ -25,7 +25,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             stackLayout.Children.Add(scrollToButton);
 
-            for (int n = 0; n < 100; n++)
+            for (var n = 0; n < 100; n++)
             {
                 stackLayout.Children.Add(new Label() { Text = n.ToString() });
             }

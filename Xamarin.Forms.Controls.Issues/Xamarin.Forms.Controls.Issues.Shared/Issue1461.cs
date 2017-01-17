@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
@@ -206,12 +202,12 @@ namespace Xamarin.Forms.Controls.Issues
 
     internal sealed class Issue1461Page : MasterDetailPage
     {
+        bool? _showButton;
+
         public Issue1461Page()
             : this(MasterBehavior.Default, null)
         {
         }
-
-        bool? _showButton;
 
         public Issue1461Page(MasterBehavior state, bool? initState)
         {

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Xamarin.Forms.Controls
 {
     public class ProductCellView : StackLayout
     {
-        Label _timeLabel;
         Label _brandLabel;
         StackLayout _stack;
+        Label _timeLabel;
 
         public ProductCellView(string text)
         {

@@ -56,8 +56,6 @@ namespace Xamarin.Forms.Controls
         {
             bool _isSelected;
 
-            public string Name { get; set; }
-
             public bool IsSelected
             {
                 get { return _isSelected; }
@@ -67,6 +65,8 @@ namespace Xamarin.Forms.Controls
                     OnPropertyChanged();
                 }
             }
+
+            public string Name { get; set; }
 
             public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Xamarin.Forms.CustomAttributes;
+﻿using Xamarin.Forms.CustomAttributes;
 using Xamarin.Forms.Internals;
 
 #if UITEST
@@ -11,12 +10,12 @@ namespace Xamarin.Forms.Controls.Issues
 {
     public class NavPageNameObject
     {
-        public string PageName { get; private set; }
-
         public NavPageNameObject(string pageName)
         {
             PageName = pageName;
         }
+
+        public string PageName { get; private set; }
     }
 
     [Preserve(AllMembers = true)]
@@ -51,7 +50,7 @@ namespace Xamarin.Forms.Controls.Issues
 
             listView.ItemTapped += (sender, e) =>
             {
-                var cellName = ((NavPageNameObject)e.Item).PageName;
+                string cellName = ((NavPageNameObject)e.Item).PageName;
                 if (cellName == "Close Master")
                 {
                     IsPresented = false;

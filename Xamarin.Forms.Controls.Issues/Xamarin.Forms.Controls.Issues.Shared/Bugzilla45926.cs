@@ -19,8 +19,8 @@ namespace Xamarin.Forms.Controls.Issues
         {
             Button createPage, sendMessage, doGC;
 
-            Label instanceCount = new Label();
-            Label messageCount = new Label();
+            var instanceCount = new Label();
+            var messageCount = new Label();
 
             instanceCount.Text = $"Instances: {_45926SecondPage.InstanceCounter.ToString()}";
             messageCount.Text = $"Messages: {_45926SecondPage.MessageCounter.ToString()}";
@@ -99,7 +99,7 @@ namespace Xamarin.Forms.Controls.Issues
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                Text = "Second Page #" + (InstanceCounter)
+                Text = "Second Page #" + InstanceCounter
             };
 
             MessagingCenter.Subscribe<Bugzilla45926>(this, "Test", OnMessage);

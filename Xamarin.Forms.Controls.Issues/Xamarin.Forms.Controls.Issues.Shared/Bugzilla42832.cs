@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms.Internals;
+﻿using System.Collections.Generic;
 using Xamarin.Forms.CustomAttributes;
+using Xamarin.Forms.Internals;
 
 #if UITEST
 using Xamarin.UITest;
@@ -25,7 +24,7 @@ namespace Xamarin.Forms.Controls.Issues
         protected override void Init()
         {
             var items = new List<string>();
-            for (int i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
                 items.Add($"Item #{i}");
 
             var template = new DataTemplate(typeof(TestCell));

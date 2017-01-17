@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
@@ -22,19 +19,19 @@ namespace Xamarin.Forms.Controls
         : ContentPage
     {
         readonly List<List<string>> _items = new List<List<string>>();
-        bool _animate = true;
         readonly ListView _listView;
+        bool _animate = true;
 
         public ListScrollTo()
         {
             Title = "ListView ScrollTo";
 
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
-                List<string> subItems = new List<string>();
-                for (int x = 0; x < 10; x++)
+                var subItems = new List<string>();
+                for (var x = 0; x < 10; x++)
                 {
-                    subItems.Add(((i * 10) + x + 1).ToString());
+                    subItems.Add((i * 10 + x + 1).ToString());
                 }
 
                 _items.Add(subItems);
@@ -73,7 +70,7 @@ namespace Xamarin.Forms.Controls
             animate.Clicked += (sender, args) =>
             {
                 _animate = !_animate;
-                animate.Text = (_animate) ? "Animate" : "No Animate";
+                animate.Text = _animate ? "Animate" : "No Animate";
             };
 
             var buttons = new StackLayout
