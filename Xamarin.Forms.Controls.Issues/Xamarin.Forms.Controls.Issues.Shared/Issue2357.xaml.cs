@@ -252,7 +252,7 @@ namespace Xamarin.Forms.Controls
             }
         }
 
-        public async Task InitializeAsync()
+        public Task InitializeAsync()
 #pragma warning restore 1998
         {
             var items = new List<MainMenuItem>();
@@ -270,6 +270,7 @@ namespace Xamarin.Forms.Controls
             });
 
             MainMenuItems = new ObservableCollection<MainMenuItem>(items);
+	        return Task.FromResult(true);
         }
 
         public static event PageSelectionChanged PageSelectionChanged;
