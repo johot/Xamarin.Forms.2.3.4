@@ -9,96 +9,96 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.None, 55555, "Header problem")]
-    public class Issue55555 : TestContentPage // or TestMasterDetailPage, etc ...
-    {
-        protected override void Init()
-        {
-            var lstView = new ListView(ListViewCachingStrategy.RecycleElement);
-            ObservableCollection<GroupedVeggieModel> grouped = CreateData();
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.None, 55555, "Header problem")]
+	public class Issue55555 : TestContentPage // or TestMasterDetailPage, etc ...
+	{
+		protected override void Init()
+		{
+			var lstView = new ListView(ListViewCachingStrategy.RecycleElement);
+			ObservableCollection<GroupedVeggieModel> grouped = CreateData();
 
-            lstView.ItemsSource = grouped;
-            lstView.HasUnevenRows = true;
-            lstView.IsGroupingEnabled = true;
-            lstView.GroupDisplayBinding = new Binding("LongName");
-            lstView.GroupShortNameBinding = new Binding("ShortName");
+			lstView.ItemsSource = grouped;
+			lstView.HasUnevenRows = true;
+			lstView.IsGroupingEnabled = true;
+			lstView.GroupDisplayBinding = new Binding("LongName");
+			lstView.GroupShortNameBinding = new Binding("ShortName");
 
-            lstView.ItemTemplate = new DataTemplate(typeof(DemoTextCell));
-            lstView.ItemTemplate.SetBinding(TextCell.TextProperty, "Name");
+			lstView.ItemTemplate = new DataTemplate(typeof(DemoTextCell));
+			lstView.ItemTemplate.SetBinding(TextCell.TextProperty, "Name");
 
-            Content = lstView;
-        }
+			Content = lstView;
+		}
 
-        static ObservableCollection<GroupedVeggieModel> CreateData()
-        {
-            var grouped = new ObservableCollection<GroupedVeggieModel>();
+		static ObservableCollection<GroupedVeggieModel> CreateData()
+		{
+			var grouped = new ObservableCollection<GroupedVeggieModel>();
 
-            var veggieGroup = new GroupedVeggieModel() { LongName = "vegetables", ShortName = "v" };
-            veggieGroup.Add(new VeggieModel() { Name = "celery", IsReallyAVeggie = true, Comment = "try ants on a log" });
-            veggieGroup.Add(new VeggieModel()
-            {
-                Name = "tomato",
-                IsReallyAVeggie = false,
-                Comment = "pairs well with basil"
-            });
-            veggieGroup.Add(new VeggieModel()
-            {
-                Name = "zucchini",
-                IsReallyAVeggie = true,
-                Comment = "zucchini bread > bannana bread"
-            });
-            veggieGroup.Add(new VeggieModel() { Name = "peas", IsReallyAVeggie = true, Comment = "like peas in a pod" });
+			var veggieGroup = new GroupedVeggieModel() { LongName = "vegetables", ShortName = "v" };
+			veggieGroup.Add(new VeggieModel() { Name = "celery", IsReallyAVeggie = true, Comment = "try ants on a log" });
+			veggieGroup.Add(new VeggieModel()
+			{
+				Name = "tomato",
+				IsReallyAVeggie = false,
+				Comment = "pairs well with basil"
+			});
+			veggieGroup.Add(new VeggieModel()
+			{
+				Name = "zucchini",
+				IsReallyAVeggie = true,
+				Comment = "zucchini bread > bannana bread"
+			});
+			veggieGroup.Add(new VeggieModel() { Name = "peas", IsReallyAVeggie = true, Comment = "like peas in a pod" });
 
-            var fruitGroup = new GroupedVeggieModel() { LongName = "fruit", ShortName = "f" };
-            fruitGroup.Add(new VeggieModel()
-            {
-                Name = "banana",
-                IsReallyAVeggie = false,
-                Comment = "available in chip form factor"
-            });
-            fruitGroup.Add(new VeggieModel() { Name = "strawberry", IsReallyAVeggie = false, Comment = "spring plant" });
-            fruitGroup.Add(new VeggieModel()
-            {
-                Name = "cherry",
-                IsReallyAVeggie = false,
-                Comment = "topper for icecream"
-            });
+			var fruitGroup = new GroupedVeggieModel() { LongName = "fruit", ShortName = "f" };
+			fruitGroup.Add(new VeggieModel()
+			{
+				Name = "banana",
+				IsReallyAVeggie = false,
+				Comment = "available in chip form factor"
+			});
+			fruitGroup.Add(new VeggieModel() { Name = "strawberry", IsReallyAVeggie = false, Comment = "spring plant" });
+			fruitGroup.Add(new VeggieModel()
+			{
+				Name = "cherry",
+				IsReallyAVeggie = false,
+				Comment = "topper for icecream"
+			});
 
-            grouped.Add(veggieGroup);
-            grouped.Add(fruitGroup);
+			grouped.Add(veggieGroup);
+			grouped.Add(fruitGroup);
 
-            return grouped;
-        }
+			return grouped;
+		}
 
-        [Preserve(AllMembers = true)]
-        public class VeggieModel
-        {
-            public string Comment { get; set; }
+		[Preserve(AllMembers = true)]
+		public class VeggieModel
+		{
+			public string Comment { get; set; }
 
-            public string Image { get; set; }
+			public string Image { get; set; }
 
-            public bool IsReallyAVeggie { get; set; }
+			public bool IsReallyAVeggie { get; set; }
 
-            public string Name { get; set; }
-        }
+			public string Name { get; set; }
+		}
 
-        [Preserve(AllMembers = true)]
-        public class GroupedVeggieModel : ObservableCollection<VeggieModel>
-        {
-            public string LongName { get; set; }
+		[Preserve(AllMembers = true)]
+		public class GroupedVeggieModel : ObservableCollection<VeggieModel>
+		{
+			public string LongName { get; set; }
 
-            public string ShortName { get; set; }
-        }
+			public string ShortName { get; set; }
+		}
 
-        [Preserve(AllMembers = true)]
-        public class DemoTextCell : TextCell
-        {
-            public DemoTextCell()
-            {
-                Height = 150;
-            }
-        }
+		[Preserve(AllMembers = true)]
+		public class DemoTextCell : TextCell
+		{
+			public DemoTextCell()
+			{
+				Height = 150;
+			}
+		}
 
 #if UITEST
 		[Test]
@@ -107,5 +107,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement(q => q.Marked("vegetables"));
 		}
 #endif
-    }
+	}
 }

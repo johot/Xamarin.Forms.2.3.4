@@ -5,87 +5,87 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1566, "ListView reuse issue", PlatformAffected.Android)]
-    public class Issue1566
-        : ContentPage
-    {
-        ObservableCollection<Tuple<string, string>> _collection = new ObservableCollection<Tuple<string, string>>();
-        bool _flag = true;
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1566, "ListView reuse issue", PlatformAffected.Android)]
+	public class Issue1566
+		: ContentPage
+	{
+		ObservableCollection<Tuple<string, string>> _collection = new ObservableCollection<Tuple<string, string>>();
+		bool _flag = true;
 
-        public Issue1566()
-        {
-            var search = new SearchBar();
-            search.SearchButtonPressed += (sender, e) => FillTheList();
+		public Issue1566()
+		{
+			var search = new SearchBar();
+			search.SearchButtonPressed += (sender, e) => FillTheList();
 
-            var list = new ListView()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HasUnevenRows = true,
-                ItemsSource = _collection,
-                ItemTemplate = new DataTemplate(typeof(CellTemplate))
-            };
+			var list = new ListView()
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HasUnevenRows = true,
+				ItemsSource = _collection,
+				ItemTemplate = new DataTemplate(typeof(CellTemplate))
+			};
 
-            var info = new Label()
-            {
-                Text =
-                    "Type something into searchbox and press search. Then swipe the list. Rows are mixed. It's important to have keyboard visible!!!"
-            };
+			var info = new Label()
+			{
+				Text =
+					"Type something into searchbox and press search. Then swipe the list. Rows are mixed. It's important to have keyboard visible!!!"
+			};
 
-            var root = new StackLayout()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Children =
-                {
-                    search,
-                    list,
-                    info,
-                }
-            };
+			var root = new StackLayout()
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Children =
+				{
+					search,
+					list,
+					info,
+				}
+			};
 
-            Content = root;
-        }
+			Content = root;
+		}
 
-        void FillTheList()
-        {
-            _collection.Clear();
+		void FillTheList()
+		{
+			_collection.Clear();
 
-            for (var i = 0; i < 100; i++)
-            {
-                var item = new Tuple<string, string>(
-                    string.Format("{0} {0} {0} {0} {0} {0}", _flag ? i : 100 - i),
-                    string.Format("---- i ----{0} {0} {0} {0} {0} {0}", _flag ? i : 100 - i)
-                );
+			for (var i = 0; i < 100; i++)
+			{
+				var item = new Tuple<string, string>(
+					string.Format("{0} {0} {0} {0} {0} {0}", _flag ? i : 100 - i),
+					string.Format("---- i ----{0} {0} {0} {0} {0} {0}", _flag ? i : 100 - i)
+				);
 
-                _collection.Add(item);
-            }
+				_collection.Add(item);
+			}
 
-            //flag = !flag;
-        }
+			//flag = !flag;
+		}
 
-        class CellTemplate : ViewCell
-        {
-            public CellTemplate()
-            {
-                var cellLabel = new Label()
-                {
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                };
+		class CellTemplate : ViewCell
+		{
+			public CellTemplate()
+			{
+				var cellLabel = new Label()
+				{
+					HorizontalOptions = LayoutOptions.FillAndExpand,
+				};
 
-                cellLabel.SetBinding(Label.TextProperty, new Binding("Item1", BindingMode.OneWay));
+				cellLabel.SetBinding(Label.TextProperty, new Binding("Item1", BindingMode.OneWay));
 
-                var root = new StackLayout()
-                {
-                    Children =
-                    {
-                        cellLabel
-                    }
-                };
+				var root = new StackLayout()
+				{
+					Children =
+					{
+						cellLabel
+					}
+				};
 
-                View = root;
-            }
-        }
-    }
+				View = root;
+			}
+		}
+	}
 }

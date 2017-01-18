@@ -5,77 +5,77 @@ using Xamarin.Forms.Maps;
 
 namespace Xamarin.Forms.Controls.TestCasesPages
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1613, "Map.GetSizeRequest always returns map's current size",
-        PlatformAffected.Android | PlatformAffected.iOS)]
-    public class Issue1613 : ContentPage
-    {
-        public Issue1613()
-        {
-            Build();
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1613, "Map.GetSizeRequest always returns map's current size",
+		PlatformAffected.Android | PlatformAffected.iOS)]
+	public class Issue1613 : ContentPage
+	{
+		public Issue1613()
+		{
+			Build();
+		}
 
-        async void Build()
-        {
-            var image = new Image
-            {
-                Source = "http://www.califliving.com/title24-energy/images/sanfrancisco.jpg",
-                Aspect = Aspect.AspectFill,
-                Opacity = 0.5,
-            };
+		async void Build()
+		{
+			var image = new Image
+			{
+				Source = "http://www.califliving.com/title24-energy/images/sanfrancisco.jpg",
+				Aspect = Aspect.AspectFill,
+				Opacity = 0.5,
+			};
 
-            var name = new Label
-            {
-                Text = "Foo",
+			var name = new Label
+			{
+				Text = "Foo",
 #pragma warning disable 618
-                XAlign = TextAlignment.Center,
+				XAlign = TextAlignment.Center,
 #pragma warning restore 618
 
 #pragma warning disable 618
-                YAlign = TextAlignment.Center,
+				YAlign = TextAlignment.Center,
 #pragma warning restore 618
 
 #pragma warning disable 618
-                Font = Font.SystemFontOfSize(30, FontAttributes.Bold),
+				Font = Font.SystemFontOfSize(30, FontAttributes.Bold),
 #pragma warning restore 618
-                TextColor = Color.White,
-            };
+				TextColor = Color.White,
+			};
 
-            var nameView = new AbsoluteLayout
-            {
-                HeightRequest = 170,
-                BackgroundColor = Color.Black,
-                Children =
-                {
-                    { image, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All },
-                    { name, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All }
-                },
-            };
+			var nameView = new AbsoluteLayout
+			{
+				HeightRequest = 170,
+				BackgroundColor = Color.Black,
+				Children =
+				{
+					{ image, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All },
+					{ name, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All }
+				},
+			};
 
-            var addressLabel = new Label
-            {
-                Text = "Loading address…",
+			var addressLabel = new Label
+			{
+				Text = "Loading address…",
 #pragma warning disable 618
-                XAlign = TextAlignment.Center,
+				XAlign = TextAlignment.Center,
 #pragma warning restore 618
 
 #pragma warning disable 618
-                YAlign = TextAlignment.Center,
+				YAlign = TextAlignment.Center,
 #pragma warning restore 618
-            };
+			};
 
-            var map = new Map
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-            };
+			var map = new Map
+			{
+				VerticalOptions = LayoutOptions.FillAndExpand,
+			};
 
-            Content = new StackLayout
-            {
-                Children = { nameView, addressLabel, map },
-            };
+			Content = new StackLayout
+			{
+				Children = { nameView, addressLabel, map },
+			};
 
-            await Task.Delay(1000);
-            addressLabel.Text = "Updated with new\nmultiline\nlabel";
-        }
-    }
+			await Task.Delay(1000);
+			addressLabel.Text = "Updated with new\nmultiline\nlabel";
+		}
+	}
 }

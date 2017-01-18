@@ -12,19 +12,19 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 206, "ViewCell with Label's text does not resize when value is changed",
-        PlatformAffected.iOS)]
-    public class Issue206 : TestContentPage
-    {
-        protected override void Init()
-        {
-            _listScreen = new Issue206ListScreen();
-            Title = "Click 9";
-            Content = _listScreen.View;
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 206, "ViewCell with Label's text does not resize when value is changed",
+		PlatformAffected.iOS)]
+	public class Issue206 : TestContentPage
+	{
+		protected override void Init()
+		{
+			_listScreen = new Issue206ListScreen();
+			Title = "Click 9";
+			Content = _listScreen.View;
+		}
 
-        Issue206ListScreen _listScreen;
+		Issue206ListScreen _listScreen;
 
 #if UITEST
 		[Test]
@@ -49,101 +49,101 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("The text should not be cropped");
 		}
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    public class Issue206ListScreen
-    {
-        public Issue206ListScreen()
-        {
-            View = new ListView();
+	[Preserve(AllMembers = true)]
+	public class Issue206ListScreen
+	{
+		public Issue206ListScreen()
+		{
+			View = new ListView();
 
-            View.RowHeight = 30;
+			View.RowHeight = 30;
 
-            var n = 50;
-            List<A> items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
-            View.ItemsSource = items;
+			var n = 50;
+			List<A> items = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+			View.ItemsSource = items;
 
-            View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
+			View.ItemTemplate = new DataTemplate(typeof(ViewCellTest));
 
-            View.ItemSelected += (sender, e) =>
-            {
-                var cell = e.SelectedItem as A;
-                if (cell == null)
-                    return;
-                int x = int.Parse(cell.Text);
-                if (x == 5)
-                {
-                    n += 10;
-                    View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
-                }
-                else
-                {
-                    cell.Text = (x + 1).ToString();
-                }
-            };
-        }
+			View.ItemSelected += (sender, e) =>
+			{
+				var cell = e.SelectedItem as A;
+				if (cell == null)
+					return;
+				int x = int.Parse(cell.Text);
+				if (x == 5)
+				{
+					n += 10;
+					View.ItemsSource = Enumerable.Range(0, n).Select(i => new A { Text = i.ToString() }).ToList();
+				}
+				else
+				{
+					cell.Text = (x + 1).ToString();
+				}
+			};
+		}
 
-        public ListView View { get; private set; }
+		public ListView View { get; private set; }
 
-        internal class A : INotifyPropertyChanged
-        {
-            string _text;
+		internal class A : INotifyPropertyChanged
+		{
+			string _text;
 
-            public string Text
-            {
-                get { return _text; }
-                set
-                {
-                    _text = value;
-                    if (PropertyChanged != null)
-                        PropertyChanged(this, new PropertyChangedEventArgs("Text"));
-                }
-            }
+			public string Text
+			{
+				get { return _text; }
+				set
+				{
+					_text = value;
+					if (PropertyChanged != null)
+						PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+				}
+			}
 
-            #region INotifyPropertyChanged implementation
+			#region INotifyPropertyChanged implementation
 
-            public event PropertyChangedEventHandler PropertyChanged;
+			public event PropertyChangedEventHandler PropertyChanged;
 
-            #endregion
-        }
+			#endregion
+		}
 
-        [Preserve(AllMembers = true)]
-        internal class ViewCellTest : ViewCell
-        {
-            static int s_inc = 0;
+		[Preserve(AllMembers = true)]
+		internal class ViewCellTest : ViewCell
+		{
+			static int s_inc = 0;
 
-            public ViewCellTest()
-            {
-                var stackLayout = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal
-                };
+			public ViewCellTest()
+			{
+				var stackLayout = new StackLayout
+				{
+					Orientation = StackOrientation.Horizontal
+				};
 
-                var label = new Label();
-                label.SetBinding(Label.TextProperty, "Text");
+				var label = new Label();
+				label.SetBinding(Label.TextProperty, "Text");
 
-                var box = new BoxView { WidthRequest = 100, HeightRequest = 10, Color = Color.Red };
+				var box = new BoxView { WidthRequest = 100, HeightRequest = 10, Color = Color.Red };
 
-                stackLayout.Children.Add(label);
-                stackLayout.Children.Add(box);
+				stackLayout.Children.Add(label);
+				stackLayout.Children.Add(box);
 
-                View = stackLayout;
-            }
+				View = stackLayout;
+			}
 
-            protected override void OnAppearing()
-            {
-                base.OnAppearing();
-                Debug.WriteLine("Appearing: " + ((A)BindingContext).Text + " : " + s_inc);
-                s_inc++;
-            }
+			protected override void OnAppearing()
+			{
+				base.OnAppearing();
+				Debug.WriteLine("Appearing: " + ((A)BindingContext).Text + " : " + s_inc);
+				s_inc++;
+			}
 
-            protected override void OnDisappearing()
-            {
-                base.OnDisappearing();
-                Debug.WriteLine("Disappearing: " + ((A)BindingContext).Text + " : " + s_inc);
-                s_inc++;
-            }
-        }
-    }
+			protected override void OnDisappearing()
+			{
+				base.OnDisappearing();
+				Debug.WriteLine("Disappearing: " + ((A)BindingContext).Text + " : " + s_inc);
+				s_inc++;
+			}
+		}
+	}
 }

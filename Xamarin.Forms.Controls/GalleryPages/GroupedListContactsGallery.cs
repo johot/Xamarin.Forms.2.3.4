@@ -7,248 +7,248 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-    [Preserve(AllMembers = true)]
-    public class GroupedListContactsGallery
-        : ContentPage
-    {
-        const string Chars = "abcdefghijklmnopqrstuvwxyz";
+	[Preserve(AllMembers = true)]
+	public class GroupedListContactsGallery
+		: ContentPage
+	{
+		const string Chars = "abcdefghijklmnopqrstuvwxyz";
 
-        readonly List<Contact> _contacts = new List<Contact>
-        {
-            new Contact { FirstName = "Jason", LastName = "Smith", Title = "Software Engineer" },
-            new Contact { FirstName = "Eric", LastName = "Maupin", Title = "Software Engineer" },
-            new Contact { FirstName = "Seth", LastName = "Rosetter", Title = "Software Engineer" },
-            new Contact { FirstName = "Stephane", LastName = "Delcroix", Title = "Software Engineer" }
-        };
+		readonly List<Contact> _contacts = new List<Contact>
+		{
+			new Contact { FirstName = "Jason", LastName = "Smith", Title = "Software Engineer" },
+			new Contact { FirstName = "Eric", LastName = "Maupin", Title = "Software Engineer" },
+			new Contact { FirstName = "Seth", LastName = "Rosetter", Title = "Software Engineer" },
+			new Contact { FirstName = "Stephane", LastName = "Delcroix", Title = "Software Engineer" }
+		};
 
-        readonly ListView _list = new ListView
-        {
-            ItemTemplate = new DataTemplate(() =>
-            {
-                var name = new Label();
-                name.SetBinding(Label.TextProperty, "FullName");
+		readonly ListView _list = new ListView
+		{
+			ItemTemplate = new DataTemplate(() =>
+			{
+				var name = new Label();
+				name.SetBinding(Label.TextProperty, "FullName");
 
 #pragma warning disable 618
-                var title = new Label { Font = Font.SystemFontOfSize(NamedSize.Micro) };
+				var title = new Label { Font = Font.SystemFontOfSize(NamedSize.Micro) };
 #pragma warning restore 618
-                title.SetBinding(Label.TextProperty, "Title");
+				title.SetBinding(Label.TextProperty, "Title");
 
-                return new ViewCell
-                {
-                    View = new StackLayout
-                    {
-                        Children =
-                        {
-                            name,
-                            title
-                        }
-                    }
-                };
-            }),
-            GroupDisplayBinding = new Binding("Key"),
-            GroupShortNameBinding = new Binding("Key"),
-            IsGroupingEnabled = true
-        };
+				return new ViewCell
+				{
+					View = new StackLayout
+					{
+						Children =
+						{
+							name,
+							title
+						}
+					}
+				};
+			}),
+			GroupDisplayBinding = new Binding("Key"),
+			GroupShortNameBinding = new Binding("Key"),
+			IsGroupingEnabled = true
+		};
 
-        readonly Random _rand = new Random(42);
+		readonly Random _rand = new Random(42);
 
-        bool _sortedByFirst = true;
-        ObservableCollection<Group> _sortedContacts;
+		bool _sortedByFirst = true;
+		ObservableCollection<Group> _sortedContacts;
 
-        public GroupedListContactsGallery()
-        {
-            var addRandom = new Button { Text = "Random" };
-            addRandom.Clicked += (sender, args) =>
-            {
-                Contact contact = GetRandomContact();
-                _contacts.Add(contact);
+		public GroupedListContactsGallery()
+		{
+			var addRandom = new Button { Text = "Random" };
+			addRandom.Clicked += (sender, args) =>
+			{
+				Contact contact = GetRandomContact();
+				_contacts.Add(contact);
 
-                AddContact(_sortedContacts, contact);
-            };
+				AddContact(_sortedContacts, contact);
+			};
 
-            var addRandomToExisting = new Button { Text = "Random Group" };
-            addRandomToExisting.Clicked += (sender, args) =>
-            {
-                Contact contact;
-                do
-                {
-                    contact = GetRandomContact();
-                } while (!_sortedContacts.Any(g => GetSortChar(g.First()) == GetSortChar(contact)));
+			var addRandomToExisting = new Button { Text = "Random Group" };
+			addRandomToExisting.Clicked += (sender, args) =>
+			{
+				Contact contact;
+				do
+				{
+					contact = GetRandomContact();
+				} while (!_sortedContacts.Any(g => GetSortChar(g.First()) == GetSortChar(contact)));
 
-                _contacts.Add(contact);
-                AddContact(_sortedContacts, contact);
-            };
+				_contacts.Add(contact);
+				AddContact(_sortedContacts, contact);
+			};
 
-            var groupByFirst = new Button { Text = "First" };
-            groupByFirst.Clicked += (sender, args) =>
-            {
-                _sortedByFirst = true;
+			var groupByFirst = new Button { Text = "First" };
+			groupByFirst.Clicked += (sender, args) =>
+			{
+				_sortedByFirst = true;
 
-                SetupContacts();
-                _list.ItemsSource = _sortedContacts;
-            };
+				SetupContacts();
+				_list.ItemsSource = _sortedContacts;
+			};
 
-            var groupByLast = new Button { Text = "Last" };
-            groupByLast.Clicked += (sender, args) =>
-            {
-                _sortedByFirst = false;
+			var groupByLast = new Button { Text = "Last" };
+			groupByLast.Clicked += (sender, args) =>
+			{
+				_sortedByFirst = false;
 
-                SetupContacts();
-                _list.ItemsSource = _sortedContacts;
-            };
+				SetupContacts();
+				_list.ItemsSource = _sortedContacts;
+			};
 
-            Content = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                Children =
-                {
-                    new StackLayout
-                    {
-                        Orientation = StackOrientation.Vertical,
-                        Children =
-                        {
-                            new StackLayout
-                            {
-                                Orientation = StackOrientation.Horizontal,
-                                Children =
-                                {
-                                    new Label { Text = "Sort: " },
-                                    groupByFirst,
-                                    groupByLast
-                                }
-                            },
-                            new StackLayout
-                            {
-                                Orientation = StackOrientation.Horizontal,
-                                Children =
-                                {
-                                    addRandom,
-                                    addRandomToExisting,
-                                }
-                            }
-                        },
-                    },
-                    _list
-                }
-            };
+			Content = new StackLayout
+			{
+				Orientation = StackOrientation.Vertical,
+				Children =
+				{
+					new StackLayout
+					{
+						Orientation = StackOrientation.Vertical,
+						Children =
+						{
+							new StackLayout
+							{
+								Orientation = StackOrientation.Horizontal,
+								Children =
+								{
+									new Label { Text = "Sort: " },
+									groupByFirst,
+									groupByLast
+								}
+							},
+							new StackLayout
+							{
+								Orientation = StackOrientation.Horizontal,
+								Children =
+								{
+									addRandom,
+									addRandomToExisting,
+								}
+							}
+						},
+					},
+					_list
+				}
+			};
 
-            SetupContacts();
-            _list.ItemsSource = _sortedContacts;
-        }
+			SetupContacts();
+			_list.ItemsSource = _sortedContacts;
+		}
 
-        void AddContact(ObservableCollection<Group> contactGroups, Contact contact)
-        {
-            char sortChar = GetSortChar(contact);
+		void AddContact(ObservableCollection<Group> contactGroups, Contact contact)
+		{
+			char sortChar = GetSortChar(contact);
 
-            Group collection = contactGroups.FirstOrDefault(col =>
-            {
-                Contact c = col.First();
-                return GetSortChar(c) == sortChar;
-            });
+			Group collection = contactGroups.FirstOrDefault(col =>
+			{
+				Contact c = col.First();
+				return GetSortChar(c) == sortChar;
+			});
 
-            if (collection == null)
-            {
-                var ocontacts = new Group(GetSortChar(contact).ToString()) { contact };
-                InsertBasedOnSort(contactGroups, ocontacts, c => GetSortChar(c.First()));
-            }
-            else
-                InsertBasedOnSort(collection, contact, c => GetSortString(c)[0]);
-        }
+			if (collection == null)
+			{
+				var ocontacts = new Group(GetSortChar(contact).ToString()) { contact };
+				InsertBasedOnSort(contactGroups, ocontacts, c => GetSortChar(c.First()));
+			}
+			else
+				InsertBasedOnSort(collection, contact, c => GetSortString(c)[0]);
+		}
 
-        Contact GetRandomContact()
-        {
-            var contact = new Contact();
+		Contact GetRandomContact()
+		{
+			var contact = new Contact();
 
-            int firstLen = _rand.Next(3, 7);
+			int firstLen = _rand.Next(3, 7);
 
-            var builder = new StringBuilder(firstLen);
-            for (var i = 0; i < firstLen; i++)
-            {
-                char c = Chars[_rand.Next(0, Chars.Length)];
-                builder.Append(i != 0 ? c : char.ToUpper(c));
-            }
+			var builder = new StringBuilder(firstLen);
+			for (var i = 0; i < firstLen; i++)
+			{
+				char c = Chars[_rand.Next(0, Chars.Length)];
+				builder.Append(i != 0 ? c : char.ToUpper(c));
+			}
 
-            contact.FirstName = builder.ToString();
+			contact.FirstName = builder.ToString();
 
-            int lastLen = _rand.Next(3, 7);
-            builder.Clear();
-            for (var i = 0; i < lastLen; i++)
-            {
-                char c = Chars[_rand.Next(0, Chars.Length)];
-                builder.Append(i != 0 ? c : char.ToUpper(c));
-            }
+			int lastLen = _rand.Next(3, 7);
+			builder.Clear();
+			for (var i = 0; i < lastLen; i++)
+			{
+				char c = Chars[_rand.Next(0, Chars.Length)];
+				builder.Append(i != 0 ? c : char.ToUpper(c));
+			}
 
-            contact.LastName = builder.ToString();
-            contact.Title = "Software Engineer";
+			contact.LastName = builder.ToString();
+			contact.Title = "Software Engineer";
 
-            return contact;
-        }
+			return contact;
+		}
 
-        char GetSortChar(Contact contact)
-        {
-            return GetSortString(contact)[0];
-        }
+		char GetSortChar(Contact contact)
+		{
+			return GetSortString(contact)[0];
+		}
 
-        string GetSortString(Contact contact)
-        {
-            return _sortedByFirst ? contact.FirstName : contact.LastName;
-        }
+		string GetSortString(Contact contact)
+		{
+			return _sortedByFirst ? contact.FirstName : contact.LastName;
+		}
 
-        int IndexOf<T>(IEnumerable<T> elements, T element)
-        {
-            var i = 0;
-            foreach (T e in elements)
-            {
-                if (Equals(e, element))
-                    return i;
+		int IndexOf<T>(IEnumerable<T> elements, T element)
+		{
+			var i = 0;
+			foreach (T e in elements)
+			{
+				if (Equals(e, element))
+					return i;
 
-                i++;
-            }
+				i++;
+			}
 
-            return -1;
-        }
+			return -1;
+		}
 
-        void InsertBasedOnSort<T, TSort>(IList<T> items, T item, Func<T, TSort> sortBy)
-        {
-            var newItems = new List<T>(items);
-            newItems.Add(item);
-            int index = IndexOf(newItems.OrderBy(sortBy), item);
-            items.Insert(index, item);
-        }
+		void InsertBasedOnSort<T, TSort>(IList<T> items, T item, Func<T, TSort> sortBy)
+		{
+			var newItems = new List<T>(items);
+			newItems.Add(item);
+			int index = IndexOf(newItems.OrderBy(sortBy), item);
+			items.Insert(index, item);
+		}
 
-        void SetupContacts()
-        {
-            var coll = new ObservableCollection<Group>();
-            foreach (Contact contact in _contacts)
-                AddContact(coll, contact);
+		void SetupContacts()
+		{
+			var coll = new ObservableCollection<Group>();
+			foreach (Contact contact in _contacts)
+				AddContact(coll, contact);
 
-            _sortedContacts = coll;
-        }
+			_sortedContacts = coll;
+		}
 
-        internal class Contact
-        {
-            public string FirstName { get; set; }
+		internal class Contact
+		{
+			public string FirstName { get; set; }
 
-            public string FullName
-            {
-                get { return FirstName + " " + LastName; }
-            }
+			public string FullName
+			{
+				get { return FirstName + " " + LastName; }
+			}
 
-            public string LastName { get; set; }
+			public string LastName { get; set; }
 
-            public string Title { get; set; }
-        }
+			public string Title { get; set; }
+		}
 
-        [Preserve(AllMembers = true)]
-        internal class Group
-            : ObservableCollection<Contact>
-        {
-            public Group(string key)
-            {
-                Key = key;
-            }
+		[Preserve(AllMembers = true)]
+		internal class Group
+			: ObservableCollection<Contact>
+		{
+			public Group(string key)
+			{
+				Key = key;
+			}
 
-            public string Key { get; private set; }
-        }
-    }
+			public string Key { get; private set; }
+		}
+	}
 }

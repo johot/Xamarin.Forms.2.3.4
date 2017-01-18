@@ -9,58 +9,58 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.None, 0, "StackLayout issue", PlatformAffected.All, NavigationBehavior.PushModalAsync)]
-    public class StackLayoutIssue : TestContentPage
-    {
-        protected override void Init()
-        {
-            var logo = new Image
-            {
-                Source = "cover1.jpg",
-                WidthRequest = 20,
-                HeightRequest = 20,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-            };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.None, 0, "StackLayout issue", PlatformAffected.All, NavigationBehavior.PushModalAsync)]
+	public class StackLayoutIssue : TestContentPage
+	{
+		protected override void Init()
+		{
+			var logo = new Image
+			{
+				Source = "cover1.jpg",
+				WidthRequest = 20,
+				HeightRequest = 20,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+			};
 
-            var winPrizeLabel = new Label
-            {
-                Text = "Win a Xamarin Prize",
+			var winPrizeLabel = new Label
+			{
+				Text = "Win a Xamarin Prize",
 #pragma warning disable 618
-                XAlign = TextAlignment.Center,
+				XAlign = TextAlignment.Center,
 #pragma warning restore 618
 
 #pragma warning disable 618
-                YAlign = TextAlignment.Center,
+				YAlign = TextAlignment.Center,
 #pragma warning restore 618
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
+				VerticalOptions = LayoutOptions.FillAndExpand
+			};
 
 #pragma warning disable 618
-            Device.OnPlatform(iOS: () => winPrizeLabel.Font = Font.OfSize("HelveticaNeue-UltraLight", NamedSize.Large));
+			Device.OnPlatform(iOS: () => winPrizeLabel.Font = Font.OfSize("HelveticaNeue-UltraLight", NamedSize.Large));
 #pragma warning restore 618
 
-            StackLayout form = MakeForm();
+			StackLayout form = MakeForm();
 
-            var spinButton = new Button
-            {
-                Text = "Spin"
-            };
+			var spinButton = new Button
+			{
+				Text = "Spin"
+			};
 
-            var mainLayout = new StackLayout
-            {
-                Children =
-                {
-                    logo,
-                    winPrizeLabel,
-                    form,
-                    spinButton
-                }
-            };
+			var mainLayout = new StackLayout
+			{
+				Children =
+				{
+					logo,
+					winPrizeLabel,
+					form,
+					spinButton
+				}
+			};
 
-            Content = mainLayout;
-            Padding = new Thickness(50);
-        }
+			Content = mainLayout;
+			Padding = new Thickness(50);
+		}
 
 #if UITEST
 		[Test]
@@ -87,66 +87,66 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 #endif
 
-        StackLayout MakeForm()
-        {
-            var nameEntry = new Entry
-            {
-                Placeholder = "Full Name"
-            };
-            var emailEntry = new Entry
-            {
-                Placeholder = "Email"
-            };
+		StackLayout MakeForm()
+		{
+			var nameEntry = new Entry
+			{
+				Placeholder = "Full Name"
+			};
+			var emailEntry = new Entry
+			{
+				Placeholder = "Email"
+			};
 
-            var companyEntry = new Entry
-            {
-                Placeholder = "Company"
-            };
+			var companyEntry = new Entry
+			{
+				Placeholder = "Company"
+			};
 
-            var switchContainer = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal
-            };
+			var switchContainer = new StackLayout
+			{
+				Orientation = StackOrientation.Horizontal
+			};
 
-            var switchLabel = new Label
-            {
-                Text = "Completed Azure Mobile Services Challenge?"
-            };
-            var switchElement = new Switch();
+			var switchLabel = new Label
+			{
+				Text = "Completed Azure Mobile Services Challenge?"
+			};
+			var switchElement = new Switch();
 
-            switchContainer.Children.Add(switchLabel);
-            switchContainer.Children.Add(switchElement);
+			switchContainer.Children.Add(switchLabel);
+			switchContainer.Children.Add(switchElement);
 
-            var entryContainer = new StackLayout
-            {
-                Children =
-                {
-                    nameEntry,
-                    emailEntry,
-                    companyEntry,
-                    switchContainer
-                },
-                MinimumWidthRequest = 50
-            };
+			var entryContainer = new StackLayout
+			{
+				Children =
+				{
+					nameEntry,
+					emailEntry,
+					companyEntry,
+					switchContainer
+				},
+				MinimumWidthRequest = 50
+			};
 
-            var qrButton = new Image
-            {
-                Source = "cover1.jpg",
-                WidthRequest = 100,
-                HeightRequest = 100
-            };
+			var qrButton = new Image
+			{
+				Source = "cover1.jpg",
+				WidthRequest = 100,
+				HeightRequest = 100
+			};
 
-            var result = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal
-            };
+			var result = new StackLayout
+			{
+				Orientation = StackOrientation.Horizontal
+			};
 
-            result.Children.Add(entryContainer);
-            result.Children.Add(qrButton);
+			result.Children.Add(entryContainer);
+			result.Children.Add(qrButton);
 
-            result.SizeChanged += (sender, args) => { Debug.WriteLine(result.Bounds); };
+			result.SizeChanged += (sender, args) => { Debug.WriteLine(result.Bounds); };
 
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 }

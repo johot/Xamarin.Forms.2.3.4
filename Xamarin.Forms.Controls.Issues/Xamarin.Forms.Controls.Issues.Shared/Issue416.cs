@@ -8,25 +8,25 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 416, "NavigationPage in PushModal does not show NavigationBar", PlatformAffected.Android,
-        NavigationBehavior.PushModalAsync)]
-    public class Issue416 : TestNavigationPage
-    {
-        protected override void Init()
-        {
-            Navigation.PushAsync(new ContentPage
-            {
-                Title = "Test Page",
-                Content = new Label
-                {
-                    Text = "I should have a nav bar"
-                }
-            });
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 416, "NavigationPage in PushModal does not show NavigationBar", PlatformAffected.Android,
+		NavigationBehavior.PushModalAsync)]
+	public class Issue416 : TestNavigationPage
+	{
+		protected override void Init()
+		{
+			Navigation.PushAsync(new ContentPage
+			{
+				Title = "Test Page",
+				Content = new Label
+				{
+					Text = "I should have a nav bar"
+				}
+			});
+		}
 
-        // Issue 416
-        // NavigationBar should be visible in modal
+		// Issue 416
+		// NavigationBar should be visible in modal
 
 #if UITEST
 		[Test]
@@ -38,5 +38,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("All element present");
 		}
 #endif
-    }
+	}
 }

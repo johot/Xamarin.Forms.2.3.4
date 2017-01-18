@@ -8,23 +8,23 @@ using Xamarin.UITest.Android;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2272, "Entry text updating set focus on the beginning of text not the end of it",
-        PlatformAffected.Android)]
-    public class Issue2272 : TestContentPage
-    {
-        protected override void Init()
-        {
-            var userNameEditor = new Entry() { Text = "userNameEditorEmptyString" };
-            userNameEditor.Focused += (sender, args) => { userNameEditor.Text = "focused"; };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2272, "Entry text updating set focus on the beginning of text not the end of it",
+		PlatformAffected.Android)]
+	public class Issue2272 : TestContentPage
+	{
+		protected override void Init()
+		{
+			var userNameEditor = new Entry() { Text = "userNameEditorEmptyString" };
+			userNameEditor.Focused += (sender, args) => { userNameEditor.Text = "focused"; };
 
-            Content = new StackLayout
-            {
-                Spacing = 10,
-                VerticalOptions = LayoutOptions.Start,
-                Children = { userNameEditor }
-            };
-        }
+			Content = new StackLayout
+			{
+				Spacing = 10,
+				VerticalOptions = LayoutOptions.Start,
+				Children = { userNameEditor }
+			};
+		}
 
 #if UITEST
 		[Test]
@@ -47,5 +47,5 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 #endif
-    }
+	}
 }

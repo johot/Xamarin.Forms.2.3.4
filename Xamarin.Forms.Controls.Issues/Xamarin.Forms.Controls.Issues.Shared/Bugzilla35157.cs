@@ -8,45 +8,45 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 35157, "CarouselPage inside NavPage inside TabbedPage gets laid out incorrectly",
-        NavigationBehavior.PushModalAsync)]
-    public class Bugzilla35157 : TestTabbedPage
-    {
-        protected override void Init()
-        {
-            var button = new Button
-            {
-                Text = "Go",
-                AutomationId = "firstButton"
-            };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 35157, "CarouselPage inside NavPage inside TabbedPage gets laid out incorrectly",
+		NavigationBehavior.PushModalAsync)]
+	public class Bugzilla35157 : TestTabbedPage
+	{
+		protected override void Init()
+		{
+			var button = new Button
+			{
+				Text = "Go",
+				AutomationId = "firstButton"
+			};
 
-            button.Clicked += (sender, args) =>
-            {
-                Button button2 = null;
-                button.Navigation.PushAsync(new CarouselPage
-                {
-                    Children =
-                    {
-                        new ContentPage
-                        {
-                            Content = button2 = new Button
-                            {
-                                AutomationId = "secondButton",
-                                VerticalOptions = LayoutOptions.EndAndExpand,
-                                Text = "Click Me"
-                            }
-                        }
-                    }
-                });
+			button.Clicked += (sender, args) =>
+			{
+				Button button2 = null;
+				button.Navigation.PushAsync(new CarouselPage
+				{
+					Children =
+					{
+						new ContentPage
+						{
+							Content = button2 = new Button
+							{
+								AutomationId = "secondButton",
+								VerticalOptions = LayoutOptions.EndAndExpand,
+								Text = "Click Me"
+							}
+						}
+					}
+				});
 
-                button2.Clicked += (s, a) => button2.Text = "Button Clicked!";
-            };
+				button2.Clicked += (s, a) => button2.Text = "Button Clicked!";
+			};
 
-            var tab = new NavigationPage(new ContentPage { Content = button });
-            tab.Title = "Tab";
-            Children.Add(tab);
-        }
+			var tab = new NavigationPage(new ContentPage { Content = button });
+			tab.Title = "Tab";
+			Children.Add(tab);
+		}
 
 #if UITEST
 		[Test]
@@ -59,5 +59,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Button ("Button Clicked!"));
 		}
 #endif
-    }
+	}
 }

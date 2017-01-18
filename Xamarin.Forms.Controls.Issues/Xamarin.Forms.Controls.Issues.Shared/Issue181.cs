@@ -9,33 +9,33 @@ using Xamarin.Forms.Core.UITests;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 181, "Color not initialized for Label", PlatformAffected.Android,
-        NavigationBehavior.PushModalAsync)]
-    public class Issue181 : TestContentPage
-    {
-        protected override void Init()
-        {
-            Title = "Issue 181";
-            Content = new Frame
-            {
-                OutlineColor = Color.Red,
-                BackgroundColor = new Color(1.0, 1.0, 0.0),
-                Content = new Label
-                {
-                    Text = "I should have red text",
-                    TextColor = Color.Red,
-                    BackgroundColor = new Color(0.5, 0.5, 0.5),
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 181, "Color not initialized for Label", PlatformAffected.Android,
+		NavigationBehavior.PushModalAsync)]
+	public class Issue181 : TestContentPage
+	{
+		protected override void Init()
+		{
+			Title = "Issue 181";
+			Content = new Frame
+			{
+				OutlineColor = Color.Red,
+				BackgroundColor = new Color(1.0, 1.0, 0.0),
+				Content = new Label
+				{
+					Text = "I should have red text",
+					TextColor = Color.Red,
+					BackgroundColor = new Color(0.5, 0.5, 0.5),
 #pragma warning disable 618
-                    XAlign = TextAlignment.Center,
+					XAlign = TextAlignment.Center,
 #pragma warning restore 618
 
 #pragma warning disable 618
-                    YAlign = TextAlignment.Center
+					YAlign = TextAlignment.Center
 #pragma warning restore 618
-                }
-            };
-        }
+				}
+			};
+		}
 
 #if UITEST
 		[Test]
@@ -47,5 +47,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("Label should have red text");
 		}
 #endif
-    }
+	}
 }

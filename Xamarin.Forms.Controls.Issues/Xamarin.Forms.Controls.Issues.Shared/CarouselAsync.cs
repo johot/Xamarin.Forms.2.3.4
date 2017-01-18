@@ -10,60 +10,60 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.None, 0, "Carousel Async Add Page Issue", PlatformAffected.All,
-        NavigationBehavior.PushModalAsync)]
-    public class CarouselAsync : TestCarouselPage
-    {
-        protected override void Init()
-        {
-            Children.Add(new ContentPage
-            {
-                BackgroundColor = Color.Red,
-                Content = new Label
-                {
-                    Text = "Page One"
-                }
-            });
-            Children.Add(new ContentPage
-            {
-                BackgroundColor = Color.Green,
-                Content = new Label
-                {
-                    Text = "Page Two"
-                }
-            });
-            Update(this);
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.None, 0, "Carousel Async Add Page Issue", PlatformAffected.All,
+		NavigationBehavior.PushModalAsync)]
+	public class CarouselAsync : TestCarouselPage
+	{
+		protected override void Init()
+		{
+			Children.Add(new ContentPage
+			{
+				BackgroundColor = Color.Red,
+				Content = new Label
+				{
+					Text = "Page One"
+				}
+			});
+			Children.Add(new ContentPage
+			{
+				BackgroundColor = Color.Green,
+				Content = new Label
+				{
+					Text = "Page Two"
+				}
+			});
+			Update(this);
+		}
 
-        static void Update(CarouselPage page)
-        {
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                page.Children.Remove(page.Children.Skip(1).First() as ContentPage);
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                {
-                    page.Children.Add(new ContentPage
-                    {
-                        BackgroundColor = Color.Blue,
-                        Content = new Label
-                        {
-                            Text = "Page Two - Added"
-                        }
-                    });
-                    page.Children.Add(new ContentPage
-                    {
-                        BackgroundColor = Color.Gray,
-                        Content = new Label
-                        {
-                            Text = "Page Three - Added"
-                        }
-                    });
-                    return false;
-                });
-                return false;
-            });
-        }
+		static void Update(CarouselPage page)
+		{
+			Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+			{
+				page.Children.Remove(page.Children.Skip(1).First() as ContentPage);
+				Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+				{
+					page.Children.Add(new ContentPage
+					{
+						BackgroundColor = Color.Blue,
+						Content = new Label
+						{
+							Text = "Page Two - Added"
+						}
+					});
+					page.Children.Add(new ContentPage
+					{
+						BackgroundColor = Color.Gray,
+						Content = new Label
+						{
+							Text = "Page Three - Added"
+						}
+					});
+					return false;
+				});
+				return false;
+			});
+		}
 
 #if UITEST
 		[Test]
@@ -120,5 +120,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.SetOrientationPortrait ();
 		}
 #endif
-    }
+	}
 }

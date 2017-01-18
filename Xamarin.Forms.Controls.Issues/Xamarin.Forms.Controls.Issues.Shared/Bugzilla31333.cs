@@ -13,220 +13,220 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 31333,
-        "Focus() on Entry in ViewCell brings up keyboard, but doesn't have cursor in EditText", PlatformAffected.Android
-    )]
-    public class Bugzilla31333 : TestContentPage
-    {
-        [Preserve(AllMembers = true)]
-        public class Model31333 : INotifyPropertyChanged
-        {
-            string _data;
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 31333,
+		"Focus() on Entry in ViewCell brings up keyboard, but doesn't have cursor in EditText", PlatformAffected.Android
+	)]
+	public class Bugzilla31333 : TestContentPage
+	{
+		[Preserve(AllMembers = true)]
+		public class Model31333 : INotifyPropertyChanged
+		{
+			string _data;
 
-            bool _isFocused = false;
+			bool _isFocused = false;
 
-            public string Data
-            {
-                get { return _data; }
-                set
-                {
-                    _data = value;
-                    OnPropertyChanged();
-                }
-            }
+			public string Data
+			{
+				get { return _data; }
+				set
+				{
+					_data = value;
+					OnPropertyChanged();
+				}
+			}
 
-            public bool IsFocused
-            {
-                get { return _isFocused; }
-                set
-                {
-                    _isFocused = value;
-                    OnPropertyChanged();
-                }
-            }
+			public bool IsFocused
+			{
+				get { return _isFocused; }
+				set
+				{
+					_isFocused = value;
+					OnPropertyChanged();
+				}
+			}
 
-            public event PropertyChangedEventHandler PropertyChanged;
+			public event PropertyChangedEventHandler PropertyChanged;
 
-            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+			protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+			{
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public interface IHaveControlFocusedProperty
-        {
-            void SetBinding();
-        }
+		[Preserve(AllMembers = true)]
+		public interface IHaveControlFocusedProperty
+		{
+			void SetBinding();
+		}
 
-        [Preserve(AllMembers = true)]
-        public class ExtendedEntry : Entry, IHaveControlFocusedProperty
-        {
-            public static readonly BindableProperty IsControlFocusedProperty =
-                BindableProperty.Create("IsControlFocused", typeof(bool), typeof(ExtendedEntry), false);
+		[Preserve(AllMembers = true)]
+		public class ExtendedEntry : Entry, IHaveControlFocusedProperty
+		{
+			public static readonly BindableProperty IsControlFocusedProperty =
+				BindableProperty.Create("IsControlFocused", typeof(bool), typeof(ExtendedEntry), false);
 
-            public bool IsControlFocused
-            {
-                get { return (bool)GetValue(IsControlFocusedProperty); }
-                set { SetValue(IsControlFocusedProperty, value); }
-            }
+			public bool IsControlFocused
+			{
+				get { return (bool)GetValue(IsControlFocusedProperty); }
+				set { SetValue(IsControlFocusedProperty, value); }
+			}
 
-            public void SetBinding()
-            {
-                this.SetBinding(IsControlFocusedProperty, "IsFocused");
-            }
+			public void SetBinding()
+			{
+				this.SetBinding(IsControlFocusedProperty, "IsFocused");
+			}
 
-            protected override void OnPropertyChanged(string propertyName = null)
-            {
-                base.OnPropertyChanged(propertyName);
-                if (propertyName == IsControlFocusedProperty.PropertyName)
-                {
-                    if (IsControlFocused)
-                    {
-                        Focus();
-                    }
-                    else
-                    {
-                        Unfocus();
-                    }
-                }
-            }
-        }
+			protected override void OnPropertyChanged(string propertyName = null)
+			{
+				base.OnPropertyChanged(propertyName);
+				if (propertyName == IsControlFocusedProperty.PropertyName)
+				{
+					if (IsControlFocused)
+					{
+						Focus();
+					}
+					else
+					{
+						Unfocus();
+					}
+				}
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public class ExtendedEditor : Editor, IHaveControlFocusedProperty
-        {
-            public static readonly BindableProperty IsControlFocusedProperty =
-                BindableProperty.Create("IsControlFocused", typeof(bool), typeof(ExtendedEditor), false);
+		[Preserve(AllMembers = true)]
+		public class ExtendedEditor : Editor, IHaveControlFocusedProperty
+		{
+			public static readonly BindableProperty IsControlFocusedProperty =
+				BindableProperty.Create("IsControlFocused", typeof(bool), typeof(ExtendedEditor), false);
 
-            public bool IsControlFocused
-            {
-                get { return (bool)GetValue(IsControlFocusedProperty); }
-                set { SetValue(IsControlFocusedProperty, value); }
-            }
+			public bool IsControlFocused
+			{
+				get { return (bool)GetValue(IsControlFocusedProperty); }
+				set { SetValue(IsControlFocusedProperty, value); }
+			}
 
-            public void SetBinding()
-            {
-                this.SetBinding(IsControlFocusedProperty, "IsFocused");
-            }
+			public void SetBinding()
+			{
+				this.SetBinding(IsControlFocusedProperty, "IsFocused");
+			}
 
-            protected override void OnPropertyChanged(string propertyName = null)
-            {
-                base.OnPropertyChanged(propertyName);
-                if (propertyName == IsControlFocusedProperty.PropertyName)
-                {
-                    if (IsControlFocused)
-                    {
-                        Focus();
-                    }
-                    else
-                    {
-                        Unfocus();
-                    }
-                }
-            }
-        }
+			protected override void OnPropertyChanged(string propertyName = null)
+			{
+				base.OnPropertyChanged(propertyName);
+				if (propertyName == IsControlFocusedProperty.PropertyName)
+				{
+					if (IsControlFocused)
+					{
+						Focus();
+					}
+					else
+					{
+						Unfocus();
+					}
+				}
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public class ExtendedCell<T> : ViewCell where T : View, IHaveControlFocusedProperty
-        {
-            public ExtendedCell()
-            {
-                var control = (T)Activator.CreateInstance(typeof(T));
-                control.SetBinding();
-                control.HorizontalOptions = LayoutOptions.FillAndExpand;
+		[Preserve(AllMembers = true)]
+		public class ExtendedCell<T> : ViewCell where T : View, IHaveControlFocusedProperty
+		{
+			public ExtendedCell()
+			{
+				var control = (T)Activator.CreateInstance(typeof(T));
+				control.SetBinding();
+				control.HorizontalOptions = LayoutOptions.FillAndExpand;
 
-                View = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.StartAndExpand,
-                    Children =
-                    {
-                        control
-                    }
-                };
-            }
-        }
+				View = new StackLayout
+				{
+					Orientation = StackOrientation.Horizontal,
+					HorizontalOptions = LayoutOptions.StartAndExpand,
+					Children =
+					{
+						control
+					}
+				};
+			}
+		}
 
-        StackLayout CreateListViewTestSection(Type controlType)
-        {
-            string name = controlType.GenericTypeArguments[0].Name;
-            name = name.Replace("Extended", "");
+		StackLayout CreateListViewTestSection(Type controlType)
+		{
+			string name = controlType.GenericTypeArguments[0].Name;
+			name = name.Replace("Extended", "");
 
-            var button = new Button() { Text = $"Focus {name} in ListView" };
+			var button = new Button() { Text = $"Focus {name} in ListView" };
 
-            var data = new ObservableCollection<Model31333> { new Model31333() };
+			var data = new ObservableCollection<Model31333> { new Model31333() };
 
-            var listView = new ListView
-            {
-                VerticalOptions = LayoutOptions.Start,
-                ItemsSource = data,
-                ItemTemplate = new DataTemplate(controlType)
-            };
+			var listView = new ListView
+			{
+				VerticalOptions = LayoutOptions.Start,
+				ItemsSource = data,
+				ItemTemplate = new DataTemplate(controlType)
+			};
 
-            button.Clicked += (sender, args) =>
-            {
-                Model31333 item = data[0];
-                if (item != null)
-                {
-                    item.IsFocused = !item.IsFocused;
-                }
-            };
+			button.Clicked += (sender, args) =>
+			{
+				Model31333 item = data[0];
+				if (item != null)
+				{
+					item.IsFocused = !item.IsFocused;
+				}
+			};
 
-            return new StackLayout() { Children = { button, listView } };
-        }
+			return new StackLayout() { Children = { button, listView } };
+		}
 
-        StackLayout CreateTableViewTestSection<T>() where T : View, IHaveControlFocusedProperty
-        {
-            string name = typeof(T).Name;
-            name = name.Replace("Extended", "");
+		StackLayout CreateTableViewTestSection<T>() where T : View, IHaveControlFocusedProperty
+		{
+			string name = typeof(T).Name;
+			name = name.Replace("Extended", "");
 
-            var button = new Button() { Text = $"Focus {name} in Table" };
+			var button = new Button() { Text = $"Focus {name} in Table" };
 
-            var data = new Model31333();
+			var data = new Model31333();
 
-            var tableView = new TableView
-            {
-                VerticalOptions = LayoutOptions.Start
-            };
+			var tableView = new TableView
+			{
+				VerticalOptions = LayoutOptions.Start
+			};
 
-            var tableRoot = new TableRoot();
-            var tableSection = new TableSection();
+			var tableRoot = new TableRoot();
+			var tableSection = new TableSection();
 
-            var cell = new ExtendedCell<T>();
+			var cell = new ExtendedCell<T>();
 
-            cell.BindingContext = data;
+			cell.BindingContext = data;
 
-            tableSection.Add(cell);
-            tableRoot.Add(tableSection);
-            tableView.Root = tableRoot;
+			tableSection.Add(cell);
+			tableRoot.Add(tableSection);
+			tableView.Root = tableRoot;
 
-            button.Clicked += (sender, args) =>
-            {
-                Model31333 item = data;
-                if (item != null)
-                {
-                    item.IsFocused = !item.IsFocused;
-                }
-            };
+			button.Clicked += (sender, args) =>
+			{
+				Model31333 item = data;
+				if (item != null)
+				{
+					item.IsFocused = !item.IsFocused;
+				}
+			};
 
-            return new StackLayout() { Children = { button, tableView } };
-        }
+			return new StackLayout() { Children = { button, tableView } };
+		}
 
-        protected override void Init()
-        {
-            StackLayout entrySection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEntry>));
-            StackLayout editorSection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEditor>));
+		protected override void Init()
+		{
+			StackLayout entrySection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEntry>));
+			StackLayout editorSection = CreateListViewTestSection(typeof(ExtendedCell<ExtendedEditor>));
 
-            StackLayout entryTableSection = CreateTableViewTestSection<ExtendedEntry>();
-            StackLayout editorTableSection = CreateTableViewTestSection<ExtendedEditor>();
+			StackLayout entryTableSection = CreateTableViewTestSection<ExtendedEntry>();
+			StackLayout editorTableSection = CreateTableViewTestSection<ExtendedEditor>();
 
-            Content = new StackLayout()
-            {
-                Children = { entrySection, editorSection, entryTableSection, editorTableSection }
-            };
-        }
+			Content = new StackLayout()
+			{
+				Children = { entrySection, editorSection, entryTableSection, editorTableSection }
+			};
+		}
 
 #if UITEST
 		[Test]
@@ -278,5 +278,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Tap(q => q.Marked("Focus Editor in Table"));
 		}
 #endif
-    }
+	}
 }

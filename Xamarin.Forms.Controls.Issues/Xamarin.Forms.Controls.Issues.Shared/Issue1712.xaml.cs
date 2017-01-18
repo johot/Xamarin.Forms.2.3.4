@@ -4,15 +4,15 @@ using Xamarin.Forms.Internals;
 namespace Xamarin.Forms.Controls
 {
 #if APP
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1712, "Wrong error thrown when setting LayoutOptions property to string",
-        PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone)]
-    public partial class Issue1712 : ContentPage
-    {
-        public Issue1712()
-        {
-            InitializeComponent();
-        }
-    }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1712, "Wrong error thrown when setting LayoutOptions property to string",
+		PlatformAffected.Android | PlatformAffected.iOS | PlatformAffected.WinPhone)]
+	public partial class Issue1712 : ContentPage
+	{
+		public Issue1712()
+		{
+			InitializeComponent();
+		}
+	}
 #endif
 }

@@ -2,55 +2,55 @@ using System;
 
 namespace Xamarin.Forms.Controls
 {
-    internal class StateViewContainer<T> : ViewContainer<T>
-        where T : View
-    {
-        public StateViewContainer(Enum formsMember, T view) : base(formsMember, view)
-        {
-            string name = formsMember.ToString();
+	internal class StateViewContainer<T> : ViewContainer<T>
+		where T : View
+	{
+		public StateViewContainer(Enum formsMember, T view) : base(formsMember, view)
+		{
+			string name = formsMember.ToString();
 
-            var stateTitleLabel = new Label
-            {
-                Text = name + "?"
-            };
+			var stateTitleLabel = new Label
+			{
+				Text = name + "?"
+			};
 
-            ViewInteractionLabel = new Label
-            {
-                Text = "Interacted? : False"
-            };
+			ViewInteractionLabel = new Label
+			{
+				Text = "Interacted? : False"
+			};
 
-            var stateValueLabel = new Label
-            {
-                BindingContext = view,
-                AutomationId = name + "StateLabel"
-            };
-            if (name != "Focus")
-                stateValueLabel.SetBinding(Label.TextProperty, name,
-                    converter: new GenericValueConverter(o => o.ToString()));
+			var stateValueLabel = new Label
+			{
+				BindingContext = view,
+				AutomationId = name + "StateLabel"
+			};
+			if (name != "Focus")
+				stateValueLabel.SetBinding(Label.TextProperty, name,
+					converter: new GenericValueConverter(o => o.ToString()));
 
-            StateChangeButton = new Button
-            {
-                Text = "Change State: " + name,
-                AutomationId = name + "StateButton"
-            };
+			StateChangeButton = new Button
+			{
+				Text = "Change State: " + name,
+				AutomationId = name + "StateButton"
+			};
 
-            var labelLayout = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-                Children =
-                {
-                    stateTitleLabel,
-                    stateValueLabel
-                }
-            };
+			var labelLayout = new StackLayout
+			{
+				Orientation = StackOrientation.Horizontal,
+				Children =
+				{
+					stateTitleLabel,
+					stateValueLabel
+				}
+			};
 
-            ContainerLayout.Children.Add(ViewInteractionLabel);
-            ContainerLayout.Children.Add(labelLayout);
-            ContainerLayout.Children.Add(StateChangeButton);
-        }
+			ContainerLayout.Children.Add(ViewInteractionLabel);
+			ContainerLayout.Children.Add(labelLayout);
+			ContainerLayout.Children.Add(StateChangeButton);
+		}
 
-        public Button StateChangeButton { get; private set; }
+		public Button StateChangeButton { get; private set; }
 
-        public Label ViewInteractionLabel { get; private set; }
-    }
+		public Label ViewInteractionLabel { get; private set; }
+	}
 }

@@ -8,35 +8,35 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 968, "StackLayout does not relayout on device rotation", PlatformAffected.iOS,
-        NavigationBehavior.PushModalAsync)]
-    public class Issue968 : TestContentPage
-    {
-        protected override void Init()
-        {
-            Title = "Nav Bar";
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 968, "StackLayout does not relayout on device rotation", PlatformAffected.iOS,
+		NavigationBehavior.PushModalAsync)]
+	public class Issue968 : TestContentPage
+	{
+		protected override void Init()
+		{
+			Title = "Nav Bar";
 
-            var layout = new StackLayout
-            {
-                Padding = new Thickness(20),
-                BackgroundColor = Color.Gray
-            };
+			var layout = new StackLayout
+			{
+				Padding = new Thickness(20),
+				BackgroundColor = Color.Gray
+			};
 
-            layout.Children.Add(new BoxView
-            {
-                BackgroundColor = Color.Red,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            });
+			layout.Children.Add(new BoxView
+			{
+				BackgroundColor = Color.Red,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand
+			});
 
-            layout.Children.Add(new Label
-            {
-                Text = "You should see me after rotating"
-            });
+			layout.Children.Add(new Label
+			{
+				Text = "You should see me after rotating"
+			});
 
-            Content = layout;
-        }
+			Content = layout;
+		}
 
 #if UITEST
 		[Test]
@@ -51,5 +51,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.SetOrientationPortrait ();
 		}
 #endif
-    }
+	}
 }

@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 38989, "[Android] NullReferenceException when using a custom ViewCellRenderer ",
-        PlatformAffected.Android)]
-    public class Bugzilla38989 : TestContentPage
-    {
-        const string Success = "If you can see this, the test passed.";
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 38989, "[Android] NullReferenceException when using a custom ViewCellRenderer ",
+		PlatformAffected.Android)]
+	public class Bugzilla38989 : TestContentPage
+	{
+		const string Success = "If you can see this, the test passed.";
 
 #if UITEST && __ANDROID__
 		[Test]
@@ -24,30 +24,30 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 #endif
 
-        protected override void Init()
-        {
-            var successLabel = new Label { Text = Success };
+		protected override void Init()
+		{
+			var successLabel = new Label { Text = Success };
 
-            var lv = new ListView();
-            var items = new List<string> { "data", "does not", "matter" };
+			var lv = new ListView();
+			var items = new List<string> { "data", "does not", "matter" };
 
-            lv.ItemTemplate = new DataTemplate(typeof(_38989CustomViewCell));
+			lv.ItemTemplate = new DataTemplate(typeof(_38989CustomViewCell));
 
-            lv.ItemsSource = items;
+			lv.ItemsSource = items;
 
-            Content = new StackLayout { Children = { successLabel, lv } };
-        }
+			Content = new StackLayout { Children = { successLabel, lv } };
+		}
 
-        [Preserve(AllMembers = true)]
-        public class _38989CustomViewCell : ViewCell
-        {
-            public _38989CustomViewCell()
-            {
-                var label = new Label();
-                label.SetBinding(Label.TextProperty, ".");
+		[Preserve(AllMembers = true)]
+		public class _38989CustomViewCell : ViewCell
+		{
+			public _38989CustomViewCell()
+			{
+				var label = new Label();
+				label.SetBinding(Label.TextProperty, ".");
 
-                View = label;
-            }
-        }
-    }
+				View = label;
+			}
+		}
+	}
 }

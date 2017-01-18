@@ -9,28 +9,28 @@ using Xamarin.UITest.Android;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2241, "ScrollView content can become stuck on orientation change (iOS)",
-        PlatformAffected.iOS)]
-    public class Issue2241 : TestContentPage
-    {
-        protected override void Init()
-        {
-            var scrollView = new ScrollView()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Padding = new Thickness(20),
-                Content = new BoxView()
-                {
-                    Color = Color.Red,
-                    HeightRequest = 400,
-                    HorizontalOptions = LayoutOptions.FillAndExpand
-                }
-            };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2241, "ScrollView content can become stuck on orientation change (iOS)",
+		PlatformAffected.iOS)]
+	public class Issue2241 : TestContentPage
+	{
+		protected override void Init()
+		{
+			var scrollView = new ScrollView()
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Padding = new Thickness(20),
+				Content = new BoxView()
+				{
+					Color = Color.Red,
+					HeightRequest = 400,
+					HorizontalOptions = LayoutOptions.FillAndExpand
+				}
+			};
 
-            Content = scrollView;
-        }
+			Content = scrollView;
+		}
 
 #if UITEST
 		[Test]
@@ -57,5 +57,5 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 #endif
-    }
+	}
 }

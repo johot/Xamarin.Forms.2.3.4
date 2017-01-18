@@ -12,138 +12,138 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 31330, "Disabled context actions appear enabled")]
-    public class Bugzilla31330 : TestContentPage
-    {
-        protected override void Init()
-        {
-            var vm = new ListViewModel();
-            BindingContext = vm;
-            vm.Init();
-            var listview = new ListView();
-            listview.SetBinding(ListView.ItemsSourceProperty, new Binding("Items"));
-            listview.ItemTemplate = new DataTemplate(typeof(CustomTextCell));
-            listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) =>
-            {
-                (e.SelectedItem as ListItemViewModel).CanExecute = true;
-                ((e.SelectedItem as ListItemViewModel).DeleteItemCommand as Command).ChangeCanExecute();
-            };
-            // Initialize ui here instead of ctor
-            Content = listview;
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 31330, "Disabled context actions appear enabled")]
+	public class Bugzilla31330 : TestContentPage
+	{
+		protected override void Init()
+		{
+			var vm = new ListViewModel();
+			BindingContext = vm;
+			vm.Init();
+			var listview = new ListView();
+			listview.SetBinding(ListView.ItemsSourceProperty, new Binding("Items"));
+			listview.ItemTemplate = new DataTemplate(typeof(CustomTextCell));
+			listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) =>
+			{
+				(e.SelectedItem as ListItemViewModel).CanExecute = true;
+				((e.SelectedItem as ListItemViewModel).DeleteItemCommand as Command).ChangeCanExecute();
+			};
+			// Initialize ui here instead of ctor
+			Content = listview;
+		}
 
-        [Preserve(AllMembers = true)]
-        public class CustomTextCell : TextCell
-        {
-            public CustomTextCell()
-            {
-                SetBinding(TextProperty, new Binding("Title"));
-                var deleteMenuItem = new MenuItem();
-                deleteMenuItem.Text = "Delete";
-                deleteMenuItem.IsDestructive = true;
-                deleteMenuItem.SetBinding(MenuItem.CommandProperty, new Binding("DeleteItemCommand"));
-                ContextActions.Add(deleteMenuItem);
-            }
-        }
+		[Preserve(AllMembers = true)]
+		public class CustomTextCell : TextCell
+		{
+			public CustomTextCell()
+			{
+				SetBinding(TextProperty, new Binding("Title"));
+				var deleteMenuItem = new MenuItem();
+				deleteMenuItem.Text = "Delete";
+				deleteMenuItem.IsDestructive = true;
+				deleteMenuItem.SetBinding(MenuItem.CommandProperty, new Binding("DeleteItemCommand"));
+				ContextActions.Add(deleteMenuItem);
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public class ListViewModel : ViewModel
-        {
-            ICommand _addItemCommand;
+		[Preserve(AllMembers = true)]
+		public class ListViewModel : ViewModel
+		{
+			ICommand _addItemCommand;
 
-            ICommand _disabledCommand;
+			ICommand _disabledCommand;
 
-            public ICommand AddItemCommand
-            {
-                get
-                {
-                    if (_addItemCommand == null)
-                    {
-                        _addItemCommand =
-                            new Command(
-                                () =>
-                                    Items.Add(new ListItemViewModel(this)
-                                    {
-                                        Title = string.Format("Something {0}", Items.Count.ToString())
-                                    }));
-                    }
+			public ICommand AddItemCommand
+			{
+				get
+				{
+					if (_addItemCommand == null)
+					{
+						_addItemCommand =
+							new Command(
+								() =>
+									Items.Add(new ListItemViewModel(this)
+									{
+										Title = string.Format("Something {0}", Items.Count.ToString())
+									}));
+					}
 
-                    return _addItemCommand;
-                }
-            }
+					return _addItemCommand;
+				}
+			}
 
-            public ICommand DisabledCommand
-            {
-                get
-                {
-                    if (_disabledCommand == null)
-                    {
-                        _disabledCommand = new Command(() => { }, () => false);
-                    }
+			public ICommand DisabledCommand
+			{
+				get
+				{
+					if (_disabledCommand == null)
+					{
+						_disabledCommand = new Command(() => { }, () => false);
+					}
 
-                    return _disabledCommand;
-                }
-            }
+					return _disabledCommand;
+				}
+			}
 
-            public ObservableCollection<ListItemViewModel> Items { get; } =
-                new ObservableCollection<ListItemViewModel>();
+			public ObservableCollection<ListItemViewModel> Items { get; } =
+				new ObservableCollection<ListItemViewModel>();
 
-            public void Init()
-            {
-                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
-                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
-                Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
-            }
-        }
+			public void Init()
+			{
+				Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
+				Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
+				Items.Add(new ListItemViewModel(this) { Title = string.Format("Something {0}", Items.Count.ToString()) });
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public class ListItemViewModel : ViewModel
-        {
-            readonly ListViewModel _listViewModel;
+		[Preserve(AllMembers = true)]
+		public class ListItemViewModel : ViewModel
+		{
+			readonly ListViewModel _listViewModel;
 
-            ICommand _deleteItemCommand;
+			ICommand _deleteItemCommand;
 
-            ICommand _otherCommand;
-            public bool CanExecute = false;
+			ICommand _otherCommand;
+			public bool CanExecute = false;
 
-            public ListItemViewModel(ListViewModel listViewModel)
-            {
-                if (listViewModel == null)
-                {
-                    throw new ArgumentNullException("listViewModel");
-                }
-                _listViewModel = listViewModel;
-            }
+			public ListItemViewModel(ListViewModel listViewModel)
+			{
+				if (listViewModel == null)
+				{
+					throw new ArgumentNullException("listViewModel");
+				}
+				_listViewModel = listViewModel;
+			}
 
-            public ICommand DeleteItemCommand
-            {
-                get
-                {
-                    if (_deleteItemCommand == null)
-                    {
-                        _deleteItemCommand = new Command(() => _listViewModel.Items.Remove(this), () => CanExecute);
-                    }
+			public ICommand DeleteItemCommand
+			{
+				get
+				{
+					if (_deleteItemCommand == null)
+					{
+						_deleteItemCommand = new Command(() => _listViewModel.Items.Remove(this), () => CanExecute);
+					}
 
-                    return _deleteItemCommand;
-                }
-            }
+					return _deleteItemCommand;
+				}
+			}
 
-            public ICommand OtherCommand
-            {
-                get
-                {
-                    if (_otherCommand == null)
-                    {
-                        _otherCommand = new Command(() => { }, () => false);
-                    }
+			public ICommand OtherCommand
+			{
+				get
+				{
+					if (_otherCommand == null)
+					{
+						_otherCommand = new Command(() => { }, () => false);
+					}
 
-                    return _otherCommand;
-                }
-            }
+					return _otherCommand;
+				}
+			}
 
-            public string Title { get; set; }
-        }
+			public string Title { get; set; }
+		}
 
 #if UITEST
 		[Test]
@@ -176,5 +176,5 @@ namespace Xamarin.Forms.Controls.Issues
 #endif
 		}
 #endif
-    }
+	}
 }

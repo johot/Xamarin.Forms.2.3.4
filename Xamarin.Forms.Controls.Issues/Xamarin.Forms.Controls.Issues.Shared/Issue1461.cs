@@ -21,14 +21,14 @@ namespace Xamarin.Forms.Controls.Issues
 	}
 #endif
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1461, "1461 - (Popover in Portrait and Landscape)", PlatformAffected.iOS)]
-    public class Issue1461 : TestContentPage
-    {
-        protected override async void Init()
-        {
-            await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.Popover, false));
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1461, "1461 - (Popover in Portrait and Landscape)", PlatformAffected.iOS)]
+	public class Issue1461 : TestContentPage
+	{
+		protected override async void Init()
+		{
+			await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.Popover, false));
+		}
 
 #if UITEST
 		[Test]
@@ -51,16 +51,16 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1461, "1461 - Default", PlatformAffected.iOS)]
-    public class Issue1461A : TestContentPage
-    {
-        protected override async void Init()
-        {
-            await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.Default, null));
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1461, "1461 - Default", PlatformAffected.iOS)]
+	public class Issue1461A : TestContentPage
+	{
+		protected override async void Init()
+		{
+			await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.Default, null));
+		}
 
 #if UITEST
 		[Test]
@@ -99,16 +99,16 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 		#endif
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1461, "1461 - (Splitview in Landscape)", PlatformAffected.iOS)]
-    public class Issue1461B : TestContentPage
-    {
-        protected override async void Init()
-        {
-            await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.SplitOnLandscape, null));
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1461, "1461 - (Splitview in Landscape)", PlatformAffected.iOS)]
+	public class Issue1461B : TestContentPage
+	{
+		protected override async void Init()
+		{
+			await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.SplitOnLandscape, null));
+		}
 
 #if UITEST
 		[Test]
@@ -131,16 +131,16 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1461, "1461 - (Splitview in Portrait)", PlatformAffected.iOS)]
-    public class Issue1461C : TestContentPage
-    {
-        protected override async void Init()
-        {
-            await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.SplitOnPortrait, null));
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1461, "1461 - (Splitview in Portrait)", PlatformAffected.iOS)]
+	public class Issue1461C : TestContentPage
+	{
+		protected override async void Init()
+		{
+			await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.SplitOnPortrait, null));
+		}
 
 #if UITEST
 		[Test]
@@ -164,16 +164,16 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1461, "1461 - (Splitview in Portrait and Landscape)", PlatformAffected.iOS)]
-    public class Issue1461D : TestContentPage
-    {
-        protected override async void Init()
-        {
-            await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.Split, null));
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1461, "1461 - (Splitview in Portrait and Landscape)", PlatformAffected.iOS)]
+	public class Issue1461D : TestContentPage
+	{
+		protected override async void Init()
+		{
+			await Navigation.PushModalAsync(new Issue1461Page(MasterBehavior.Split, null));
+		}
 
 #if UITEST
 		[Test]
@@ -198,97 +198,97 @@ namespace Xamarin.Forms.Controls.Issues
 			}
 		}
 #endif
-    }
+	}
 
-    internal sealed class Issue1461Page : MasterDetailPage
-    {
-        bool? _showButton;
+	internal sealed class Issue1461Page : MasterDetailPage
+	{
+		bool? _showButton;
 
-        public Issue1461Page()
-            : this(MasterBehavior.Default, null)
-        {
-        }
+		public Issue1461Page()
+			: this(MasterBehavior.Default, null)
+		{
+		}
 
-        public Issue1461Page(MasterBehavior state, bool? initState)
-        {
-            var btn = new Button { Text = "hide me" };
-            btn.Clicked += bnToggle_Clicked;
-            Master = new ContentPage
-            {
-                Title = string.Format("Master sample for {0}", state),
-                Icon = "bank.png",
-                Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(5, 60, 5, 5) : new Thickness(5),
-                Content =
-                    new StackLayout
-                    {
-                        Children =
-                        {
-                            new Label
-                            {
-                                Text = "Master Label",
-                                AutomationId = "Master_Label",
-                                BackgroundColor = Color.Gray
-                            },
-                            btn
-                        }
-                    },
-                //BackgroundColor = Color.Red
-            };
+		public Issue1461Page(MasterBehavior state, bool? initState)
+		{
+			var btn = new Button { Text = "hide me" };
+			btn.Clicked += bnToggle_Clicked;
+			Master = new ContentPage
+			{
+				Title = string.Format("Master sample for {0}", state),
+				Icon = "bank.png",
+				Padding = Device.RuntimePlatform == Device.iOS ? new Thickness(5, 60, 5, 5) : new Thickness(5),
+				Content =
+					new StackLayout
+					{
+						Children =
+						{
+							new Label
+							{
+								Text = "Master Label",
+								AutomationId = "Master_Label",
+								BackgroundColor = Color.Gray
+							},
+							btn
+						}
+					},
+				//BackgroundColor = Color.Red
+			};
 
-            if (initState.HasValue)
-                _showButton = initState.Value;
+			if (initState.HasValue)
+				_showButton = initState.Value;
 
-            var lbl = new Label
-            {
-                HorizontalOptions = LayoutOptions.End,
-                BindingContext = this
-            };
-            lbl.SetBinding(Label.TextProperty, "IsPresented");
+			var lbl = new Label
+			{
+				HorizontalOptions = LayoutOptions.End,
+				BindingContext = this
+			};
+			lbl.SetBinding(Label.TextProperty, "IsPresented");
 
-            var bnToggle = new Button
-            {
-                Text = "Toggle IsPresented",
-            };
+			var bnToggle = new Button
+			{
+				Text = "Toggle IsPresented",
+			};
 
-            var bnGoBack = new Button
-            {
-                Text = "Go Back",
-            };
+			var bnGoBack = new Button
+			{
+				Text = "Go Back",
+			};
 
-            bnGoBack.Clicked += bnGoBack_Clicked;
-            bnToggle.Clicked += bnToggle_Clicked;
+			bnGoBack.Clicked += bnGoBack_Clicked;
+			bnToggle.Clicked += bnToggle_Clicked;
 
-            Detail = new NavigationPage(new ContentPage
-            {
-                Title = "Detail Title",
-                Content = new StackLayout { Spacing = 10, Children = { lbl, bnToggle, bnGoBack } }
-            });
+			Detail = new NavigationPage(new ContentPage
+			{
+				Title = "Detail Title",
+				Content = new StackLayout { Spacing = 10, Children = { lbl, bnToggle, bnGoBack } }
+			});
 
-            MasterBehavior = state;
-        }
+			MasterBehavior = state;
+		}
 
-        public override bool ShouldShowToolbarButton()
-        {
-            if (_showButton.HasValue)
-                return _showButton.Value;
-            return base.ShouldShowToolbarButton();
-        }
+		public override bool ShouldShowToolbarButton()
+		{
+			if (_showButton.HasValue)
+				return _showButton.Value;
+			return base.ShouldShowToolbarButton();
+		}
 
-        async void bnGoBack_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PopModalAsync();
-        }
+		async void bnGoBack_Clicked(object sender, EventArgs e)
+		{
+			await Navigation.PopModalAsync();
+		}
 
-        async void bnToggle_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                IsPresented = !IsPresented;
-            }
-            catch (InvalidOperationException ex)
-            {
-                await DisplayAlert("Error", ex.Message, "ok");
-            }
-        }
-    }
+		async void bnToggle_Clicked(object sender, EventArgs e)
+		{
+			try
+			{
+				IsPresented = !IsPresented;
+			}
+			catch (InvalidOperationException ex)
+			{
+				await DisplayAlert("Error", ex.Message, "ok");
+			}
+		}
+	}
 }

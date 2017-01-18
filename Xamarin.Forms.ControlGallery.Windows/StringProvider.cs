@@ -6,11 +6,11 @@ using Xamarin.Forms.Controls;
 
 namespace Xamarin.Forms.ControlGallery.WinRT
 {
-    public class StringProvider : IStringProvider
-    {
-        public string CoreGalleryTitle
-        {
-            get { return "Windows Core Gallery"; }
-        }
-    }
+	public class StringProvider : IStringProvider
+	{
+		public string CoreGalleryTitle
+		{
+			get { return "Windows Core Gallery"; }
+		}
+	}
 }

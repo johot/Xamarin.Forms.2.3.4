@@ -1,152 +1,152 @@
 ﻿namespace Xamarin.Forms.Controls
 {
-    internal class ScaleRotate : ContentPage
-    {
-        public ScaleRotate()
-        {
-            var label = new Label
-            {
-                Text = "SCALE AND\nROTATE",
-                HorizontalTextAlignment = TextAlignment.Center,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.CenterAndExpand
-            };
+	internal class ScaleRotate : ContentPage
+	{
+		public ScaleRotate()
+		{
+			var label = new Label
+			{
+				Text = "SCALE AND\nROTATE",
+				HorizontalTextAlignment = TextAlignment.Center,
+				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.CenterAndExpand
+			};
 
-            // Label and Slider for Scale property.
-            var scaleSliderValue = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            Grid.SetRow(scaleSliderValue, 0);
-            Grid.SetColumn(scaleSliderValue, 0);
+			// Label and Slider for Scale property.
+			var scaleSliderValue = new Label
+			{
+				VerticalTextAlignment = TextAlignment.Center
+			};
+			Grid.SetRow(scaleSliderValue, 0);
+			Grid.SetColumn(scaleSliderValue, 0);
 
-            var scaleSlider = new Slider
-            {
-                Maximum = 10
-            };
-            Grid.SetRow(scaleSlider, 0);
-            Grid.SetColumn(scaleSlider, 1);
+			var scaleSlider = new Slider
+			{
+				Maximum = 10
+			};
+			Grid.SetRow(scaleSlider, 0);
+			Grid.SetColumn(scaleSlider, 1);
 
-            // Set Bindings.
-            scaleSliderValue.BindingContext = scaleSlider;
-            scaleSliderValue.SetBinding(Label.TextProperty,
-                new Binding("Value", BindingMode.OneWay, null, null, "Scale = {0:F1}"));
+			// Set Bindings.
+			scaleSliderValue.BindingContext = scaleSlider;
+			scaleSliderValue.SetBinding(Label.TextProperty,
+				new Binding("Value", BindingMode.OneWay, null, null, "Scale = {0:F1}"));
 
-            scaleSlider.BindingContext = label;
-            scaleSlider.SetBinding(Slider.ValueProperty,
-                new Binding("Scale", BindingMode.TwoWay));
+			scaleSlider.BindingContext = label;
+			scaleSlider.SetBinding(Slider.ValueProperty,
+				new Binding("Scale", BindingMode.TwoWay));
 
-            // Label and Slider for Rotation property.
-            var rotationSliderValue = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            Grid.SetRow(rotationSliderValue, 1);
-            Grid.SetColumn(rotationSliderValue, 0);
+			// Label and Slider for Rotation property.
+			var rotationSliderValue = new Label
+			{
+				VerticalTextAlignment = TextAlignment.Center
+			};
+			Grid.SetRow(rotationSliderValue, 1);
+			Grid.SetColumn(rotationSliderValue, 0);
 
-            var rotationSlider = new Slider
-            {
-                Maximum = 360
-            };
-            Grid.SetRow(rotationSlider, 1);
-            Grid.SetColumn(rotationSlider, 1);
+			var rotationSlider = new Slider
+			{
+				Maximum = 360
+			};
+			Grid.SetRow(rotationSlider, 1);
+			Grid.SetColumn(rotationSlider, 1);
 
-            // Set Bindings.
-            rotationSliderValue.BindingContext = rotationSlider;
-            rotationSliderValue.SetBinding(Label.TextProperty,
-                new Binding("Value", BindingMode.OneWay, null, null, "Rotation = {0:F0}"));
+			// Set Bindings.
+			rotationSliderValue.BindingContext = rotationSlider;
+			rotationSliderValue.SetBinding(Label.TextProperty,
+				new Binding("Value", BindingMode.OneWay, null, null, "Rotation = {0:F0}"));
 
-            rotationSlider.BindingContext = label;
-            rotationSlider.SetBinding(Slider.ValueProperty,
-                new Binding("Rotation", BindingMode.TwoWay));
+			rotationSlider.BindingContext = label;
+			rotationSlider.SetBinding(Slider.ValueProperty,
+				new Binding("Rotation", BindingMode.TwoWay));
 
-            // Label and Slider for AnchorX property.
-            var anchorxStepperValue = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            Grid.SetRow(anchorxStepperValue, 2);
-            Grid.SetColumn(anchorxStepperValue, 0);
+			// Label and Slider for AnchorX property.
+			var anchorxStepperValue = new Label
+			{
+				VerticalTextAlignment = TextAlignment.Center
+			};
+			Grid.SetRow(anchorxStepperValue, 2);
+			Grid.SetColumn(anchorxStepperValue, 0);
 
-            var anchorxStepper = new Stepper
-            {
-                Maximum = 2,
-                Minimum = -1,
-                Increment = 0.5
-            };
-            Grid.SetRow(anchorxStepper, 2);
-            Grid.SetColumn(anchorxStepper, 1);
+			var anchorxStepper = new Stepper
+			{
+				Maximum = 2,
+				Minimum = -1,
+				Increment = 0.5
+			};
+			Grid.SetRow(anchorxStepper, 2);
+			Grid.SetColumn(anchorxStepper, 1);
 
-            // Set bindings.
-            anchorxStepperValue.BindingContext = anchorxStepper;
-            anchorxStepperValue.SetBinding(Label.TextProperty,
-                new Binding("Value", BindingMode.OneWay, null, null, "AnchorX = {0:F1}"));
+			// Set bindings.
+			anchorxStepperValue.BindingContext = anchorxStepper;
+			anchorxStepperValue.SetBinding(Label.TextProperty,
+				new Binding("Value", BindingMode.OneWay, null, null, "AnchorX = {0:F1}"));
 
-            anchorxStepper.BindingContext = label;
-            anchorxStepper.SetBinding(Stepper.ValueProperty,
-                new Binding("AnchorX", BindingMode.TwoWay));
+			anchorxStepper.BindingContext = label;
+			anchorxStepper.SetBinding(Stepper.ValueProperty,
+				new Binding("AnchorX", BindingMode.TwoWay));
 
-            // Label and Slider for AnchorY property.
-            var anchoryStepperValue = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            Grid.SetRow(anchoryStepperValue, 3);
-            Grid.SetColumn(anchoryStepperValue, 0);
+			// Label and Slider for AnchorY property.
+			var anchoryStepperValue = new Label
+			{
+				VerticalTextAlignment = TextAlignment.Center
+			};
+			Grid.SetRow(anchoryStepperValue, 3);
+			Grid.SetColumn(anchoryStepperValue, 0);
 
-            var anchoryStepper = new Stepper
-            {
-                Maximum = 2,
-                Minimum = -1,
-                Increment = 0.5
-            };
-            Grid.SetRow(anchoryStepper, 3);
-            Grid.SetColumn(anchoryStepper, 1);
+			var anchoryStepper = new Stepper
+			{
+				Maximum = 2,
+				Minimum = -1,
+				Increment = 0.5
+			};
+			Grid.SetRow(anchoryStepper, 3);
+			Grid.SetColumn(anchoryStepper, 1);
 
-            // Set bindings.
-            anchoryStepperValue.BindingContext = anchoryStepper;
-            anchoryStepperValue.SetBinding(Label.TextProperty,
-                new Binding("Value", BindingMode.OneWay, null, null, "AnchorY = {0:F1}"));
+			// Set bindings.
+			anchoryStepperValue.BindingContext = anchoryStepper;
+			anchoryStepperValue.SetBinding(Label.TextProperty,
+				new Binding("Value", BindingMode.OneWay, null, null, "AnchorY = {0:F1}"));
 
-            anchoryStepper.BindingContext = label;
-            anchoryStepper.SetBinding(Stepper.ValueProperty,
-                new Binding("AnchorY", BindingMode.TwoWay));
+			anchoryStepper.BindingContext = label;
+			anchoryStepper.SetBinding(Stepper.ValueProperty,
+				new Binding("AnchorY", BindingMode.TwoWay));
 
-            // Assemble the page.
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    label,
-                    new Grid
-                    {
-                        Padding = 10,
-                        RowDefinitions =
-                        {
-                            new RowDefinition { Height = GridLength.Auto },
-                            new RowDefinition { Height = GridLength.Auto },
-                            new RowDefinition { Height = GridLength.Auto },
-                            new RowDefinition { Height = GridLength.Auto },
-                        },
-                        ColumnDefinitions =
-                        {
-                            new ColumnDefinition { Width = GridLength.Auto },
-                            new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
-                        },
-                        Children =
-                        {
-                            scaleSliderValue,
-                            scaleSlider,
-                            rotationSliderValue,
-                            rotationSlider,
-                            anchorxStepperValue,
-                            anchorxStepper,
-                            anchoryStepperValue,
-                            anchoryStepper
-                        }
-                    }
-                }
-            };
-        }
-    }
+			// Assemble the page.
+			Content = new StackLayout
+			{
+				Children =
+				{
+					label,
+					new Grid
+					{
+						Padding = 10,
+						RowDefinitions =
+						{
+							new RowDefinition { Height = GridLength.Auto },
+							new RowDefinition { Height = GridLength.Auto },
+							new RowDefinition { Height = GridLength.Auto },
+							new RowDefinition { Height = GridLength.Auto },
+						},
+						ColumnDefinitions =
+						{
+							new ColumnDefinition { Width = GridLength.Auto },
+							new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
+						},
+						Children =
+						{
+							scaleSliderValue,
+							scaleSlider,
+							rotationSliderValue,
+							rotationSlider,
+							anchorxStepperValue,
+							anchorxStepper,
+							anchoryStepperValue,
+							anchoryStepper
+						}
+					}
+				}
+			};
+		}
+	}
 }

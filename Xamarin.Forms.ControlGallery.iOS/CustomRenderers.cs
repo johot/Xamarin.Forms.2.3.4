@@ -23,565 +23,565 @@ using RectangleF = CoreGraphics.CGRect;
 
 namespace Xamarin.Forms.ControlGallery.iOS
 {
-    public class CustomIOSMapRenderer : ViewRenderer<CustomMapView, MKMapView>
-    {
-        private MKMapView _mapView;
-
-        public double MilesToLatitudeDegrees(double miles)
-        {
-            var earthRadius = 3960.0; // in miles
-            double radiansToDegrees = 180.0 / Math.PI;
-            return miles / earthRadius * radiansToDegrees;
-        }
-
-        public double MilesToLongitudeDegrees(double miles, double atLatitude)
-        {
-            var earthRadius = 3960.0; // in miles
-            double degreesToRadians = Math.PI / 180.0;
-            double radiansToDegrees = 180.0 / Math.PI;
-            // derive the earth's radius at that point in latitude
-            double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
-            return miles / radiusAtLatitude * radiansToDegrees;
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<CustomMapView> e)
-        {
-            base.OnElementChanged(e);
-
-            if (e.NewElement != null)
-            {
-                if (Control == null)
-                {
-                    _mapView = new MKMapView(UIScreen.MainScreen.Bounds);
-                    _mapView.MapType = MKMapType.Standard;
-                    _mapView.RotateEnabled = false;
-                    SetNativeControl(_mapView);
-                }
-            }
-
-            var coords = new CLLocationCoordinate2D(48.857, 2.351);
-            var span = new MKCoordinateSpan(MilesToLatitudeDegrees(20),
-                MilesToLongitudeDegrees(20, coords.Latitude));
-            _mapView.Region = new MKCoordinateRegion(coords, span);
-        }
-    }
-
-    public class NativeiOSCellRenderer : ViewCellRenderer
-    {
-        static NSString s_rid = new NSString("NativeCell");
-
-        public NativeiOSCellRenderer()
-        {
-        }
-
-        public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
-        {
-            var x = (NativeCell)item;
-            Console.WriteLine(x);
-
-            var c = reusableCell as NativeiOSCell;
-
-            if (c == null)
-            {
-                c = new NativeiOSCell(s_rid);
-            }
-
-            UIImage i = null;
-            if (!string.IsNullOrWhiteSpace(x.ImageFilename))
-            {
-                i = UIImage.FromFile("Images/" + x.ImageFilename + ".jpg");
-            }
-
-            WireUpForceUpdateSizeRequested(item, c, tv);
-
-            c.UpdateCell(x.Name, x.Category, i);
-
-            return c;
-        }
-    }
-
-    /// <summary>
-    /// Sample of a custom cell layout, taken from the iOS docs at
-    /// http://developer.xamarin.com/guides/ios/user_interface/tables/part_3_-_customizing_a_table's_appearance/
-    /// </summary>
-    public class NativeiOSCell : UITableViewCell
-    {
-        UILabel _headingLabel;
-        UIImageView _imageView;
-        UILabel _subheadingLabel;
-
-        public NativeiOSCell(NSString cellId) : base(UITableViewCellStyle.Default, cellId)
-        {
-            SelectionStyle = UITableViewCellSelectionStyle.Gray;
-
-            ContentView.BackgroundColor = UIColor.FromRGB(255, 255, 224);
-
-            _imageView = new UIImageView();
-
-            _headingLabel = new UILabel()
-            {
-                Font = UIFont.FromName("Cochin-BoldItalic", 22f),
-                TextColor = UIColor.FromRGB(127, 51, 0),
-                BackgroundColor = UIColor.Clear
-            };
-
-            _subheadingLabel = new UILabel()
-            {
-                Font = UIFont.FromName("AmericanTypewriter", 12f),
-                TextColor = UIColor.FromRGB(38, 127, 0),
-                TextAlignment = UITextAlignment.Center,
-                BackgroundColor = UIColor.Clear
-            };
-
-            ContentView.Add(_headingLabel);
-            ContentView.Add(_subheadingLabel);
-            ContentView.Add(_imageView);
-        }
-
-        public override void LayoutSubviews()
-        {
-            base.LayoutSubviews();
-
-            _imageView.Frame = new RectangleF(ContentView.Bounds.Width - 63, 5, 33, 33);
-            _headingLabel.Frame = new RectangleF(5, 4, ContentView.Bounds.Width - 63, 25);
-            _subheadingLabel.Frame = new RectangleF(100, 18, 100, 20);
-        }
-
-        public void UpdateCell(string caption, string subtitle, UIImage image)
-        {
-            _imageView.Image = image;
-            _headingLabel.Text = caption;
-            _subheadingLabel.Text = subtitle;
-        }
-    }
-
-    /// <summary>
-    /// Sample of a custom cell layout, taken from the iOS docs at
-    /// http://developer.xamarin.com/guides/ios/user_interface/tables/part_3_-_customizing_a_table's_appearance/
-    /// </summary>
-    public class NativeiOSListViewCell : UITableViewCell
-    {
-        UILabel _headingLabel;
-        UIImageView _imageView;
-        UILabel _subheadingLabel;
-
-        public NativeiOSListViewCell(NSString cellId) : base(UITableViewCellStyle.Default, cellId)
-        {
-            SelectionStyle = UITableViewCellSelectionStyle.Gray;
-
-            ContentView.BackgroundColor = UIColor.FromRGB(218, 255, 127);
-
-            _imageView = new UIImageView();
-
-            _headingLabel = new UILabel()
-            {
-                Font = UIFont.FromName("Cochin-BoldItalic", 22f),
-                TextColor = UIColor.FromRGB(127, 51, 0),
-                BackgroundColor = UIColor.Clear
-            };
-
-            _subheadingLabel = new UILabel()
-            {
-                Font = UIFont.FromName("AmericanTypewriter", 12f),
-                TextColor = UIColor.FromRGB(38, 127, 0),
-                TextAlignment = UITextAlignment.Center,
-                BackgroundColor = UIColor.Clear
-            };
-
-            ContentView.Add(_headingLabel);
-            ContentView.Add(_subheadingLabel);
-            ContentView.Add(_imageView);
-        }
-
-        public override void LayoutSubviews()
-        {
-            base.LayoutSubviews();
-
-            _imageView.Frame = new RectangleF(ContentView.Bounds.Width - 63, 5, 33, 33);
-            _headingLabel.Frame = new RectangleF(5, 4, ContentView.Bounds.Width - 63, 25);
-            _subheadingLabel.Frame = new RectangleF(100, 18, 100, 20);
-        }
-
-        public void UpdateCell(string caption, string subtitle, UIImage image)
-        {
-            _imageView.Image = image;
-            _headingLabel.Text = caption;
-            _subheadingLabel.Text = subtitle;
-        }
-    }
-
-    public class NativeiOSListViewRenderer : ViewRenderer<NativeListView2, UITableView>
-    {
-        public NativeiOSListViewRenderer()
-        {
-        }
-
-        public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
-        {
-            return Control.GetSizeRequest(widthConstraint, heightConstraint, 44, 44);
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<NativeListView2> e)
-        {
-            base.OnElementChanged(e);
-
-            if (Control == null)
-            {
-                SetNativeControl(new UITableView());
-            }
-
-            if (e.OldElement != null)
-            {
-                // unsubscribe
-            }
-
-            if (e.NewElement != null)
-            {
-                // subscribe
-
-                var s = new NativeiOSListViewSource(e.NewElement);
-                Control.Source = s;
-            }
-        }
-
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
-            {
-                // update the Items list in the UITableViewSource
-                var s = new NativeiOSListViewSource(Element);
-
-                Control.Source = s;
-            }
-        }
-    }
-
-    public class NativeListViewRenderer : ViewRenderer<NativeListView, UITableView>
-    {
-        public NativeListViewRenderer()
-        {
-        }
-
-        public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
-        {
-            return Control.GetSizeRequest(widthConstraint, heightConstraint, 44, 44);
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<NativeListView> e)
-        {
-            base.OnElementChanged(e);
-
-            if (Control == null)
-            {
-                SetNativeControl(new UITableView());
-            }
-
-            if (e.OldElement != null)
-            {
-                // unsubscribe
-            }
-
-            if (e.NewElement != null)
-            {
-                // subscribe
-
-                var s = new NativeListViewSource(e.NewElement);
-                Control.Source = s;
-            }
-        }
-
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
-            {
-                // update the Items list in the UITableViewSource
-                var s = new NativeListViewSource(Element);
-                Control.Source = s;
-            }
-        }
-    }
-
-    public class NativeiOSListViewSource : UITableViewSource
-    {
-        readonly NSString _cellIdentifier = new NSString("TableCell");
-        NativeListView2 _listView;
-        // declare vars
-        IList<DataSource> _tableItems;
-
-        public NativeiOSListViewSource(NativeListView2 view)
-        {
-            _tableItems = new List<DataSource>(view.Items);
-            _listView = view;
-        }
-
-        public IEnumerable<DataSource> Items
-        {
-            //get{ }
-            set { _tableItems = new List<DataSource>(value); }
-        }
-
-        /// <summary>
-        /// Called by the TableView to get the actual UITableViewCell to render for the particular section and row
-        /// </summary>
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {
-            // request a recycled cell to save memory
-            var cell = tableView.DequeueReusableCell(_cellIdentifier) as NativeiOSListViewCell;
-
-            // if there are no cells to reuse, create a new one
-            if (cell == null)
-            {
-                cell = new NativeiOSListViewCell(_cellIdentifier);
-            }
-
-            if (string.IsNullOrWhiteSpace(_tableItems[indexPath.Row].ImageFilename))
-            {
-                cell.UpdateCell(_tableItems[indexPath.Row].Name
-                    , _tableItems[indexPath.Row].Category
-                    , null);
-            }
-            else
-            {
-                cell.UpdateCell(_tableItems[indexPath.Row].Name
-                    , _tableItems[indexPath.Row].Category
-                    , UIImage.FromFile("Images/" + _tableItems[indexPath.Row].ImageFilename + ".jpg"));
-            }
-
-            return cell;
-        }
-
-        /// <summary>
-        /// Called by the TableView to determine how many cells to create for that particular section.
-        /// </summary>
-        public override nint RowsInSection(UITableView tableview, nint section)
-        {
-            return _tableItems.Count;
-        }
-
-        #region user interaction methods
-
-        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            _listView.NotifyItemSelected(_tableItems[indexPath.Row]);
-            Console.WriteLine("Row " + indexPath.Row.ToString() + " selected");
-            tableView.DeselectRow(indexPath, true);
-        }
-
-        public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
-        {
-            Console.WriteLine("Row " + indexPath.Row.ToString() + " deselected");
-        }
-
-        #endregion
-    }
-
-    public class NativeListViewSource : UITableViewSource
-    {
-        string _cellIdentifier = "TableCell";
-        NativeListView _listView;
-        // declare vars
-        IList<string> _tableItems;
-
-        public NativeListViewSource(NativeListView view)
-        {
-            _tableItems = new List<string>(view.Items);
-            _listView = view;
-        }
-
-        public IEnumerable<string> Items
-        {
-            set { _tableItems = new List<string>(value); }
-        }
-
-        /// <summary>
-        /// Called by the TableView to get the actual UITableViewCell to render for the particular section and row
-        /// </summary>
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {
-            // declare vars
-            UITableViewCell cell = tableView.DequeueReusableCell(_cellIdentifier);
-            //string item = tableItems [indexPath.Row]; //.Items[indexPath.Row];
-
-            // if there are no cells to reuse, create a new one
-            if (cell == null)
-                cell = new UITableViewCell(UITableViewCellStyle.Subtitle, _cellIdentifier);
-
-            // set the item text
-            cell.TextLabel.Text = _tableItems[indexPath.Row]; //.Items[indexPath.Row].Heading;
-
-            // if it's a cell style that supports a subheading, set it
-            //			if(item.CellStyle == UITableViewCellStyle.Subtitle 
-            //				|| item.CellStyle == UITableViewCellStyle.Value1
-            //				|| item.CellStyle == UITableViewCellStyle.Value2)
-            //			{ cell.DetailTextLabel.Text = item.SubHeading; }
-
-            // if the item has a valid image, and it's not the contact style (doesn't support images)
-            //			if(!string.IsNullOrEmpty(item.ImageName) && item.CellStyle != UITableViewCellStyle.Value2)
-            //			{
-            //				if(File.Exists(item.ImageName))
-            //					cell.ImageView.Image = UIImage.FromBundle(item.ImageName);
-            //			}
-
-            // set the accessory
-            cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
-
-            return cell;
-        }
-
-        public override nint RowsInSection(UITableView tableview, nint section)
-        {
-            return _tableItems.Count;
-        }
-
-        #region user interaction methods
-
-        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            _listView.NotifyItemSelected(_tableItems[indexPath.Row]);
-
-            Console.WriteLine("Row " + indexPath.Row.ToString() + " selected");
-
-            tableView.DeselectRow(indexPath, true);
-        }
-
-        public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
-        {
-            Console.WriteLine("Row " + indexPath.Row.ToString() + " deselected");
-        }
-
-        #endregion
-    }
-
-    public class CustomContentRenderer : ViewRenderer
-    {
-    }
-
-    public class CollectionViewRenderer : ViewRenderer<Bugzilla21177.CollectionView, UICollectionView>
-    {
-        CollectionViewController _controller;
-
-        public void ItemSelected(UICollectionView collectionViewView, NSIndexPath indexPath)
-        {
-            Element.InvokeItemSelected(indexPath.Row);
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<Bugzilla21177.CollectionView> e)
-        {
-            if (e.NewElement != null)
-            {
-                var flowLayout = new UICollectionViewFlowLayout
-                {
-                    SectionInset = new UIEdgeInsets(20, 20, 20, 20),
-                    ScrollDirection = UICollectionViewScrollDirection.Vertical,
-                    MinimumInteritemSpacing = 5, // minimum spacing between cells 
-                    MinimumLineSpacing = 5
-                    // minimum spacing between rows if ScrollDirection is Vertical or between columns if Horizontal 
-                };
-                _controller = new CollectionViewController(flowLayout, ItemSelected);
-                SetNativeControl(_controller.CollectionView);
-            }
-
-            base.OnElementChanged(e);
-        }
-    }
-
-    public class CollectionViewController : UICollectionViewController
-    {
-        public delegate void OnItemSelected(UICollectionView collectionView, NSIndexPath indexPath);
-
-        static NSString cellId = new NSString("CollectionViewCell");
-        readonly OnItemSelected _onItemSelected;
-        List<string> items;
-
-        public CollectionViewController(UICollectionViewLayout layout, OnItemSelected onItemSelected) : base(layout)
-        {
-            items = new List<string>();
-            for (var i = 0; i < 20; i++)
-            {
-                items.Add($"#{i}");
-            }
-            _onItemSelected = onItemSelected;
-        }
-
-        public override UICollectionViewCell GetCell(UICollectionView collectionView, NSIndexPath indexPath)
-        {
-            var cell = (CollectionViewCell)collectionView.DequeueReusableCell(cellId, indexPath);
-            cell.Label.Text = items[indexPath.Row];
-            return cell;
-        }
-
-        public override nint GetItemsCount(UICollectionView collectionView, nint section)
-        {
-            return items.Count;
-        }
-
-        public override void ItemSelected(UICollectionView collectionView, NSIndexPath indexPath)
-        {
-            _onItemSelected(collectionView, indexPath);
-        }
-
-        public override nint NumberOfSections(UICollectionView collectionView)
-        {
-            return 1;
-        }
-
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
-            CollectionView.RegisterClassForCell(typeof(CollectionViewCell), cellId);
-        }
-    }
-
-    public class CollectionViewCell : UICollectionViewCell
-    {
-        [Export("initWithFrame:")]
-        public CollectionViewCell(RectangleF frame) : base(frame)
-        {
-            var rand = new Random();
-            BackgroundView = new UIView
-            {
-                BackgroundColor = UIColor.FromRGB(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256))
-            };
-            SelectedBackgroundView = new UIView { BackgroundColor = UIColor.Green };
-            ContentView.Layer.BorderColor = UIColor.LightGray.CGColor;
-            ContentView.Layer.BorderWidth = 2.0f;
-            Label = new UILabel(frame);
-            Label.Center = ContentView.Center;
-            ContentView.AddSubview(Label);
-        }
-
-        public UILabel Label { get; private set; }
-    }
-
-    public class TabbedPageWithCustomBarColorRenderer : TabbedRenderer
-    {
-        public TabbedPageWithCustomBarColorRenderer()
-        {
-            TabBar.TintColor = UIColor.White;
-            TabBar.BarTintColor = UIColor.Purple;
-
-            //UITabBar.Appearance.TintColor = UIColor.White;
-            //UITabBar.Appearance.BarTintColor = UIColor.Purple;
-        }
-    }
-
-    public class AccessoryViewCellRenderer : ViewCellRenderer
-    {
-        public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
-        {
-            UITableViewCell cell = base.GetCell(item, reusableCell, tv);
-
-            // remove highlight on selected cell
-            cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-
-            // iOS right arrow
-            cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
-
-            return cell;
-        }
-    }
+	public class CustomIOSMapRenderer : ViewRenderer<CustomMapView, MKMapView>
+	{
+		private MKMapView _mapView;
+
+		public double MilesToLatitudeDegrees(double miles)
+		{
+			var earthRadius = 3960.0; // in miles
+			double radiansToDegrees = 180.0 / Math.PI;
+			return miles / earthRadius * radiansToDegrees;
+		}
+
+		public double MilesToLongitudeDegrees(double miles, double atLatitude)
+		{
+			var earthRadius = 3960.0; // in miles
+			double degreesToRadians = Math.PI / 180.0;
+			double radiansToDegrees = 180.0 / Math.PI;
+			// derive the earth's radius at that point in latitude
+			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
+			return miles / radiusAtLatitude * radiansToDegrees;
+		}
+
+		protected override void OnElementChanged(ElementChangedEventArgs<CustomMapView> e)
+		{
+			base.OnElementChanged(e);
+
+			if (e.NewElement != null)
+			{
+				if (Control == null)
+				{
+					_mapView = new MKMapView(UIScreen.MainScreen.Bounds);
+					_mapView.MapType = MKMapType.Standard;
+					_mapView.RotateEnabled = false;
+					SetNativeControl(_mapView);
+				}
+			}
+
+			var coords = new CLLocationCoordinate2D(48.857, 2.351);
+			var span = new MKCoordinateSpan(MilesToLatitudeDegrees(20),
+				MilesToLongitudeDegrees(20, coords.Latitude));
+			_mapView.Region = new MKCoordinateRegion(coords, span);
+		}
+	}
+
+	public class NativeiOSCellRenderer : ViewCellRenderer
+	{
+		static NSString s_rid = new NSString("NativeCell");
+
+		public NativeiOSCellRenderer()
+		{
+		}
+
+		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		{
+			var x = (NativeCell)item;
+			Console.WriteLine(x);
+
+			var c = reusableCell as NativeiOSCell;
+
+			if (c == null)
+			{
+				c = new NativeiOSCell(s_rid);
+			}
+
+			UIImage i = null;
+			if (!string.IsNullOrWhiteSpace(x.ImageFilename))
+			{
+				i = UIImage.FromFile("Images/" + x.ImageFilename + ".jpg");
+			}
+
+			WireUpForceUpdateSizeRequested(item, c, tv);
+
+			c.UpdateCell(x.Name, x.Category, i);
+
+			return c;
+		}
+	}
+
+	/// <summary>
+	/// Sample of a custom cell layout, taken from the iOS docs at
+	/// http://developer.xamarin.com/guides/ios/user_interface/tables/part_3_-_customizing_a_table's_appearance/
+	/// </summary>
+	public class NativeiOSCell : UITableViewCell
+	{
+		UILabel _headingLabel;
+		UIImageView _imageView;
+		UILabel _subheadingLabel;
+
+		public NativeiOSCell(NSString cellId) : base(UITableViewCellStyle.Default, cellId)
+		{
+			SelectionStyle = UITableViewCellSelectionStyle.Gray;
+
+			ContentView.BackgroundColor = UIColor.FromRGB(255, 255, 224);
+
+			_imageView = new UIImageView();
+
+			_headingLabel = new UILabel()
+			{
+				Font = UIFont.FromName("Cochin-BoldItalic", 22f),
+				TextColor = UIColor.FromRGB(127, 51, 0),
+				BackgroundColor = UIColor.Clear
+			};
+
+			_subheadingLabel = new UILabel()
+			{
+				Font = UIFont.FromName("AmericanTypewriter", 12f),
+				TextColor = UIColor.FromRGB(38, 127, 0),
+				TextAlignment = UITextAlignment.Center,
+				BackgroundColor = UIColor.Clear
+			};
+
+			ContentView.Add(_headingLabel);
+			ContentView.Add(_subheadingLabel);
+			ContentView.Add(_imageView);
+		}
+
+		public override void LayoutSubviews()
+		{
+			base.LayoutSubviews();
+
+			_imageView.Frame = new RectangleF(ContentView.Bounds.Width - 63, 5, 33, 33);
+			_headingLabel.Frame = new RectangleF(5, 4, ContentView.Bounds.Width - 63, 25);
+			_subheadingLabel.Frame = new RectangleF(100, 18, 100, 20);
+		}
+
+		public void UpdateCell(string caption, string subtitle, UIImage image)
+		{
+			_imageView.Image = image;
+			_headingLabel.Text = caption;
+			_subheadingLabel.Text = subtitle;
+		}
+	}
+
+	/// <summary>
+	/// Sample of a custom cell layout, taken from the iOS docs at
+	/// http://developer.xamarin.com/guides/ios/user_interface/tables/part_3_-_customizing_a_table's_appearance/
+	/// </summary>
+	public class NativeiOSListViewCell : UITableViewCell
+	{
+		UILabel _headingLabel;
+		UIImageView _imageView;
+		UILabel _subheadingLabel;
+
+		public NativeiOSListViewCell(NSString cellId) : base(UITableViewCellStyle.Default, cellId)
+		{
+			SelectionStyle = UITableViewCellSelectionStyle.Gray;
+
+			ContentView.BackgroundColor = UIColor.FromRGB(218, 255, 127);
+
+			_imageView = new UIImageView();
+
+			_headingLabel = new UILabel()
+			{
+				Font = UIFont.FromName("Cochin-BoldItalic", 22f),
+				TextColor = UIColor.FromRGB(127, 51, 0),
+				BackgroundColor = UIColor.Clear
+			};
+
+			_subheadingLabel = new UILabel()
+			{
+				Font = UIFont.FromName("AmericanTypewriter", 12f),
+				TextColor = UIColor.FromRGB(38, 127, 0),
+				TextAlignment = UITextAlignment.Center,
+				BackgroundColor = UIColor.Clear
+			};
+
+			ContentView.Add(_headingLabel);
+			ContentView.Add(_subheadingLabel);
+			ContentView.Add(_imageView);
+		}
+
+		public override void LayoutSubviews()
+		{
+			base.LayoutSubviews();
+
+			_imageView.Frame = new RectangleF(ContentView.Bounds.Width - 63, 5, 33, 33);
+			_headingLabel.Frame = new RectangleF(5, 4, ContentView.Bounds.Width - 63, 25);
+			_subheadingLabel.Frame = new RectangleF(100, 18, 100, 20);
+		}
+
+		public void UpdateCell(string caption, string subtitle, UIImage image)
+		{
+			_imageView.Image = image;
+			_headingLabel.Text = caption;
+			_subheadingLabel.Text = subtitle;
+		}
+	}
+
+	public class NativeiOSListViewRenderer : ViewRenderer<NativeListView2, UITableView>
+	{
+		public NativeiOSListViewRenderer()
+		{
+		}
+
+		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
+		{
+			return Control.GetSizeRequest(widthConstraint, heightConstraint, 44, 44);
+		}
+
+		protected override void OnElementChanged(ElementChangedEventArgs<NativeListView2> e)
+		{
+			base.OnElementChanged(e);
+
+			if (Control == null)
+			{
+				SetNativeControl(new UITableView());
+			}
+
+			if (e.OldElement != null)
+			{
+				// unsubscribe
+			}
+
+			if (e.NewElement != null)
+			{
+				// subscribe
+
+				var s = new NativeiOSListViewSource(e.NewElement);
+				Control.Source = s;
+			}
+		}
+
+		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+
+			if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
+			{
+				// update the Items list in the UITableViewSource
+				var s = new NativeiOSListViewSource(Element);
+
+				Control.Source = s;
+			}
+		}
+	}
+
+	public class NativeListViewRenderer : ViewRenderer<NativeListView, UITableView>
+	{
+		public NativeListViewRenderer()
+		{
+		}
+
+		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
+		{
+			return Control.GetSizeRequest(widthConstraint, heightConstraint, 44, 44);
+		}
+
+		protected override void OnElementChanged(ElementChangedEventArgs<NativeListView> e)
+		{
+			base.OnElementChanged(e);
+
+			if (Control == null)
+			{
+				SetNativeControl(new UITableView());
+			}
+
+			if (e.OldElement != null)
+			{
+				// unsubscribe
+			}
+
+			if (e.NewElement != null)
+			{
+				// subscribe
+
+				var s = new NativeListViewSource(e.NewElement);
+				Control.Source = s;
+			}
+		}
+
+		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+
+			if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
+			{
+				// update the Items list in the UITableViewSource
+				var s = new NativeListViewSource(Element);
+				Control.Source = s;
+			}
+		}
+	}
+
+	public class NativeiOSListViewSource : UITableViewSource
+	{
+		readonly NSString _cellIdentifier = new NSString("TableCell");
+		NativeListView2 _listView;
+		// declare vars
+		IList<DataSource> _tableItems;
+
+		public NativeiOSListViewSource(NativeListView2 view)
+		{
+			_tableItems = new List<DataSource>(view.Items);
+			_listView = view;
+		}
+
+		public IEnumerable<DataSource> Items
+		{
+			//get{ }
+			set { _tableItems = new List<DataSource>(value); }
+		}
+
+		/// <summary>
+		/// Called by the TableView to get the actual UITableViewCell to render for the particular section and row
+		/// </summary>
+		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+		{
+			// request a recycled cell to save memory
+			var cell = tableView.DequeueReusableCell(_cellIdentifier) as NativeiOSListViewCell;
+
+			// if there are no cells to reuse, create a new one
+			if (cell == null)
+			{
+				cell = new NativeiOSListViewCell(_cellIdentifier);
+			}
+
+			if (string.IsNullOrWhiteSpace(_tableItems[indexPath.Row].ImageFilename))
+			{
+				cell.UpdateCell(_tableItems[indexPath.Row].Name
+					, _tableItems[indexPath.Row].Category
+					, null);
+			}
+			else
+			{
+				cell.UpdateCell(_tableItems[indexPath.Row].Name
+					, _tableItems[indexPath.Row].Category
+					, UIImage.FromFile("Images/" + _tableItems[indexPath.Row].ImageFilename + ".jpg"));
+			}
+
+			return cell;
+		}
+
+		/// <summary>
+		/// Called by the TableView to determine how many cells to create for that particular section.
+		/// </summary>
+		public override nint RowsInSection(UITableView tableview, nint section)
+		{
+			return _tableItems.Count;
+		}
+
+		#region user interaction methods
+
+		public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+		{
+			_listView.NotifyItemSelected(_tableItems[indexPath.Row]);
+			Console.WriteLine("Row " + indexPath.Row.ToString() + " selected");
+			tableView.DeselectRow(indexPath, true);
+		}
+
+		public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
+		{
+			Console.WriteLine("Row " + indexPath.Row.ToString() + " deselected");
+		}
+
+		#endregion
+	}
+
+	public class NativeListViewSource : UITableViewSource
+	{
+		string _cellIdentifier = "TableCell";
+		NativeListView _listView;
+		// declare vars
+		IList<string> _tableItems;
+
+		public NativeListViewSource(NativeListView view)
+		{
+			_tableItems = new List<string>(view.Items);
+			_listView = view;
+		}
+
+		public IEnumerable<string> Items
+		{
+			set { _tableItems = new List<string>(value); }
+		}
+
+		/// <summary>
+		/// Called by the TableView to get the actual UITableViewCell to render for the particular section and row
+		/// </summary>
+		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+		{
+			// declare vars
+			UITableViewCell cell = tableView.DequeueReusableCell(_cellIdentifier);
+			//string item = tableItems [indexPath.Row]; //.Items[indexPath.Row];
+
+			// if there are no cells to reuse, create a new one
+			if (cell == null)
+				cell = new UITableViewCell(UITableViewCellStyle.Subtitle, _cellIdentifier);
+
+			// set the item text
+			cell.TextLabel.Text = _tableItems[indexPath.Row]; //.Items[indexPath.Row].Heading;
+
+			// if it's a cell style that supports a subheading, set it
+			//			if(item.CellStyle == UITableViewCellStyle.Subtitle 
+			//				|| item.CellStyle == UITableViewCellStyle.Value1
+			//				|| item.CellStyle == UITableViewCellStyle.Value2)
+			//			{ cell.DetailTextLabel.Text = item.SubHeading; }
+
+			// if the item has a valid image, and it's not the contact style (doesn't support images)
+			//			if(!string.IsNullOrEmpty(item.ImageName) && item.CellStyle != UITableViewCellStyle.Value2)
+			//			{
+			//				if(File.Exists(item.ImageName))
+			//					cell.ImageView.Image = UIImage.FromBundle(item.ImageName);
+			//			}
+
+			// set the accessory
+			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+
+			return cell;
+		}
+
+		public override nint RowsInSection(UITableView tableview, nint section)
+		{
+			return _tableItems.Count;
+		}
+
+		#region user interaction methods
+
+		public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+		{
+			_listView.NotifyItemSelected(_tableItems[indexPath.Row]);
+
+			Console.WriteLine("Row " + indexPath.Row.ToString() + " selected");
+
+			tableView.DeselectRow(indexPath, true);
+		}
+
+		public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
+		{
+			Console.WriteLine("Row " + indexPath.Row.ToString() + " deselected");
+		}
+
+		#endregion
+	}
+
+	public class CustomContentRenderer : ViewRenderer
+	{
+	}
+
+	public class CollectionViewRenderer : ViewRenderer<Bugzilla21177.CollectionView, UICollectionView>
+	{
+		CollectionViewController _controller;
+
+		public void ItemSelected(UICollectionView collectionViewView, NSIndexPath indexPath)
+		{
+			Element.InvokeItemSelected(indexPath.Row);
+		}
+
+		protected override void OnElementChanged(ElementChangedEventArgs<Bugzilla21177.CollectionView> e)
+		{
+			if (e.NewElement != null)
+			{
+				var flowLayout = new UICollectionViewFlowLayout
+				{
+					SectionInset = new UIEdgeInsets(20, 20, 20, 20),
+					ScrollDirection = UICollectionViewScrollDirection.Vertical,
+					MinimumInteritemSpacing = 5, // minimum spacing between cells 
+					MinimumLineSpacing = 5
+					// minimum spacing between rows if ScrollDirection is Vertical or between columns if Horizontal 
+				};
+				_controller = new CollectionViewController(flowLayout, ItemSelected);
+				SetNativeControl(_controller.CollectionView);
+			}
+
+			base.OnElementChanged(e);
+		}
+	}
+
+	public class CollectionViewController : UICollectionViewController
+	{
+		public delegate void OnItemSelected(UICollectionView collectionView, NSIndexPath indexPath);
+
+		static NSString cellId = new NSString("CollectionViewCell");
+		readonly OnItemSelected _onItemSelected;
+		List<string> items;
+
+		public CollectionViewController(UICollectionViewLayout layout, OnItemSelected onItemSelected) : base(layout)
+		{
+			items = new List<string>();
+			for (var i = 0; i < 20; i++)
+			{
+				items.Add($"#{i}");
+			}
+			_onItemSelected = onItemSelected;
+		}
+
+		public override UICollectionViewCell GetCell(UICollectionView collectionView, NSIndexPath indexPath)
+		{
+			var cell = (CollectionViewCell)collectionView.DequeueReusableCell(cellId, indexPath);
+			cell.Label.Text = items[indexPath.Row];
+			return cell;
+		}
+
+		public override nint GetItemsCount(UICollectionView collectionView, nint section)
+		{
+			return items.Count;
+		}
+
+		public override void ItemSelected(UICollectionView collectionView, NSIndexPath indexPath)
+		{
+			_onItemSelected(collectionView, indexPath);
+		}
+
+		public override nint NumberOfSections(UICollectionView collectionView)
+		{
+			return 1;
+		}
+
+		public override void ViewDidLoad()
+		{
+			base.ViewDidLoad();
+			CollectionView.RegisterClassForCell(typeof(CollectionViewCell), cellId);
+		}
+	}
+
+	public class CollectionViewCell : UICollectionViewCell
+	{
+		[Export("initWithFrame:")]
+		public CollectionViewCell(RectangleF frame) : base(frame)
+		{
+			var rand = new Random();
+			BackgroundView = new UIView
+			{
+				BackgroundColor = UIColor.FromRGB(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256))
+			};
+			SelectedBackgroundView = new UIView { BackgroundColor = UIColor.Green };
+			ContentView.Layer.BorderColor = UIColor.LightGray.CGColor;
+			ContentView.Layer.BorderWidth = 2.0f;
+			Label = new UILabel(frame);
+			Label.Center = ContentView.Center;
+			ContentView.AddSubview(Label);
+		}
+
+		public UILabel Label { get; private set; }
+	}
+
+	public class TabbedPageWithCustomBarColorRenderer : TabbedRenderer
+	{
+		public TabbedPageWithCustomBarColorRenderer()
+		{
+			TabBar.TintColor = UIColor.White;
+			TabBar.BarTintColor = UIColor.Purple;
+
+			//UITabBar.Appearance.TintColor = UIColor.White;
+			//UITabBar.Appearance.BarTintColor = UIColor.Purple;
+		}
+	}
+
+	public class AccessoryViewCellRenderer : ViewCellRenderer
+	{
+		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		{
+			UITableViewCell cell = base.GetCell(item, reusableCell, tv);
+
+			// remove highlight on selected cell
+			cell.SelectionStyle = UITableViewCellSelectionStyle.None;
+
+			// iOS right arrow
+			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+
+			return cell;
+		}
+	}
 }

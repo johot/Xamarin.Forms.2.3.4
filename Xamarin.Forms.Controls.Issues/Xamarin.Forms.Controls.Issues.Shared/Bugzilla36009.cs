@@ -8,44 +8,44 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 36009, "Children of Layouts with data bound IsVisible are not displayed")]
-    public class Bugzilla36009 : TestContentPage // or TestMasterDetailPage, etc ...
-    {
-        [Preserve(AllMembers = true)]
-        public class SampleViewModel : ViewModelBase
-        {
-            public bool IsContentVisible
-            {
-                get { return GetProperty<bool>(); }
-                set { SetProperty(value); }
-            }
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 36009, "Children of Layouts with data bound IsVisible are not displayed")]
+	public class Bugzilla36009 : TestContentPage // or TestMasterDetailPage, etc ...
+	{
+		[Preserve(AllMembers = true)]
+		public class SampleViewModel : ViewModelBase
+		{
+			public bool IsContentVisible
+			{
+				get { return GetProperty<bool>(); }
+				set { SetProperty(value); }
+			}
+		}
 
-        protected override void Init()
-        {
-            var boxview = new BoxView { BackgroundColor = Color.Aqua, AutomationId = "Victory" };
+		protected override void Init()
+		{
+			var boxview = new BoxView { BackgroundColor = Color.Aqua, AutomationId = "Victory" };
 
-            var contentView = new ContentView
-            {
-                Content = boxview
-            };
+			var contentView = new ContentView
+			{
+				Content = boxview
+			};
 
-            contentView.SetBinding(IsVisibleProperty, "IsContentVisible");
+			contentView.SetBinding(IsVisibleProperty, "IsContentVisible");
 
-            var layout = new AbsoluteLayout
-            {
-                Children = { contentView }
-            };
+			var layout = new AbsoluteLayout
+			{
+				Children = { contentView }
+			};
 
-            Content = layout;
+			Content = layout;
 
-            var vm = new SampleViewModel();
+			var vm = new SampleViewModel();
 
-            BindingContext = vm;
+			BindingContext = vm;
 
-            vm.IsContentVisible = true;
-        }
+			vm.IsContentVisible = true;
+		}
 
 #if UITEST
 		[Test]
@@ -54,5 +54,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement(q => q.Marked("Victory"));
 		}
 #endif
-    }
+	}
 }

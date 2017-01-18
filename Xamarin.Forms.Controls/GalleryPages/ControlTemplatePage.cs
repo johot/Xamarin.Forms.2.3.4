@@ -2,43 +2,43 @@
 
 namespace Xamarin.Forms.Controls.GalleryPages
 {
-    internal class ControlTemplatePage : ContentPage
-    {
-        public ControlTemplatePage()
-        {
-            var button = new Button { Text = "Replace Template" };
-            var content = new ContentView
-            {
-                Content = button,
-                ControlTemplate = new ControlTemplate(typeof(MyLayout))
-            };
+	internal class ControlTemplatePage : ContentPage
+	{
+		public ControlTemplatePage()
+		{
+			var button = new Button { Text = "Replace Template" };
+			var content = new ContentView
+			{
+				Content = button,
+				ControlTemplate = new ControlTemplate(typeof(MyLayout))
+			};
 
-            button.Clicked +=
-                (sender, args) => { content.ControlTemplate = new ControlTemplate(typeof(MyOtherLayout)); };
+			button.Clicked +=
+				(sender, args) => { content.ControlTemplate = new ControlTemplate(typeof(MyOtherLayout)); };
 
-            Content = content;
-        }
+			Content = content;
+		}
 
-        [Preserve(AllMembers = true)]
-        class MyLayout : StackLayout
-        {
-            public MyLayout()
-            {
-                Children.Add(new Label { Text = "Before" });
-                Children.Add(new ContentPresenter());
-                Children.Add(new Label { Text = "After" });
-            }
-        }
+		[Preserve(AllMembers = true)]
+		class MyLayout : StackLayout
+		{
+			public MyLayout()
+			{
+				Children.Add(new Label { Text = "Before" });
+				Children.Add(new ContentPresenter());
+				Children.Add(new Label { Text = "After" });
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        class MyOtherLayout : StackLayout
-        {
-            public MyOtherLayout()
-            {
-                Children.Add(new Entry { Text = "Before" });
-                Children.Add(new ContentPresenter());
-                Children.Add(new Entry { Text = "After" });
-            }
-        }
-    }
+		[Preserve(AllMembers = true)]
+		class MyOtherLayout : StackLayout
+		{
+			public MyOtherLayout()
+			{
+				Children.Add(new Entry { Text = "Before" });
+				Children.Add(new ContentPresenter());
+				Children.Add(new Entry { Text = "After" });
+			}
+		}
+	}
 }

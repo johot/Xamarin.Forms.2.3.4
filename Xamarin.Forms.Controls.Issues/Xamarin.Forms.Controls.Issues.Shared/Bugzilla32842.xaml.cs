@@ -6,44 +6,44 @@ using Xamarin.Forms.Internals;
 namespace Xamarin.Forms.Controls.Issues
 {
 #if APP
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 32842,
-            "[WinRT] ItemSelected Not Ignored When a ListView Item Contains a TapGestureRecognizer",
-            PlatformAffected.WinRT)
-    ]
-    public partial class Bugzilla32842 : ContentPage
-    {
-        int _boxTaps;
-        int _listSelections;
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 32842,
+			"[WinRT] ItemSelected Not Ignored When a ListView Item Contains a TapGestureRecognizer",
+			PlatformAffected.WinRT)
+	]
+	public partial class Bugzilla32842 : ContentPage
+	{
+		int _boxTaps;
+		int _listSelections;
 
-        public Bugzilla32842()
-        {
-            var items = new List<string> { "item1", "item2", "item3" };
+		public Bugzilla32842()
+		{
+			var items = new List<string> { "item1", "item2", "item3" };
 
-            InitializeComponent();
+			InitializeComponent();
 
-            MainList.ItemsSource = items;
-            MainList.ItemSelected += MainListSelectionChanged;
-        }
+			MainList.ItemsSource = items;
+			MainList.ItemSelected += MainListSelectionChanged;
+		}
 
-        void BoxTapped(object sender, EventArgs args)
-        {
-            _boxTaps += 1;
+		void BoxTapped(object sender, EventArgs args)
+		{
+			_boxTaps += 1;
 
-            BoxResults.Text = $"Box Taps = {_boxTaps}";
-        }
+			BoxResults.Text = $"Box Taps = {_boxTaps}";
+		}
 
-        void MainListSelectionChanged(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem == null)
-            {
-                return;
-            }
+		void MainListSelectionChanged(object sender, SelectedItemChangedEventArgs e)
+		{
+			if (e.SelectedItem == null)
+			{
+				return;
+			}
 
-            _listSelections += 1;
+			_listSelections += 1;
 
-            ListResults.Text = $"Selections = {_listSelections}";
-        }
-    }
+			ListResults.Text = $"Selections = {_listSelections}";
+		}
+	}
 #endif
 }

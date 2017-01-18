@@ -10,90 +10,90 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2951, "On Android, button background is not updated when color changes ")]
-    public partial class Issue2951 : TestContentPage
-    {
-        public Issue2951()
-        {
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2951, "On Android, button background is not updated when color changes ")]
+	public partial class Issue2951 : TestContentPage
+	{
+		public Issue2951()
+		{
 #if APP
-            InitializeComponent();
+			InitializeComponent();
 #endif
-        }
+		}
 
-        protected override void Init()
-        {
-            BindingContext = new MyViewModel();
-        }
+		protected override void Init()
+		{
+			BindingContext = new MyViewModel();
+		}
 
-        [Preserve(AllMembers = true)]
-        public class MyViewModel
-        {
-            public MyViewModel()
-            {
-                ButtonTapped = new Command<MyItemViewModel>(OnItemTapped);
+		[Preserve(AllMembers = true)]
+		public class MyViewModel
+		{
+			public MyViewModel()
+			{
+				ButtonTapped = new Command<MyItemViewModel>(OnItemTapped);
 
-                Items = new ObservableCollection<MyItemViewModel>();
+				Items = new ObservableCollection<MyItemViewModel>();
 
-                Items.Add(new MyItemViewModel { Name = "A", IsStarted = false });
-                Items.Add(new MyItemViewModel { Name = "B", IsStarted = false });
-                Items.Add(new MyItemViewModel { Name = "C", IsStarted = false });
-            }
+				Items.Add(new MyItemViewModel { Name = "A", IsStarted = false });
+				Items.Add(new MyItemViewModel { Name = "B", IsStarted = false });
+				Items.Add(new MyItemViewModel { Name = "C", IsStarted = false });
+			}
 
-            public Command<MyItemViewModel> ButtonTapped { get; private set; }
+			public Command<MyItemViewModel> ButtonTapped { get; private set; }
 
-            public ObservableCollection<MyItemViewModel> Items { get; private set; }
+			public ObservableCollection<MyItemViewModel> Items { get; private set; }
 
-            void OnItemTapped(MyItemViewModel model)
-            {
-                if (model.IsStarted)
-                {
-                    Items.Remove(model);
-                }
-                else
-                {
-                    model.IsStarted = true;
-                }
-            }
-        }
+			void OnItemTapped(MyItemViewModel model)
+			{
+				if (model.IsStarted)
+				{
+					Items.Remove(model);
+				}
+				else
+				{
+					model.IsStarted = true;
+				}
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public class MyItemViewModel : INotifyPropertyChanged
-        {
-            bool _isStarted;
+		[Preserve(AllMembers = true)]
+		public class MyItemViewModel : INotifyPropertyChanged
+		{
+			bool _isStarted;
 
-            string _name;
+			string _name;
 
-            public bool IsStarted
-            {
-                get { return _isStarted; }
-                set
-                {
-                    _isStarted = value;
-                    OnPropertyChanged("IsStarted");
-                }
-            }
+			public bool IsStarted
+			{
+				get { return _isStarted; }
+				set
+				{
+					_isStarted = value;
+					OnPropertyChanged("IsStarted");
+				}
+			}
 
-            public string Name
-            {
-                get { return _name; }
-                set
-                {
-                    _name = value;
-                    OnPropertyChanged("Name");
-                }
-            }
+			public string Name
+			{
+				get { return _name; }
+				set
+				{
+					_name = value;
+					OnPropertyChanged("Name");
+				}
+			}
 
-            public event PropertyChangedEventHandler PropertyChanged;
+			public event PropertyChangedEventHandler PropertyChanged;
 
-            void OnPropertyChanged(string propertyName)
-            {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
-            }
-        }
+			void OnPropertyChanged(string propertyName)
+			{
+				if (PropertyChanged != null)
+				{
+					PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				}
+			}
+		}
 
 #if UITEST
 		[Test]
@@ -116,34 +116,34 @@ namespace Xamarin.Forms.Controls.Issues
 
 	
 		#endif
-    }
+	}
 }
 
 namespace Xamarin.Forms.Controls
 {
-    [Preserve(AllMembers = true)]
-    public class ButtonExtensions
-    {
+	[Preserve(AllMembers = true)]
+	public class ButtonExtensions
+	{
 #pragma warning disable 618
-        public static readonly BindableProperty IsPrimaryProperty = BindableProperty
-            .CreateAttached<ButtonExtensions, bool>(
+		public static readonly BindableProperty IsPrimaryProperty = BindableProperty
+			.CreateAttached<ButtonExtensions, bool>(
 #pragma warning restore 618
-                bindable => GetIsPrimary(bindable),
-                false,
-                BindingMode.TwoWay,
-                null,
-                null,
-                null,
-                null);
+				bindable => GetIsPrimary(bindable),
+				false,
+				BindingMode.TwoWay,
+				null,
+				null,
+				null,
+				null);
 
-        public static bool GetIsPrimary(BindableObject bo)
-        {
-            return (bool)bo.GetValue(IsPrimaryProperty);
-        }
+		public static bool GetIsPrimary(BindableObject bo)
+		{
+			return (bool)bo.GetValue(IsPrimaryProperty);
+		}
 
-        public static void SetIsPrimary(BindableObject bo, bool value)
-        {
-            bo.SetValue(IsPrimaryProperty, value);
-        }
-    }
+		public static void SetIsPrimary(BindableObject bo, bool value)
+		{
+			bo.SetValue(IsPrimaryProperty, value);
+		}
+	}
 }

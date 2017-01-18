@@ -12,12 +12,12 @@ using Xamarin.Forms.Platform.WinRT;
 namespace Xamarin.Forms.ControlGallery.WinRT
 #endif
 {
-    public sealed class BrokenImageSourceHandler : IImageSourceHandler
-    {
-        public Task<WImageSource> LoadImageAsync(ImageSource imagesource,
-            CancellationToken cancellationToken = new CancellationToken())
-        {
-            throw new Exception("Fail");
-        }
-    }
+	public sealed class BrokenImageSourceHandler : IImageSourceHandler
+	{
+		public Task<WImageSource> LoadImageAsync(ImageSource imagesource,
+			CancellationToken cancellationToken = new CancellationToken())
+		{
+			throw new Exception("Fail");
+		}
+	}
 }

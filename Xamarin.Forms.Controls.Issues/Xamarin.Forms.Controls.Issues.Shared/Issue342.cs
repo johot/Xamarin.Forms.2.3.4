@@ -10,27 +10,27 @@ using Xamarin.Forms.Core.UITests;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 342, "NRE when Image is not assigned source", PlatformAffected.WinPhone)]
-    public class Issue342NoSource : TestContentPage
-    {
-        protected override void Init()
-        {
-            Title = "Issue 342";
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    new Label
-                    {
-                        Text = "Uninitialized image"
-                    },
-                    new Image()
-                }
-            };
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 342, "NRE when Image is not assigned source", PlatformAffected.WinPhone)]
+	public class Issue342NoSource : TestContentPage
+	{
+		protected override void Init()
+		{
+			Title = "Issue 342";
+			Content = new StackLayout
+			{
+				Children =
+				{
+					new Label
+					{
+						Text = "Uninitialized image"
+					},
+					new Image()
+				}
+			};
+		}
 
-        // Should not throw exception when user does not include image
+		// Should not throw exception when user does not include image
 
 #if UITEST
 		[Test]
@@ -40,44 +40,44 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("All elements present");
 		}
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 342, "NRE when Image is delayed source", PlatformAffected.WinPhone)]
-    public class Issue342DelayedSource : TestContentPage
-    {
-        protected override void Init()
-        {
-            Title = "Issue 342";
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 342, "NRE when Image is delayed source", PlatformAffected.WinPhone)]
+	public class Issue342DelayedSource : TestContentPage
+	{
+		protected override void Init()
+		{
+			Title = "Issue 342";
 
-            _image = new Image();
+			_image = new Image();
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    new Label
-                    {
-                        Text = "Delayed image"
-                    },
-                    _image
-                }
-            };
+			Content = new StackLayout
+			{
+				Children =
+				{
+					new Label
+					{
+						Text = "Delayed image"
+					},
+					_image
+				}
+			};
 
-            AddSourceAfterDelay();
-        }
+			AddSourceAfterDelay();
+		}
 
-        // Should not throw exception when user does not include image
-        Image _image;
+		// Should not throw exception when user does not include image
+		Image _image;
 
-        void AddSourceAfterDelay()
-        {
-            Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-            {
-                _image.Source = "cover1.jpg";
-                return false;
-            });
-        }
+		void AddSourceAfterDelay()
+		{
+			Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+			{
+				_image.Source = "cover1.jpg";
+				return false;
+			});
+		}
 
 #if UITEST
 		[Test]
@@ -87,5 +87,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("Should not crash");
 		}
 #endif
-    }
+	}
 }

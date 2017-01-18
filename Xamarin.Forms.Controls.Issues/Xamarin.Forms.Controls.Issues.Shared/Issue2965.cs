@@ -9,132 +9,132 @@ using Xamarin.UITest.iOS;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2965, "CarouselPage Disappearing event does not fire on Android")]
-    public class Issue2965 : TestMasterDetailPage
-    {
-        static MasterDetailPage s_mdp;
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2965, "CarouselPage Disappearing event does not fire on Android")]
+	public class Issue2965 : TestMasterDetailPage
+	{
+		static MasterDetailPage s_mdp;
 
-        int _countAppearing;
+		int _countAppearing;
 
-        protected override void Init()
-        {
-            s_mdp = this;
+		protected override void Init()
+		{
+			s_mdp = this;
 
-            var lblCount = new Label { AutomationId = "lblCount" };
+			var lblCount = new Label { AutomationId = "lblCount" };
 
-            var myCarouselPage = new CarouselPage()
-            {
-                Children =
-                {
-                    new ContentPage
-                    {
-                        BackgroundColor = Color.Green,
-                        Content = new StackLayout
-                        {
-                            Children =
-                            {
-                                new Button
-                                {
-                                    AutomationId = "ShowMasterBtnPage1",
-                                    Text = "ShowMaster",
-                                    Command = new Command(() => s_mdp.IsPresented = true)
-                                },
-                                lblCount
-                            }
-                        }
-                    },
-                    new ContentPage
-                    {
-                        BackgroundColor = Color.Red
-                    },
-                    new ContentPage
-                    {
-                        BackgroundColor = Color.Lime,
-                    },
-                    new ContentPage
-                    {
-                        BackgroundColor = Color.Purple,
-                    },
-                }
-            };
+			var myCarouselPage = new CarouselPage()
+			{
+				Children =
+				{
+					new ContentPage
+					{
+						BackgroundColor = Color.Green,
+						Content = new StackLayout
+						{
+							Children =
+							{
+								new Button
+								{
+									AutomationId = "ShowMasterBtnPage1",
+									Text = "ShowMaster",
+									Command = new Command(() => s_mdp.IsPresented = true)
+								},
+								lblCount
+							}
+						}
+					},
+					new ContentPage
+					{
+						BackgroundColor = Color.Red
+					},
+					new ContentPage
+					{
+						BackgroundColor = Color.Lime,
+					},
+					new ContentPage
+					{
+						BackgroundColor = Color.Purple,
+					},
+				}
+			};
 
-            var myCarouselDetailPage = new NavigationPage(myCarouselPage);
+			var myCarouselDetailPage = new NavigationPage(myCarouselPage);
 
-            var myPushButton = new Button()
-            {
-                Text = "Push Page",
-                HorizontalOptions = LayoutOptions.Start
-            };
+			var myPushButton = new Button()
+			{
+				Text = "Push Page",
+				HorizontalOptions = LayoutOptions.Start
+			};
 
-            myCarouselPage.Appearing += (sender, e) =>
-            {
-                _countAppearing++;
-                lblCount.Text = _countAppearing.ToString();
-            };
-            myCarouselPage.Disappearing += (sender, e) => { _countAppearing--; };
+			myCarouselPage.Appearing += (sender, e) =>
+			{
+				_countAppearing++;
+				lblCount.Text = _countAppearing.ToString();
+			};
+			myCarouselPage.Disappearing += (sender, e) => { _countAppearing--; };
 
-            var mySecondDetailPage = new NavigationPage(new ContentPage()
-            {
-                Title = "My Second Page",
-                Content = new StackLayout()
-                {
-                    Orientation = StackOrientation.Vertical,
-                    Children =
-                    {
-                        new Button
-                        {
-                            AutomationId = "ShowMasterBtnPage2",
-                            Text = "ShowMaster",
-                            Command = new Command(() => s_mdp.IsPresented = true)
-                        },
-                        myPushButton
-                    }
-                }
-            });
+			var mySecondDetailPage = new NavigationPage(new ContentPage()
+			{
+				Title = "My Second Page",
+				Content = new StackLayout()
+				{
+					Orientation = StackOrientation.Vertical,
+					Children =
+					{
+						new Button
+						{
+							AutomationId = "ShowMasterBtnPage2",
+							Text = "ShowMaster",
+							Command = new Command(() => s_mdp.IsPresented = true)
+						},
+						myPushButton
+					}
+				}
+			});
 
-            myPushButton.Command =
-                new Command(
-                    () => mySecondDetailPage.Navigation.PushAsync(new ContentPage() { Title = "My Pushed Page" }));
+			myPushButton.Command =
+				new Command(
+					() => mySecondDetailPage.Navigation.PushAsync(new ContentPage() { Title = "My Pushed Page" }));
 
-            var myMasterPage = new ContentPage()
-            {
-                Padding = new Thickness(0, 60, 0, 0),
-                Title = "Menu",
-                Content = new StackLayout()
-                {
-                    Orientation = StackOrientation.Vertical,
-                    Children =
-                    {
-                        new Button()
-                        {
-                            Text = "Detail 1",
-                            AutomationId = "btnDetail1",
-                            Command = new Command(() =>
-                            {
-                                Detail = myCarouselDetailPage;
-                                IsPresented = false;
-                            }),
-                            HorizontalOptions = LayoutOptions.Start
-                        },
-                        new Button()
-                        {
-                            Text = "Detail 2",
-                            AutomationId = "btnDetail2",
-                            Command = new Command(() =>
-                            {
-                                Detail = mySecondDetailPage;
-                                IsPresented = false;
-                            }),
-                            HorizontalOptions = LayoutOptions.Start
-                        }
-                    }
-                }
-            };
+			var myMasterPage = new ContentPage()
+			{
+				Padding = new Thickness(0, 60, 0, 0),
+				Title = "Menu",
+				Content = new StackLayout()
+				{
+					Orientation = StackOrientation.Vertical,
+					Children =
+					{
+						new Button()
+						{
+							Text = "Detail 1",
+							AutomationId = "btnDetail1",
+							Command = new Command(() =>
+							{
+								Detail = myCarouselDetailPage;
+								IsPresented = false;
+							}),
+							HorizontalOptions = LayoutOptions.Start
+						},
+						new Button()
+						{
+							Text = "Detail 2",
+							AutomationId = "btnDetail2",
+							Command = new Command(() =>
+							{
+								Detail = mySecondDetailPage;
+								IsPresented = false;
+							}),
+							HorizontalOptions = LayoutOptions.Start
+						}
+					}
+				}
+			};
 
-            Master = myMasterPage;
-            Detail = myCarouselDetailPage;
-        }
+			Master = myMasterPage;
+			Detail = myCarouselDetailPage;
+		}
 
 #if UITEST
 		[Test]
@@ -162,5 +162,5 @@ namespace Xamarin.Forms.Controls.Issues
 			Assert.That (element.Text, Is.EqualTo ("1"));
 		}
 #endif
-    }
+	}
 }

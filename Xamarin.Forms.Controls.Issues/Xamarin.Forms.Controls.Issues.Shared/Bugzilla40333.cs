@@ -8,205 +8,205 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 40333,
-        "[Android] IllegalStateException: Recursive entry to executePendingTransactions", PlatformAffected.Android)]
-    public class Bugzilla40333 : TestNavigationPage
-    {
-        const string StartNavPageTestId = "StartNavPageTest";
-        const string OpenMasterId = "OpenMaster";
-        const string StartTabPageTestId = "StartTabPageTest";
-        const string StillHereId = "3 Still Here";
-        const string ClickThisId = "2 Click This";
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 40333,
+		"[Android] IllegalStateException: Recursive entry to executePendingTransactions", PlatformAffected.Android)]
+	public class Bugzilla40333 : TestNavigationPage
+	{
+		const string StartNavPageTestId = "StartNavPageTest";
+		const string OpenMasterId = "OpenMaster";
+		const string StartTabPageTestId = "StartTabPageTest";
+		const string StillHereId = "3 Still Here";
+		const string ClickThisId = "2 Click This";
 
-        protected override void Init()
-        {
-            var navButton = new Button { Text = "Test With NavigationPage", AutomationId = StartNavPageTestId };
-            navButton.Clicked += (sender, args) => { PushAsync(new _40333MDP(false)); };
+		protected override void Init()
+		{
+			var navButton = new Button { Text = "Test With NavigationPage", AutomationId = StartNavPageTestId };
+			navButton.Clicked += (sender, args) => { PushAsync(new _40333MDP(false)); };
 
-            var tabButton = new Button { Text = "Test With TabbedPage", AutomationId = StartTabPageTestId };
-            tabButton.Clicked += (sender, args) => { PushAsync(new _40333MDP(true)); };
+			var tabButton = new Button { Text = "Test With TabbedPage", AutomationId = StartTabPageTestId };
+			tabButton.Clicked += (sender, args) => { PushAsync(new _40333MDP(true)); };
 
-            var content = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    Children = { navButton, tabButton }
-                }
-            };
+			var content = new ContentPage
+			{
+				Content = new StackLayout
+				{
+					Children = { navButton, tabButton }
+				}
+			};
 
-            PushAsync(content);
-        }
+			PushAsync(content);
+		}
 
-        [Preserve(AllMembers = true)]
-        public class _40333MDP : TestMasterDetailPage
-        {
-            readonly bool _showTabVersion;
+		[Preserve(AllMembers = true)]
+		public class _40333MDP : TestMasterDetailPage
+		{
+			readonly bool _showTabVersion;
 
-            public _40333MDP(bool showTabVersion)
-            {
-                _showTabVersion = showTabVersion;
-            }
+			public _40333MDP(bool showTabVersion)
+			{
+				_showTabVersion = showTabVersion;
+			}
 
-            protected override void Init()
-            {
-                if (_showTabVersion)
-                {
-                    Master = new NavigationPage(new _40333TabPusher("Root")) { Title = "MasterNav" };
-                    Detail = new TabbedPage() { Title = "DetailNav", Children = { new _40333DetailPage("T1") } };
-                }
-                else
-                {
-                    Master = new NavigationPage(new _40333NavPusher("Root")) { Title = "MasterNav" };
-                    Detail = new NavigationPage(new _40333DetailPage("Detail") { Title = "DetailPage" })
-                    {
-                        Title = "DetailNav"
-                    };
-                }
-            }
+			protected override void Init()
+			{
+				if (_showTabVersion)
+				{
+					Master = new NavigationPage(new _40333TabPusher("Root")) { Title = "MasterNav" };
+					Detail = new TabbedPage() { Title = "DetailNav", Children = { new _40333DetailPage("T1") } };
+				}
+				else
+				{
+					Master = new NavigationPage(new _40333NavPusher("Root")) { Title = "MasterNav" };
+					Detail = new NavigationPage(new _40333DetailPage("Detail") { Title = "DetailPage" })
+					{
+						Title = "DetailNav"
+					};
+				}
+			}
 
-            [Preserve(AllMembers = true)]
-            public class _40333DetailPage : ContentPage
-            {
-                public _40333DetailPage(string title)
-                {
-                    Title = title;
+			[Preserve(AllMembers = true)]
+			public class _40333DetailPage : ContentPage
+			{
+				public _40333DetailPage(string title)
+				{
+					Title = title;
 
-                    var openMaster = new Button
-                    {
-                        Text = "Open Master",
-                        AutomationId = OpenMasterId
-                    };
+					var openMaster = new Button
+					{
+						Text = "Open Master",
+						AutomationId = OpenMasterId
+					};
 
-                    openMaster.Clicked += (sender, args) => ((MasterDetailPage)Parent.Parent).IsPresented = true;
+					openMaster.Clicked += (sender, args) => ((MasterDetailPage)Parent.Parent).IsPresented = true;
 
-                    Content = new StackLayout()
-                    {
-                        Children = { new Label { Text = "Detail Text" }, openMaster }
-                    };
-                }
-            }
+					Content = new StackLayout()
+					{
+						Children = { new Label { Text = "Detail Text" }, openMaster }
+					};
+				}
+			}
 
-            [Preserve(AllMembers = true)]
-            public class _40333NavPusher : ContentPage
-            {
-                readonly ListView _listView = new ListView();
+			[Preserve(AllMembers = true)]
+			public class _40333NavPusher : ContentPage
+			{
+				readonly ListView _listView = new ListView();
 
-                public _40333NavPusher(string title)
-                {
-                    Title = title;
+				public _40333NavPusher(string title)
+				{
+					Title = title;
 
-                    _listView.ItemTemplate = new DataTemplate(() =>
-                    {
-                        var lbl = new Label();
-                        lbl.SetBinding(Label.TextProperty, ".");
-                        lbl.AutomationId = lbl.Text;
+					_listView.ItemTemplate = new DataTemplate(() =>
+					{
+						var lbl = new Label();
+						lbl.SetBinding(Label.TextProperty, ".");
+						lbl.AutomationId = lbl.Text;
 
-                        var result = new ViewCell
-                        {
-                            View = new StackLayout
-                            {
-                                Orientation = StackOrientation.Horizontal,
-                                Children =
-                                {
-                                    lbl
-                                }
-                            }
-                        };
+						var result = new ViewCell
+						{
+							View = new StackLayout
+							{
+								Orientation = StackOrientation.Horizontal,
+								Children =
+								{
+									lbl
+								}
+							}
+						};
 
-                        return result;
-                    });
+						return result;
+					});
 
-                    _listView.ItemsSource = new[] { "1", ClickThisId, StillHereId };
-                    _listView.ItemTapped += OnItemTapped;
+					_listView.ItemsSource = new[] { "1", ClickThisId, StillHereId };
+					_listView.ItemTapped += OnItemTapped;
 
-                    Content = new StackLayout
-                    {
-                        Children = { _listView }
-                    };
-                }
+					Content = new StackLayout
+					{
+						Children = { _listView }
+					};
+				}
 
-                protected override async void OnAppearing()
-                {
-                    base.OnAppearing();
+				protected override async void OnAppearing()
+				{
+					base.OnAppearing();
 
-                    var newPage = new _40333DetailPage(Title);
+					var newPage = new _40333DetailPage(Title);
 
-                    INavigation detailNav = ((MasterDetailPage)Parent.Parent).Detail.Navigation;
-                    Page currentRoot = detailNav.NavigationStack[0];
-                    detailNav.InsertPageBefore(newPage, currentRoot);
-                    await detailNav.PopToRootAsync();
-                }
+					INavigation detailNav = ((MasterDetailPage)Parent.Parent).Detail.Navigation;
+					Page currentRoot = detailNav.NavigationStack[0];
+					detailNav.InsertPageBefore(newPage, currentRoot);
+					await detailNav.PopToRootAsync();
+				}
 
-                async void OnItemTapped(object sender, EventArgs e)
-                {
-                    INavigation masterNav = ((MasterDetailPage)Parent.Parent).Master.Navigation;
+				async void OnItemTapped(object sender, EventArgs e)
+				{
+					INavigation masterNav = ((MasterDetailPage)Parent.Parent).Master.Navigation;
 
-                    string newTitle = $"{Title}.{_listView.SelectedItem}";
-                    await masterNav.PushAsync(new _40333NavPusher(newTitle));
-                }
-            }
+					string newTitle = $"{Title}.{_listView.SelectedItem}";
+					await masterNav.PushAsync(new _40333NavPusher(newTitle));
+				}
+			}
 
-            [Preserve(AllMembers = true)]
-            public class _40333TabPusher : ContentPage
-            {
-                readonly ListView _listView = new ListView();
+			[Preserve(AllMembers = true)]
+			public class _40333TabPusher : ContentPage
+			{
+				readonly ListView _listView = new ListView();
 
-                public _40333TabPusher(string title)
-                {
-                    Title = title;
+				public _40333TabPusher(string title)
+				{
+					Title = title;
 
-                    _listView.ItemTemplate = new DataTemplate(() =>
-                    {
-                        var lbl = new Label();
-                        lbl.SetBinding(Label.TextProperty, ".");
-                        lbl.AutomationId = lbl.Text;
+					_listView.ItemTemplate = new DataTemplate(() =>
+					{
+						var lbl = new Label();
+						lbl.SetBinding(Label.TextProperty, ".");
+						lbl.AutomationId = lbl.Text;
 
-                        var result = new ViewCell
-                        {
-                            View = new StackLayout
-                            {
-                                Orientation = StackOrientation.Horizontal,
-                                Children =
-                                {
-                                    lbl
-                                }
-                            }
-                        };
+						var result = new ViewCell
+						{
+							View = new StackLayout
+							{
+								Orientation = StackOrientation.Horizontal,
+								Children =
+								{
+									lbl
+								}
+							}
+						};
 
-                        return result;
-                    });
+						return result;
+					});
 
-                    _listView.ItemsSource = new[] { "1", ClickThisId, StillHereId };
-                    _listView.ItemTapped += OnItemTapped;
+					_listView.ItemsSource = new[] { "1", ClickThisId, StillHereId };
+					_listView.ItemTapped += OnItemTapped;
 
-                    Content = new StackLayout
-                    {
-                        Children = { _listView }
-                    };
-                }
+					Content = new StackLayout
+					{
+						Children = { _listView }
+					};
+				}
 
-                protected override void OnAppearing()
-                {
-                    base.OnAppearing();
+				protected override void OnAppearing()
+				{
+					base.OnAppearing();
 
-                    var newPage = new _40333DetailPage(Title);
+					var newPage = new _40333DetailPage(Title);
 
-                    var detailTab = (TabbedPage)((MasterDetailPage)Parent.Parent).Detail;
+					var detailTab = (TabbedPage)((MasterDetailPage)Parent.Parent).Detail;
 
-                    detailTab.Children.Add(newPage);
-                    detailTab.CurrentPage = newPage;
-                }
+					detailTab.Children.Add(newPage);
+					detailTab.CurrentPage = newPage;
+				}
 
-                async void OnItemTapped(object sender, EventArgs e)
-                {
-                    INavigation masterNav = ((MasterDetailPage)Parent.Parent).Master.Navigation;
+				async void OnItemTapped(object sender, EventArgs e)
+				{
+					INavigation masterNav = ((MasterDetailPage)Parent.Parent).Master.Navigation;
 
-                    string newTitle = $"{Title}.{_listView.SelectedItem}";
-                    await masterNav.PushAsync(new _40333TabPusher(newTitle));
-                }
-            }
-        }
+					string newTitle = $"{Title}.{_listView.SelectedItem}";
+					await masterNav.PushAsync(new _40333TabPusher(newTitle));
+				}
+			}
+		}
 
 #if UITEST
 
@@ -239,5 +239,5 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 #endif
 #endif
-    }
+	}
 }

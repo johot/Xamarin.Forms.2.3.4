@@ -8,20 +8,20 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 29128, "Slider background lays out wrong Android")]
-    public class Bugzilla29128 : TestContentPage
-    {
-        protected override void Init()
-        {
-            Content = new Slider
-            {
-                AutomationId = "SliderId",
-                BackgroundColor = Color.Blue,
-                Maximum = 255,
-                Minimum = 0,
-            };
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 29128, "Slider background lays out wrong Android")]
+	public class Bugzilla29128 : TestContentPage
+	{
+		protected override void Init()
+		{
+			Content = new Slider
+			{
+				AutomationId = "SliderId",
+				BackgroundColor = Color.Blue,
+				Maximum = 255,
+				Minimum = 0,
+			};
+		}
 
 #if UITEST
 		[Test]
@@ -32,5 +32,5 @@ namespace Xamarin.Forms.Controls.Issues
 			Assert.Inconclusive ("For visual review only");
 		}
 #endif
-    }
+	}
 }

@@ -10,16 +10,16 @@ using AView = Android.Views.View;
 
 namespace Xamarin.Forms.ControlGallery.Android
 {
-    public class _38989CustomViewCellRenderer : Platform.Android.ViewCellRenderer
-    {
-        protected override AView GetCellCore(Cell item, AView convertView, ViewGroup parent, Context context)
-        {
-            AView nativeView = convertView;
+	public class _38989CustomViewCellRenderer : Platform.Android.ViewCellRenderer
+	{
+		protected override AView GetCellCore(Cell item, AView convertView, ViewGroup parent, Context context)
+		{
+			AView nativeView = convertView;
 
-            if (nativeView == null)
-                nativeView = (context as Activity).LayoutInflater.Inflate(Resource.Layout.Layout38989, null);
+			if (nativeView == null)
+				nativeView = (context as Activity).LayoutInflater.Inflate(Resource.Layout.Layout38989, null);
 
-            return nativeView;
-        }
-    }
+			return nativeView;
+		}
+	}
 }

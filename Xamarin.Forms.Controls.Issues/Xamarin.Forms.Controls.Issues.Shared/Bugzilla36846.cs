@@ -15,93 +15,93 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 36846, "ActionBar does not dismiss when content which called it is removed",
-        PlatformAffected.Android)]
-    public class Bugzilla36846 : TestNavigationPage // or TestMasterDetailPage, etc ...
-    {
-        protected override void Init()
-        {
-            PushAsync(new ListWithLongPress());
-        }
-    }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 36846, "ActionBar does not dismiss when content which called it is removed",
+		PlatformAffected.Android)]
+	public class Bugzilla36846 : TestNavigationPage // or TestMasterDetailPage, etc ...
+	{
+		protected override void Init()
+		{
+			PushAsync(new ListWithLongPress());
+		}
+	}
 
-    public class ListWithLongPress : ContentPage
-    {
-        public ListWithLongPress()
-        {
-            MyCollection = new ObservableCollection<string>();
-            PopulateCollection();
+	public class ListWithLongPress : ContentPage
+	{
+		public ListWithLongPress()
+		{
+			MyCollection = new ObservableCollection<string>();
+			PopulateCollection();
 
-            var stackLayout = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical
-            };
+			var stackLayout = new StackLayout
+			{
+				Orientation = StackOrientation.Vertical
+			};
 
-            var listView = new ListView
-            {
-                HasUnevenRows = true,
-                ItemsSource = MyCollection,
-                ItemTemplate = new DataTemplate(() =>
-                {
-                    var viewCell = new ViewCell();
+			var listView = new ListView
+			{
+				HasUnevenRows = true,
+				ItemsSource = MyCollection,
+				ItemTemplate = new DataTemplate(() =>
+				{
+					var viewCell = new ViewCell();
 
-                    var grid = new Grid
-                    {
-                        Padding = new Thickness(0, 5, 0, 5),
-                        RowSpacing = 3
-                    };
+					var grid = new Grid
+					{
+						Padding = new Thickness(0, 5, 0, 5),
+						RowSpacing = 3
+					};
 
-                    var label = new Label();
-                    label.SetBinding(Label.TextProperty, new Binding("."));
-                    grid.Children.Add(label);
+					var label = new Label();
+					label.SetBinding(Label.TextProperty, new Binding("."));
+					grid.Children.Add(label);
 
-                    viewCell.ContextActions.Add(new MenuItem { Text = "Edit" });
-                    viewCell.ContextActions.Add(new MenuItem { Text = "Delete", IsDestructive = true });
+					viewCell.ContextActions.Add(new MenuItem { Text = "Edit" });
+					viewCell.ContextActions.Add(new MenuItem { Text = "Delete", IsDestructive = true });
 
-                    viewCell.View = grid;
+					viewCell.View = grid;
 
-                    return viewCell;
-                })
-            };
-            stackLayout.Children.Add(listView);
+					return viewCell;
+				})
+			};
+			stackLayout.Children.Add(listView);
 
-            var button1 = new Button
-            {
-                Text = "Clear list",
-                Command = new Command(() => { MyCollection.Clear(); })
-            };
-            stackLayout.Children.Add(button1);
+			var button1 = new Button
+			{
+				Text = "Clear list",
+				Command = new Command(() => { MyCollection.Clear(); })
+			};
+			stackLayout.Children.Add(button1);
 
-            var button2 = new Button
-            {
-                Text = "Remove last item",
-                Command = new Command(() =>
-                {
-                    if (MyCollection.Count > 0)
-                        MyCollection.RemoveAt(MyCollection.Count - 1);
-                })
-            };
-            stackLayout.Children.Add(button2);
+			var button2 = new Button
+			{
+				Text = "Remove last item",
+				Command = new Command(() =>
+				{
+					if (MyCollection.Count > 0)
+						MyCollection.RemoveAt(MyCollection.Count - 1);
+				})
+			};
+			stackLayout.Children.Add(button2);
 
-            var button3 = new Button
-            {
-                Text = "Load items",
-                Command = new Command(PopulateCollection)
-            };
-            stackLayout.Children.Add(button3);
+			var button3 = new Button
+			{
+				Text = "Load items",
+				Command = new Command(PopulateCollection)
+			};
+			stackLayout.Children.Add(button3);
 
-            Content = stackLayout;
-        }
+			Content = stackLayout;
+		}
 
-        public ObservableCollection<string> MyCollection { get; set; }
+		public ObservableCollection<string> MyCollection { get; set; }
 
-        void PopulateCollection()
-        {
-            for (var i = 0; i < 10; i++)
-            {
-                MyCollection.Add("This is a Dummy Item #" + i);
-            }
-        }
-    }
+		void PopulateCollection()
+		{
+			for (var i = 0; i < 10; i++)
+			{
+				MyCollection.Add("This is a Dummy Item #" + i);
+			}
+		}
+	}
 }

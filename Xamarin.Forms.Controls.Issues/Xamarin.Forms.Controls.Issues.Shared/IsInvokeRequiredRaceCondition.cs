@@ -10,50 +10,50 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.None, 0, "Device.IsInvokeRequired race condition causes crash")]
-    public class IsInvokeRequiredRaceCondition : TestContentPage
-    {
-        protected override void Init()
-        {
-            var button = new Button
-            {
-                AutomationId = "crashButton",
-                Text = "Start Test"
-            };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.None, 0, "Device.IsInvokeRequired race condition causes crash")]
+	public class IsInvokeRequiredRaceCondition : TestContentPage
+	{
+		protected override void Init()
+		{
+			var button = new Button
+			{
+				AutomationId = "crashButton",
+				Text = "Start Test"
+			};
 
-            var success = new Label { Text = "Success", IsVisible = false, AutomationId = "successLabel" };
+			var success = new Label { Text = "Success", IsVisible = false, AutomationId = "successLabel" };
 
-            var instructions = new Label { Text = "Click the Start Test button. " };
+			var instructions = new Label { Text = "Click the Start Test button. " };
 
-            Content = new StackLayout
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
-                Children = { instructions, success, button }
-            };
+			Content = new StackLayout
+			{
+				HorizontalOptions = LayoutOptions.Fill,
+				VerticalOptions = LayoutOptions.Fill,
+				Children = { instructions, success, button }
+			};
 
-            button.Clicked += async (sender, args) =>
-            {
-                await Task.WhenAll(GenerateTasks());
-                success.IsVisible = true;
-            };
-        }
+			button.Clicked += async (sender, args) =>
+			{
+				await Task.WhenAll(GenerateTasks());
+				success.IsVisible = true;
+			};
+		}
 
-        List<Task> GenerateTasks()
-        {
-            var result = new List<Task>();
+		List<Task> GenerateTasks()
+		{
+			var result = new List<Task>();
 
-            for (var n = 0; n < 1000; n++)
-            {
-                result.Add(Task.Run(() =>
-                {
-                    bool t = Device.IsInvokeRequired;
-                }));
-            }
+			for (var n = 0; n < 1000; n++)
+			{
+				result.Add(Task.Run(() =>
+				{
+					bool t = Device.IsInvokeRequired;
+				}));
+			}
 
-            return result;
-        }
+			return result;
+		}
 
 #if UITEST
 		[Test]
@@ -63,5 +63,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement(q => q.Marked("successLabel"));
 		}
 #endif
-    }
+	}
 }

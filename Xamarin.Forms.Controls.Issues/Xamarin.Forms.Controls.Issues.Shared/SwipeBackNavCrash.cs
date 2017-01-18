@@ -9,14 +9,14 @@ using Xamarin.UITest.iOS;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.None, 0, "Swipe back nav crash", PlatformAffected.iOS)]
-    public class SwipeBackNavCrash : TestNavigationPage
-    {
-        protected override void Init()
-        {
-            Navigation.PushAsync(new SwipeBackNavCrashPageOne());
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.None, 0, "Swipe back nav crash", PlatformAffected.iOS)]
+	public class SwipeBackNavCrash : TestNavigationPage
+	{
+		protected override void Init()
+		{
+			Navigation.PushAsync(new SwipeBackNavCrashPageOne());
+		}
 
 #if UITEST
 		[Test]
@@ -52,35 +52,35 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 #endif
 #endif
-    }
+	}
 
-    public class SwipeBackNavCrashPageOne : ContentPage
-    {
-        public SwipeBackNavCrashPageOne()
-        {
-            Title = "Page One";
-            var button = new Button
-            {
-                Text = "Go to second page"
-            };
-            button.Clicked += (sender, e) => Navigation.PushAsync(new PageTwo());
-            Content = button;
-        }
-    }
+	public class SwipeBackNavCrashPageOne : ContentPage
+	{
+		public SwipeBackNavCrashPageOne()
+		{
+			Title = "Page One";
+			var button = new Button
+			{
+				Text = "Go to second page"
+			};
+			button.Clicked += (sender, e) => Navigation.PushAsync(new PageTwo());
+			Content = button;
+		}
+	}
 
-    public class PageTwo : ContentPage
-    {
-        public PageTwo()
-        {
-            Title = "Second Page";
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    new Label { Text = "Swipe lightly left and right to crash this page" },
-                    new BoxView { Color = new Color(0.0) }
-                }
-            };
-        }
-    }
+	public class PageTwo : ContentPage
+	{
+		public PageTwo()
+		{
+			Title = "Second Page";
+			Content = new StackLayout
+			{
+				Children =
+				{
+					new Label { Text = "Swipe lightly left and right to crash this page" },
+					new BoxView { Color = new Color(0.0) }
+				}
+			};
+		}
+	}
 }

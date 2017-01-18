@@ -11,16 +11,16 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2411, "ListView.ScrollTo not working in TabbedPage", PlatformAffected.Android)]
-    public class Issue2411 : TestTabbedPage
-    {
-        protected override void Init()
-        {
-            Children.Add(new XamarinListViewScrollToBugPage1());
-            Children.Add(new XamarinListViewScrollToBugPage2());
-            Children.Add(new XamarinListViewScrollToBugPage3());
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2411, "ListView.ScrollTo not working in TabbedPage", PlatformAffected.Android)]
+	public class Issue2411 : TestTabbedPage
+	{
+		protected override void Init()
+		{
+			Children.Add(new XamarinListViewScrollToBugPage1());
+			Children.Add(new XamarinListViewScrollToBugPage2());
+			Children.Add(new XamarinListViewScrollToBugPage3());
+		}
 
 #if UITEST
 		[Test]
@@ -80,232 +80,232 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement(q => q.Marked("99 99 99 99 99 99"));
 		}
 #endif
-    }
+	}
 
-    [Preserve(AllMembers = true)]
-    internal class ListObj
-    {
-        public string Name { get; set; }
-    }
+	[Preserve(AllMembers = true)]
+	internal class ListObj
+	{
+		public string Name { get; set; }
+	}
 
-    [Preserve(AllMembers = true)]
-    public class CellTemplateScrollTo : ViewCell
-    {
-        public CellTemplateScrollTo()
-        {
-            var cellLabel = new Label()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-            };
+	[Preserve(AllMembers = true)]
+	public class CellTemplateScrollTo : ViewCell
+	{
+		public CellTemplateScrollTo()
+		{
+			var cellLabel = new Label()
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+			};
 
-            cellLabel.SetBinding(Label.TextProperty, new Binding("Name", BindingMode.OneWay));
+			cellLabel.SetBinding(Label.TextProperty, new Binding("Name", BindingMode.OneWay));
 
-            var root = new StackLayout()
-            {
-                Children =
-                {
-                    cellLabel
-                }
-            };
+			var root = new StackLayout()
+			{
+				Children =
+				{
+					cellLabel
+				}
+			};
 
-            View = root;
-        }
-    }
+			View = root;
+		}
+	}
 
-    [Preserve(AllMembers = true)]
-    public class CellTemplateScrollToUneven : CellTemplateScrollTo
-    {
-        public CellTemplateScrollToUneven()
-        {
-            Height = 60 + new Random().Next(10, 100);
-        }
-    }
+	[Preserve(AllMembers = true)]
+	public class CellTemplateScrollToUneven : CellTemplateScrollTo
+	{
+		public CellTemplateScrollToUneven()
+		{
+			Height = 60 + new Random().Next(10, 100);
+		}
+	}
 
-    [Preserve(AllMembers = true)]
-    public class XamarinListViewScrollToBugPage1 : ContentPage
-    {
-        ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
-        ListView _listView;
+	[Preserve(AllMembers = true)]
+	public class XamarinListViewScrollToBugPage1 : ContentPage
+	{
+		ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
+		ListView _listView;
 
-        public XamarinListViewScrollToBugPage1()
-        {
-            Title = "Scroll To in OnAppearing";
+		public XamarinListViewScrollToBugPage1()
+		{
+			Title = "Scroll To in OnAppearing";
 
-            for (var i = 0; i < 100; i++)
-            {
-                var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", i) };
-                _collection.Add(item);
-            }
+			for (var i = 0; i < 100; i++)
+			{
+				var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", i) };
+				_collection.Add(item);
+			}
 
-            _listView = new ListView
-            {
-                ItemsSource = _collection,
-                ItemTemplate = new DataTemplate(typeof(CellTemplateScrollTo))
-            };
+			_listView = new ListView
+			{
+				ItemsSource = _collection,
+				ItemTemplate = new DataTemplate(typeof(CellTemplateScrollTo))
+			};
 
-            _listView.AutomationId = "listView";
+			_listView.AutomationId = "listView";
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    _listView
-                }
-            };
-        }
+			Content = new StackLayout
+			{
+				Children =
+				{
+					_listView
+				}
+			};
+		}
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            _listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, false);
-        }
-    }
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			_listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, false);
+		}
+	}
 
-    [Preserve(AllMembers = true)]
-    public class XamarinListViewScrollToBugPage2 : ContentPage
-    {
-        ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
-        ListView _listView;
+	[Preserve(AllMembers = true)]
+	public class XamarinListViewScrollToBugPage2 : ContentPage
+	{
+		ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
+		ListView _listView;
 
-        public XamarinListViewScrollToBugPage2()
-        {
-            Title = "Crash in ScrollToPosition.End";
+		public XamarinListViewScrollToBugPage2()
+		{
+			Title = "Crash in ScrollToPosition.End";
 
-            for (var i = 0; i < 100; i++)
-            {
-                var item = new ListObj { Name = string.Format("2 {0} {0} {0} {0} {0} {0}", i) };
-                _collection.Add(item);
-            }
+			for (var i = 0; i < 100; i++)
+			{
+				var item = new ListObj { Name = string.Format("2 {0} {0} {0} {0} {0} {0}", i) };
+				_collection.Add(item);
+			}
 
-            _listView = new ListView
-            {
-                ItemsSource = _collection,
-                ItemTemplate = new DataTemplate(typeof(CellTemplateScrollTo))
-            };
+			_listView = new ListView
+			{
+				ItemsSource = _collection,
+				ItemTemplate = new DataTemplate(typeof(CellTemplateScrollTo))
+			};
 
-            var endButton = new Button
-            {
-                Text = "ScrollToPosition.End End - Not animated",
-                Command = new Command(() => { _listView.ScrollTo(_collection.Last(), ScrollToPosition.End, false); })
-            };
+			var endButton = new Button
+			{
+				Text = "ScrollToPosition.End End - Not animated",
+				Command = new Command(() => { _listView.ScrollTo(_collection.Last(), ScrollToPosition.End, false); })
+			};
 
-            var endButtonAnimated = new Button
-            {
-                Text = "ScrollToPosition.MakeVisible End - Animated",
-                Command =
-                    new Command(() => { _listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, true); })
-            };
+			var endButtonAnimated = new Button
+			{
+				Text = "ScrollToPosition.MakeVisible End - Animated",
+				Command =
+					new Command(() => { _listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, true); })
+			};
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    endButton,
-                    endButtonAnimated,
-                    _listView
-                }
-            };
-        }
-    }
+			Content = new StackLayout
+			{
+				Children =
+				{
+					endButton,
+					endButtonAnimated,
+					_listView
+				}
+			};
+		}
+	}
 
-    public class XamarinListViewScrollToBugPage3 : ContentPage
-    {
-        public const string DontRun = "Don't run";
-        ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
-        int _i = 0;
-        ListView _listView;
+	public class XamarinListViewScrollToBugPage3 : ContentPage
+	{
+		public const string DontRun = "Don't run";
+		ObservableCollection<ListObj> _collection = new ObservableCollection<ListObj>();
+		int _i = 0;
+		ListView _listView;
 
-        public XamarinListViewScrollToBugPage3()
-        {
-            Title = "Scroll To in OnAppearing Uneven";
+		public XamarinListViewScrollToBugPage3()
+		{
+			Title = "Scroll To in OnAppearing Uneven";
 
-            var runTest = true;
-            // This test will fail in iOS < 9 because using ScrollTo with UnevenRows with estimation is currently not working.
-            // It did not previously fail because this test used `TakePerformanceHit` to turn off row estimation. However, as
-            // that was never a public feature, it was never a valid fix for the test.
-            // https://bugzilla.xamarin.com/show_bug.cgi?id=28277
+			var runTest = true;
+			// This test will fail in iOS < 9 because using ScrollTo with UnevenRows with estimation is currently not working.
+			// It did not previously fail because this test used `TakePerformanceHit` to turn off row estimation. However, as
+			// that was never a public feature, it was never a valid fix for the test.
+			// https://bugzilla.xamarin.com/show_bug.cgi?id=28277
 #if !UITEST
-            if (App.IOSVersion < 9)
-                runTest = false;
+			if (App.IOSVersion < 9)
+				runTest = false;
 #endif
 
-            if (!runTest)
-                _collection.Add(new ListObj { Name = DontRun });
-            else
-            {
-                for (_i = 0; _i < 100; _i++)
-                {
-                    var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", _i) };
-                    _collection.Add(item);
-                }
-            }
+			if (!runTest)
+				_collection.Add(new ListObj { Name = DontRun });
+			else
+			{
+				for (_i = 0; _i < 100; _i++)
+				{
+					var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", _i) };
+					_collection.Add(item);
+				}
+			}
 
-            var btnAdd = new Button
-            {
-                Text = "Add item",
-                WidthRequest = 100
-            };
-            btnAdd.Clicked += BtnAddOnClicked;
+			var btnAdd = new Button
+			{
+				Text = "Add item",
+				WidthRequest = 100
+			};
+			btnAdd.Clicked += BtnAddOnClicked;
 
-            var btnBottom = new Button
-            {
-                Text = "Scroll to end",
-                WidthRequest = 100
-            };
-            btnBottom.Clicked += BtnBottomOnClicked;
+			var btnBottom = new Button
+			{
+				Text = "Scroll to end",
+				WidthRequest = 100
+			};
+			btnBottom.Clicked += BtnBottomOnClicked;
 
-            var btnPanel = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-                HorizontalOptions = LayoutOptions.Center,
-                Children =
-                {
-                    btnAdd,
-                    btnBottom
-                }
-            };
+			var btnPanel = new StackLayout
+			{
+				Orientation = StackOrientation.Horizontal,
+				HorizontalOptions = LayoutOptions.Center,
+				Children =
+				{
+					btnAdd,
+					btnBottom
+				}
+			};
 
-            _listView = new ListView
-            {
-                ItemsSource = _collection,
-                BackgroundColor = Color.Transparent,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HasUnevenRows = true,
-                ItemTemplate = new DataTemplate(typeof(CellTemplateScrollToUneven))
-            };
-            _listView.ItemTapped += (sender, e) => ((ListView)sender).SelectedItem = null;
+			_listView = new ListView
+			{
+				ItemsSource = _collection,
+				BackgroundColor = Color.Transparent,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HasUnevenRows = true,
+				ItemTemplate = new DataTemplate(typeof(CellTemplateScrollToUneven))
+			};
+			_listView.ItemTapped += (sender, e) => ((ListView)sender).SelectedItem = null;
 
-            _listView.AutomationId = "listView";
+			_listView.AutomationId = "listView";
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    btnPanel,
-                    _listView
-                }
-            };
-        }
+			Content = new StackLayout
+			{
+				Children =
+				{
+					btnPanel,
+					_listView
+				}
+			};
+		}
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            _listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, false);
-        }
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			_listView.ScrollTo(_collection.Last(), ScrollToPosition.MakeVisible, false);
+		}
 
-        void BtnAddOnClicked(object sender, EventArgs eventArgs)
-        {
-            string str = string.Format("Item {0}", _i++);
-            var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", _i) };
-            _collection.Add(item);
+		void BtnAddOnClicked(object sender, EventArgs eventArgs)
+		{
+			string str = string.Format("Item {0}", _i++);
+			var item = new ListObj { Name = string.Format("{0} {0} {0} {0} {0} {0}", _i) };
+			_collection.Add(item);
 
-            _listView.ScrollTo(item, ScrollToPosition.End, true);
-        }
+			_listView.ScrollTo(item, ScrollToPosition.End, true);
+		}
 
-        void BtnBottomOnClicked(object sender, EventArgs e)
-        {
-            ListObj item = _collection.Last();
-            _listView.ScrollTo(item, ScrollToPosition.End, true);
-        }
-    }
+		void BtnBottomOnClicked(object sender, EventArgs e)
+		{
+			ListObj item = _collection.Last();
+			_listView.ScrollTo(item, ScrollToPosition.End, true);
+		}
+	}
 }

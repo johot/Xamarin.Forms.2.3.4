@@ -12,115 +12,115 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2777, "When add GroupHeaderTemplate in XAML the group header does not show up")]
-    public partial class Issue2777 : TestContentPage
-    {
-        public Issue2777()
-        {
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2777, "When add GroupHeaderTemplate in XAML the group header does not show up")]
+	public partial class Issue2777 : TestContentPage
+	{
+		public Issue2777()
+		{
 #if APP
-            InitializeComponent();
-            ObservableCollection<ListItemCollection> list = SetupList();
-            itemListView.ItemsSource = list;
+			InitializeComponent();
+			ObservableCollection<ListItemCollection> list = SetupList();
+			itemListView.ItemsSource = list;
 #endif
-        }
+		}
 
-        protected override void Init()
-        {
-        }
+		protected override void Init()
+		{
+		}
 
-        internal void OnItemTapped(object sender, ItemTappedEventArgs ea)
-        {
-            var listItem = (ListItemValue)ea.Item;
-            DisplayAlert(listItem.Name, "You tapped " + listItem.Name, "OK", "Cancel");
-        }
+		internal void OnItemTapped(object sender, ItemTappedEventArgs ea)
+		{
+			var listItem = (ListItemValue)ea.Item;
+			DisplayAlert(listItem.Name, "You tapped " + listItem.Name, "OK", "Cancel");
+		}
 
-        ObservableCollection<ListItemCollection> SetupList()
-        {
-            var allListItemGroups = new ObservableCollection<ListItemCollection>();
+		ObservableCollection<ListItemCollection> SetupList()
+		{
+			var allListItemGroups = new ObservableCollection<ListItemCollection>();
 
-            foreach (ListItemValue item in ListItemCollection.GetSortedData())
-            {
-                // Attempt to find any existing groups where theg group title matches the first char of our ListItem's name.
-                ListItemCollection listItemGroup = allListItemGroups.FirstOrDefault(g => g.Title == item.Label);
+			foreach (ListItemValue item in ListItemCollection.GetSortedData())
+			{
+				// Attempt to find any existing groups where theg group title matches the first char of our ListItem's name.
+				ListItemCollection listItemGroup = allListItemGroups.FirstOrDefault(g => g.Title == item.Label);
 
-                // If the list group does not exist, we create it.
-                if (listItemGroup == null)
-                {
-                    listItemGroup = new ListItemCollection(item.Label);
-                    listItemGroup.Add(item);
-                    allListItemGroups.Add(listItemGroup);
-                }
-                else
-                {
-                    // If the group does exist, we simply add the demo to the existing group.
-                    listItemGroup.Add(item);
-                }
-            }
-            return allListItemGroups;
-        }
+				// If the list group does not exist, we create it.
+				if (listItemGroup == null)
+				{
+					listItemGroup = new ListItemCollection(item.Label);
+					listItemGroup.Add(item);
+					allListItemGroups.Add(listItemGroup);
+				}
+				else
+				{
+					// If the group does exist, we simply add the demo to the existing group.
+					listItemGroup.Add(item);
+				}
+			}
+			return allListItemGroups;
+		}
 
-        // Represents a group of items in our list.
-        [Preserve(AllMembers = true)]
-        public class ListItemCollection : ObservableCollection<ListItemValue>
-        {
-            // Data used to populate our list.
-            static readonly List<ListItemValue> ListItems = new List<ListItemValue>()
-            {
-                new ListItemValue("Babbage"),
-                new ListItemValue("Boole"),
-                new ListItemValue("Berners-Lee"),
-                new ListItemValue("Atanasoff"),
-                new ListItemValue("Allen"),
-                new ListItemValue("Cormack"),
-                new ListItemValue("Cray"),
-                new ListItemValue("Dijkstra"),
-                new ListItemValue("Dix"),
-                new ListItemValue("Dewey"),
-                new ListItemValue("Erdős"),
-            };
+		// Represents a group of items in our list.
+		[Preserve(AllMembers = true)]
+		public class ListItemCollection : ObservableCollection<ListItemValue>
+		{
+			// Data used to populate our list.
+			static readonly List<ListItemValue> ListItems = new List<ListItemValue>()
+			{
+				new ListItemValue("Babbage"),
+				new ListItemValue("Boole"),
+				new ListItemValue("Berners-Lee"),
+				new ListItemValue("Atanasoff"),
+				new ListItemValue("Allen"),
+				new ListItemValue("Cormack"),
+				new ListItemValue("Cray"),
+				new ListItemValue("Dijkstra"),
+				new ListItemValue("Dix"),
+				new ListItemValue("Dewey"),
+				new ListItemValue("Erdős"),
+			};
 
-            public ListItemCollection(string title)
-            {
-                Title = title;
-            }
+			public ListItemCollection(string title)
+			{
+				Title = title;
+			}
 
-            public string LongTitle
-            {
-                get { return "The letter " + Title; }
-            }
+			public string LongTitle
+			{
+				get { return "The letter " + Title; }
+			}
 
-            public string Title { get; private set; }
+			public string Title { get; private set; }
 
-            public static List<ListItemValue> GetSortedData()
-            {
-                List<ListItemValue> items = ListItems;
-                items.Sort();
-                return items;
-            }
-        }
+			public static List<ListItemValue> GetSortedData()
+			{
+				List<ListItemValue> items = ListItems;
+				items.Sort();
+				return items;
+			}
+		}
 
-        // Represents one item in our list.
-        [Preserve(AllMembers = true)]
-        public class ListItemValue : IComparable<ListItemValue>
-        {
-            public ListItemValue(string name)
-            {
-                Name = name;
-            }
+		// Represents one item in our list.
+		[Preserve(AllMembers = true)]
+		public class ListItemValue : IComparable<ListItemValue>
+		{
+			public ListItemValue(string name)
+			{
+				Name = name;
+			}
 
-            public string Label
-            {
-                get { return Name[0].ToString(); }
-            }
+			public string Label
+			{
+				get { return Name[0].ToString(); }
+			}
 
-            public string Name { get; private set; }
+			public string Name { get; private set; }
 
-            int IComparable<ListItemValue>.CompareTo(ListItemValue value)
-            {
-                return Name.CompareTo(value.Name);
-            }
-        }
+			int IComparable<ListItemValue>.CompareTo(ListItemValue value)
+			{
+				return Name.CompareTo(value.Name);
+			}
+		}
 
 #if UITEST
 		[Test]
@@ -130,5 +130,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Marked ("The letter A"));
 		}
 		#endif
-    }
+	}
 }

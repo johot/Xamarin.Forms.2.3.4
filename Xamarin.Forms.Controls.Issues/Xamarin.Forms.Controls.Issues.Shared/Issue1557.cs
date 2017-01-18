@@ -6,29 +6,29 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1557, "Setting source crashes if view was detached from visual tree",
-        PlatformAffected.iOS)]
-    public class Issue1557
-        : ContentPage
-    {
-        ObservableCollection<string> _items = new ObservableCollection<string> { "foo", "bar" };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1557, "Setting source crashes if view was detached from visual tree",
+		PlatformAffected.iOS)]
+	public class Issue1557
+		: ContentPage
+	{
+		ObservableCollection<string> _items = new ObservableCollection<string> { "foo", "bar" };
 
-        public Issue1557()
-        {
-            Content = new ListView
-            {
-                ItemsSource = _items
-            };
+		public Issue1557()
+		{
+			Content = new ListView
+			{
+				ItemsSource = _items
+			};
 
-            Task.Delay(3000).ContinueWith(async t =>
-            {
-                var list = (ListView)Content;
+			Task.Delay(3000).ContinueWith(async t =>
+			{
+				var list = (ListView)Content;
 
-                await Navigation.PopAsync();
+				await Navigation.PopAsync();
 
-                list.ItemsSource = new List<string>() { "test" };
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-        }
-    }
+				list.ItemsSource = new List<string>() { "test" };
+			}, TaskScheduler.FromCurrentSynchronizationContext());
+		}
+	}
 }

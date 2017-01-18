@@ -9,28 +9,28 @@ using Xamarin.Forms.Core.UITests;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 488, "Resizing the Label results in wrapped text being cropped on iOS",
-        PlatformAffected.iOS)]
-    public class Issue488 : TestContentPage
-    {
-        protected override void Init()
-        {
-            var layout = new RelativeLayout
-            {
-                BackgroundColor = Color.Gray
-            };
-            var label = new Label
-            {
-                Text =
-                    "I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text."
-            };
-            layout.Children.Add(label, () => new Rectangle(0, 0, 250, 400));
-            Content = layout;
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 488, "Resizing the Label results in wrapped text being cropped on iOS",
+		PlatformAffected.iOS)]
+	public class Issue488 : TestContentPage
+	{
+		protected override void Init()
+		{
+			var layout = new RelativeLayout
+			{
+				BackgroundColor = Color.Gray
+			};
+			var label = new Label
+			{
+				Text =
+					"I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text. I am a long bit of text."
+			};
+			layout.Children.Add(label, () => new Rectangle(0, 0, 250, 400));
+			Content = layout;
+		}
 
-        // Issue: #488
-        // Text wrapping issue in Label
+		// Issue: #488
+		// Text wrapping issue in Label
 
 #if UITEST
 		[Test]
@@ -47,5 +47,5 @@ namespace Xamarin.Forms.Controls.Issues
 			Assert.Inconclusive ("Manual Review");
 		}
 #endif
-    }
+	}
 }

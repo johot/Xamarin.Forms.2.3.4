@@ -5,167 +5,167 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Controls
 {
-    public partial class TwitterPage : ContentPage
-    {
-        public TwitterPage()
-        {
-            InitializeComponent();
-            BindingContext = new TwitterViewModel();
+	public partial class TwitterPage : ContentPage
+	{
+		public TwitterPage()
+		{
+			InitializeComponent();
+			BindingContext = new TwitterViewModel();
 
-            listView.ItemTapped += (sender, args) =>
-            {
-                if (listView.SelectedItem == null)
-                    return;
-                var tweet = listView.SelectedItem as Tweet;
-                Navigation.PushAsync(new WebsiteView("http://m.twitter.com/shanselman/status/" + tweet.StatusID,
-                    tweet.Date));
-                listView.SelectedItem = null;
-            };
-        }
+			listView.ItemTapped += (sender, args) =>
+			{
+				if (listView.SelectedItem == null)
+					return;
+				var tweet = listView.SelectedItem as Tweet;
+				Navigation.PushAsync(new WebsiteView("http://m.twitter.com/shanselman/status/" + tweet.StatusID,
+					tweet.Date));
+				listView.SelectedItem = null;
+			};
+		}
 
-        private TwitterViewModel ViewModel
-        {
-            get { return BindingContext as TwitterViewModel; }
-        }
+		private TwitterViewModel ViewModel
+		{
+			get { return BindingContext as TwitterViewModel; }
+		}
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            if (ViewModel == null || !ViewModel.CanLoadMore || ViewModel.IsBusy || ViewModel.Tweets.Count > 0)
-                return;
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			if (ViewModel == null || !ViewModel.CanLoadMore || ViewModel.IsBusy || ViewModel.Tweets.Count > 0)
+				return;
 
-            ViewModel.LoadTweetsCommand.Execute(null);
-        }
-    }
+			ViewModel.LoadTweetsCommand.Execute(null);
+		}
+	}
 
-    public class TwitterViewModel : HBaseViewModel
-    {
-        private Command loadTweetsCommand;
+	public class TwitterViewModel : HBaseViewModel
+	{
+		private Command loadTweetsCommand;
 
-        public TwitterViewModel()
-        {
-            Title = "Twitter";
-            Icon = "slideout.png";
-            Tweets = new ObservableCollection<Tweet>();
-        }
+		public TwitterViewModel()
+		{
+			Title = "Twitter";
+			Icon = "slideout.png";
+			Tweets = new ObservableCollection<Tweet>();
+		}
 
-        public Command LoadTweetsCommand
-        {
-            get
-            {
-                return loadTweetsCommand ??
-                       (loadTweetsCommand =
-                           new Command(async () => { await ExecuteLoadTweetsCommand(); }, () => { return !IsBusy; }));
-            }
-        }
+		public Command LoadTweetsCommand
+		{
+			get
+			{
+				return loadTweetsCommand ??
+						(loadTweetsCommand =
+							new Command(async () => { await ExecuteLoadTweetsCommand(); }, () => { return !IsBusy; }));
+			}
+		}
 
-        public ObservableCollection<Tweet> Tweets { get; set; }
+		public ObservableCollection<Tweet> Tweets { get; set; }
 
-        public async Task ExecuteLoadTweetsCommand()
-        {
-            if (IsBusy)
-                return;
+		public async Task ExecuteLoadTweetsCommand()
+		{
+			if (IsBusy)
+				return;
 
-            IsBusy = true;
-            LoadTweetsCommand.ChangeCanExecute();
-            var error = false;
-            try
-            {
-                Tweets.Clear();
-                //var auth = new ApplicationOnlyAuthorizer()
-                //{
-                //	CredentialStore = new InMemoryCredentialStore
-                //	{
-                //		ConsumerKey = "ZTmEODUCChOhLXO4lnUCEbH2I",
-                //		ConsumerSecret = "Y8z2Wouc5ckFb1a0wjUDT9KAI6DUat5tFNdmIkPLl8T4Nyaa2J",
-                //	},
-                //};
-                //await auth.AuthorizeAsync();
+			IsBusy = true;
+			LoadTweetsCommand.ChangeCanExecute();
+			var error = false;
+			try
+			{
+				Tweets.Clear();
+				//var auth = new ApplicationOnlyAuthorizer()
+				//{
+				//	CredentialStore = new InMemoryCredentialStore
+				//	{
+				//		ConsumerKey = "ZTmEODUCChOhLXO4lnUCEbH2I",
+				//		ConsumerSecret = "Y8z2Wouc5ckFb1a0wjUDT9KAI6DUat5tFNdmIkPLl8T4Nyaa2J",
+				//	},
+				//};
+				//await auth.AuthorizeAsync();
 
-                //var twitterContext = new TwitterContext(auth);
+				//var twitterContext = new TwitterContext(auth);
 
-                //var queryResponse = await
-                //  (from tweet in twitterContext.Status
-                //   where tweet.Type == StatusType.User &&
-                //	 tweet.ScreenName == "shanselman" &&
-                //	 tweet.Count == 100 &&
-                //	 tweet.IncludeRetweets == true &&
-                //	 tweet.ExcludeReplies == true
-                //   select tweet).ToListAsync();
+				//var queryResponse = await
+				//  (from tweet in twitterContext.Status
+				//   where tweet.Type == StatusType.User &&
+				//	 tweet.ScreenName == "shanselman" &&
+				//	 tweet.Count == 100 &&
+				//	 tweet.IncludeRetweets == true &&
+				//	 tweet.ExcludeReplies == true
+				//   select tweet).ToListAsync();
 
-                //var tweets =
-                //  (from tweet in queryResponse
-                //   select new Tweet
-                //   {
-                //	   StatusID = tweet.StatusID,
-                //	   ScreenName = tweet.User.ScreenNameResponse,
-                //	   Text = tweet.Text,
-                //	   CurrentUserRetweet = tweet.CurrentUserRetweet,
-                //	   CreatedAt = tweet.CreatedAt,
-                //	   Image = tweet.RetweetedStatus != null && tweet.RetweetedStatus.User != null ?
-                //					  tweet.RetweetedStatus.User.ProfileImageUrl.Replace("http://", "https://") : (tweet.User.ScreenNameResponse == "shanselman" ? "scott159.png" : tweet.User.ProfileImageUrl.Replace("http://", "https://"))
-                //   }).ToList();
-                //foreach (var tweet in tweets)
-                //{
-                //	Tweets.Add(tweet);
-                //}
+				//var tweets =
+				//  (from tweet in queryResponse
+				//   select new Tweet
+				//   {
+				//	   StatusID = tweet.StatusID,
+				//	   ScreenName = tweet.User.ScreenNameResponse,
+				//	   Text = tweet.Text,
+				//	   CurrentUserRetweet = tweet.CurrentUserRetweet,
+				//	   CreatedAt = tweet.CreatedAt,
+				//	   Image = tweet.RetweetedStatus != null && tweet.RetweetedStatus.User != null ?
+				//					  tweet.RetweetedStatus.User.ProfileImageUrl.Replace("http://", "https://") : (tweet.User.ScreenNameResponse == "shanselman" ? "scott159.png" : tweet.User.ProfileImageUrl.Replace("http://", "https://"))
+				//   }).ToList();
+				//foreach (var tweet in tweets)
+				//{
+				//	Tweets.Add(tweet);
+				//}
 
-                //if (Device.OS == TargetPlatform.iOS)
-                //{
-                //	// only does anything on iOS, for the Watch
-                //	//	DependencyService.Get<ITweetStore>().Save(tweets);
-                //}
-            }
-            catch
-            {
-                error = true;
-            }
+				//if (Device.OS == TargetPlatform.iOS)
+				//{
+				//	// only does anything on iOS, for the Watch
+				//	//	DependencyService.Get<ITweetStore>().Save(tweets);
+				//}
+			}
+			catch
+			{
+				error = true;
+			}
 
-            if (error)
-            {
-                var page = new ContentPage();
-                await page.DisplayAlert("Error", "Unable to load tweets.", "OK");
-            }
+			if (error)
+			{
+				var page = new ContentPage();
+				await page.DisplayAlert("Error", "Unable to load tweets.", "OK");
+			}
 
-            IsBusy = false;
-            LoadTweetsCommand.ChangeCanExecute();
-        }
-    }
+			IsBusy = false;
+			LoadTweetsCommand.ChangeCanExecute();
+		}
+	}
 
-    public class Tweet
-    {
-        public Tweet()
-        {
-        }
+	public class Tweet
+	{
+		public Tweet()
+		{
+		}
 
-        public DateTime CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; }
 
-        public ulong CurrentUserRetweet { get; set; }
+		public ulong CurrentUserRetweet { get; set; }
 
-        //[JsonIgnore]
-        public string Date
-        {
-            get { return CreatedAt.ToString("g"); }
-        }
+		//[JsonIgnore]
+		public string Date
+		{
+			get { return CreatedAt.ToString("g"); }
+		}
 
-        public string Image { get; set; }
+		public string Image { get; set; }
 
-        //[JsonIgnore]
-        public string RTCount
-        {
-            get { return CurrentUserRetweet == 0 ? string.Empty : CurrentUserRetweet + " RT"; }
-        }
+		//[JsonIgnore]
+		public string RTCount
+		{
+			get { return CurrentUserRetweet == 0 ? string.Empty : CurrentUserRetweet + " RT"; }
+		}
 
-        public string ScreenName { get; set; }
+		public string ScreenName { get; set; }
 
-        public ulong StatusID { get; set; }
+		public ulong StatusID { get; set; }
 
-        public string Text { get; set; }
-    }
+		public string Text { get; set; }
+	}
 
-    public interface ITweetStore
-    {
-        void Save(List<Tweet> tweets);
-        //System.Collections.Generic.List<Hanselman.Shared.Tweet> Load ();
-    }
+	public interface ITweetStore
+	{
+		void Save(List<Tweet> tweets);
+		//System.Collections.Generic.List<Hanselman.Shared.Tweet> Load ();
+	}
 }

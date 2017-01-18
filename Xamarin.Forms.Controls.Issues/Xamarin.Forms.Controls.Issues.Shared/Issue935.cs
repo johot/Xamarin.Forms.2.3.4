@@ -8,63 +8,63 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    public class Person
-    {
-        public Person(string name)
-        {
-            Name = name;
-        }
+	public class Person
+	{
+		public Person(string name)
+		{
+			Name = name;
+		}
 
-        public string Name { get; set; }
-    }
+		public string Name { get; set; }
+	}
 
-    public class CustomViewCell : ViewCell
-    {
-        public CustomViewCell()
-        {
-            var tapsFired = 0;
+	public class CustomViewCell : ViewCell
+	{
+		public CustomViewCell()
+		{
+			var tapsFired = 0;
 
-            Height = 50;
+			Height = 50;
 
-            var label = new Label
-            {
-                Text = "I have been selected:"
-            };
+			var label = new Label
+			{
+				Text = "I have been selected:"
+			};
 
-            Tapped += (s, e) =>
-            {
-                tapsFired++;
-                label.Text = "I have been selected:" + tapsFired;
-            };
+			Tapped += (s, e) =>
+			{
+				tapsFired++;
+				label.Text = "I have been selected:" + tapsFired;
+			};
 
-            View = label;
-        }
-    }
+			View = label;
+		}
+	}
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 935, "ViewCell.ItemTapped only fires once for ListView.SelectedItem",
-        PlatformAffected.Android)]
-    public class Issue935 : TestContentPage
-    {
-        protected override void Init()
-        {
-            Title = "List Page";
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 935, "ViewCell.ItemTapped only fires once for ListView.SelectedItem",
+		PlatformAffected.Android)]
+	public class Issue935 : TestContentPage
+	{
+		protected override void Init()
+		{
+			Title = "List Page";
 
-            var items = new[]
-            {
-                new CustomViewCell(),
-            };
+			var items = new[]
+			{
+				new CustomViewCell(),
+			};
 
-            var cellTemplate = new DataTemplate(typeof(CustomViewCell));
+			var cellTemplate = new DataTemplate(typeof(CustomViewCell));
 
-            var list = new ListView()
-            {
-                ItemTemplate = cellTemplate,
-                ItemsSource = items
-            };
+			var list = new ListView()
+			{
+				ItemTemplate = cellTemplate,
+				ItemsSource = items
+			};
 
-            Content = list;
-        }
+			Content = list;
+		}
 
 #if UITEST
 		[Test]
@@ -81,5 +81,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("Tapped Cell Twice");
 		}
 #endif
-    }
+	}
 }

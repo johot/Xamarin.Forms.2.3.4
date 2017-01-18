@@ -8,76 +8,76 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 2964, "TabbedPage toolbar item crash")]
-    public class Issue2964 : TestMasterDetailPage
-    {
-        public class ModalPage : ContentPage
-        {
-            public ModalPage()
-            {
-                Content = new Button
-                {
-                    AutomationId = "ModalPagePopButton",
-                    Text = "Pop Me",
-                    Command = new Command(async () =>
-                    {
-                        MessagingCenter.Send(this, "update");
-                        await Navigation.PopModalAsync();
-                    })
-                };
-            }
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 2964, "TabbedPage toolbar item crash")]
+	public class Issue2964 : TestMasterDetailPage
+	{
+		public class ModalPage : ContentPage
+		{
+			public ModalPage()
+			{
+				Content = new Button
+				{
+					AutomationId = "ModalPagePopButton",
+					Text = "Pop Me",
+					Command = new Command(async () =>
+					{
+						MessagingCenter.Send(this, "update");
+						await Navigation.PopModalAsync();
+					})
+				};
+			}
+		}
 
-        public class Page1 : ContentPage
-        {
-            public Page1()
-            {
-                Title = "Testpage 1";
+		public class Page1 : ContentPage
+		{
+			public Page1()
+			{
+				Title = "Testpage 1";
 
-                MessagingCenter.Subscribe<ModalPage>(this, "update", sender => { BlowUp(); });
+				MessagingCenter.Subscribe<ModalPage>(this, "update", sender => { BlowUp(); });
 
-                Content = new Button
-                {
-                    AutomationId = "Page1PushModalButton",
-                    Text = "press me",
-                    Command = new Command(async () => await Navigation.PushModalAsync(new ModalPage()))
-                };
-            }
+				Content = new Button
+				{
+					AutomationId = "Page1PushModalButton",
+					Text = "press me",
+					Command = new Command(async () => await Navigation.PushModalAsync(new ModalPage()))
+				};
+			}
 
-            void BlowUp()
-            {
-                Content = new Label
-                {
-                    AutomationId = "Page1Label",
-                    Text = "Page1"
-                };
-            }
-        }
+			void BlowUp()
+			{
+				Content = new Label
+				{
+					AutomationId = "Page1Label",
+					Text = "Page1"
+				};
+			}
+		}
 
-        protected override void Init()
-        {
-            Title = "Test";
+		protected override void Init()
+		{
+			Title = "Test";
 
-            Master = new ContentPage
-            {
-                Title = "Master",
-                Content = new Button
-                {
-                    AutomationId = "MasterButton",
-                    Text = "Make a new page",
-                    Command = new Command(() =>
-                    {
-                        Detail = new Page1();
-                        IsPresented = false;
-                    })
-                }
-            };
+			Master = new ContentPage
+			{
+				Title = "Master",
+				Content = new Button
+				{
+					AutomationId = "MasterButton",
+					Text = "Make a new page",
+					Command = new Command(() =>
+					{
+						Detail = new Page1();
+						IsPresented = false;
+					})
+				}
+			};
 
-            Detail = new Page1();
+			Detail = new Page1();
 
-            IsPresented = true;
-        }
+			IsPresented = true;
+		}
 
 #if UITEST
 		[Test]
@@ -98,5 +98,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.Screenshot ("Didn't blow up! :)");
 		}
 #endif
-    }
+	}
 }

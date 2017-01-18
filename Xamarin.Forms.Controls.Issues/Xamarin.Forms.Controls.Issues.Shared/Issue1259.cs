@@ -5,107 +5,107 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 1259, "Layout issue with SwitchCell", PlatformAffected.Android)]
-    public class Issue1259
-        : ContentPage
-    {
-        TableView _table;
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 1259, "Layout issue with SwitchCell", PlatformAffected.Android)]
+	public class Issue1259
+		: ContentPage
+	{
+		TableView _table;
 
-        public Issue1259()
-        {
-            var st = new StackLayout();
-            st.HorizontalOptions = LayoutOptions.FillAndExpand;
-            st.VerticalOptions = LayoutOptions.FillAndExpand;
+		public Issue1259()
+		{
+			var st = new StackLayout();
+			st.HorizontalOptions = LayoutOptions.FillAndExpand;
+			st.VerticalOptions = LayoutOptions.FillAndExpand;
 
-            _table = new TableView
-            {
-                Intent = TableIntent.Form,
-                Root = new TableRoot("")
-                {
-                    new TableSection
-                    {
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new SwitchCell
-                        {
-                            Text = "SwitchCell:"
-                        },
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new SwitchCell
-                        {
-                            Text = "SwitchCell:"
-                        },
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new TextCell(),
-                        new SwitchCell
-                        {
-                            Text = "SwitchCell:"
-                        }
-                    }
-                }
-            };
+			_table = new TableView
+			{
+				Intent = TableIntent.Form,
+				Root = new TableRoot("")
+				{
+					new TableSection
+					{
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new SwitchCell
+						{
+							Text = "SwitchCell:"
+						},
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new SwitchCell
+						{
+							Text = "SwitchCell:"
+						},
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new TextCell(),
+						new SwitchCell
+						{
+							Text = "SwitchCell:"
+						}
+					}
+				}
+			};
 
-            st.Children.Add(_table);
+			st.Children.Add(_table);
 
-            var next = new Button
-            {
-                Text = "Ok",
-            };
-            next.Clicked += next_Clicked;
+			var next = new Button
+			{
+				Text = "Ok",
+			};
+			next.Clicked += next_Clicked;
 
-            st.Children.Add(next);
+			st.Children.Add(next);
 
-            Content = st;
-        }
+			Content = st;
+		}
 
-        void next_Clicked(object sender, EventArgs e)
-        {
-            SwitchCell sw = _table.Root[0].OfType<SwitchCell>().First();
-            sw.On = !sw.On;
-        }
-    }
+		void next_Clicked(object sender, EventArgs e)
+		{
+			SwitchCell sw = _table.Root[0].OfType<SwitchCell>().First();
+			sw.On = !sw.On;
+		}
+	}
 }

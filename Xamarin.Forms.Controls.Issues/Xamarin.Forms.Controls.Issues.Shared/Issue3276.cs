@@ -11,71 +11,71 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 3276, "Crashing Unknown cell parent type on ContextAction Bindings")]
-    public class Issue3276 : TestTabbedPage
-    {
-        protected override void Init()
-        {
-            var listview = new ListView();
-            listview.ItemTemplate = new DataTemplate(typeof(CaCell));
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 3276, "Crashing Unknown cell parent type on ContextAction Bindings")]
+	public class Issue3276 : TestTabbedPage
+	{
+		protected override void Init()
+		{
+			var listview = new ListView();
+			listview.ItemTemplate = new DataTemplate(typeof(CaCell));
 
-            listview.SetBinding(ListView.ItemsSourceProperty, new Binding("SearchResults"));
+			listview.SetBinding(ListView.ItemsSourceProperty, new Binding("SearchResults"));
 
-            var page = new ContentPage { Title = "First", Content = listview, BindingContext = new VM() };
+			var page = new ContentPage { Title = "First", Content = listview, BindingContext = new VM() };
 
-            page.Appearing += (object sender, EventArgs e) => (page.BindingContext as VM).Load();
+			page.Appearing += (object sender, EventArgs e) => (page.BindingContext as VM).Load();
 
-            Children.Add(page);
-            Children.Add(new ContentPage { Title = "Second" });
-        }
+			Children.Add(page);
+			Children.Add(new ContentPage { Title = "Second" });
+		}
 
-        [Preserve(AllMembers = true)]
-        public class VM : ViewModel
-        {
-            ObservableCollection<string> _list = null;
+		[Preserve(AllMembers = true)]
+		public class VM : ViewModel
+		{
+			ObservableCollection<string> _list = null;
 
-            public ObservableCollection<string> SearchResults
-            {
-                get { return _list; }
+			public ObservableCollection<string> SearchResults
+			{
+				get { return _list; }
 
-                set
-                {
-                    _list = value;
-                    OnPropertyChanged();
-                }
-            }
+				set
+				{
+					_list = value;
+					OnPropertyChanged();
+				}
+			}
 
-            public void Load()
-            {
-                var list = new List<string>();
-                for (var i = 0; i < 20; i++)
-                {
-                    list.Add("second " + i.ToString());
-                }
-                SearchResults = new ObservableCollection<string>(list);
-            }
-        }
+			public void Load()
+			{
+				var list = new List<string>();
+				for (var i = 0; i < 20; i++)
+				{
+					list.Add("second " + i.ToString());
+				}
+				SearchResults = new ObservableCollection<string>(list);
+			}
+		}
 
-        [Preserve(AllMembers = true)]
-        public class CaCell : ViewCell
-        {
-            public CaCell()
-            {
-                var label = new Label();
-                label.SetBinding(Label.TextProperty, new Binding("."));
-                var menu = new MenuItem { Text = "Delete", IsDestructive = true };
-                menu.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-                var menu1 = new MenuItem { Text = "Settings" };
-                menu1.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-                ContextActions.Add(menu);
-                ContextActions.Add(menu1);
+		[Preserve(AllMembers = true)]
+		public class CaCell : ViewCell
+		{
+			public CaCell()
+			{
+				var label = new Label();
+				label.SetBinding(Label.TextProperty, new Binding("."));
+				var menu = new MenuItem { Text = "Delete", IsDestructive = true };
+				menu.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+				var menu1 = new MenuItem { Text = "Settings" };
+				menu1.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+				ContextActions.Add(menu);
+				ContextActions.Add(menu1);
 
-                var stack = new StackLayout();
-                stack.Children.Add(label);
-                View = stack;
-            }
-        }
+				var stack = new StackLayout();
+				stack.Children.Add(label);
+				View = stack;
+			}
+		}
 
 #if UITEST
 		[Test]
@@ -86,5 +86,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement (q => q.Marked ("second 1"));
 		}
 #endif
-    }
+	}
 }

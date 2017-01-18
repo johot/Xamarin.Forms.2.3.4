@@ -7,15 +7,15 @@ using Xamarin.UITest;
 
 namespace Xamarin.Forms.Controls
 {
-    internal static class AppPaths
-    {
-        public static string ApkPath =
-            "../../../Xamarin.Forms.ControlGallery.Android/bin/Debug/AndroidControlGallery.AndroidControlGallery-Signed.apk";
+	internal static class AppPaths
+	{
+		public static string ApkPath =
+			"../../../Xamarin.Forms.ControlGallery.Android/bin/Debug/AndroidControlGallery.AndroidControlGallery-Signed.apk";
 
-        // Have to continue using the old BundleId for now; Test Cloud doesn't like
-        // when you change the BundleId
-        public static string BundleId = "com.xamarin.quickui.controlgallery";
-    }
+		// Have to continue using the old BundleId for now; Test Cloud doesn't like
+		// when you change the BundleId
+		public static string BundleId = "com.xamarin.quickui.controlgallery";
+	}
 
 #if UITEST
 	internal static class AppSetup
@@ -220,20 +220,20 @@ namespace Xamarin.Forms.Controls
 	}
 #endif
 
-    public abstract class TestPage : Page
-    {
+	public abstract class TestPage : Page
+	{
 #if UITEST
 		public IApp RunningApp => AppSetup.RunningApp;
 
 		protected virtual bool Isolate => false;
 #endif
 
-        protected TestPage()
-        {
+		protected TestPage()
+		{
 #if APP
-            Init();
+			Init();
 #endif
-        }
+		}
 
 #if UITEST
 		[SetUp]
@@ -262,23 +262,23 @@ namespace Xamarin.Forms.Controls
 		}
 #endif
 
-        protected abstract void Init();
-    }
+		protected abstract void Init();
+	}
 
-    public abstract class TestContentPage : ContentPage
-    {
+	public abstract class TestContentPage : ContentPage
+	{
 #if UITEST
 		public IApp RunningApp => AppSetup.RunningApp;
 
 		protected virtual bool Isolate => false;
 #endif
 
-        protected TestContentPage()
-        {
+		protected TestContentPage()
+		{
 #if APP
-            Init();
+			Init();
 #endif
-        }
+		}
 
 #if UITEST
 		[SetUp]
@@ -307,23 +307,23 @@ namespace Xamarin.Forms.Controls
 		}
 #endif
 
-        protected abstract void Init();
-    }
+		protected abstract void Init();
+	}
 
-    public abstract class TestCarouselPage : CarouselPage
-    {
+	public abstract class TestCarouselPage : CarouselPage
+	{
 #if UITEST
 		public IApp RunningApp => AppSetup.RunningApp;
 
 		protected virtual bool Isolate => false;
 #endif
 
-        protected TestCarouselPage()
-        {
+		protected TestCarouselPage()
+		{
 #if APP
-            Init();
+			Init();
 #endif
-        }
+		}
 
 #if UITEST
 		[SetUp]
@@ -352,23 +352,23 @@ namespace Xamarin.Forms.Controls
 		}
 #endif
 
-        protected abstract void Init();
-    }
+		protected abstract void Init();
+	}
 
-    public abstract class TestMasterDetailPage : MasterDetailPage
-    {
+	public abstract class TestMasterDetailPage : MasterDetailPage
+	{
 #if UITEST
 		public IApp RunningApp => AppSetup.RunningApp;
 
 		protected virtual bool Isolate => false;
 #endif
 
-        protected TestMasterDetailPage()
-        {
+		protected TestMasterDetailPage()
+		{
 #if APP
-            Init();
+			Init();
 #endif
-        }
+		}
 
 #if UITEST
 		[SetUp]
@@ -397,23 +397,23 @@ namespace Xamarin.Forms.Controls
 		}
 #endif
 
-        protected abstract void Init();
-    }
+		protected abstract void Init();
+	}
 
-    public abstract class TestNavigationPage : NavigationPage
-    {
+	public abstract class TestNavigationPage : NavigationPage
+	{
 #if UITEST
 		public IApp RunningApp => AppSetup.RunningApp;
 
 		protected virtual bool Isolate => false;
 #endif
 
-        protected TestNavigationPage()
-        {
+		protected TestNavigationPage()
+		{
 #if APP
-            Init();
+			Init();
 #endif
-        }
+		}
 
 #if UITEST
 		[SetUp]
@@ -442,23 +442,23 @@ namespace Xamarin.Forms.Controls
 		}
 #endif
 
-        protected abstract void Init();
-    }
+		protected abstract void Init();
+	}
 
-    public abstract class TestTabbedPage : TabbedPage
-    {
+	public abstract class TestTabbedPage : TabbedPage
+	{
 #if UITEST
 		public IApp RunningApp => AppSetup.RunningApp;
 
 		protected virtual bool Isolate => false;
 #endif
 
-        protected TestTabbedPage()
-        {
+		protected TestTabbedPage()
+		{
 #if APP
-            Init();
+			Init();
 #endif
-        }
+		}
 
 #if UITEST
 		[SetUp]
@@ -487,8 +487,8 @@ namespace Xamarin.Forms.Controls
 		}
 #endif
 
-        protected abstract void Init();
-    }
+		protected abstract void Init();
+	}
 }
 
 #if UITEST

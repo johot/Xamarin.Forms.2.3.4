@@ -9,40 +9,40 @@ using Xamarin.Forms.Core.UITests;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Github, 764, "Keyboard does not dismiss on SearchBar", PlatformAffected.Android)]
-    public class Issue764 : TestContentPage
-    {
-        protected override void Init()
-        {
-            Title = "Issue 764";
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Github, 764, "Keyboard does not dismiss on SearchBar", PlatformAffected.Android)]
+	public class Issue764 : TestContentPage
+	{
+		protected override void Init()
+		{
+			Title = "Issue 764";
 
-            var searchBar = new SearchBar
-            {
-                Placeholder = "Search Me!"
-            };
+			var searchBar = new SearchBar
+			{
+				Placeholder = "Search Me!"
+			};
 
-            var label = new Label
-            {
-                Text = "Pending Search"
-            };
+			var label = new Label
+			{
+				Text = "Pending Search"
+			};
 
-            searchBar.SearchButtonPressed += (s, e) => label.Text = "Search Activated";
+			searchBar.SearchButtonPressed += (s, e) => label.Text = "Search Activated";
 
-            var layout = new StackLayout
-            {
-                Children =
-                {
-                    searchBar,
-                    label
-                }
-            };
+			var layout = new StackLayout
+			{
+				Children =
+				{
+					searchBar,
+					label
+				}
+			};
 
-            Content = layout;
-        }
+			Content = layout;
+		}
 
-        // Issue 416
-        // NavigationBar should be visible in modal
+		// Issue 416
+		// NavigationBar should be visible in modal
 
 #if UITEST
 		[Test]
@@ -52,5 +52,5 @@ namespace Xamarin.Forms.Controls.Issues
 			Assert.Inconclusive ("Needs test");
 		}
 #endif
-    }
+	}
 }

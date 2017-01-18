@@ -9,87 +9,87 @@ using NUnit.Framework;
 
 namespace Xamarin.Forms.Controls.Issues
 {
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 33578,
-        "TableView EntryCell shows DefaultKeyboard, but after scrolling down and back a NumericKeyboard (")]
-    public class Bugzilla33578 : TestContentPage // or TestMasterDetailPage, etc ...
-    {
-        protected override void Init()
-        {
-            Content = new TableView
-            {
-                Root = new TableRoot
-                {
-                    new TableSection
-                    {
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here 1",
-                            AutomationId = "entryNormal"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here 2"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here"
-                        },
-                        new EntryCell
-                        {
-                            Placeholder = "Enter text here",
-                            AutomationId = "entryPreviousNumeric"
-                        },
-                        new EntryCell
-                        {
-                            Keyboard = Keyboard.Numeric,
-                            Placeholder = "0",
-                            AutomationId = "entryNumeric"
-                        }
-                    }
-                }
-            };
-        }
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 33578,
+		"TableView EntryCell shows DefaultKeyboard, but after scrolling down and back a NumericKeyboard (")]
+	public class Bugzilla33578 : TestContentPage // or TestMasterDetailPage, etc ...
+	{
+		protected override void Init()
+		{
+			Content = new TableView
+			{
+				Root = new TableRoot
+				{
+					new TableSection
+					{
+						new EntryCell
+						{
+							Placeholder = "Enter text here 1",
+							AutomationId = "entryNormal"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here 2"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here"
+						},
+						new EntryCell
+						{
+							Placeholder = "Enter text here",
+							AutomationId = "entryPreviousNumeric"
+						},
+						new EntryCell
+						{
+							Keyboard = Keyboard.Numeric,
+							Placeholder = "0",
+							AutomationId = "entryNumeric"
+						}
+					}
+				}
+			};
+		}
 
 #if UITEST && __IOS__
 		[Test]
@@ -111,5 +111,5 @@ namespace Xamarin.Forms.Controls.Issues
 			Assert.AreEqual (0, e1);		
 		}
 #endif
-    }
+	}
 }

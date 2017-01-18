@@ -13,36 +13,36 @@ namespace Xamarin.Forms.Controls.Issues
 	[Category(UITestCategories.LifeCycle)]
 #endif
 
-    [Preserve(AllMembers = true)]
-    [Issue(IssueTracker.Bugzilla, 29363, "PushModal followed immediate by PopModal crashes")]
-    public class Bugzilla29363 : TestContentPage
-    {
-        protected override void Init()
-        {
-            var layout = new StackLayout()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
+	[Preserve(AllMembers = true)]
+	[Issue(IssueTracker.Bugzilla, 29363, "PushModal followed immediate by PopModal crashes")]
+	public class Bugzilla29363 : TestContentPage
+	{
+		protected override void Init()
+		{
+			var layout = new StackLayout()
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand
+			};
 
-            var modal = new Button
-            {
-                Text = "Modal Push Pop Test",
-                Font = Font.SystemFontOfSize(25, FontAttributes.Bold),
-                HorizontalOptions = LayoutOptions.Center
-            };
-            modal.Clicked += async (object sender, EventArgs e) =>
-            {
-                var page = new ContentPage() { BackgroundColor = Color.Red };
+			var modal = new Button
+			{
+				Text = "Modal Push Pop Test",
+				Font = Font.SystemFontOfSize(25, FontAttributes.Bold),
+				HorizontalOptions = LayoutOptions.Center
+			};
+			modal.Clicked += async (object sender, EventArgs e) =>
+			{
+				var page = new ContentPage() { BackgroundColor = Color.Red };
 
-                await Navigation.PushModalAsync(page);
+				await Navigation.PushModalAsync(page);
 
-                await Navigation.PopModalAsync(true);
-            };
+				await Navigation.PopModalAsync(true);
+			};
 
-            layout.Children.Add(modal);
-            Content = layout;
-        }
+			layout.Children.Add(modal);
+			Content = layout;
+		}
 
 #if UITEST
 		[Test]
@@ -54,5 +54,5 @@ namespace Xamarin.Forms.Controls.Issues
 			RunningApp.WaitForElement(q => q.Marked("Modal Push Pop Test"));
 		}
 #endif
-    }
+	}
 }
