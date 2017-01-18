@@ -316,6 +316,11 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			return source.Task;
 		}
 
+		public Task<T> ShowPopup<T>(Popup<T> popup)
+		{
+			throw new NotImplementedException();
+		}
+
 		sealed class ModalContainer : ViewGroup
 		{
 			global::Android.Views.View _backgroundView;

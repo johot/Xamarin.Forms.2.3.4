@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using System.Threading.Tasks;
-
+using System;
 
 namespace Xamarin.Forms.Core.UnitTests
 {
@@ -77,6 +77,11 @@ namespace Xamarin.Forms.Core.UnitTests
 
 			public void InsertPageBefore (Page page, Page before)
 			{
+			}
+
+			public Task<T> ShowPopup<T>(Popup<T> popup)
+			{
+				throw new NotImplementedException();
 			}
 
 			public System.Collections.Generic.IReadOnlyList<Page> NavigationStack
