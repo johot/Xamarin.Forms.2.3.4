@@ -163,7 +163,10 @@ namespace Xamarin.Forms.Platform.WinRT
 			else if (e.PropertyName == MasterDetailPage.IsPresentedProperty.PropertyName)
 				UpdateIsPresented();
 			else if (e.PropertyName == MasterDetailPage.MasterBehaviorProperty.PropertyName)
+			{
 				UpdateBehavior();
+				UpdateIsPresented();
+			}
 			else if (e.PropertyName == Page.TitleProperty.PropertyName)
 				UpdateTitle();
 		}
@@ -271,6 +274,11 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		void UpdateIsPresented()
 		{
+			// Ignore the IsPresented value being set to false for Split mode on desktop and allow the master
+			// view to be made initially visible
+			if ((Device.Idiom == TargetIdiom.Desktop || Device.Idiom == TargetIdiom.Tablet) && _container.IsMasterVisible && !Element.IsPresented && Element.MasterBehavior != MasterBehavior.Popover)
+				return;
+
 			UpdateBehavior();
 
 			bool isPresented = !GetIsMasterAPopover() || Element.IsPresented;
