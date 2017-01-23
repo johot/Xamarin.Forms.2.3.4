@@ -8,33 +8,33 @@ namespace Xamarin.Forms.Platform.WinRT
 	internal sealed class WindowsPhoneResourcesProvider
 		: ISystemResourcesProvider
 	{
-		readonly TextBlock _prototype = new TextBlock();
-
 		public IResourceDictionary GetSystemResources()
 		{
+			var prototype = new TextBlock();
+			
 			return new ResourceDictionary
 			{
-				[Device.Styles.TitleStyleKey] = GetStyle("HeaderTextBlockStyle"),
-				[Device.Styles.SubtitleStyleKey] = GetStyle("SubheaderTextBlockStyle"),
-				[Device.Styles.BodyStyleKey] = GetStyle("BodyTextBlockStyle"),
-				[Device.Styles.CaptionStyleKey] = GetStyle("BodyTextBlockStyle"),
-				[Device.Styles.ListItemTextStyleKey] = GetStyle("ListViewItemTextBlockStyle"),
-				[Device.Styles.ListItemDetailTextStyleKey] = GetStyle("ListViewItemContentTextBlockStyle")
+				[Device.Styles.TitleStyleKey] = GetStyle("HeaderTextBlockStyle", prototype),
+				[Device.Styles.SubtitleStyleKey] = GetStyle("SubheaderTextBlockStyle", prototype),
+				[Device.Styles.BodyStyleKey] = GetStyle("BodyTextBlockStyle", prototype),
+				[Device.Styles.CaptionStyleKey] = GetStyle("BodyTextBlockStyle", prototype),
+				[Device.Styles.ListItemTextStyleKey] = GetStyle("ListViewItemTextBlockStyle", prototype),
+				[Device.Styles.ListItemDetailTextStyleKey] = GetStyle("ListViewItemContentTextBlockStyle", prototype)
 			};
 		}
 
-		Style GetStyle(object nativeKey)
+		static Style GetStyle(object nativeKey, TextBlock prototype)
 		{
 			var style = (WStyle)Windows.UI.Xaml.Application.Current.Resources[nativeKey];
 
-			_prototype.Style = style;
+			prototype.Style = style;
 
 			var formsStyle = new Style(typeof(Label));
 
-			formsStyle.Setters.Add(Label.FontSizeProperty, _prototype.FontSize);
-			formsStyle.Setters.Add(Label.FontFamilyProperty, _prototype.FontFamily.Source);
-			formsStyle.Setters.Add(Label.FontAttributesProperty, ToAttributes(_prototype.FontWeight));
-			formsStyle.Setters.Add(Label.LineBreakModeProperty, ToLineBreakMode(_prototype.TextWrapping));
+			formsStyle.Setters.Add(Label.FontSizeProperty, prototype.FontSize);
+			formsStyle.Setters.Add(Label.FontFamilyProperty, prototype.FontFamily.Source);
+			formsStyle.Setters.Add(Label.FontAttributesProperty, ToAttributes(prototype.FontWeight));
+			formsStyle.Setters.Add(Label.LineBreakModeProperty, ToLineBreakMode(prototype.TextWrapping));
 
 			return formsStyle;
 		}
