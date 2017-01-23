@@ -8,6 +8,8 @@ namespace Xamarin.Forms.Platform.WinRT
 	internal sealed class WindowsPhoneResourcesProvider
 		: ISystemResourcesProvider
 	{
+		readonly TextBlock _prototype = new TextBlock();
+
 		public IResourceDictionary GetSystemResources()
 		{
 			return new ResourceDictionary
@@ -36,8 +38,6 @@ namespace Xamarin.Forms.Platform.WinRT
 
 			return formsStyle;
 		}
-
-		readonly TextBlock _prototype = new TextBlock();
 
 		static FontAttributes ToAttributes(FontWeight fontWeight)
 		{
