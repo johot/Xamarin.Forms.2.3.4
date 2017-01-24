@@ -164,6 +164,11 @@ namespace Xamarin.Forms.Platform.WinRT
 			throw new InvalidOperationException("RemovePage is not supported globally on Windows, please use a NavigationPage.");
 		}
 
+		public Task<T> ShowPopup<T>(Popup<T> popup)
+		{
+			throw new NotImplementedException();
+		}
+
 		void INavigation.InsertPageBefore(Page page, Page before)
 		{
 			throw new InvalidOperationException("InsertPageBefore is not supported globally on Windows, please use a NavigationPage.");
@@ -563,7 +568,7 @@ namespace Xamarin.Forms.Platform.WinRT
 		}
 
 		ActionSheetArguments _actionSheetOptions;
-		Popup _currentActionSheet;
+		Windows.UI.Xaml.Controls.Primitives.Popup _currentActionSheet;
 
 #if WINDOWS_UWP
 		async void OnPageActionSheet(Page sender, ActionSheetArguments options)
@@ -695,11 +700,11 @@ namespace Xamarin.Forms.Platform.WinRT
 				Children = { border }
 			};
 
-			var bgPopup = new Popup { Child = new Canvas { Width = size.Width, Height = size.Height, Background = new SolidColorBrush(new Windows.UI.Color { A = 128, R = 0, G = 0, B = 0 }) } };
+			var bgPopup = new Windows.UI.Xaml.Controls.Primitives.Popup { Child = new Canvas { Width = size.Width, Height = size.Height, Background = new SolidColorBrush(new Windows.UI.Color { A = 128, R = 0, G = 0, B = 0 }) } };
 
 			bgPopup.IsOpen = true;
 
-			_currentActionSheet = new Popup { ChildTransitions = new TransitionCollection { new PopupThemeTransition() }, IsLightDismissEnabled = true, Child = container };
+			_currentActionSheet = new Windows.UI.Xaml.Controls.Primitives.Popup { ChildTransitions = new TransitionCollection { new PopupThemeTransition() }, IsLightDismissEnabled = true, Child = container };
 
 			_currentActionSheet.Closed += (s, e) =>
 			{

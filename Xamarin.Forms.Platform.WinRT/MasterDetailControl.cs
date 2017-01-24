@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		Windows.UI.Xaml.Controls.ContentPresenter _masterPresenter;
 		Windows.UI.Xaml.Controls.ContentPresenter _detailPresenter;
-		Popup _popup;
+		Windows.UI.Xaml.Controls.Primitives.Popup _popup;
 		TextBlock _txbTitle;
 
 		public object DetailContent
@@ -109,7 +109,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			_txbTitle = GetTemplateChild("txbTitle") as TextBlock;
 			_grd = GetTemplateChild("grdToolbar") as Windows.UI.Xaml.Controls.Grid;
 
-			_popup = GetTemplateChild("popup") as Popup;
+			_popup = GetTemplateChild("popup") as Windows.UI.Xaml.Controls.Primitives.Popup;
 			if (_popup != null)
 				_popup.Closed += OnPopupClosed;
 

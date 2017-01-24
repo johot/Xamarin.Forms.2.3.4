@@ -195,6 +195,11 @@ namespace Xamarin.Forms.Platform.WinPhone
 			RemovePage(page, true);
 		}
 
+		public Task<T> ShowPopup<T>(Popup<T> popup)
+		{
+			throw new NotImplementedException();
+		}
+
 		SizeRequest IPlatform.GetNativeSize(VisualElement view, double widthConstraint, double heightConstraint)
 		{
 			// Hack around the fact that Canvas ignores the child constraints.
