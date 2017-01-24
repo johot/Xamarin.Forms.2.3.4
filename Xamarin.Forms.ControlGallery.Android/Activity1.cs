@@ -311,7 +311,7 @@ namespace Xamarin.Forms.ControlGallery.Android
 		public override void OnConfigurationChanged(Droid.Content.Res.Configuration newConfig)
 		{
 			// we're good
-			base.OnConfigurationChanged(newConfig);z
+			base.OnConfigurationChanged(newConfig);
 		}
 
 		[Export("Reset")]
