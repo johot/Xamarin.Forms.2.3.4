@@ -1,0 +1,58 @@
+<Type Name="Popup" FullName="Xamarin.Forms.Popup">
+  <TypeSignature Language="C#" Value="public class Popup : Xamarin.Forms.Popup&lt;Xamarin.Forms.PopupDismissed&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Popup extends Xamarin.Forms.Popup`1&lt;valuetype Xamarin.Forms.PopupDismissed&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Forms.Core</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Xamarin.Forms.Popup&lt;Xamarin.Forms.PopupDismissed&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">Xamarin.Forms.PopupDismissed</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Popup (Xamarin.Forms.View view, string title = null, Xamarin.Forms.View anchor = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Xamarin.Forms.View view, string title, class Xamarin.Forms.View anchor) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="view" Type="Xamarin.Forms.View" />
+        <Parameter Name="title" Type="System.String" />
+        <Parameter Name="anchor" Type="Xamarin.Forms.View" />
+      </Parameters>
+      <Docs>
+        <param name="view">To be added.</param>
+        <param name="title">To be added.</param>
+        <param name="anchor">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnLightDismissed">
+      <MemberSignature Language="C#" Value="protected override Xamarin.Forms.PopupDismissed OnLightDismissed ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance valuetype Xamarin.Forms.PopupDismissed OnLightDismissed() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Forms.PopupDismissed</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -163,6 +163,8 @@
       <Type Name="BaseMenuItem" Kind="Class" />
       <Type Name="Behavior" Kind="Class" />
       <Type Name="Behavior`1" DisplayName="Behavior&lt;T&gt;" Kind="Class" />
+      <Type Name="BinaryResult" Kind="Enumeration" />
+      <Type Name="BinaryResultPopup" Kind="Class" />
       <Type Name="BindableObject" Kind="Class" />
       <Type Name="BindableObjectExtensions" Kind="Class" />
       <Type Name="BindableProperty" Kind="Class" />
@@ -291,6 +293,7 @@
       <Type Name="IPlatform" Kind="Interface" />
       <Type Name="IPlatformElementConfiguration`2" DisplayName="IPlatformElementConfiguration&lt;TPlatform,TElement&gt;" Kind="Interface" />
       <Type Name="IPlatformEngine" Kind="Interface" />
+      <Type Name="IPopupView`1" DisplayName="IPopupView&lt;T&gt;" Kind="Interface" />
       <Type Name="IRegisterable" Kind="Interface" />
       <Type Name="IScrollViewController" Kind="Interface" />
       <Type Name="ISearchBarController" Kind="Interface" />
@@ -338,6 +341,7 @@
       <Type Name="NavigationEventArgs" Kind="Class" />
       <Type Name="NavigationMenu" Kind="Class" />
       <Type Name="NavigationPage" Kind="Class" />
+      <Type Name="On" Kind="Class" />
       <Type Name="OnIdiom`1" DisplayName="OnIdiom&lt;T&gt;" Kind="Class" />
       <Type Name="OnPlatform`1" DisplayName="OnPlatform&lt;T&gt;" Kind="Class" />
       <Type Name="OpenGLView" Kind="Class" />
@@ -351,6 +355,9 @@
       <Type Name="Point" Kind="Structure" />
       <Type Name="PointTypeConverter" Kind="Class" />
       <Type Name="PoppedToRootEventArgs" Kind="Class" />
+      <Type Name="Popup" Kind="Class" />
+      <Type Name="Popup`1" DisplayName="Popup&lt;T&gt;" Kind="Class" />
+      <Type Name="PopupDismissed" Kind="Structure" />
       <Type Name="ProgressBar" Kind="Class" />
       <Type Name="PropertyChangingEventArgs" Kind="Class" />
       <Type Name="PropertyChangingEventHandler" Kind="Delegate" />
@@ -476,9 +483,11 @@
       <Type Name="Entry" Kind="Class" />
       <Type Name="NavigationPage" Kind="Class" />
       <Type Name="Page" Kind="Class" />
+      <Type Name="Picker" Kind="Class" />
       <Type Name="StatusBarHiddenMode" Kind="Enumeration" />
       <Type Name="StatusBarTextColorMode" Kind="Enumeration" />
       <Type Name="UIStatusBarAnimation" Kind="Enumeration" />
+      <Type Name="UpdateMode" Kind="Enumeration" />
       <Type Name="VisualElement" Kind="Class" />
     </Namespace>
     <Namespace Name="Xamarin.Forms.PlatformConfiguration.WindowsSpecific">
@@ -1711,6 +1720,50 @@
           <summary>To be added.</summary>
         </Docs>
         <Link Type="Xamarin.Forms.PlatformConfiguration.iOSSpecific.Page" Member="M:Xamarin.Forms.PlatformConfiguration.iOSSpecific.Page.SetPrefersStatusBarHidden(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Page},Xamarin.Forms.PlatformConfiguration.iOSSpecific.StatusBarHiddenMode)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="SetUpdateMode">
+        <MemberSignature Language="C#" Value="public static Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker&gt; SetUpdateMode (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker&gt; config, Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode value);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.iOS, class Xamarin.Forms.Picker&gt; SetUpdateMode(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.iOS, class Xamarin.Forms.Picker&gt; config, valuetype Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode value) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker&gt;" RefType="this" />
+          <Parameter Name="value" Type="Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <param name="value">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.iOSSpecific.Picker" Member="M:Xamarin.Forms.PlatformConfiguration.iOSSpecific.Picker.SetUpdateMode(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker},Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Xamarin.Forms.IPlatformElementConfiguration`2" />
+      </Targets>
+      <Member MemberName="UpdateMode">
+        <MemberSignature Language="C#" Value="public static Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode UpdateMode (this Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker&gt; config);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode UpdateMode(class Xamarin.Forms.IPlatformElementConfiguration`2&lt;class Xamarin.Forms.PlatformConfiguration.iOS, class Xamarin.Forms.Picker&gt; config) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>Xamarin.Forms.PlatformConfiguration.iOSSpecific.UpdateMode</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="config" Type="Xamarin.Forms.IPlatformElementConfiguration&lt;Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker&gt;" RefType="this" />
+        </Parameters>
+        <Docs>
+          <param name="config">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Forms.PlatformConfiguration.iOSSpecific.Picker" Member="M:Xamarin.Forms.PlatformConfiguration.iOSSpecific.Picker.UpdateMode(Xamarin.Forms.IPlatformElementConfiguration{Xamarin.Forms.PlatformConfiguration.iOS,Xamarin.Forms.Picker})" />
       </Member>
     </ExtensionMethod>
     <ExtensionMethod>

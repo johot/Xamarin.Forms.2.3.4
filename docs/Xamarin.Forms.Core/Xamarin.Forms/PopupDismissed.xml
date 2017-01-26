@@ -1,0 +1,17 @@
+<Type Name="PopupDismissed" FullName="Xamarin.Forms.PopupDismissed">
+  <TypeSignature Language="C#" Value="public struct PopupDismissed" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit PopupDismissed extends System.ValueType" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Forms.Core</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members />
+</Type>

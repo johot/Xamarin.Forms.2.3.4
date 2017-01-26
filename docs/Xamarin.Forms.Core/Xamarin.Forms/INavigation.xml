@@ -385,5 +385,29 @@ Debug.WriteLine (Object.ReferenceEquals (modalPage, poppedPage)); //prints "true
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="ShowPopup&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;T&gt; ShowPopup&lt;T&gt; (Xamarin.Forms.Popup&lt;T&gt; popup);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;!!T&gt; ShowPopup&lt;T&gt;(class Xamarin.Forms.Popup`1&lt;!!T&gt; popup) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;T&gt;</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T" />
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="popup" Type="Xamarin.Forms.Popup&lt;T&gt;" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="popup">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
 </Type>
