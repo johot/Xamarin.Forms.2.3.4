@@ -26,6 +26,8 @@ namespace Xamarin.Forms
 
 		static bool? s_isiOS9OrNewer;
 
+		static bool? s_isiOS10OrNewer;
+
 		static Forms()
 		{
 			if (nevertrue)
@@ -41,6 +43,16 @@ namespace Xamarin.Forms
 				if (!s_isiOS9OrNewer.HasValue)
 					s_isiOS9OrNewer = UIDevice.CurrentDevice.CheckSystemVersion(9, 0);
 				return s_isiOS9OrNewer.Value;
+			}
+		}
+
+		internal static bool IsiOS10OrNewer
+		{
+			get
+			{
+				if (!s_isiOS10OrNewer.HasValue)
+					s_isiOS10OrNewer = UIDevice.CurrentDevice.CheckSystemVersion(10, 0);
+				return s_isiOS10OrNewer.Value;
 			}
 		}
 
