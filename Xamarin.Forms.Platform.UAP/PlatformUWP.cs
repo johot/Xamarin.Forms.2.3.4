@@ -134,9 +134,15 @@ namespace Xamarin.Forms.Platform.UWP
 			return bar;
 		}
 
-		Task<CommandBar> GetCommandBarAsync()
+		async Task<CommandBar> GetCommandBarAsync()
 		{
-			return GetToolbarProvider()?.GetCommandBarAsync();
+			IToolbarProvider provider = GetToolbarProvider();
+			if (provider == null)
+			{
+				return null;
+			}
+
+			return await provider.GetCommandBarAsync();
 		}
 
 		void UpdateBounds()
