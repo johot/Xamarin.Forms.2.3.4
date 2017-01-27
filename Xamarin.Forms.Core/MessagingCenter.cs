@@ -22,9 +22,9 @@ namespace Xamarin.Forms
 
 	public class MessagingCenter : IMessagingCenter
 	{
-		static readonly Lazy<MessagingCenter> s_instance = new Lazy<MessagingCenter>(() => new MessagingCenter());
+		static readonly MessagingCenter s_instance = new MessagingCenter();
 
-		public static IMessagingCenter Instance => s_instance.Value;
+		public static IMessagingCenter Instance => s_instance;
 
 		class Sender : Tuple<string, Type, Type>
 		{
