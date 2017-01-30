@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = ".repo", ".repo.shproj", "{31D1E28A-0EAE-4AC4-A023-B02E7A58A8FC}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "forms", "forms.shproj", "{31D1E28A-0EAE-4AC4-A023-B02E7A58A8FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{453F471B-9F4F-4431-85F8-FB7BA2035659}"
 	ProjectSection(SolutionItems) = preProject
@@ -33,10 +33,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Xaml.BuildTas
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mxbuild", "sub\mxbuild\mxbuild.shproj", "{2FDD0418-FA09-4556-B6ED-10E07C1F6DB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery", "src\Xamarin.Forms.ControlGallery\Xamarin.Forms.ControlGallery.csproj", "{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		sub\mxbuild\mxbuild.projitems*{2fdd0418-fa09-4556-b6ed-10e07c1f6db9}*SharedItemsImports = 13
-		.repo.projitems*{31d1e28a-0eae-4ac4-a023-b02e7a58a8fc}*SharedItemsImports = 13
+		forms.projitems*{31d1e28a-0eae-4ac4-a023-b02e7a58a8fc}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Android = Debug|Android
@@ -395,6 +397,54 @@ Global
 		{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}.Turkey|Win Tablet (x64).Build.0 = release|netstandard
 		{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}.Turkey|Win Universal.ActiveCfg = release|netstandard
 		{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}.Turkey|Win Universal.Build.0 = release|netstandard
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Android.ActiveCfg = debug|monoDroid
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Android.Build.0 = debug|monoDroid
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|IOS.ActiveCfg = debug|xamarin.ios
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|IOS.Build.0 = debug|xamarin.ios
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Portable.ActiveCfg = debug|dotnet
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Portable.Build.0 = debug|dotnet
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Phone.ActiveCfg = debug|wpa
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Phone.Build.0 = debug|wpa
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (arm).ActiveCfg = debug|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (arm).Build.0 = debug|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x32).ActiveCfg = debug|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x32).Build.0 = debug|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x64).ActiveCfg = debug|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x64).Build.0 = debug|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Universal.ActiveCfg = debug|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Universal.Build.0 = debug|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Android.ActiveCfg = release|monoDroid
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Android.Build.0 = release|monoDroid
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|IOS.ActiveCfg = release|xamarin.ios
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|IOS.Build.0 = release|xamarin.ios
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Portable.ActiveCfg = release|dotnet
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Portable.Build.0 = release|dotnet
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Phone.ActiveCfg = release|wpa
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Phone.Build.0 = release|wpa
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (arm).ActiveCfg = release|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (arm).Build.0 = release|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x32).ActiveCfg = release|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x32).Build.0 = release|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x64).ActiveCfg = release|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x64).Build.0 = release|win
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Universal.ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Universal.Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Android.ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Android.Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|IOS.ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|IOS.Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Portable.ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Portable.Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Phone.ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Phone.Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Tablet (arm).ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Tablet (arm).Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Tablet (x32).ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Tablet (x32).Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Tablet (x64).ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Tablet (x64).Build.0 = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Universal.ActiveCfg = release|uap
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Turkey|Win Universal.Build.0 = release|uap
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -409,5 +459,6 @@ Global
 		{5CC7C14B-C702-444A-9403-2DADF6BA8603} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{80707FB3-8C08-4369-B4BB-4053559EF2EA} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 		{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 	EndGlobalSection
 EndGlobal

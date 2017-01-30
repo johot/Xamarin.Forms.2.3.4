@@ -76,6 +76,9 @@
   </ImportGroup>
   <ItemGroup>
     <None Include="nuspec.props" />
+    <None Include="Xamarin.Forms.Xaml.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <!--
   
@@ -119,16 +122,16 @@
     <Reference Include="Microsoft.Build" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
-    <ProjectReference Include="..\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj">
+    <NugetProjectReference Include="..\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj">
       <Project>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</Project>
       <Name>Xamarin.Forms.Xaml</Name>
       <Platform>dotnet</Platform>
-    </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
       <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
       <Name>Xamarin.Forms</Name>
       <Platform>dotnet</Platform>
-    </ProjectReference>
+    </NugetProjectReference>
   </ItemGroup>
   <!--
 

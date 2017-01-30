@@ -892,11 +892,11 @@
     <SelfReference Include="$(WindowsPhoneMobileSubPlatformId)" />
     <SelfReference Include="$(WindowsTabletMobileSubPlatformId)" />
     <SelfReference Include="$(WindowsUniversalMobileSubPlatformId)" />
-    <ProjectReference Include="..\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj">
+    <NugetProjectReference Include="..\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj">
       <Project>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</Project>
       <Platform>$(PortablePlatformId)</Platform>
       <Name>Xamarin.Forms.BuildTasks</Name>
-    </ProjectReference>
+    </NugetProjectReference>
     <!--
       content
     -->
@@ -966,13 +966,13 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
   </PropertyGroup>
   <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
-    <Import Project="$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props" />
+    <Import Project="$(NugetAndroidSupportAnimatedVectorDrawableShim)" />
+    <Import Project="$(NugetAndroidSupportDesignShim)" />
+    <Import Project="$(NugetAndroidSupportV4Shim)" />
+    <Import Project="$(NugetAndroidSupportV7AppCompatShim)" />
+    <Import Project="$(NugetAndroidSupportV7CardViewShim)" />
+    <Import Project="$(NugetAndroidSupportV7RecyclerViewShim)" />
+    <Import Project="$(NugetAndroidSupportVectorDrawableShim)" />
   </ImportGroup>
   <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <Reference Include="Mono.Android" />

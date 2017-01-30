@@ -11,13 +11,6 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
   <!--
-    ======
-    SOURCE
-    ======
-  -->
-  <ItemGroup>
-  </ItemGroup>
-  <!--
   
     Hierarchy
   -->
@@ -66,13 +59,6 @@
       <Link>Properties\BuildInfo.t.cs</Link>
       <CompileOutput>BuildInfo.cs</CompileOutput>
     </None>
-    <Compile Include="$(ExtPackDir)\GlobalPackageInfo.cs">
-      <Link>Properties\GlobalPackageInfo.cs</Link>
-      <IsMxbuildTemplate>true</IsMxbuildTemplate>
-    </Compile>
-    <Compile Include="$(ExtPackDir)PackageInfo.cs">
-      <Link>Properties\PackageInfo.cs</Link>
-    </Compile>
   </ItemGroup>
   <!--
   

@@ -80,7 +80,7 @@ namespace Xamarin.Forms.Build.Tasks
 			}
 
 			var rootClass = root.Attributes["Class", "http://schemas.microsoft.com/winfx/2006/xaml"] ??
-			                root.Attributes["Class", "http://schemas.microsoft.com/winfx/2009/xaml"];
+							root.Attributes["Class", "http://schemas.microsoft.com/winfx/2009/xaml"];
 			if (rootClass == null)
 			{
 				rootType = null;
@@ -130,8 +130,12 @@ namespace Xamarin.Forms.Build.Tasks
 				CustomAttributes =
 				{
 					new CodeAttributeDeclaration(new CodeTypeReference($"global::{typeof (GeneratedCodeAttribute).FullName}"),
-						new CodeAttributeArgument(new CodePrimitiveExpression("Xamarin.Forms.Build.Tasks.XamlG")),
-						new CodeAttributeArgument(new CodePrimitiveExpression("0.0.0.0")))
+#if !MXBUILD
+					new CodeAttributeArgument(new CodePrimitiveExpression("Xamarin.Forms.Build.Tasks.XamlG")),
+#else
+					new CodeAttributeArgument(new CodePrimitiveExpression("Xamarin.Forms.Xaml.BuildTasks.XamlG")),
+#endif
+					new CodeAttributeArgument(new CodePrimitiveExpression("0.0.0.0")))
 				}
 			};
 			declType.Members.Add(initcomp);
@@ -152,7 +156,11 @@ namespace Xamarin.Forms.Build.Tasks
 					CustomAttributes =
 					{
 						new CodeAttributeDeclaration(new CodeTypeReference($"global::{typeof (GeneratedCodeAttribute).FullName}"),
+#if !MXBUILD
 							new CodeAttributeArgument(new CodePrimitiveExpression("Xamarin.Forms.Build.Tasks.XamlG")),
+#else
+							new CodeAttributeArgument(new CodePrimitiveExpression("Xamarin.Forms.Xaml.BuildTasks.XamlG")),
+#endif
 							new CodeAttributeArgument(new CodePrimitiveExpression("0.0.0.0")))
 					}
 				};
@@ -205,7 +213,7 @@ namespace Xamarin.Forms.Build.Tasks
 						continue;
 
 					XmlAttribute attr = node.Attributes["Name", "http://schemas.microsoft.com/winfx/2006/xaml"] ??
-					                    node.Attributes["Name", "http://schemas.microsoft.com/winfx/2009/xaml"];
+										node.Attributes["Name", "http://schemas.microsoft.com/winfx/2009/xaml"];
 					XmlAttribute typeArgsAttr = node.Attributes["x:TypeArguments"];
 					var typeArgsList = typeArgsAttr == null ? null : typeArgsAttr.Value.Split(',').ToList();
 					string name = attr.Value;

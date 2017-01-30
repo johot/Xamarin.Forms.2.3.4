@@ -1,6 +1,10 @@
 using Android.Runtime;
 
+#if MXBUILD
+[assembly: ResourceDesigner("Xamarin.Forms.Resource", IsApplication = false)]
+#else
 [assembly: ResourceDesigner("Xamarin.Forms.Platform.Android.Resource", IsApplication = false)]
+#endif
 
 namespace Xamarin.Forms.Platform.Android
 {

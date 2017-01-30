@@ -108,14 +108,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|dotnet' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|dotnet' " />
   <ImportGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <Import Project="$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\shim.props" />
-    <Import Project="$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\shim.props" />
+    <Import Project="$(NugetNewtonsoftJsonShim)" />
+    <Import Project="$(NugetMicrosoftSystemShim)" />
   </ImportGroup>
   <ItemGroup Condition=" '$(LibraryPlatform)' == '$(DotNetLibraryPlatformId)' ">
-    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Xamarin.Forms</Name>
-    </ProjectReference>
+    </NugetProjectReference>
   </ItemGroup>  
   <!--
 

@@ -44,6 +44,8 @@
     <Compile Include="winrt\tablet\MapRenderer.cs" />
     <Compile Include="winrt\uap\Properties\AssemblyInfo.cs" />
     <None Include="android\.dir.props" />
+    <None Include="build\Xamarin.Forms.Maps.props" />
+    <None Include="build\Xamarin.Forms.Maps.targets" />
     <None Include="ios\.dir.props" />
     <None Include="portable\.dir.props" />
     <None Include="winrt\.dir.props" />
@@ -71,10 +73,10 @@
     <None Include="winrt\uap\project.lock.json" />
     <!--<None Include="winrt\uap\project.lock.json" />-->
     <!--references-->
-    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Xamarin.Forms</Name>
-    </ProjectReference>
+    </NugetProjectReference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -171,11 +173,6 @@
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Xml.Linq" />
-    <ProjectReference Include="..\Xamarin.Forms.Bindings\Xamarin.Forms.Bindings.csproj">
-      <Project>{3B72465B-ACAE-43AE-9327-10F372FE5F80}</Project>
-      <Platform>$(AndroidBindingsLibraryPlatformId)</Platform>
-      <Name>Xamarin.Forms.Bindings</Name>
-    </ProjectReference>
   </ItemGroup>
   <!--
   

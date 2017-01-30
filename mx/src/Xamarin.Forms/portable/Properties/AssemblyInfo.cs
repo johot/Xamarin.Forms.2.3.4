@@ -34,6 +34,7 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.MacOS")]
 #else
 [assembly: InternalsVisibleTo("Xamarin.Forms.Portable")]
+[assembly: InternalsVisibleTo("Xamarin.Forms.ControlGallery")]
 #endif
 [assembly: InternalsVisibleTo("iOSUnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Controls")]

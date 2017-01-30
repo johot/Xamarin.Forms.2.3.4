@@ -35,7 +35,11 @@ namespace Xamarin.Forms.Platform.Android
 			return Device.GetAssemblies().FirstOrDefault(assembly => assembly.GetName().Name == assemblyName);
 		}
 
+#if MXBUILD
+        const string AppLinksAssemblyName = "Xamarin.Forms.AppLinks";
+#else
 		const string AppLinksAssemblyName = "Xamarin.Forms.Platform.Android.AppLinks";
-		const string AppLinksClassName = "AndroidAppLinks";
+#endif
+        const string AppLinksClassName = "AndroidAppLinks";
 	}
 }

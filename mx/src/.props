@@ -29,13 +29,73 @@
 
   <!--nuget versions-->
   <PropertyGroup>
+    <NugetXamarinFormsVersion>2.3.1.110-pre1</NugetXamarinFormsVersion>
+    <!--<NugetXamarinFormsBuildTasksVersion>2.3.1.110-pre1</NugetXamarinFormsBuildTasksVersion>-->
     <NugetMonoCecilVersion>0.9.6.1</NugetMonoCecilVersion>
+    <NugetPclStorageVersion>1.0.2</NugetPclStorageVersion>
     <NugetXamarinFormsDesignSupportVersion>1.0.14-pre</NugetXamarinFormsDesignSupportVersion>
     <NugetXamarinAndroidSupportVersion>23.3.0</NugetXamarinAndroidSupportVersion>
+    <NugetXamarinInsightsVersion>1.12.3</NugetXamarinInsightsVersion>
     <NugetGooglePlayServicesVersion>29.0.0.1</NugetGooglePlayServicesVersion>
     <NugetNewtonsoftJsonVersion>6.0.4</NugetNewtonsoftJsonVersion>
     <NugetMicrosoftSystemVersion>2.2.29</NugetMicrosoftSystemVersion>
     <NugetMicrosoftAzureVersion>2.0.1</NugetMicrosoftAzureVersion>
+    <NugetXamarinFormsXamlVersion>0.0.30</NugetXamarinFormsXamlVersion>
+  </PropertyGroup>
+  
+  <!--nuget paths-->
+  <PropertyGroup>
+    <!--Xamarin.Forms-->
+    <NugetXamarinFormsPortableShim>$(PkgDir)Xamarin.Forms.$(NugetXamarinFormsVersion)\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\shim.props</NugetXamarinFormsPortableShim>
+    <NugetXamarinFormsAndroidShim>$(PkgDir)Xamarin.Forms.$(NugetXamarinFormsVersion)\lib\MonoAndroid10\shim.props</NugetXamarinFormsAndroidShim>
+    <NugetXamarinFormsIosShim>$(PkgDir)Xamarin.Forms.$(NugetXamarinFormsVersion)\lib\Xamarin.iOS10\shim.props</NugetXamarinFormsIosShim>
+    <NugetXamarinFormsUapShim>$(PkgDir)Xamarin.Forms.$(NugetXamarinFormsVersion)\lib\uap10.0\shim.props</NugetXamarinFormsUapShim>
+    <NugetXamarinFormsWinShim>$(PkgDir)Xamarin.Forms.$(NugetXamarinFormsVersion)\lib\win81\shim.props</NugetXamarinFormsWinShim>
+    <NugetXamarinFormsWpaShim>$(PkgDir)Xamarin.Forms.$(NugetXamarinFormsVersion)\lib\wpa81\shim.props</NugetXamarinFormsWpaShim>
+    
+    <!--Xamarin.Forms.BuildTasks-->
+    <!--<NugetXamarinFormsBuildTasksShim>$(PkgDir)Xamarin.Forms.BuildTasks.$(NugetXamarinFormsBuildTasksVersion)\build\shim.props</NugetXamarinFormsBuildTasksShim>-->
+
+    <!--PCLStorage-->
+    <NugetPclStorageShim>$(PkgDir)PCLStorage.$(NugetPclStorageVersion)\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\shim.props</NugetPclStorageShim>
+
+    <!--Xamarin.Forms.Xaml-->
+    <NugetXamarinFormsXamlShim>$(PkgDir)Xamarin.Forms.Xaml.$(NugetXamarinFormsXamlVersion)\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\shim.props</NugetXamarinFormsXamlShim>
+    
+    <!--Xamarin.Insights-->
+    <NugetXamarinInsightsShim>$(PkgDir)Xamarin.Insights.$(NugetXamarinInsightsVersion)\lib\portable-win+net45+wp80+windows8+wpa+MonoAndroid10+MonoTouch10\shim.props</NugetXamarinInsightsShim>
+    
+    <!--Nunit-->
+    <NugetNunitShim>$(PkgDir)NUnit.$(NugetNunitVersion)\lib\shim.props</NugetNunitShim>
+
+    <!--Xamarin.UITest-->
+    <XamarinUITestShim>$(PkgDir)Xamarin.UITest.$(NugetXamarinUITestVersion)\lib\shim.props</XamarinUITestShim>
+
+    <!--Xamarin.TestCloud.Agent-->
+    <XamarinTestCloudAgentUnifiedShim>$(PkgDir)Xamarin.TestCloud.Agent.$(NugetXamarinTestCloudAgentVersion)\lib\Xamarin.iOS10\shim.props</XamarinTestCloudAgentUnifiedShim>
+
+    <!--Xamarin.GooglePlayServices-->
+    <NugetGooglePlayServicesBaseShim>$(PkgDir)Xamarin.GooglePlayServices.Base.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props</NugetGooglePlayServicesBaseShim>
+    <NugetGooglePlayServicesBasementShim>$(PkgDir)Xamarin.GooglePlayServices.Basement.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props</NugetGooglePlayServicesBasementShim>
+    <NugetGooglePlayServicesMapShim>$(PkgDir)Xamarin.GooglePlayServices.Maps.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props</NugetGooglePlayServicesMapShim>
+    <NugetGooglePlayAppIndexingShim>$(PkgDir)Xamarin.GooglePlayServices.AppIndexing.$(NugetGooglePlayServicesVersion)\lib\MonoAndroid41\shim.props</NugetGooglePlayAppIndexingShim>
+
+    <!--Xamarin.Android.Support.*-->
+    <NugetAndroidSupportAnimatedVectorDrawableShim>$(PkgDir)Xamarin.Android.Support.Animated.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportAnimatedVectorDrawableShim>
+    <NugetAndroidSupportDesignShim>$(PkgDir)Xamarin.Android.Support.Design.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid43\shim.props</NugetAndroidSupportDesignShim>
+    <NugetAndroidSupportV4Shim>$(PkgDir)Xamarin.Android.Support.v4.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportV4Shim>
+    <NugetAndroidSupportV7AppCompatShim>$(PkgDir)Xamarin.Android.Support.v7.AppCompat.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportV7AppCompatShim>
+    <NugetAndroidSupportV7CardViewShim>$(PkgDir)Xamarin.Android.Support.v7.CardView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportV7CardViewShim>
+    <NugetAndroidSupportV7MediaRouterShim>$(PkgDir)Xamarin.Android.Support.v7.MediaRouter.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportV7MediaRouterShim>
+    <NugetAndroidSupportV7RecyclerViewShim>$(PkgDir)Xamarin.Android.Support.v7.RecyclerView.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportV7RecyclerViewShim>
+    <NugetAndroidSupportVectorDrawableShim>$(PkgDir)Xamarin.Android.Support.Vector.Drawable.$(NugetXamarinAndroidSupportVersion)\lib\MonoAndroid403\shim.props</NugetAndroidSupportVectorDrawableShim>
+
+    <!--NewtonsoftJson-->
+    <NugetNewtonsoftJsonShim>$(PkgDir)Newtonsoft.Json.$(NugetNewtonsoftJsonVersion)\lib\portable-net45+wp80+win8+wpa81\shim.props</NugetNewtonsoftJsonShim>
+    
+    <!--Microsoft-->
+    <NugetMicrosoftSystemShim>$(PkgDir)Microsoft.Net.Http.$(NugetMicrosoftSystemVersion)\lib\portable-net40+sl4+win8+wp71+wpa81\shim.props</NugetMicrosoftSystemShim>
+    <NugetMicrosoftAzureMobileShim>$(PkgDir)Microsoft.Azure.Mobile.Client.$(NugetMicrosoftAzureVersion)\lib\portable-win+net45+wp8+wpa81+monotouch+monoandroid\shim.props</NugetMicrosoftAzureMobileShim>
   </PropertyGroup>
 
   <!--msbuild (remove if\when mxbuild adopted)-->
