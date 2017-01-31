@@ -13,35 +13,13 @@
   <Import Project="$(ExtXfDir)\xf.app.hierarchy.props" />
   <!--
   
-    Herierarchy
-  -->
-  <ItemGroup Condition="false">
-    <!--all E { mobile }-->
-    <PlatformGroup Include="$(AllPlatformId)">
-      <Platforms>$(MobilePlatformId)</Platforms>
-    </PlatformGroup>
-    <!--mobile E { portable }-->
-    <PlatformGroup Include="$(MobilePlatformId)">
-      <Platforms>$(PortablePlatformId)</Platforms>
-    </PlatformGroup>
-    <!--portable E { dotnet }-->
-    <PlatformGroup Include="$(PortablePlatformId)">
-      <Platforms>$(DotNetLibraryPlatformId)</Platforms>
-    </PlatformGroup>
-    <!--dotnet E { dotnet-259 }-->
-    <PlatformGroup Include="$(DotNetLibraryPlatformId)">
-      <Platforms>$(DotNetLibraryPlatformId-259)</Platforms>
-    </PlatformGroup>
-  </ItemGroup>
-  <!--
-  
     Universal
   -->
   <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
   <PropertyGroup>
     <ProjectGuid>{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}</ProjectGuid>
     <AssemblyName>Xamarin.Forms.ControlGallery</AssemblyName>
-    <RootNamespace>Xamarin.Forms.Controls</RootNamespace>
+    <RootNamespace>Xamarin.Forms.ControlGallery</RootNamespace>
     <NoWarn>0114;0108;0109;4014;0649;0169;0472;0414;0168;0219;0429</NoWarn>
   </PropertyGroup>
   <ImportGroup>
@@ -137,9 +115,19 @@
   -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|xamarin.ios' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
+  <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <CodesignEntitlements/>
+  </PropertyGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="AdvancedColorPicker">
+      <HintPath>..\Components\advancedcolorpicker-2.0\lib\ios-unified\AdvancedColorPicker.dll</HintPath>
+    </Reference>
   </ItemGroup>
+  <ImportGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
+    <Import Project="$(NugetXamarinInsightIosShim)" />
+    <Import Project="$(XamarinTestCloudAgentUnifiedShim)" />
+  </ImportGroup>
   <!--
   
     Windows
@@ -191,6 +179,11 @@
     Source
   -->
   <ItemGroup>
+    <Compile Include="ios\AppDelegate.cs" />
+    <Compile Include="ios\BrokenNativeControl.cs" />
+    <Compile Include="ios\CustomRenderers.cs" />
+    <Compile Include="ios\Main.cs" />
+    <Compile Include="ios\Properties\AssemblyInfo.cs" />
     <Compile Include="issues\AddingMultipleItemsListView.cs" />
     <Compile Include="issues\AppBarIconColors.cs" />
     <Compile Include="issues\Bugzilla21177.cs" />
@@ -1141,11 +1134,17 @@
     <None Include="android\app.config" />
     <None Include="android\packages.config" />
     <None Include="android\Properties\MapsKey.cs.blank" />
+    <None Include="ios\.dir.props" />
+    <None Include="ios\app.config" />
+    <None Include="ios\move_slider_one_right_ios6_iphone.base64" />
+    <None Include="ios\move_slider_three_right_ios6_iphone.base64" />
+    <None Include="ios\move_slider_two_right_ios6_iphone.base64" />
+    <None Include="ios\packages.config" />
+    <None Include="Resources\.dir.props" />
     <None Include="Resources\layout\NativeAndroidCell.axml" />
     <None Include="Resources\layout\NativeAndroidListViewCell.axml" />
     <None Include="Resources\layout\Tabbar.axml" />
     <None Include="Resources\layout\Toolbar.axml" />
-    
     <Compile Include="android\Properties\MapsKey.cs" />
     <Compile Include="android\Activity1.cs" />
     <Compile Include="android\BrokenNativeControl.cs" />
@@ -1156,12 +1155,49 @@
     <AndroidAsset Include="android\Assets\default.css" />
     <AndroidAsset Include="android\Assets\local.html" />
     <AndroidAsset Include="android\Assets\WebImages\XamarinLogo.png" />
+    <Content Include="Info.plist" />
+    <Content Include="ios\bank%402x.png" />
+    <Content Include="ios\bank.png" />
+    <Content Include="ios\calculator%402x.png" />
+    <Content Include="ios\calculator.png" />
+    <Content Include="ios\coffee%402x.png" />
+    <Content Include="ios\cover1.jpg" />
+    <Content Include="ios\cover1small.jpg" />
+    <Content Include="ios\crimson.jpg" />
+    <Content Include="ios\crimsonsmall.jpg" />
+    <Content Include="ios\Default%402x.png" />
+    <BundleResource Include="ios\Default-568h%402x.png" />
+    <BundleResource Include="ios\Default-667h%402x.png" />
+    <BundleResource Include="ios\default.css" />
+    <Content Include="ios\Entitlements.plist" />
+    <Content Include="ios\Goobuntu-icon.png" />
+    <BundleResource Include="ios\Images\FlowerBuds%402x.jpg" />
+    <BundleResource Include="ios\Images\FlowerBuds.jpg" />
+    <BundleResource Include="ios\Images\Fruits%402x.jpg" />
+    <BundleResource Include="ios\Images\Fruits.jpg" />
+    <BundleResource Include="ios\Images\Legumes%402x.jpg" />
+    <BundleResource Include="ios\Images\Legumes.jpg" />
+    <BundleResource Include="ios\Images\Vegetables%402x.jpg" />
+    <BundleResource Include="ios\Images\Vegetables.jpg" />
+    <Content Include="ios\Intranet-icon.png" />
+    <BundleResource Include="ios\local.html" />
+    <Content Include="ios\menuIcon%402x.png" />
+    <Content Include="ios\menuIcon.png" />
+    <Content Include="ios\oasis.jpg" />
+    <BundleResource Include="ios\oasissmall.jpg" />
+    <BundleResource Include="ios\photo.jpg" />
+    <Content Include="ios\seth%402x.png" />
+    <Content Include="ios\seth.png" />
+    <Content Include="ios\settings%402x.png" />
+    <BundleResource Include="ios\test.jpg" />
+    <BundleResource Include="ios\toolbar_close.png" />
+    <BundleResource Include="ios\WebImages\XamarinLogo.png" />
     <Content Include="Resources\AboutResources.txt" />
     <Compile Include="Resources\Resource.Designer.cs" />
-    <AndroidResource Include="Resources\layout\Tabbar.axml" >
+    <AndroidResource Include="Resources\layout\Tabbar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Toolbar.axml" >
+    <AndroidResource Include="Resources\layout\Toolbar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\NativeAndroidCell.axml" />
@@ -1196,4 +1232,5 @@
   -->
   <Import Project="*\.dir.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+
 </Project>

@@ -308,8 +308,8 @@ namespace Xamarin.Forms.ControlGallery.Android
 
 		protected override void OnCreate (Bundle bundle)
 		{
-			ToolbarResource = Xamarin.Forms.Controls.Resource.Layout.Toolbar;
-			TabLayoutResource = Xamarin.Forms.Controls.Resource.Layout.Tabbar;
+			ToolbarResource = Resource.Layout.Toolbar;
+			TabLayoutResource = Resource.Layout.Tabbar;
 
 			base.OnCreate (bundle);
 

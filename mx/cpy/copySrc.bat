@@ -105,7 +105,7 @@ xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Android\*.blank               %
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Android\*.txt                 %srcDir%Xamarin.Forms.ControlGallery\android\               /EXCLUDE:%~dp0excludeObjBin.txt
 
 rmdir /s/q %srcDir%Xamarin.Forms.ControlGallery\Resources
-move %srcDir%Xamarin.Forms.ControlGallery\android\Resources %srcDir%Xamarin.Forms.ControlGallery\Resources
+move %srcDir%Xamarin.Forms.ControlGallery\android\Resources                    %srcDir%Xamarin.Forms.ControlGallery\Resources
 
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.cs                      %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.jpg                     %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
@@ -115,6 +115,7 @@ xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.html                    %
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.css                     %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.plist                   %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.base64                  %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
+move /y %srcDir%Xamarin.Forms.ControlGallery\ios\info.plist                    %srcDir%Xamarin.Forms.ControlGallery\
 
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Windows\*.cs                  %srcDir%Xamarin.Forms.ControlGallery\windows\tablet\        /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Windows\*.appxmanifest        %srcDir%Xamarin.Forms.ControlGallery\windows\tablet\        /EXCLUDE:%~dp0excludeObjBin.txt
