@@ -212,6 +212,7 @@ namespace Xamarin.Forms.Controls
 				}		
 			};
 #endif
+			SetValue(Accessibility.NameProperty, "SwapRoot");
 		}
 	}
 
@@ -219,50 +220,73 @@ namespace Xamarin.Forms.Controls
 	{
 		public CorePageView (Page rootPage, NavigationBehavior navigationBehavior = NavigationBehavior.PushAsync)
 		{
-			var pages = new List<Page> {
-				new PlatformSpecificsGallery() {Title = "Platform Specifics"},
-				new NativeBindingGalleryPage {Title = "Native Binding Controls Gallery"},
-				new XamlNativeViews {Title = "Xaml Native Views Gallery"},
-				new AppLinkPageGallery {Title = "App Link Page Gallery"},
-				new NestedNativeControlGalleryPage {Title = "Nested Native Controls Gallery"},
-				new CellForceUpdateSizeGalleryPage {Title = "Cell Force Update Size Gallery"},
-				new AppearingGalleryPage {Title = "Appearing Gallery"},
-				new EntryCoreGalleryPage { Title = "Entry Gallery" },
-				new NavBarTitleTestPage {Title = "Titles And Navbar Windows"},
-				new PanGestureGalleryPage {Title = "Pan gesture Gallery"},
-				new PinchGestureTestPage {Title = "Pinch gesture Gallery"},
-				new AutomationIdGallery { Title ="AutomationID Gallery" },
-				new LayoutPerformanceGallery {Title = "Layout Perf Gallery"},
-				new ListViewSelectionColor { Title = "ListView SelectionColor Gallery" },
-				new AlertGallery { Title = "DisplayAlert Gallery" },
-				new ToolbarItems { Title = "ToolbarItems Gallery" },
-				new ActionSheetGallery { Title = "ActionSheet Gallery" }, 
-				new ActivityIndicatorCoreGalleryPage { Title = "ActivityIndicator Gallery" },
-				new BehaviorsAndTriggers { Title = "BehaviorsTriggers Gallery" },
-				new ContextActionsGallery { Title = "ContextActions List Gallery"},
-				new ContextActionsGallery (tableView: true) { Title = "ContextActions Table Gallery"},
-				new CoreBoxViewGalleryPage { Title = "BoxView Gallery" },
-				new ButtonCoreGalleryPage { Title = "Button Gallery" },
-				new DatePickerCoreGalleryPage { Title = "DatePicker Gallery" },
-				new EditorCoreGalleryPage { Title = "Editor Gallery" },
-				new FrameCoreGalleryPage { Title = "Frame Gallery" },
-				new ImageCoreGalleryPage { Title = "Image Gallery" },
-				new KeyboardCoreGallery { Title = "Keyboard Gallery" },
-				new LabelCoreGalleryPage { Title = "Label Gallery" },
-				new ListViewCoreGalleryPage { Title = "ListView Gallery" },
-				new OpenGLViewCoreGalleryPage { Title = "OpenGLView Gallery" },
-				new PickerCoreGalleryPage { Title = "Picker Gallery" },
-				new ProgressBarCoreGalleryPage { Title = "ProgressBar Gallery" },
-				new ScrollGallery { Title = "ScrollView Gallery" }, 
-				new ScrollGallery(ScrollOrientation.Horizontal) { Title = "ScrollView Gallery Horizontal" },
-				new ScrollGallery(ScrollOrientation.Both) { Title = "ScrollView Gallery 2D" },
-				new SearchBarCoreGalleryPage { Title = "SearchBar Gallery" },
-				new SliderCoreGalleryPage { Title = "Slider Gallery" },
-				new StepperCoreGalleryPage { Title = "Stepper Gallery" },
-				new SwitchCoreGalleryPage { Title = "Switch Gallery" },
-				new TableViewCoreGalleryPage { Title = "TableView Gallery" },
-				new TimePickerCoreGalleryPage { Title = "TimePicker Gallery" },
-				new WebViewCoreGalleryPage { Title = "WebView Gallery" },
+			public GalleryPageFactory(Func<Page> create, string title)
+			{
+				Realize = () =>
+				{
+					var p = create();
+					p.Title = title;
+					return p;
+				};
+			
+				Title = title;
+			}
+
+			public Func<Page> Realize { get; set; }
+			public string Title { get; set; }
+
+			public override string ToString()
+			{	
+				// a11y: let Narrator read a friendly string instead of the default ToString()
+				return Title;
+			}
+		}
+
+		List<GalleryPageFactory> _pages = new List<GalleryPageFactory> {
+				new GalleryPageFactory(() => new AccessibilityGallery(), "Accessibility"),
+				new GalleryPageFactory(() => new PlatformSpecificsGallery(), "Platform Specifics"),
+				new GalleryPageFactory(() => new NativeBindingGalleryPage(), "Native Binding Controls Gallery"),
+				new GalleryPageFactory(() => new XamlNativeViews(), "Xaml Native Views Gallery"),
+				new GalleryPageFactory(() => new AppLinkPageGallery(), "App Link Page Gallery"),
+				new GalleryPageFactory(() => new NestedNativeControlGalleryPage(), "Nested Native Controls Gallery"),
+				new GalleryPageFactory(() => new CellForceUpdateSizeGalleryPage(), "Cell Force Update Size Gallery"),
+				new GalleryPageFactory(() => new AppearingGalleryPage(), "Appearing Gallery"),
+				new GalleryPageFactory(() => new EntryCoreGalleryPage(), "Entry Gallery"),
+				new GalleryPageFactory(() => new NavBarTitleTestPage(), "Titles And Navbar Windows"),
+				new GalleryPageFactory(() => new PanGestureGalleryPage(), "Pan gesture Gallery"),
+				new GalleryPageFactory(() => new PinchGestureTestPage(), "Pinch gesture Gallery"),
+				new GalleryPageFactory(() => new AutomationIdGallery(), "AutomationID Gallery"),
+				new GalleryPageFactory(() => new LayoutPerformanceGallery(), "Layout Perf Gallery"),
+				new GalleryPageFactory(() => new ListViewSelectionColor(), "ListView SelectionColor Gallery"),
+				new GalleryPageFactory(() => new AlertGallery(), "DisplayAlert Gallery"),
+				new GalleryPageFactory(() => new ToolbarItems(), "ToolbarItems Gallery"),
+				new GalleryPageFactory(() => new ActionSheetGallery(), "ActionSheet Gallery"),
+				new GalleryPageFactory(() => new ActivityIndicatorCoreGalleryPage(), "ActivityIndicator Gallery"),
+				new GalleryPageFactory(() => new BehaviorsAndTriggers(), "BehaviorsTriggers Gallery"),
+				new GalleryPageFactory(() => new ContextActionsGallery(), "ContextActions List Gallery"),
+				new GalleryPageFactory(() => new ContextActionsGallery (tableView: true), "ContextActions Table Gallery"),
+				new GalleryPageFactory(() => new CoreBoxViewGalleryPage(), "BoxView Gallery"),
+				new GalleryPageFactory(() => new ButtonCoreGalleryPage(), "Button Gallery"),
+				new GalleryPageFactory(() => new DatePickerCoreGalleryPage(), "DatePicker Gallery"),
+				new GalleryPageFactory(() => new EditorCoreGalleryPage(), "Editor Gallery"),
+				new GalleryPageFactory(() => new FrameCoreGalleryPage(), "Frame Gallery"),
+				new GalleryPageFactory(() => new ImageCoreGalleryPage(), "Image Gallery"),
+				new GalleryPageFactory(() => new KeyboardCoreGallery(), "Keyboard Gallery"),
+				new GalleryPageFactory(() => new LabelCoreGalleryPage(), "Label Gallery"),
+				new GalleryPageFactory(() => new ListViewCoreGalleryPage(), "ListView Gallery"),
+				new GalleryPageFactory(() => new OpenGLViewCoreGalleryPage(), "OpenGLView Gallery"),
+				new GalleryPageFactory(() => new PickerCoreGalleryPage(), "Picker Gallery"),
+				new GalleryPageFactory(() => new ProgressBarCoreGalleryPage(), "ProgressBar Gallery"),
+				new GalleryPageFactory(() => new ScrollGallery(), "ScrollView Gallery"),
+				new GalleryPageFactory(() => new ScrollGallery(ScrollOrientation.Horizontal), "ScrollView Gallery Horizontal"),
+				new GalleryPageFactory(() => new ScrollGallery(ScrollOrientation.Both), "ScrollView Gallery 2D"),
+				new GalleryPageFactory(() => new SearchBarCoreGalleryPage(), "SearchBar Gallery"),
+				new GalleryPageFactory(() => new SliderCoreGalleryPage(), "Slider Gallery"),
+				new GalleryPageFactory(() => new StepperCoreGalleryPage(), "Stepper Gallery"),
+				new GalleryPageFactory(() => new SwitchCoreGalleryPage(), "Switch Gallery"),
+				new GalleryPageFactory(() => new TableViewCoreGalleryPage(), "TableView Gallery"),
+				new GalleryPageFactory(() => new TimePickerCoreGalleryPage(), "TimePicker Gallery"),
+				new GalleryPageFactory(() => new WebViewCoreGalleryPage(), "WebView Gallery"),
 				//pages
  				new RootContentPage ("Content") { Title = "RootPages Gallery" },
 				new MasterDetailPageTabletPage { Title = "MasterDetailPage Tablet Page" },
@@ -348,6 +372,8 @@ namespace Xamarin.Forms.Controls
 
 				SelectedItem = null;
 			};
+
+			SetValue(Accessibility.NameProperty, "Core Pages");
 		}
 
 		NavigationBehavior navigationBehavior;

@@ -293,6 +293,10 @@ namespace Xamarin.Forms.Platform.Android
 			}
 		}
 
+		void IVisualElementRenderer.SetLabelFor(int? id)
+		{
+		}
+
 		void UpdateBackgroundColor()
 		{
 			SetBackgroundColor(Element.BackgroundColor.ToAndroid(Color.Transparent));

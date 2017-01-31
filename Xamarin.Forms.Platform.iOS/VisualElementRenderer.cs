@@ -24,6 +24,11 @@ namespace Xamarin.Forms.Platform.iOS
 		readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
 
 		readonly PropertyChangedEventHandler _propertyChangedHandler;
+#if __MOBILE__
+		string _defaultAccessibilityLabel;
+		string _defaultAccessibilityHint;
+		bool? _defaultIsAccessibilityElement;
+#endif
 		EventTracker _events;
 
 		VisualElementRendererFlags _flags = VisualElementRendererFlags.AutoPackage | VisualElementRendererFlags.AutoTrack;
@@ -152,6 +157,7 @@ namespace Xamarin.Forms.Platform.iOS
 				}
 
 				element.PropertyChanged += _propertyChangedHandler;
+
 			}
 
 			OnElementChanged(new ElementChangedEventArgs<TElement>(oldElement, element));
@@ -163,6 +169,11 @@ namespace Xamarin.Forms.Platform.iOS
 
 			if (Element != null && !string.IsNullOrEmpty(Element.AutomationId))
 				SetAutomationId(Element.AutomationId);
+#if __MOBILE__
+			SetAccessibilityLabel();
+			SetAccessibilityHint();
+			SetIsAccessibilityElement();
+#endif
 		}
 
 		public override SizeF SizeThatFits(SizeF size)
@@ -233,6 +244,12 @@ namespace Xamarin.Forms.Platform.iOS
 				UpdateClipToBounds();
 			else if (e.PropertyName == PlatformConfiguration.iOSSpecific.VisualElement.BlurEffectProperty.PropertyName)
 				SetBlur((BlurEffectStyle)Element.GetValue(PlatformConfiguration.iOSSpecific.VisualElement.BlurEffectProperty));
+			else if (e.PropertyName == Accessibility.HintProperty.PropertyName)
+				SetAccessibilityHint();
+			else if (e.PropertyName == Accessibility.NameProperty.PropertyName)
+				SetAccessibilityLabel();
+			else if (e.PropertyName == Accessibility.IsInAccessibleTreeProperty.PropertyName)
+				SetIsAccessibilityElement();
 		}
 
 		protected virtual void OnRegisterEffect(PlatformEffect effect)
@@ -240,6 +257,40 @@ namespace Xamarin.Forms.Platform.iOS
 			effect.Container = this;
 		}
 
+#if __MOBILE__
+		protected virtual void SetAccessibilityHint()
+		{
+			if (Element == null)
+				return;
+
+			if (_defaultAccessibilityHint == null)
+				_defaultAccessibilityHint = AccessibilityHint;
+
+			AccessibilityHint = (string)Element.GetValue(Accessibility.HintProperty) ?? _defaultAccessibilityHint;
+		}
+
+		protected virtual void SetAccessibilityLabel()
+		{
+			if (Element == null)
+				return;
+
+			if (_defaultAccessibilityLabel == null)
+				_defaultAccessibilityLabel = AccessibilityLabel;
+
+			AccessibilityLabel = (string)Element.GetValue(Accessibility.NameProperty) ?? _defaultAccessibilityLabel;
+		}
+
+		protected virtual void SetIsAccessibilityElement()
+		{
+			if (Element == null)
+				return;
+
+			if (!_defaultIsAccessibilityElement.HasValue)
+				_defaultIsAccessibilityElement = IsAccessibilityElement;
+
+			IsAccessibilityElement = (bool)((bool?)Element.GetValue(Accessibility.IsInAccessibleTreeProperty) ?? _defaultIsAccessibilityElement);
+		}
+#endif
 		protected virtual void SetAutomationId(string id)
 		{
 			AccessibilityIdentifier = id;
@@ -248,9 +299,23 @@ namespace Xamarin.Forms.Platform.iOS
 		protected virtual void SetBackgroundColor(Color color)
 		{
 			if (color == Color.Default)
+<<<<<<< HEAD
 				BackgroundColor = _defaultColor;
 			else
 				BackgroundColor = color.ToUIColor();
+=======
+#if __MOBILE__
+
+				BackgroundColor = _defaultColor;
+			else
+				BackgroundColor = color.ToUIColor();
+
+#else
+				Layer.BackgroundColor = _defaultColor.CGColor;
+			else
+				Layer.BackgroundColor = color.ToCGColor();
+#endif
+>>>>>>> ae59382... [All] Basic Accessibility Support (#713)
 		}
 
 		protected virtual void SetBlur(BlurEffectStyle blur)
