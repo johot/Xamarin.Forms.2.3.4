@@ -226,21 +226,21 @@ namespace Xamarin.Forms.ControlGallery.Android
 
 			if (view == null)
 			{// no view to re-use, create new
-				view = (context as Activity).LayoutInflater.Inflate(Resource.Layout.NativeAndroidCell, null);
+				view = (context as Activity).LayoutInflater.Inflate(Xamarin.Forms.Controls.Resource.Layout.NativeAndroidCell, null);
 			}
 			else { // re-use, clear image
 				   // doesn't seem to help
 				   //view.FindViewById<ImageView> (Resource.Id.Image).Drawable.Dispose ();
 			}
 
-			view.FindViewById<TextView>(Resource.Id.Text1).Text = x.Name;
-			view.FindViewById<TextView>(Resource.Id.Text2).Text = x.Category;
+			view.FindViewById<TextView>(Xamarin.Forms.Controls.Resource.Id.Text1).Text = x.Name;
+			view.FindViewById<TextView>(Xamarin.Forms.Controls.Resource.Id.Text2).Text = x.Category;
 
 			// grab the old image and dispose of it
 			// TODO: optimize if the image is the *same* and we want to just keep it
-			if (view.FindViewById<ImageView>(Resource.Id.Image).Drawable != null)
+			if (view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).Drawable != null)
 			{
-				using (var image = view.FindViewById<ImageView>(Resource.Id.Image).Drawable as BitmapDrawable)
+				using (var image = view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).Drawable as BitmapDrawable)
 				{
 					if (image != null)
 					{
@@ -261,7 +261,7 @@ namespace Xamarin.Forms.ControlGallery.Android
 					var bitmap = t.Result;
 					if (bitmap != null)
 					{
-						view.FindViewById<ImageView>(Resource.Id.Image).SetImageBitmap(bitmap);
+						view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).SetImageBitmap(bitmap);
 						bitmap.Dispose();
 					}
 				}, TaskScheduler.FromCurrentSynchronizationContext());
@@ -269,7 +269,7 @@ namespace Xamarin.Forms.ControlGallery.Android
 			}
 			else {
 				// clear the image
-				view.FindViewById<ImageView>(Resource.Id.Image).SetImageBitmap(null);
+				view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).SetImageBitmap(null);
 			}
 
 			return view;
@@ -380,20 +380,20 @@ namespace Xamarin.Forms.ControlGallery.Android
 			var view = convertView;
 			if (view == null)
 			{// no view to re-use, create new
-				view = _context.LayoutInflater.Inflate(Resource.Layout.NativeAndroidListViewCell, null);
+				view = _context.LayoutInflater.Inflate(Xamarin.Forms.Controls.Resource.Layout.NativeAndroidListViewCell, null);
 			}
 			else { // re-use, clear image
 				   // doesn't seem to help
 				   //view.FindViewById<ImageView> (Resource.Id.Image).Drawable.Dispose ();
 			}
-			view.FindViewById<TextView>(Resource.Id.Text1).Text = item.Name;
-			view.FindViewById<TextView>(Resource.Id.Text2).Text = item.Category;
+			view.FindViewById<TextView>(Xamarin.Forms.Controls.Resource.Id.Text1).Text = item.Name;
+			view.FindViewById<TextView>(Xamarin.Forms.Controls.Resource.Id.Text2).Text = item.Category;
 
 			// grab the old image and dispose of it
 			// TODO: optimize if the image is the *same* and we want to just keep it
-			if (view.FindViewById<ImageView>(Resource.Id.Image).Drawable != null)
+			if (view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).Drawable != null)
 			{
-				using (var image = view.FindViewById<ImageView>(Resource.Id.Image).Drawable as BitmapDrawable)
+				using (var image = view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).Drawable as BitmapDrawable)
 				{
 					if (image != null)
 					{
@@ -414,14 +414,14 @@ namespace Xamarin.Forms.ControlGallery.Android
 					var bitmap = t.Result;
 					if (bitmap != null)
 					{
-						view.FindViewById<ImageView>(Resource.Id.Image).SetImageBitmap(bitmap);
+						view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).SetImageBitmap(bitmap);
 						bitmap.Dispose();
 					}
 				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 			else {
 				// clear the image
-				view.FindViewById<ImageView>(Resource.Id.Image).SetImageBitmap(null);
+				view.FindViewById<ImageView>(Xamarin.Forms.Controls.Resource.Id.Image).SetImageBitmap(null);
 			}
 
 			return view;

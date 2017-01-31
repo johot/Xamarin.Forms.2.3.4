@@ -49,7 +49,6 @@
     <Import Project="$(NugetGooglePlayAppIndexingShim)" />
   </ImportGroup>
   <ImportGroup>
-    <Import Project="$(NugetXamarinInsightsShim)" />
     <!--<Import Project="$(NugetPclStorageShim)" />-->
     <Import Project="$(NugetXamarinFormsXamlShim)" />
     <!--<Import Project="$(NugetXamarinFormsBuildTasksShim)" />-->
@@ -130,6 +129,7 @@
     <Import Project="$(NugetGooglePlayServicesBaseShim)" />
     <Import Project="$(NugetGooglePlayServicesBasementShim)" />
     <Import Project="$(NugetGooglePlayServicesMapShim)" />
+    <Import Project="$(NugetXamarinInsightAndroidShim)" />
   </ImportGroup>
   <!--
   

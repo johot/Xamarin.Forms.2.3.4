@@ -36,10 +36,10 @@ namespace Xamarin.Forms.Platform.Android
 		}
 
 #if MXBUILD
-        const string AppLinksAssemblyName = "Xamarin.Forms.AppLinks";
+		const string AppLinksAssemblyName = "Xamarin.Forms.AppLinks";
 #else
 		const string AppLinksAssemblyName = "Xamarin.Forms.Platform.Android.AppLinks";
 #endif
-        const string AppLinksClassName = "AndroidAppLinks";
+		const string AppLinksClassName = "AndroidAppLinks";
 	}
 }

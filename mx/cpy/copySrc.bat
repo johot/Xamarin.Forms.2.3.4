@@ -43,6 +43,9 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Maps.Design\*.cs                            %s
 copy /Y %repoDir%.nuspec\Xamarin.Forms.Maps.targets                           %srcDir%Xamarin.Forms.Maps\build\Xamarin.Forms.Maps.targets
 copy /Y %repoDir%.nuspec\Xamarin.Forms.Maps.props                             %srcDir%Xamarin.Forms.Maps\build\Xamarin.Forms.Maps.props
 
+rmdir /s/q %srcDir%Xamarin.Forms.Maps\Resources
+move %srcDir%Xamarin.Forms.Maps\android\Resources %srcDir%Xamarin.Forms.Maps\Resources
+
 erase /s %srcDir%Xamarin.Forms.AppLinks\*.cs
 erase /s %srcDir%Xamarin.Forms.AppLinks\*.txt
 erase /s %srcDir%Xamarin.Forms.AppLinks\*.xml
@@ -100,6 +103,9 @@ xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Android\*.html                %
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Android\*.css                 %srcDir%Xamarin.Forms.ControlGallery\android\               /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Android\*.blank               %srcDir%Xamarin.Forms.ControlGallery\android\               /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.Android\*.txt                 %srcDir%Xamarin.Forms.ControlGallery\android\               /EXCLUDE:%~dp0excludeObjBin.txt
+
+rmdir /s/q %srcDir%Xamarin.Forms.ControlGallery\Resources
+move %srcDir%Xamarin.Forms.ControlGallery\android\Resources %srcDir%Xamarin.Forms.ControlGallery\Resources
 
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.cs                      %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.ControlGallery.iOS\*.jpg                     %srcDir%Xamarin.Forms.ControlGallery\ios\                   /EXCLUDE:%~dp0excludeObjBin.txt
