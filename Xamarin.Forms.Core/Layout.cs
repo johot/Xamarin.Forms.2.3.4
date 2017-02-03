@@ -226,7 +226,10 @@ namespace Xamarin.Forms
 			double w = Math.Max(0, width - Padding.HorizontalThickness);
 			double h = Math.Max(0, height - Padding.VerticalThickness);
 
-			LayoutChildren(x, y, w, h);
+			if (CompressedLayout.GetIsHeadless(this))
+				LayoutChildren(x + Bounds.Left, y + Bounds.Top, w, h);
+			else
+				LayoutChildren(x, y, w, h);
 
 			for (var i = 0; i < oldBounds.Length; i++)
 			{

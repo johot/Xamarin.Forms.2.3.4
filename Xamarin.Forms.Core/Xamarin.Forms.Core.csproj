@@ -448,6 +448,7 @@
     <Compile Include="XmlnsDefinitionAttribute.cs" />
     <Compile Include="PlatformConfiguration\macOSSpecific\TabbedPage.cs" />
     <Compile Include="PlatformConfiguration\macOSSpecific\TabsStyle.cs" />
+    <Compile Include="CompressedLayout.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
