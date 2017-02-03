@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Media;
 using Xamarin.Forms.Controls;
 using Xamarin.Forms.Platform.WinRT;
 
-namespace Xamarin.Forms.ControlGallery.Windows
+namespace Xamarin.Forms.ControlGallery
 {
 	public sealed partial class MainPage
 	{

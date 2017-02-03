@@ -1,0 +1,7 @@
+Microsoft (R) Build Engine version 14.0.25420.1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+MSBUILD : error MSB1008: Only one project can be specified.
+Switch: .log
+
+For switch syntax, type "MSBuild /help"

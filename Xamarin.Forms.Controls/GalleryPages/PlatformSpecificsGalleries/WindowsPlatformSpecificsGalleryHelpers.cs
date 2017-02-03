@@ -85,10 +85,10 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
             Type enumType = typeof(ToolbarPlacement);
 
             return CreateChanger(enumType,
-                Enum.GetName(enumType, page.On<Windows>().GetToolbarPlacement()),
+                Enum.GetName(enumType, page.On<Xamarin.Forms.PlatformConfiguration.Windows>().GetToolbarPlacement()),
                 picker =>
                 {
-                    page.On<Windows>().SetToolbarPlacement((ToolbarPlacement)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
+                    page.On<Xamarin.Forms.PlatformConfiguration.Windows>().SetToolbarPlacement((ToolbarPlacement)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
                 }, "Select Toolbar Placement");
         }
 

@@ -24,7 +24,6 @@
   </PropertyGroup>
   <ImportGroup>
     <Import Project="$(NugetNewtonsoftJsonShim)" />
-    <Import Project="$(NugetGooglePlayAppIndexingShim)" />
   </ImportGroup>
   <ImportGroup>
     <!--<Import Project="$(NugetPclStorageShim)" />-->
@@ -96,6 +95,8 @@
     </NugetProjectReference>
   </ItemGroup>
   <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <!--GooglePlay is indirectly referenced but unexpectedly needs to be referenced here-->
+    <Import Project="$(NugetGooglePlayAppIndexingShim)" />
     <Import Project="$(NugetAndroidSupportAnimatedVectorDrawableShim)" />
     <Import Project="$(NugetAndroidSupportDesignShim)" />
     <Import Project="$(NugetAndroidSupportV4Shim)" />
@@ -116,7 +117,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|xamarin.ios' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|xamarin.ios' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
-    <CodesignEntitlements/>
+    <CodesignEntitlements />
   </PropertyGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(IosUnifiedMobileSubPlatformId)' ">
     <Reference Include="Xamarin.iOS" />
@@ -134,7 +135,11 @@
   -->
   <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
     <AppxPackageDir>$(OutDir)</AppxPackageDir>
+    <NoWarn>0618;$(NoWarn)</NoWarn>
   </PropertyGroup>
+  <ImportGroup Condition=" '$(MobilePlatform)' == '$(WindowsMobilePlatformId)' ">
+    <Import Project="$(NugetXamarinInsightsShim)" />
+  </ImportGroup>
   <!--
   
     Windows Phone
@@ -150,6 +155,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
     <PrimitivePlatform>$(X86PlatformId)</PrimitivePlatform>
+    <PackageCertificateKeyFile>windows\Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
     <SDKReference Include="Bing.Maps.Xaml, Version=1.313.0825.0">
@@ -166,8 +172,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
+    <!--orig csproj didn't have UapDefaultAssetScale; 
+          see http://stackoverflow.com/questions/25295462/app-manifest-references-the-image-which-doesnot-have-a-candidate-in-the-main-pac -->
+    <UapDefaultAssetScale>100</UapDefaultAssetScale>
     <UseProjectJson>true</UseProjectJson>
-    <ProjectLockFile>winrt\uap\project.lock.json</ProjectLockFile>
+    <ProjectLockFile>windows\uwp\project.lock.json</ProjectLockFile>
+    <PackageCertificateKeyFile>windows\Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
@@ -940,8 +950,6 @@
     <Compile Include="portable\ViewContainers\StateViewContainer.cs" />
     <Compile Include="portable\ViewContainers\ValueViewContainer.cs" />
     <Compile Include="portable\ViewContainers\ViewContainer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="issues\Bugzilla22229.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -1130,6 +1138,34 @@
     <EmbeddedResource Include="portable\GalleryPages\crimson.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="windows\uwp\BrokenNativeControl.cs" />
+    <Compile Include="windows\uwp\CustomRenderers.cs" />
+    <Compile Include="windows\uwp\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\uwp\Properties\AssemblyInfo.cs" />
+    <Compile Include="windows\uwp\StringProvider.cs" />
+    <Content Include="windows\uwp\Assets\Logo.scale-100.png" />
+    <Content Include="windows\uwp\Assets\SmallLogo.scale-100.png" />
+    <Content Include="windows\uwp\Assets\SplashScreen.scale-100.png" />
+    <Content Include="windows\uwp\Assets\StoreLogo.scale-100.png" />
+    <Content Include="windows\uwp\Assets\WideLogo.scale-100.png" />
+    <Content Include="windows\uwp\coffee.png" />
+    <Content Include="windows\uwp\default.css" />
+    <Content Include="windows\uwp\local.html" />
+    <Content Include="windows\uwp\toolbar_close.png" />
+    <Content Include="windows\uwp\WebImages\XamarinLogo.png" />
+    <None Include="windows\uwp\.dir.props" />
+    <AppxManifest Include="windows\uwp\Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="windows\uwp\project.json" />
+    <None Include="windows\uwp\project.lock.json" />
+    <None Include="windows\Windows_TemporaryKey.pfx" />
+    <Page Include="windows\uwp\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <None Include="android\.dir.props" />
     <None Include="android\app.config" />
     <None Include="android\packages.config" />
@@ -1226,11 +1262,83 @@
     <AndroidResource Include="Resources\values\Colors.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="windows\tablet\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="windows\tablet\BrokenNativeControl.cs" />
+    <Compile Include="windows\tablet\CustomRenderers.cs" />
+    <Compile Include="windows\tablet\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\tablet\Properties\AssemblyInfo.cs" />
+    <Compile Include="windows\tablet\StringProvider.cs" />
+    <Content Include="windows\tablet\Assets\Logo.scale-100.png" />
+    <Content Include="windows\tablet\Assets\SmallLogo.scale-100.png" />
+    <Content Include="windows\tablet\Assets\SplashScreen.scale-100.png" />
+    <Content Include="windows\tablet\Assets\StoreLogo.scale-100.png" />
+    <Content Include="windows\tablet\coffee.png" />
+    <Content Include="windows\tablet\default.css" />
+    <Content Include="windows\tablet\local.html" />
+    <Content Include="windows\tablet\toolbar_close.png" />
+    <Content Include="windows\tablet\WebImages\XamarinLogo.png" />
+    <None Include="windows\tablet\.dir.props" />
+    <AppxManifest Include="windows\tablet\Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <Content Include="windows\toolbar_close.png" />
+    <Content Include="windows\photo.jpg" />
+    <Content Include="windows\seth.png" />
+    <Content Include="windows\bank.png" />
+    <Content Include="windows\coffee.png" />
+    <Content Include="windows\cover1.jpg" />
+    <Content Include="windows\cover1small.jpg" />
+    <Content Include="windows\crimson.jpg" />
+    <Content Include="windows\crimsonsmall.jpg" />
+    <Content Include="windows\menuIcon.png" />
+    <Content Include="windows\oasis.jpg" />
+    <Content Include="windows\oasissmall.jpg" />
+    <Content Include="windows\phone\Assets\Logo.scale-240.png" />
+    <Content Include="windows\phone\Assets\SmallLogo.scale-240.png" />
+    <Content Include="windows\phone\Assets\SplashScreen.scale-240.png" />
+    <Content Include="windows\phone\Assets\Square71x71Logo.scale-240.png" />
+    <Content Include="windows\phone\Assets\StoreLogo.scale-240.png" />
+    <Content Include="windows\phone\Assets\WideLogo.scale-240.png" />
+    <Content Include="windows\phone\coffee.png" />
+    <Content Include="windows\phone\default.css" />
+    <Content Include="windows\phone\local.html" />
+    <Content Include="windows\phone\toolbar_close.png" />
+    <Content Include="windows\phone\WebImages\XamarinLogo.png" />
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="windows\phone\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\phone\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\BrokenImageSourceHandler.cs" />
+    <Compile Include="windows\phone\BrokenNativeControl.cs" />
+    <Compile Include="windows\phone\CustomRenderers.cs" />
+    <Compile Include="windows\phone\Properties\AssemblyInfo.cs" />
+    <Compile Include="windows\phone\StringProvider.cs" />
+    <None Include="windows\.dir.props" />
+    <None Include="windows\phone\.dir.props" />
+    <AppxManifest Include="windows\phone\Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
   <!--
 
     Targets
   -->
   <Import Project="*\.dir.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
-
 </Project>

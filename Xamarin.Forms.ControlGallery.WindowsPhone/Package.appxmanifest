@@ -3,7 +3,7 @@
   <Identity Name="7d1da7bc-9b18-4581-9184-6b674b7a3dbe" Publisher="CN=Eric" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="7d1da7bc-9b18-4581-9184-6b674b7a3dbe" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Xamarin.Forms.ControlGallery.WindowsPhone</DisplayName>
+    <DisplayName>Xamarin.Forms.ControlGallery</DisplayName>
     <PublisherDisplayName>Eric</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,8 +15,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Xamarin.Forms.ControlGallery.WindowsPhone.App">
-      <m3:VisualElements DisplayName="Xamarin.Forms.ControlGallery.WindowsPhone" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Xamarin.Forms.ControlGallery.WindowsPhone" ForegroundText="light" BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Xamarin.Forms.ControlGallery.App">
+      <m3:VisualElements DisplayName="Xamarin.Forms.ControlGallery" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Xamarin.Forms.ControlGallery" ForegroundText="light" BackgroundColor="transparent">
         <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />

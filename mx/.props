@@ -28,7 +28,7 @@
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.AppLinks.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Bindings.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.BuildTasks.csproj</ShimInclude>
-    <!--<ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.ControlGallery.csproj</ShimInclude>-->
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.ControlGallery.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Maps.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.Azure.csproj</ShimInclude>

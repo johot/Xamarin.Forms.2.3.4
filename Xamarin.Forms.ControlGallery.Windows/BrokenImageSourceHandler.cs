@@ -7,7 +7,7 @@ using WImageSource = Windows.UI.Xaml.Media.ImageSource;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
-namespace Xamarin.Forms.ControlGallery.WindowsUniversal
+namespace Xamarin.Forms.ControlGallery
 #else
 using Xamarin.Forms.Platform.WinRT;
 

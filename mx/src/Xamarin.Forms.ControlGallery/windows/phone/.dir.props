@@ -7,8 +7,11 @@
   
   <Target Name="_WindowsPhoneDirProps">
     <ItemGroup Condition="'$(MobileSubPlatform)' != '$(WindowsPhoneMobileSubPlatformId)'">
-      <Compile Remove="winrt\windows\**\*"/>
-      <Page Remove="winrt\windows\**\*"/>
+      <Compile Remove="windows\phone\**\*"/>
+      <Page Remove="windows\phone\**\*"/>
+      <AppxManifest Remove="windows\phone\**\*"/>
+      <Content Remove="windows\phone\**\*"/>
+      <ApplicationDefinition Remove="windows\phone\**\*"/>
     </ItemGroup>
   </Target>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS_PHONE_APP
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
-namespace Xamarin.Forms.ControlGallery.WindowsPhone
+namespace Xamarin.Forms.ControlGallery
 {
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.
@@ -132,3 +133,4 @@ namespace Xamarin.Forms.ControlGallery.WindowsPhone
 		}
 	}
 }
+#endif

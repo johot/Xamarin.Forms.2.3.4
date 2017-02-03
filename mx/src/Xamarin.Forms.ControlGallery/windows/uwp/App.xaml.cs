@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS_UWP
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,8 +20,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
-
-namespace Xamarin.Forms.ControlGallery.WindowsUniversal
+namespace Xamarin.Forms.ControlGallery
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -121,3 +121,4 @@ namespace Xamarin.Forms.ControlGallery.WindowsUniversal
         }
     }
 }
+#endif

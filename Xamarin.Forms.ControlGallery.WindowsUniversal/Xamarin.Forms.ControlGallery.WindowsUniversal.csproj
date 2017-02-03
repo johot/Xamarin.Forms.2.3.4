@@ -8,7 +8,7 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OutputPath>bin\Debug\</OutputPath>
-    <RootNamespace>Xamarin.Forms.ControlGallery.WindowsUniversal</RootNamespace>
+    <RootNamespace>Xamarin.Forms.ControlGallery</RootNamespace>
     <AssemblyName>Xamarin.Forms.ControlGallery.WindowsUniversal</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>

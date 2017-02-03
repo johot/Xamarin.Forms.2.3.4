@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using WSize = Windows.Foundation.Size;
 
-namespace Xamarin.Forms.ControlGallery.WindowsPhone
+namespace Xamarin.Forms.ControlGallery
 {
 	internal class BrokenNativeControl : Panel
 	{

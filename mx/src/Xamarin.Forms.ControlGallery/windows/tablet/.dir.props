@@ -7,8 +7,11 @@
 
   <Target Name="_WindowsTabletDirProps">
     <ItemGroup Condition="'$(MobileSubPlatform)' != '$(WindowsTabletMobileSubPlatformId)'">
-      <Compile Remove="winrt\windows\**\*"/>
-      <Page Remove="winrt\windows\**\*"/>
+      <Compile Remove="windows\tablet\**\*"/>
+      <Page Remove="windows\tablet\**\*"/>
+      <AppxManifest Remove="windows\tablet\**\*"/>
+      <Content Remove="windows\tablet\**\*"/>
+      <ApplicationDefinition Remove="windows\tablet\**\*"/>
     </ItemGroup>
   </Target>
 

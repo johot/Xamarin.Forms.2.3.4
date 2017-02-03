@@ -7,7 +7,7 @@
     <ProjectGuid>{8CDEC974-E6BE-4424-BC77-0B87400A08AF}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamarin.Forms.ControlGallery.WindowsPhone</RootNamespace>
+    <RootNamespace>Xamarin.Forms.ControlGallery</RootNamespace>
     <AssemblyName>Xamarin.Forms.ControlGallery.WindowsPhone</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>

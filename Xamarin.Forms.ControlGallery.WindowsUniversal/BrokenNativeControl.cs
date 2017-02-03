@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace Xamarin.Forms.ControlGallery.WindowsUniversal
+namespace Xamarin.Forms.ControlGallery
 {
 	internal class BrokenNativeControl : Panel
 	{

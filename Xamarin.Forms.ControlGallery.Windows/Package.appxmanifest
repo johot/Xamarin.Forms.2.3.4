@@ -2,7 +2,7 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
   <Identity Name="a4530307-5452-466a-8944-7925f27ddc21" Publisher="CN=xamarinforms" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>Xamarin.Forms.ControlGallery.Windows</DisplayName>
+    <DisplayName>Xamarin.Forms.ControlGallery</DisplayName>
     <PublisherDisplayName>Xamarin Inc</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Xamarin.Forms.ControlGallery.Windows.App">
-      <m2:VisualElements DisplayName="Xamarin.Forms.ControlGallery.Windows" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Xamarin.Forms.ControlGallery.Windows" ForegroundText="light" BackgroundColor="#464646">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Xamarin.Forms.ControlGallery.App">
+      <m2:VisualElements DisplayName="Xamarin.Forms.ControlGallery" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Xamarin.Forms.ControlGallery" ForegroundText="light" BackgroundColor="#464646">
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
     </Application>

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project 
   ToolsVersion="12.0" 
-  InitialTargets="_WindowsDirProps"
+  InitialTargets="_WindowsUwpDirProps"
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
 >
   
-  <Target Name="_WindowsDirProps">
-    <ItemGroup Condition="'$(MobilePlatform)' != '$(WindowsMobilePlatformId)'">
-      <Compile Remove="windows\**\*"/>
-      <Page Remove="windows\**\*"/>
+  <Target Name="_WindowsUwpDirProps">
+    <ItemGroup Condition="'$(MobileSubPlatform)' != '$(WindowsUniversalMobileSubPlatformId)'">
+      <Compile Remove="windows\uwp\**\*"/>
+      <Page Remove="windows\uwp\**\*"/>
+      <AppxManifest Remove="windows\uwp\**\*"/>
+      <Content Remove="windows\uwp\**\*"/>
+      <ApplicationDefinition Remove="windows\uwp\**\*"/>
     </ItemGroup>
   </Target>
   

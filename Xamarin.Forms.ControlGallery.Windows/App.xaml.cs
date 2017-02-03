@@ -1,10 +1,11 @@
-﻿using System;
+﻿#if WINDOWS_APP
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
-namespace Xamarin.Forms.ControlGallery.Windows
+namespace Xamarin.Forms.ControlGallery
 {
 	public sealed partial class App
 	{
@@ -65,3 +66,4 @@ namespace Xamarin.Forms.ControlGallery.Windows
 		}
 	}
 }
+#endif

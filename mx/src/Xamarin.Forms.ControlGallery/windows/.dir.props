@@ -9,6 +9,7 @@
     <ItemGroup Condition="'$(MobilePlatform)' != '$(WindowsMobilePlatformId)'">
       <Compile Remove="windows\**\*"/>
       <Page Remove="windows\**\*"/>
+      <Content Remove="windows\**\*"/>
     </ItemGroup>
   </Target>
   

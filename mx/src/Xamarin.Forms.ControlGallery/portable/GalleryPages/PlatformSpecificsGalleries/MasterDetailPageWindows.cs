@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 	{
 		public MasterDetailPageWindows(ICommand restore)
 		{
-			On<Windows>()
+			On<Xamarin.Forms.PlatformConfiguration.Windows>()
 				.SetCollapseStyle(CollapseStyle.Partial);
 			MasterBehavior = MasterBehavior.Popover;
 
@@ -65,10 +65,10 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 			Type enumType = typeof(CollapseStyle);
 
 			return CreateChanger(enumType,
-				Enum.GetName(enumType, page.On<Windows>().GetCollapseStyle()),
+				Enum.GetName(enumType, page.On<Xamarin.Forms.PlatformConfiguration.Windows>().GetCollapseStyle()),
 				picker =>
 				{
-					page.On<Windows>().SetCollapseStyle((CollapseStyle)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
+					page.On<Xamarin.Forms.PlatformConfiguration.Windows>().SetCollapseStyle((CollapseStyle)Enum.Parse(enumType, picker.Items[picker.SelectedIndex]));
 				},
 				"Select Collapse Style");
 		}
@@ -81,14 +81,14 @@ namespace Xamarin.Forms.Controls.GalleryPages.PlatformSpecificsGalleries
 				VerticalTextAlignment = TextAlignment.Center,
 				VerticalOptions = LayoutOptions.Center
 			};
-			var adjustCollapseWidthEntry = new Entry { Text = page.On<Windows>().CollapsedPaneWidth().ToString() };
+			var adjustCollapseWidthEntry = new Entry { Text = page.On<Xamarin.Forms.PlatformConfiguration.Windows>().CollapsedPaneWidth().ToString() };
 			var adjustCollapseWidthButton = new Button { Text = "Change", BackgroundColor = Color.Gray };
 			adjustCollapseWidthButton.Clicked += (sender, args) =>
 			{
 				double newWidth;
 				if (double.TryParse(adjustCollapseWidthEntry.Text, out newWidth))
 				{
-					page.On<Windows>().CollapsedPaneWidth(newWidth);
+					page.On<Xamarin.Forms.PlatformConfiguration.Windows>().CollapsedPaneWidth(newWidth);
 				}
 			};
 

@@ -3,8 +3,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.Platform.WinRT;
 
-[assembly: ExportRenderer(typeof(Xamarin.Forms.Controls.Bugzilla42602.TextBoxView), typeof(Xamarin.Forms.ControlGallery.WindowsPhone.TextBoxViewRenderer))]
-namespace Xamarin.Forms.ControlGallery.WindowsPhone
+[assembly: ExportRenderer(typeof(Xamarin.Forms.Controls.Bugzilla42602.TextBoxView), typeof(Xamarin.Forms.ControlGallery.TextBoxViewRenderer))]
+namespace Xamarin.Forms.ControlGallery
 {
 	public class TextBoxViewRenderer : BoxViewRenderer
 	{

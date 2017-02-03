@@ -10,7 +10,7 @@ using Xamarin.Forms.Platform.WinRT;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
-namespace Xamarin.Forms.ControlGallery.WindowsPhone
+namespace Xamarin.Forms.ControlGallery
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

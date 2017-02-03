@@ -8,6 +8,7 @@
   <Target Name="_IosDirProps">
     <ItemGroup Condition="'$(MobilePlatform)' != '$(IosMobilePlatformId)'">
       <Compile Remove="ios\**\*"/>
+      <Content Remove="ios\**\*"/>
     </ItemGroup>
   </Target>
   

@@ -2,18 +2,19 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Xamarin.Forms;
-using Xamarin.Forms.ControlGallery.WindowsUniversal;
+using Xamarin.Forms.ControlGallery;
 using Xamarin.Forms.Controls;
 using Xamarin.Forms.Platform.UWP;
 
+#if !MXBUILD
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Xamarin.Forms.ControlGallery.WindowsUniversal")]
+[assembly: AssemblyTitle("Xamarin.Forms.ControlGallery")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Xamarin.Forms.ControlGallery.WindowsUniversal")]
+[assembly: AssemblyProduct("Xamarin.Forms.ControlGallery")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -31,6 +32,7 @@ using Xamarin.Forms.Platform.UWP;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: ComVisible(false)]
+#endif
 
 // Deliberately broken image source and handler so we can test handling of image loading errors
 [assembly: ExportImageSourceHandler(typeof(FailImageSource), typeof(BrokenImageSourceHandler))]
