@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+    PreProps
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Platform Condition="'$(Platform)'==''">x86</Platform>
+    <MetaPlatform Condition=" '$(Platform)' == 'x86'">win.32-8.1</MetaPlatform>
+    <MetaPlatform Condition=" '$(Platform)' == 'x64'">win.64-8.1</MetaPlatform>
+    <MetaPlatform Condition=" '$(Platform)' == 'ARM'">win.arm-8.1</MetaPlatform>
+  </PropertyGroup>
+  <Import Project="..\windows.debugger.props" />
+  <!--
+
+    Configurations
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' " />
+</Project>

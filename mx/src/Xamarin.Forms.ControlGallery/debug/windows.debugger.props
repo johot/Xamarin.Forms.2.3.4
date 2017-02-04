@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--
+      Windows UWP tooling is sensitive to the value of ProjectName
+      The debugger assumes the project matches the AssemblyName
+    -->
+    <OutputType>AppContainerExe</OutputType>
+    <ProjectName>Xamarin.Forms.ControlGallery</ProjectName>
+  </PropertyGroup>
+  <Import Project="debugger.props" />
+</Project>

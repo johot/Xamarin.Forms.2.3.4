@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+    Properties
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Platform Condition="'$(Platform)'==''">x86</Platform>
+    <MetaPlatform Condition=" '$(Platform)' == 'x86'">uap.32-10.0.10586.0</MetaPlatform>
+    <MetaPlatform Condition=" '$(Platform)' == 'x64'">uap.64-10.0.10586.0</MetaPlatform>
+    <MetaPlatform Condition=" '$(Platform)' == 'ARM'">uap.arm-10.0.10586.0</MetaPlatform>
+  </PropertyGroup>
+  <Import Project="..\windows.debugger.props" />
+  <!--
+
+    Configurations
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' " />
+</Project>

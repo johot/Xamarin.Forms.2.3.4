@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+    Properties
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Platform Condition="'$(Platform)'==''">AnyCPU</Platform>
+    <MetaPlatform>monoDroid.app-7.0</MetaPlatform>
+  </PropertyGroup>
+  <Import Project="..\debugger.props" />
+  <!--
+
+    Configurations
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|[none]' " />
+  <!--
+  
+    Source
+  -->
+  <ItemGroup>
+    <!--
+      Xamain Android VS tooling is sensitive to the location of AndroidManifest.xml.
+      In order for the debugger to work AndroidManifest.xml must be located at 'Properties\'
+    -->
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <!--
+  
+    Targets
+  -->
+  <Target Name="Install">
+    <MSBuild Projects="@(TargetProject)" Targets="Install" Properties="Platform=$(MetaPlatform)" />
+  </Target>
+</Project>

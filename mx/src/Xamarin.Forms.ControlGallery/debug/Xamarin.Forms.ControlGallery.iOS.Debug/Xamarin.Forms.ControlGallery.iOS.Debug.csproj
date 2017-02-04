@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+    Properties
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Platform Condition="'$(Platform)'==''">iPhoneSimulator</Platform>
+    <MetaPlatform>xamarin.ios.sim-1.0</MetaPlatform>
+    <!--
+      Xamain iOS VS tooling is sensitive to the location of MtouchDebug property.
+      In order for the debugger to work MtouchDebug must be declared in the .csproj
+    -->
+    <MtouchDebug>true</MtouchDebug>
+    <!--
+      Xamain iOS VS tooling is sensitive to the location of AssemblyName property.
+      In order for the debugger to work AssemblyName must be declared in the .csproj
+    -->
+    <AssemblyName>Xamarin.Forms.ControlGallery</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\debugger.props" />
+  <!--
+
+    Configurations
+  -->
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' " />
+  <!--
+      If the following import is missing then Xamain iOS VS tooling will "repair" the .csproj
+      By adding a false condition we can satisfy the tooling while allowing mxbuild to handle the import
+    -->
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" Condition="false" />
+  <!--
+
+    Targets
+  -->
+  <Target 
+    Name="AfterBuild" 
+    AfterTargets="Build" 
+    DependsOnTargets="AliasLocalDirectory;SyncRemoteDirectory"
+  />
+  <Target Name="Clean" DependsOnTargets="_CleanMacBuild"/>
+  
+  <!--
+    Xamarin.iOS VS tooling expects build directories to be nested under the project directory.
+    Alias the build output directories so they can be accessed as nested directories.
+  -->
+  <Target Name="AliasLocalDirectory" >
+    <CallTarget Targets="AliasOutDir"/>
+  </Target>
+  
+  <!--
+    Xamarin.iOS VS tooling computes mac output directory as a function of the .csproj name.
+    Compute the expected mac directory for this project and place a copy of the build output there.
+  -->
+  <Target Name="SyncRemoteDirectory" DependsOnTargets="_SayHello;_SyncRemoteDirectory;_SayGoodbye"/>
+  <Target Name="_SyncRemoteDirectory">
+    
+    <!--target sync path-->
+    <PropertyGroup>
+      <MtbsBuildPath>~/Library/Caches/Xamarin/mtbs/builds/</MtbsBuildPath>
+      <MacBuildPath>$(MtbsBuildPath)$(BuildAppName)/$(MacBuildDir)$(BuildSessionId)</MacBuildPath>
+    </PropertyGroup>
+
+    <!--source sync path-->
+    <GenerateBuildSessionId ProjectFullPath="$(DebuggerTargetProject)" ProjectName="$(DebuggerTargetProjectName)">
+      <Output TaskParameter="BuildSessionId" PropertyName="DebuggerTargetBuildSessionId" />
+      <Output TaskParameter="BuildAppName" PropertyName="DebuggerTargetBuildAppName" />
+    </GenerateBuildSessionId>
+    <PropertyGroup>
+      <DebuggerTargetMacBuildPath>$(MtbsBuildPath)$(DebuggerTargetBuildAppName)/$(DebuggerTargetBuildSessionId)</DebuggerTargetMacBuildPath>
+    </PropertyGroup>
+
+    <!--sync command-->
+    <PropertyGroup>
+      <MacSyncCommand>rsync --delete -a $(DebuggerTargetMacBuildPath)/ $(MacBuildPath)</MacSyncCommand>
+    </PropertyGroup>
+    <Message Importance="high" Text="$(MacSyncCommand)"/>
+    <Exec
+      Command="$(MacSyncCommand)"
+      SessionId="$(BuildSessionId)"
+      Condition="'$(BuildSessionId)'!=''"
+      ContinueOnError="true"
+      IgnoreExitCode="true"
+    />
+  </Target>
+</Project>

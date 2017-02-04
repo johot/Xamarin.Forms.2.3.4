@@ -83,7 +83,8 @@ namespace Xamarin.Forms
 		static Windows.UI.Xaml.ResourceDictionary GetPhoneResources ()
 		{
 			return new Windows.UI.Xaml.ResourceDictionary {
-				Source = new Uri ("ms-appx:///Xamarin.Forms.Platform.WinRT.Phone/PhoneResources.xbf")
+				//Source = new Uri ("ms-appx:///Xamarin.Forms.Platform.WinRT.Phone/PhoneResources.xbf")
+				Source = new Uri ("ms-appx:///Xamarin.Forms/winrt/phone/PhoneResources.xbf")
 			};
 		}
 

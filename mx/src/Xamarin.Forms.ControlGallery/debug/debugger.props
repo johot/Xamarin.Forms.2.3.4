@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project 
+  ToolsVersion="4.0" 
+  InitialTargets="DebuggerPropsInitialTarget" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <OutRelDir>..\..\</OutRelDir>
+    <AssemblyName>Xamarin.Forms.ControlGallery</AssemblyName>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+  </ImportGroup>
+  <!--
+
+    Targets
+  -->
+  <Target Name="DebuggerPropsInitialTarget">
+    <ItemGroup>
+      <DebuggerTargetProject Include="$(OutRelDir)Xamarin.Forms.ControlGallery.csproj"/>
+    </ItemGroup>
+    <PropertyGroup>
+      <DebuggerTargetProject>@(DebuggerTargetProject)</DebuggerTargetProject>
+      <DebuggerTargetProject>$([System.IO.Path]::GetFullPath($(DebuggerTargetProject)))</DebuggerTargetProject>
+      <DebuggerTargetProjectName>@(DebuggerTargetProject->'%(FileName)')</DebuggerTargetProjectName>
+    </PropertyGroup>
+  </Target>
+  <Target Name="Build">
+    <MSBuild 
+      Projects="@(DebuggerTargetProject)" 
+      Targets="Build" 
+      Properties="Platform=$(MetaPlatform)" 
+    />
+  </Target>
+</Project>

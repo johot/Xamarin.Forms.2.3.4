@@ -64,6 +64,13 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.BuildTasks\Xamarin.Forms.BuildTasks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.BuildTasks\Xamarin.Forms.Design.targets" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\android\.dir.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\debugger.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\windows.debugger.props" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.Android.Debug\Xamarin.Forms.ControlGallery.Android.Debug.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.iOS.Debug\Xamarin.Forms.ControlGallery.iOS.Debug.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.UWP.Debug\Xamarin.Forms.ControlGallery.UWP.Debug.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.Windows.Debug\Xamarin.Forms.ControlGallery.Windows.Debug.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.WinPhone.Debug\Xamarin.Forms.ControlGallery.WinPhone.Debug.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\ios\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\windows\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\windows\phone\.dir.props" />
@@ -128,9 +135,12 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)doskey.txt" />
     <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Bindings\Transforms\Metadata.xml" />
+    <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.Android.Debug\Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.BuildTasks\Properties\" />
+    <Folder Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.iOS.Debug\bld\bin\debug\xamarin.ios.sim\" />
+    <Folder Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.iOS.Debug\bld\obj\debug\xamarin.ios.sim\" />
     <Folder Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Properties\" />
   </ItemGroup>
 </Project>

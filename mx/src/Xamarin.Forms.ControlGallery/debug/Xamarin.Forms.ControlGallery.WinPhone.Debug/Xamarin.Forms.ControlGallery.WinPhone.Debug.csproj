@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+    Properties
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Platform Condition="'$(Platform)'==''">x86</Platform>
+    <MetaPlatform Condition=" '$(Platform)' == 'x86'">wpa.32-8.1</MetaPlatform>
+    <MetaPlatform Condition=" '$(Platform)' == 'ARM'">wpa.arm-8.1</MetaPlatform>
+  </PropertyGroup>
+  <Import Project="..\windows.debugger.props" />
+  <!--
+
+    Configurations
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|[none]' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' " />
+</Project>
