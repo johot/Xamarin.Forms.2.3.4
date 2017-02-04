@@ -35,7 +35,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{80707FB3-8C08-4369-B4BB-4053559EF2EA}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms.BuildTasks</AssemblyName>
     <RootNamespace>Xamarin.Forms.BuildTasks</RootNamespace>
     
     <NugetIsBuildAssembly>true</NugetIsBuildAssembly>

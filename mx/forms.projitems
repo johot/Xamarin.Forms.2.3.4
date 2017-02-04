@@ -55,12 +55,6 @@
     <None Include="$(MSBuildThisFileDirectory)env.lnk" />
     <None Include="$(MSBuildThisFileDirectory)src\.dir.props" />
     <None Include="$(MSBuildThisFileDirectory)src\.props" />
-    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.classpath" />
-    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.project" />
-    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\.settings\org.eclipse.jdt.core.prefs" />
-    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\libs\android-support-v4.jar" />
-    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\project.properties" />
-    <None Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\src\com\xamarin\forms\platform\android\FormsViewGroup.java" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.AppLinks\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.AppLinks\Xamarin.Forms.AppLinks.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Bindings\Jars\formsviewgroup.jar" />
@@ -133,15 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)doskey.txt" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\AndroidManifest.xml" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\proguard-project.txt" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\drawable-hdpi\ic_launcher.png" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\drawable-mdpi\ic_launcher.png" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\drawable-xhdpi\ic_launcher.png" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values-v11\styles.xml" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values-v14\styles.xml" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values\strings.xml" />
-    <Content Include="$(MSBuildThisFileDirectory)src\AndroidNative\FormsViewGroup\res\values\styles.xml" />
     <Content Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Bindings\Transforms\Metadata.xml" />
   </ItemGroup>
   <ItemGroup>

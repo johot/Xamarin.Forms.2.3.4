@@ -61,7 +61,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms.Xaml</AssemblyName>
     <RootNamespace>Xamarin.Forms.Xaml</RootNamespace>
   </PropertyGroup>
   <ImportGroup>

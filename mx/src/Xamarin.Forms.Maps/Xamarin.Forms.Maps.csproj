@@ -64,8 +64,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{7D13BAC2-C6A4-416A-B07E-C169B199E52B}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms.Maps</AssemblyName>
-    <PortableAssemblyName>Xamarin.Forms.Maps.Portable</PortableAssemblyName>
     <RootNamespace>Xamarin.Forms.Maps</RootNamespace>
     <!--TODO: Was not present in orig .csproj-->
     <!--<TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>-->
@@ -145,7 +143,6 @@
     Part ([platform].part)
   -->
   <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <AssemblyName>$(PortableAssemblyName)</AssemblyName>
   </PropertyGroup>
   <!--
   

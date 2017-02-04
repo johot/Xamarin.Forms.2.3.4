@@ -1,6 +1,3 @@
-rmdir /s/q %srcDir%AndroidNative\
-xcopy /S/Y %repoDir%AndroidNative\*                                           %srcDir%AndroidNative\
-
 erase /s %srcDir%Xamarin.Forms.Core\*.cs
 erase /s %srcDir%Xamarin.Forms.Core\project.json
 erase /s %srcDir%Xamarin.Forms.Core\*.xaml

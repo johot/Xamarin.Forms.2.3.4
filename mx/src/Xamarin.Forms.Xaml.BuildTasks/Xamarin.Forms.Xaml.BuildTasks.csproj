@@ -57,6 +57,10 @@
     <Compile Include="CompiledConverters\ICompiledTypeConverter.cs" />
     <Compile Include="CompiledConverters\LayoutOptionsConverter.cs" />
     <Compile Include="CompiledConverters\RectangleTypeConverter.cs" />
+    <None Include="nuspec.props" />
+    <None Include="Xamarin.Forms.Xaml.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <!--
   
@@ -67,19 +71,12 @@
     <OutputType>Library</OutputType>
     <ProjectGuid>{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}</ProjectGuid>
     <RootNamespace>Xamarin.Forms.Xaml.BuildTasks</RootNamespace>
-    <AssemblyName>Xamarin.Forms.Xaml.BuildTasks</AssemblyName>
     <NugetIsBuildAssembly>true</NugetIsBuildAssembly>
     <NugetBuildAssemblySubDirName />
   </PropertyGroup>
   <ImportGroup>
     <Import Project="nuspec.props" />
   </ImportGroup>
-  <ItemGroup>
-    <None Include="nuspec.props" />
-    <None Include="Xamarin.Forms.Xaml.targets">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   <!--
   
     Library

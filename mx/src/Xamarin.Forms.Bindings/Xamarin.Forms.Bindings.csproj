@@ -32,7 +32,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{3B72465B-ACAE-43AE-9327-10F372FE5F80}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms.Bindings</AssemblyName>
     <RootNamespace>Xamarin.Forms.Bindings</RootNamespace>
   </PropertyGroup>
   <ImportGroup>

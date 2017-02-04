@@ -865,8 +865,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms</AssemblyName>
-    <PortableAssemblyName>Xamarin.Forms.Portable</PortableAssemblyName>
     <RootNamespace>Xamarin.Forms</RootNamespace>
   </PropertyGroup>
   <ImportGroup>
@@ -946,7 +944,6 @@
     Part ([platform].part)
   -->
   <PropertyGroup Condition=" '$(IsPartPlatform)' == 'true' ">
-    <AssemblyName>$(PortableAssemblyName)</AssemblyName>
   </PropertyGroup>
   <!--
   

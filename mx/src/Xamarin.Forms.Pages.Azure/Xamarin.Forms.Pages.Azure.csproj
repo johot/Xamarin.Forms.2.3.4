@@ -31,7 +31,6 @@
   <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xamarin.Forms.Pages.Azure</AssemblyName>
     <RootNamespace>Xamarin.Forms.Pages.Azure</RootNamespace>
     <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
   </PropertyGroup>

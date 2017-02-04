@@ -8,6 +8,7 @@
   <Target Name="_AndroidDirProps">
     <ItemGroup Condition="'$(MobilePlatform)' != '$(AndroidMobilePlatformId)'">
       <Compile Remove="android\**\*"/>
+      <Content Remove="android\**\*"/>
     </ItemGroup>
   </Target>
   

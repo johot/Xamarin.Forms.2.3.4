@@ -50,7 +50,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <ProjectGuid>{A3F22767-213E-46F4-B639-5565668AE2FF}</ProjectGuid>
-    <AssemblyName>Xamarin.Forms.AppLinks</AssemblyName>
     <RootNamespace>Xamarin.Forms.AppLinks</RootNamespace>
   </PropertyGroup>
   <!--

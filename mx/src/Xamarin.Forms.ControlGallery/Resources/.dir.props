@@ -10,6 +10,7 @@
       <!--BUG: For some reason the wild card match is not removing Resource.Designer.cs!-->
       <Compile Remove="resources\Resource.Designer.cs"/>
       <Compile Remove="resources\**\*"/>
+      <Content Remove="resources\**\*"/>
       <AndroidResource Remove="resources\**\*"/>
     </ItemGroup>
   </Target>
