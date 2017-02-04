@@ -143,15 +143,19 @@
   
     Windows Phone
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|wpa.32' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|wpa.32' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' " />
   <!--
 
     Windows Tablet
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win.32' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win.32' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win.64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win.64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|win.arm' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|win.arm' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' ">
     <PrimitivePlatform>$(X86PlatformId)</PrimitivePlatform>
     <PackageCertificateKeyFile>windows\Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
@@ -168,8 +172,8 @@
 
     Windows Universal
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|uap.32' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|uap.32' " />
   <PropertyGroup Condition=" '$(MobileSubPlatform)' == '$(WindowsUniversalMobileSubPlatformId)' ">
     <!--orig csproj didn't have UapDefaultAssetScale; 
           see http://stackoverflow.com/questions/25295462/app-manifest-references-the-image-which-doesnot-have-a-candidate-in-the-main-pac -->
