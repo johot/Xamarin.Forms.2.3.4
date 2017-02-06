@@ -188,7 +188,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			{
 				UpdateScaleAndRotation(Element, Container);
 			}
-			else if (e.PropertyName == VisualElement.ScaleProperty.PropertyName || e.PropertyName == VisualElement.ScaleXProperty.PropertyName ||)e.PropertyName == VisualElement.ScaleYProperty.PropertyName
+			else if (e.PropertyName == VisualElement.ScaleProperty.PropertyName || e.PropertyName == VisualElement.ScaleXProperty.PropertyName || e.PropertyName == VisualElement.ScaleYProperty.PropertyName)
 			{
 				UpdateScaleAndRotation(Element, Container);
 			}
