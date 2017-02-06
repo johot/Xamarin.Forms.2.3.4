@@ -230,7 +230,7 @@ namespace Xamarin.Forms.Platform.Android
 						UpdateRotationX();
 					if (oldElement.RotationY != newElement.RotationY)
 						UpdateRotationY();
-					if (oldElement.Scale != newElement.Scale || oldElement.ScaleX != newElement.ScaleY || oldElement.ScaleY != newElement.ScaleY)
+					if (oldElement.Scale != newElement.Scale || oldElement.ScaleX != newElement.ScaleX || oldElement.ScaleY != newElement.ScaleY)
 						UpdateScale();
 					// ReSharper restore CompareOfFloatsByEqualityOperator
 
