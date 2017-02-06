@@ -73,7 +73,7 @@ public class FormsViewGroup extends ViewGroup {
 			float rotationX, 
 			float rotationY,
 			float scaleX,
-			float scaleY
+			float scaleY,
 			float translationX,
 			float translationY){
 		setPivotX (pivotX);
@@ -90,7 +90,7 @@ public class FormsViewGroup extends ViewGroup {
 		setRotationX (rotationX);
 		setRotationY (rotationY);
 		setScaleX (scaleX);
-		setScaleY (sclaeY);
+		setScaleY (scaleY);
 		setTranslationX (translationX);
 		setTranslationY (translationY);
 	}
