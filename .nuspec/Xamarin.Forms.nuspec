@@ -208,6 +208,7 @@
     <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\$Configuration$\Resources.xbf" target="lib\win81\Xamarin.Forms.Platform.WinRT.Tablet" />
     <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\$Configuration$\TabletResources.xbf" target="lib\win81\Xamarin.Forms.Platform.WinRT.Tablet" />
     <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\$Configuration$\FormsTextBoxStyle.xbf" target="lib\win81\Xamarin.Forms.Platform.WinRT.Tablet" />
+    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\$Configuration$\FormsProgressBarStyle.xbf" target="lib\win81\Xamarin.Forms.Platform.WinRT.Tablet" />
 
     <file src="..\Xamarin.Forms.Core\bin\$Configuration$\Xamarin.Forms.Core.dll" target="lib\win81" />
     <file src="..\docs\Xamarin.Forms.Core.xml" target="lib\win81" />
