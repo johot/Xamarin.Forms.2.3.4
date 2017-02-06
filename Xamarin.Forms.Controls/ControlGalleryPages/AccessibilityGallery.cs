@@ -25,7 +25,8 @@ namespace Xamarin.Forms.Controls
 					scrollFingers = "two fingers";
 					explore = "Drag one finger across the screen to read each element on the page.";
 					break;
-				case Device.Windows:
+				case Device.WinRT:
+				case Device.UWP:
 				case Device.WinPhone:
 					screenReader = "Narrator";
 					scrollFingers = "two fingers";
