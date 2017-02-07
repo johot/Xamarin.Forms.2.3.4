@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5225D8E4-DFB4-4697-BEF7-3DE99187F8B0}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Windows.UI</RootNamespace>
+    <AssemblyName>UniversalPlatform</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows.UI.Xaml\DependencyObject.cs" />
+    <Compile Include="Windows.UI.Core\CoreDispatcher.cs" />
+    <Compile Include="Windows.Foundation\TypedEventHandler.cs" />
+    <Compile Include="Windows.UI.Core\CoreDispatcherPriority.cs" />
+    <Compile Include="Windows.Foundation\IAsyncAction.cs" />
+    <Compile Include="Windows.Foundation\AsyncStatus.cs" />
+    <Compile Include="Windows.Foundation\IAsyncInfo.cs" />
+    <Compile Include="Windows.UI.Core\DispatchedHandler.cs" />
+    <Compile Include="Windows.UI.Core\IdleDispatchedHandler.cs" />
+    <Compile Include="Windows.UI.Xaml\DependencyProperty.cs" />
+    <Compile Include="Windows.UI.Xaml\DependencyPropertyChangedCallback.cs" />
+    <Compile Include="Windows.UI.Xaml\PropertyChangedCallback.cs" />
+    <Compile Include="Windows.UI.Xaml\DependencyPropertyChangedEventArgs.cs" />
+    <Compile Include="Windows.UI.Xaml\PropertyMetadata.cs" />
+    <Compile Include="Windows.UI.Xaml\CreateDefaultValueCallback.cs" />
+    <Compile Include="Windows.UI.Xaml\DependencyPropertyExtensions.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\Binding.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\BindingBase.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\IValueConverter.cs" />
+    <Compile Include="Windows.UI.Xaml\PropertyPath.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\UpdateSourceTrigger.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\RelativeSourceMode.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\RelativeSource.cs" />
+    <Compile Include="Windows.UI.Xaml.Data\BindingMode.cs" />
+    <Compile Include="Windows.UI.Xaml\UIElement.cs" />
+    <Compile Include="Windows.UI.Xaml\FrameworkElement.cs" />
+    <Compile Include="Windows.UI.Xaml\DataContextChangedEventArgs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows.UI.Xaml\" />
+    <Folder Include="Windows.UI.Core\" />
+    <Folder Include="Windows.Foundation\" />
+    <Folder Include="Windows.UI.Xaml.Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <StandardHeader Text="&#xA;${FileName}&#xA; &#xA;Author:&#xA;      ${AuthorName} &lt;${AuthorEmail}&gt;&#xA;&#xA;Copyright (c) ${Year} ${CopyrightHolder}" IncludeInNewFiles="False" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
