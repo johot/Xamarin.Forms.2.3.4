@@ -9,6 +9,8 @@
     <ItemGroup Condition="'$(MobilePlatform)' != '$(AndroidMobilePlatformId)'">
       <Compile Remove="android\**\*"/>
       <Content Remove="android\**\*"/>
+      <None Remove="android\**\*"/>
+      <AndroidAsset Remove="android\**\*"/>
     </ItemGroup>
   </Target>
   

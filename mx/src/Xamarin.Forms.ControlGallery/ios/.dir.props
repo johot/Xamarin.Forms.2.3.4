@@ -9,6 +9,8 @@
     <ItemGroup Condition="'$(MobilePlatform)' != '$(IosMobilePlatformId)'">
       <Compile Remove="ios\**\*"/>
       <Content Remove="ios\**\*"/>
+      <BundleResource Remove="ios\**\*"/>
+      <None Remove="ios\**\*"/>
     </ItemGroup>
   </Target>
   
