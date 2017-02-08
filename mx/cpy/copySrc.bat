@@ -19,6 +19,8 @@ xcopy /S/Y %repoDir%Xamarin.Forms.Platform.UAP\*.cs                           %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.UAP\*.xaml                         %srcDir%Xamarin.Forms\winrt\uap\                              /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Platform.UAP\*.json                         %srcDir%Xamarin.Forms\winrt\uap\                              /EXCLUDE:%~dp0excludeObjBin.txt
 move /y %srcDir%Xamarin.Forms\winrt\phone\FormsPivot.cs                       %srcDir%Xamarin.Forms\winrt\FormsPivot.cs
+copy /y %srcDir%Xamarin.Forms\winrt\Resources.xaml                            %srcDir%Xamarin.Forms\winrt\phone\
+copy /y %srcDir%Xamarin.Forms\winrt\Resources.xaml                            %srcDir%Xamarin.Forms\winrt\tablet\
 
 erase /s %srcDir%Xamarin.Forms.Maps\*.cs
 erase /s %srcDir%Xamarin.Forms.Maps\project.json
@@ -86,6 +88,7 @@ xcopy /S/Y %repoDir%Xamarin.Forms.CustomAttributes\*.cs                       %s
 xcopy /S/Y %repoDir%Xamarin.Forms.Controls\*.cs                               %srcDir%Xamarin.Forms.ControlGallery\portable\                /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Controls\*.xaml                             %srcDir%Xamarin.Forms.ControlGallery\portable\                /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Controls\*.jpg                              %srcDir%Xamarin.Forms.ControlGallery\portable\                /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Controls\*.config                           %srcDir%Xamarin.Forms.ControlGallery\                         /EXCLUDE:%~dp0excludeObjBin.txt
 
 xcopy /S/Y %repoDir%Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\*.cs                        %srcDir%Xamarin.Forms.ControlGallery\issues\                  /EXCLUDE:%~dp0excludeObjBin.txt
 xcopy /S/Y %repoDir%Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\*.xaml                      %srcDir%Xamarin.Forms.ControlGallery\issues\                  /EXCLUDE:%~dp0excludeObjBin.txt

@@ -26,7 +26,7 @@
   </ImportGroup>
   <ImportGroup>
     <!--<Import Project="$(NugetPclStorageShim)" />-->
-    <Import Project="$(NugetXamarinFormsXamlShim)" />
+    <Import Project="$(NugetXamarinFormsXamlBuildShim)" />
     <!--<Import Project="$(NugetXamarinFormsBuildTasksShim)" />-->
   </ImportGroup>
   <ItemGroup>
@@ -45,6 +45,11 @@
     <NugetProjectReference Include="..\Xamarin.Forms.Pages\Xamarin.Forms.Pages.csproj">
       <Project>{d6133dbd-6c60-4bd5-bea2-07e0a3927c31}</Project>
       <Name>Xamarin.Forms.Pages</Name>
+      <Platform>dotnet</Platform>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj">
+      <Project>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</Project>
+      <Name>Xamarin.Forms.Xaml</Name>
       <Platform>dotnet</Platform>
     </NugetProjectReference>
   </ItemGroup>
@@ -1158,6 +1163,7 @@
     <Content Include="windows\uwp\local.html" />
     <Content Include="windows\uwp\toolbar_close.png" />
     <Content Include="windows\uwp\WebImages\XamarinLogo.png" />
+    <EmbeddedResource Include="controlgallery.config" />
     <None Include="windows\uwp\.dir.props" />
     <AppxManifest Include="windows\uwp\Package.appxmanifest">
       <SubType>Designer</SubType>

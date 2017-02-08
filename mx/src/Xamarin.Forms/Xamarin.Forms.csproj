@@ -777,7 +777,12 @@
     <Compile Include="winrt\phone\WindowsPhonePlatform.cs" />
     <Compile Include="winrt\phone\WindowsPhonePlatformServices.cs" />
     <Compile Include="winrt\phone\WindowsPhoneResourcesProvider.cs" />
-    <Page Include="winrt\Resources.xaml" Condition=" '$(MobileSubPlatform)' == '$(WindowsTabletMobileSubPlatformId)' OR '$(MobileSubPlatform)' == '$(WindowsPhoneMobileSubPlatformId)' ">
+    <!--http://stackoverflow.com/questions/8732307/does-xaml-have-a-conditional-compiler-directive-for-debug-mode-->
+    <Page Include="winrt\phone\Resources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="winrt\tablet\Resources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -90,12 +90,18 @@ namespace Xamarin.Forms
 		static Windows.UI.Xaml.ResourceDictionary GetTabletResources()
 		{
 			return new Windows.UI.Xaml.ResourceDictionary {
+#if !MXBUILD
 #if !WINDOWS_UWP
-				//Source = new Uri("ms-appx:///Xamarin.Forms.Platform.WinRT.Tablet/TabletResources.xbf")
+				Source = new Uri("ms-appx:///Xamarin.Forms.Platform.WinRT.Tablet/TabletResources.xbf")
+#else
+				Source = new Uri("ms-appx:///Xamarin.Forms.Platform.UAP/Resources.xbf")
+#endif
+#else
+#if !WINDOWS_UWP
 				Source = new Uri("ms-appx:///Xamarin.Forms/winrt/tablet/TabletResources.xbf")
 #else
-                //Source = new Uri("ms-appx:///Xamarin.Forms.Platform.UAP/Resources.xbf")
-                Source = new Uri("ms-appx:///Xamarin.Forms/winrt/Resources.xbf")
+				Source = new Uri("ms-appx:///Xamarin.Forms/winrt/uap/Resources.xbf")
+#endif
 #endif
 			};
 		}
