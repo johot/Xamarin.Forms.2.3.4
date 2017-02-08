@@ -255,13 +255,9 @@ namespace Xamarin.Forms.Platform.WinRT
 				// key to trigger OnKeyDown, then treat it as handled.
 				var ctrlDown = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
 
-				if (ctrlDown && e.Key == VirtualKey.Control)
-				{
-					e.Handled = true;
-				}
 				// The shift, tab, and directional (Home/End/PgUp/PgDown included) keys can be used to select text and should otherwise
 				// be ignored.
-				else if (
+				if (
 					e.Key == VirtualKey.Shift ||
 					e.Key == VirtualKey.Tab ||
 					e.Key == VirtualKey.Left ||
