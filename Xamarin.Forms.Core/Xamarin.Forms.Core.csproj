@@ -355,6 +355,7 @@
     <Compile Include="Internals\ToolbarTracker.cs" />
     <Compile Include="ViewExtensions.cs" />
     <Compile Include="ViewState.cs" />
+    <Compile Include="VisualStateManager.cs" />
     <Compile Include="WeakEventManager.cs" />
     <Compile Include="WeakReferenceExtensions.cs" />
     <Compile Include="WebNavigatedEventArgs.cs" />
@@ -462,7 +463,5 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="PlatformConfiguration\macOSSpecific\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

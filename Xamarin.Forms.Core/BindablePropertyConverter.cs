@@ -43,10 +43,13 @@ namespace Xamarin.Forms
 				{
 					var style = parent as Style;
 					var triggerBase = parent as TriggerBase;
+					var visualState = parent as VisualState;
 					if (style != null)
 						type = style.TargetType;
 					else if (triggerBase != null)
 						type = triggerBase.TargetType;
+					else if (visualState != null)
+						type = visualState.TargetType;
 				}
 				else if (parentValuesProvider.TargetObject is Trigger)
 					type = (parentValuesProvider.TargetObject as Trigger).TargetType;
