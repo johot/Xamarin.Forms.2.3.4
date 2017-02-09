@@ -2,12 +2,14 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
 	x:Class="Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests">
   <!--<ContentPage.Resources>
     <ResourceDictionary>
-      <Style TargetType="Label">
-        <Setter Property="VisualStateManager.VisualStateManager">
-          <VisualStateManager.VisualStateGroups>
+      <Style TargetType="Label" x:Key="vsmTest">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+          <Setter.Value>
+            <generic:List x:TypeArguments="VisualStateGroup">
             <VisualStateGroup x:Name="Common">
               <VisualState x:Name="Disabled">
                 <VisualState.Setters>
@@ -15,13 +17,14 @@
                 </VisualState.Setters>
               </VisualState>
             </VisualStateGroup>
-          </VisualStateManager.VisualStateGroups>
+            </generic:List>
+          </Setter.Value>
         </Setter>
       </Style>
 
     </ResourceDictionary>
-  </ContentPage.Resources>-->
+  </ContentPage.Resources>
   <StackLayout>
-    <Label x:Name="label0"/>
-  </StackLayout>
+    <Label x:Name="label0" Style="{StaticResource vsmTest}"/>
+  </StackLayout>-->
 </ContentPage>

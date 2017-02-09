@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -49,7 +50,7 @@ namespace Xamarin.Forms
 					else if (triggerBase != null)
 						type = triggerBase.TargetType;
 					else if (visualState != null)
-						type = visualState.TargetType;
+						type = FindTypeForVisualState(parentValuesProvider.ParentObjects.ToList());
 				}
 				else if (parentValuesProvider.TargetObject is Trigger)
 					type = (parentValuesProvider.TargetObject as Trigger).TargetType;
@@ -71,6 +72,22 @@ namespace Xamarin.Forms
 				return ConvertFrom(type, parts[1], lineinfo);
 			}
 			throw new XamlParseException($"Can't resolve {value}. Syntax is [[prefix:]Type.]PropertyName.", lineinfo);
+		}
+
+		Type FindTypeForVisualState(List<object> parentObjects)
+		{
+			// Iterate through ParentObjects to find a Style and use its TargetType
+			foreach (var obj in parentObjects.Skip(3)) // Skip Setter, VisualState, and VisualStateGroup
+			{
+				var s = obj as Style;
+				if (s != null)
+				{
+					return s.TargetType;
+				}
+			}
+			
+			// This VSM must be directly on an element; use the root type
+			return parentObjects.Last().GetType();
 		}
 
 		public override object ConvertFromInvariantString(string value)

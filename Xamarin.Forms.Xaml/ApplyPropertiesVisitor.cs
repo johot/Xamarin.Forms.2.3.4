@@ -47,7 +47,10 @@ namespace Xamarin.Forms.Xaml
 			var source = Values [parentNode];
 
 			XmlName propertyName;
-			if (TryGetPropertyName(node, parentNode, out propertyName)) {
+			if (TryGetPropertyName(node, parentNode, out propertyName))
+			{
+				if (TrySetRuntimeName(propertyName, source, value, node))
+					return;
 				if (Skips.Contains(propertyName))
 					return;
 				if (parentElement.SkipProperties.Contains(propertyName))
@@ -200,6 +203,19 @@ namespace Xamarin.Forms.Xaml
 				return true;
 			}
 			return false;
+		}
+
+		bool TrySetRuntimeName(XmlName propertyName, object source, object value, ValueNode node)
+		{
+			if (propertyName != XmlName.xName)
+				return false;
+
+			var runTimeName = source.GetType().GetTypeInfo().GetCustomAttribute<RuntimeNamePropertyAttribute>();
+			if (runTimeName == null)
+				return false;
+
+			SetPropertyValue(source, new XmlName("", runTimeName.Name), value, Context.RootElement, node, Context, node);
+			return true;
 		}
 
 		static bool IsCollectionItem(INode node, INode parentNode)

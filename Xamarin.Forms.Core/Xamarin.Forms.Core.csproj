@@ -247,6 +247,7 @@
     <Compile Include="RoutingEffect.cs" />
     <Compile Include="RowDefinition.cs" />
     <Compile Include="RowDefinitionCollection.cs" />
+    <Compile Include="RuntimeNamePropertyAttribute.cs" />
     <Compile Include="ScrollOrientation.cs" />
     <Compile Include="ScrollToMode.cs" />
     <Compile Include="ScrollToPosition.cs" />

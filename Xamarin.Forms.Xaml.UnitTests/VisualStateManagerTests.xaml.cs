@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 
 using NUnit.Framework;
 
@@ -38,38 +39,72 @@ namespace Xamarin.Forms.Xaml.UnitTests
 <ContentPage
 xmlns=""http://xamarin.com/schemas/2014/forms""
 xmlns:x=""http://schemas.microsoft.com/winfx/2009/xaml""
+xmlns:generic=""clr-namespace:System.Collections.Generic;assembly=mscorlib""
 x:Class=""Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests"">
 <ContentPage.Resources>
 	<ResourceDictionary>
-		<Style TargetType = ""Label"" >
+		<Style TargetType = ""Label"" x:Key=""vsmTest"">
+			<Setter Property = ""BackgroundColor"" Value = ""Green"" />
 			<Setter Property = ""VisualStateManager.VisualStateGroups"">
-				<VisualStateGroup x:Name = ""Common"">
-					<VisualState x:Name = ""Disabled"">
-						<VisualState.Setters>
-								
-						</VisualState.Setters>
-					</VisualState>
-				</VisualStateGroup>
+				<Setter.Value>
+					<generic:List x:TypeArguments=""VisualStateGroup"">
+						<VisualStateGroup x:Name = ""Common"">
+							<VisualState x:Name = ""Disabled"">
+								<VisualState.Setters>
+									<Setter Property=""TextColor"" Value=""Red"" />
+								</VisualState.Setters>
+							</VisualState>
+						</VisualStateGroup>
+						<VisualStateGroup x:Name = ""Other"">
+							<VisualState x:Name = ""Hover"">
+								<VisualState.Setters>
+									<Setter Property=""TextColor"" Value=""Blue"" />
+								</VisualState.Setters>
+							</VisualState>
+						</VisualStateGroup>
+					</generic:List>
+				</Setter.Value>
 			</Setter>
 		</Style>
 	</ResourceDictionary>
 </ContentPage.Resources>
 	<StackLayout>
-		<Label x:Name = ""label0"" />
-	</StackLayout>
+		<Label x:Name = ""label0"" Style=""{StaticResource vsmTest}""/>
+</StackLayout>
 </ContentPage>";
 
 				var page = new ContentPage();
 				Assert.DoesNotThrow(() => page.LoadFromXaml(xaml));
 
-				var layout = new VisualStateManagerTests(useCompiledXaml);
-				Assert.AreEqual(layout.label0.TextColor, Color.Default);
+				var layout = page.Content as StackLayout;
 
-				var movedToState = VisualStateManager.GoToState(layout.label0, "Disabled");
+				if (layout != null)
+				{
+					var label = layout.Children.FirstOrDefault() as Label;
 
-				Assert.True(movedToState);
+					if (label != null)
+					{
+						var groups = VisualStateManager.GetVisualStateGroups(label);
+						Assert.AreEqual(2, groups.Count);
 
-				Assert.AreEqual(layout.label0.TextColor, Color.Red);
+						Assert.AreEqual(label.TextColor, Color.Default);
+
+						var wentToState = VisualStateManager.GoToState(label, "Disabled");
+
+						Assert.True(wentToState);
+
+						Assert.AreEqual(label.TextColor, Color.Red);
+					}
+				}
+
+				//var layout = new VisualStateManagerTests(useCompiledXaml);
+				//Assert.AreEqual(layout.label0.TextColor, Color.Default);
+
+				//var movedToState = VisualStateManager.GoToState(layout.label0, "Disabled");
+
+				//Assert.True(movedToState);
+
+				//Assert.AreEqual(layout.label0.TextColor, Color.Red);
 			}
 
 			//[TestCase (false)]
