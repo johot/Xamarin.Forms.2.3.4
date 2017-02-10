@@ -6,37 +6,27 @@
 	x:Class="Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests">
   <ContentPage.Resources>
     <ResourceDictionary>
-      <Style TargetType="Label" x:Key="VsmTest">
-        <Setter Property="Text" Value="derp">
-
-        </Setter>
+      <Style TargetType="Entry" x:Key="CustomDisabledState">
         <Setter Property="VisualStateManager.VisualStateGroups">
-
           <generic:List x:TypeArguments="VisualStateGroup">
-            <VisualStateGroup x:Name="Common">
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal" />
               <VisualState x:Name="Disabled">
                 <VisualState.Setters>
-                  <Setter Property="TextColor" Value="Red" />
-                </VisualState.Setters>
-              </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup x:Name="Other">
-
-              <VisualState x:Name="Hover">
-                <VisualState.Setters>
-                  <Setter Property="TextColor" Value="Blue" />
+                  <Setter Property="TextColor" Value="Gray" />
+                  <Setter Property="PlaceholderColor" Value="LightGray" />
                 </VisualState.Setters>
               </VisualState>
             </VisualStateGroup>
           </generic:List>
-
         </Setter>
       </Style>
     </ResourceDictionary>
   </ContentPage.Resources>
 
   <StackLayout>
-    <Label x:Name="Label0" Style="{StaticResource VsmTest}"/>
+    <Entry x:Name="Entry0" />
+    <Entry x:Name="Entry1" Style="{StaticResource CustomDisabledState}" />
   </StackLayout>
 
 </ContentPage>

@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-
 using NUnit.Framework;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml.UnitTests;
 using Xamarin.Forms.Core.UnitTests;
@@ -33,100 +31,65 @@ namespace Xamarin.Forms.Xaml.UnitTests
 
 			[TestCase (false)]
 			[TestCase (true)]
-			public void TestStyle (bool useCompiledXaml)
+			public void VisualStatesFromStyleXaml(bool useCompiledXaml)
 			{
-//				string xaml = @"<?xml version=""1.0"" encoding=""UTF - 8""?>
-//<ContentPage
-//xmlns=""http://xamarin.com/schemas/2014/forms""
-//xmlns:x=""http://schemas.microsoft.com/winfx/2009/xaml""
-//xmlns:generic=""clr-namespace:System.Collections.Generic;assembly=mscorlib""
-//x:Class=""Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests"">
-//<ContentPage.Resources>
-//	<ResourceDictionary>
-//		<Style TargetType = ""Label"" x:Key=""vsmTest"">
-//			<Setter Property = ""BackgroundColor"" Value = ""Green"" />
-//			<Setter Property = ""VisualStateManager.VisualStateGroups"">
-//					<generic:List x:TypeArguments=""VisualStateGroup"">
-//						<VisualStateGroup x:Name = ""Common"">
-//							<VisualState x:Name = ""Disabled"">
-//								<VisualState.Setters>
-//									<Setter Property=""TextColor"" Value=""Red"" />
-//								</VisualState.Setters>
-//							</VisualState>
-//						</VisualStateGroup>
-//						<VisualStateGroup x:Name = ""Other"">
-//							<VisualState x:Name = ""Hover"">
-//								<VisualState.Setters>
-//									<Setter Property=""TextColor"" Value=""Blue"" />
-//								</VisualState.Setters>
-//							</VisualState>
-//						</VisualStateGroup>
-//					</generic:List>
-//			</Setter>
-//		</Style>
-//	</ResourceDictionary>
-//</ContentPage.Resources>
-//	<StackLayout>
-//		<Label x:Name = ""label0"" Style=""{StaticResource vsmTest}""/>
-//</StackLayout>
-//</ContentPage>";
-
 				var layout = new VisualStateManagerTests(useCompiledXaml);
-
-				//var page = new ContentPage();
-				//Assert.DoesNotThrow(() => page.LoadFromXaml(xaml));
-				//var layout = page.Content as StackLayout;
-				//var label = layout.Children.FirstOrDefault() as Label;
-				var label = layout.Label0;
-
-				if (label != null)
-					{
-						var groups = VisualStateManager.GetVisualStateGroups(label);
-						Assert.AreEqual(2, groups.Count);
-
-						Assert.AreEqual(label.TextColor, Color.Default);
-
-						var wentToState = VisualStateManager.GoToState(label, "Disabled");
-
-						Assert.True(wentToState);
-
-						Assert.AreEqual(label.TextColor, Color.Red);
-					}
 				
+				var entry0 = layout.Entry0;
 
-				//
-				//Assert.AreEqual(layout.label0.TextColor, Color.Default);
+				// Verify that Entry0 has no VisualStateGroups
+				Assert.That(VisualStateManager.GetVisualStateGroups(entry0).Count == 0);
+				Assert.AreEqual(Color.Default, entry0.TextColor);
+				Assert.AreEqual(Color.Default, entry0.PlaceholderColor);
 
-				//var movedToState = VisualStateManager.GoToState(layout.label0, "Disabled");
+				var entry1 = layout.Entry1;
 
-				//Assert.True(movedToState);
+				// Verify that the correct groups are set up for Entry1
+				var groups = VisualStateManager.GetVisualStateGroups(entry1);
+				Assert.AreEqual(1, groups.Count);
+				Assert.That(groups[0].Name == "CommonStates");
+				Assert.Contains("Normal", groups[0].States.Select(state => state.Name).ToList());
+				Assert.Contains("Disabled", groups[0].States.Select(state => state.Name).ToList());
+				
+				Assert.AreEqual(Color.Default, entry1.TextColor);
+				Assert.AreEqual(Color.Default, entry1.PlaceholderColor);
 
-				//Assert.AreEqual(layout.label0.TextColor, Color.Red);
+				// Change the state of Entry1
+				Assert.True(VisualStateManager.GoToState(entry1, "Disabled"));
+
+				// And verify that the changes took
+				Assert.AreEqual(Color.Gray, entry1.TextColor);
+				Assert.AreEqual(Color.LightGray, entry1.PlaceholderColor);
+
+				// Verify that Entry0 was unaffected
+				Assert.AreEqual(Color.Default, entry0.TextColor);
+				Assert.AreEqual(Color.Default, entry0.PlaceholderColor);
 			}
 
-			//[TestCase (false)]
-			//[TestCase (true)]
-			//public void TestConversionOnSetters (bool useCompiledXaml)
-			//{
-			//	var layout = new VisualStateManagerTests(useCompiledXaml);
-			//	Style style = layout.style1;
-			//	Setter setter;
+			[TestCase(false)]
+			[TestCase(true)]
+			public void UnapplyVisualState(bool useCompiledXaml)
+			{
+				var layout = new VisualStateManagerTests(useCompiledXaml);
+				var entry1 = layout.Entry1;
 
-			//	//Test built-in conversions
-			//	setter = style.Setters.Single (s => s.Property == HeightProperty);
-			//	Assert.That (setter.Value, Is.TypeOf<double> ());
-			//	Assert.AreEqual (42d, (double)setter.Value);
+				Assert.AreEqual(Color.Default, entry1.TextColor);
+				Assert.AreEqual(Color.Default, entry1.PlaceholderColor);
 
-			//	//Test TypeConverters
-			//	setter = style.Setters.Single (s => s.Property == BackgroundColorProperty);
-			//	Assert.That (setter.Value, Is.TypeOf<Color> ());
-			//	Assert.AreEqual (Color.Pink, (Color)setter.Value);
+				// Change the state of Entry1
+				Assert.True(VisualStateManager.GoToState(entry1, "Disabled"));
 
-			//	//Test implicit cast operator
-			//	setter = style.Setters.Single (s => s.Property == Image.SourceProperty);
-			//	Assert.That (setter.Value, Is.TypeOf<FileImageSource> ());
-			//	Assert.AreEqual ("foo.png", ((FileImageSource)setter.Value).File);
-			//}
+				// And verify that the changes took
+				Assert.AreEqual(Color.Gray, entry1.TextColor);
+				Assert.AreEqual(Color.LightGray, entry1.PlaceholderColor);
+
+				// Now change it to Normal
+				Assert.True(VisualStateManager.GoToState(entry1, "Normal"));
+
+				// And verify that the changes reverted
+				Assert.AreEqual(Color.Default, entry1.TextColor);
+				Assert.AreEqual(Color.Default, entry1.PlaceholderColor);
+			}
 
 			//[TestCase (false)]
 			//[TestCase (true)]

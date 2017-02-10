@@ -34,6 +34,8 @@ namespace Xamarin.Forms
 
 			// TODO hartez 2017/02/08 17:53:46 Figure out what UWP does about duplicate state names inside of groups and between groups	
 			// Right now, if there are duplicates we don't throw any exceptions, and the first one found will always win
+			// I think in UWP since everything comes from XAML x:Name is doing the enforcement; if we're going to allow creation
+			// of VSM stuff from code (and we are), we need to enforce names on our own
 
 			foreach (VisualStateGroup group in groups)
 			{
@@ -43,14 +45,24 @@ namespace Xamarin.Forms
 					return true;
 				}
 
-				// See if this group contains t
+				// See if this group contains the new state
 				var target = group.GetState(name);
 				if (target == null)
 				{
 					continue;
 				}
 
-				// TODO hartez 2017/02/08 18:00:48 You probably need to unapply the styles from the previous state (if any)	
+				// If we've got a new state to transition to, unapply the setters from the current state
+				if (group.CurrentState != null)
+				{
+					foreach (Setter setter in group.CurrentState.Setters)
+					{
+						setter.UnApply(visualElement);
+					}
+				}
+
+				// Update the current state
+				group.CurrentState = target;
 
 				// Apply the setters from the new state
 				foreach (Setter setter in target.Setters)
