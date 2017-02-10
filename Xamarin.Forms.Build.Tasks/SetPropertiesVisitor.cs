@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml;
 
 using Mono.Cecil;
@@ -10,6 +11,10 @@ using Mono.Cecil.Rocks;
 
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
+using FieldAttributes = Mono.Cecil.FieldAttributes;
+using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
+using MethodAttributes = Mono.Cecil.MethodAttributes;
+using TypeAttributes = Mono.Cecil.TypeAttributes;
 
 namespace Xamarin.Forms.Build.Tasks
 {
@@ -61,6 +66,8 @@ namespace Xamarin.Forms.Build.Tasks
 					return;
 			}
 
+			if (TrySetRuntimeName(propertyName, Context.Variables[(IElementNode)parentNode], node))
+				return;
 			if (skips.Contains(propertyName))
 				return;
 			if (parentNode is IElementNode && ((IElementNode)parentNode).SkipProperties.Contains (propertyName))
@@ -69,6 +76,26 @@ namespace Xamarin.Forms.Build.Tasks
 			    propertyName.LocalName == "Ignorable")
 				return;
 			Context.IL.Append(SetPropertyValue(Context.Variables [(IElementNode)parentNode], propertyName, node, Context, node));
+		}
+
+		bool TrySetRuntimeName(XmlName propertyName, VariableDefinition variableDefinition, ValueNode node)
+		{
+			if (propertyName != XmlName.xName)
+				return false;
+
+			var attributes = variableDefinition.VariableType.Resolve()
+				.CustomAttributes.Where(attribute => attribute.AttributeType.FullName == "Xamarin.Forms.RuntimeNamePropertyAttribute").ToList();
+
+			if (!attributes.Any())
+				return false;
+
+			var runTimeName = attributes[0].ConstructorArguments[0].Value as string;
+
+			if (string.IsNullOrEmpty(runTimeName)) 
+				return false;
+
+			Context.IL.Append(SetPropertyValue(variableDefinition, new XmlName("", runTimeName), node, Context, node));
+			return true;
 		}
 
 		public void Visit(MarkupNode node, INode parentNode)
@@ -223,6 +250,8 @@ namespace Xamarin.Forms.Build.Tasks
 			}
 			return false;
 		}
+
+
 
 		static bool IsCollectionItem(INode node, INode parentNode)
 		{

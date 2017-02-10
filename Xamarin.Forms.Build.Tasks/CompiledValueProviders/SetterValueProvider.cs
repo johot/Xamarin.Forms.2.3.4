@@ -14,6 +14,7 @@ namespace Xamarin.Forms.Core.XamlC
 		public IEnumerable<Instruction> ProvideValue(VariableDefinitionReference vardefref, ModuleDefinition module, BaseNode node, ILContext context)
 		{
 			INode valueNode = null;
+
 			if (!((IElementNode)node).Properties.TryGetValue(new XmlName("", "Value"), out valueNode) && ((IElementNode)node).CollectionItems.Count == 1)
 				valueNode = ((IElementNode)node).CollectionItems[0];
 

@@ -4,27 +4,39 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
 	x:Class="Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests">
-  <!--<ContentPage.Resources>
+  <ContentPage.Resources>
     <ResourceDictionary>
-      <Style TargetType="Label" x:Key="vsmTest">
+      <Style TargetType="Label" x:Key="VsmTest">
+        <Setter Property="Text" Value="derp">
+
+        </Setter>
         <Setter Property="VisualStateManager.VisualStateGroups">
-          <Setter.Value>
-            <generic:List x:TypeArguments="VisualStateGroup">
+
+          <generic:List x:TypeArguments="VisualStateGroup">
             <VisualStateGroup x:Name="Common">
               <VisualState x:Name="Disabled">
                 <VisualState.Setters>
-                  <Setter Property="TextColor" Value="Red"/>
+                  <Setter Property="TextColor" Value="Red" />
                 </VisualState.Setters>
               </VisualState>
             </VisualStateGroup>
-            </generic:List>
-          </Setter.Value>
+            <VisualStateGroup x:Name="Other">
+
+              <VisualState x:Name="Hover">
+                <VisualState.Setters>
+                  <Setter Property="TextColor" Value="Blue" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </generic:List>
+
         </Setter>
       </Style>
-
     </ResourceDictionary>
   </ContentPage.Resources>
+
   <StackLayout>
-    <Label x:Name="label0" Style="{StaticResource vsmTest}"/>
-  </StackLayout>-->
+    <Label x:Name="Label0" Style="{StaticResource VsmTest}"/>
+  </StackLayout>
+
 </ContentPage>

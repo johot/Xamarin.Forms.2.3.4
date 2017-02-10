@@ -32,57 +32,54 @@ namespace Xamarin.Forms.Xaml.UnitTests
 			}
 
 			[TestCase (false)]
-			//[TestCase (true)]
+			[TestCase (true)]
 			public void TestStyle (bool useCompiledXaml)
 			{
-				string xaml = @"<?xml version=""1.0"" encoding=""UTF - 8""?>
-<ContentPage
-xmlns=""http://xamarin.com/schemas/2014/forms""
-xmlns:x=""http://schemas.microsoft.com/winfx/2009/xaml""
-xmlns:generic=""clr-namespace:System.Collections.Generic;assembly=mscorlib""
-x:Class=""Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests"">
-<ContentPage.Resources>
-	<ResourceDictionary>
-		<Style TargetType = ""Label"" x:Key=""vsmTest"">
-			<Setter Property = ""BackgroundColor"" Value = ""Green"" />
-			<Setter Property = ""VisualStateManager.VisualStateGroups"">
-				<Setter.Value>
-					<generic:List x:TypeArguments=""VisualStateGroup"">
-						<VisualStateGroup x:Name = ""Common"">
-							<VisualState x:Name = ""Disabled"">
-								<VisualState.Setters>
-									<Setter Property=""TextColor"" Value=""Red"" />
-								</VisualState.Setters>
-							</VisualState>
-						</VisualStateGroup>
-						<VisualStateGroup x:Name = ""Other"">
-							<VisualState x:Name = ""Hover"">
-								<VisualState.Setters>
-									<Setter Property=""TextColor"" Value=""Blue"" />
-								</VisualState.Setters>
-							</VisualState>
-						</VisualStateGroup>
-					</generic:List>
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</ResourceDictionary>
-</ContentPage.Resources>
-	<StackLayout>
-		<Label x:Name = ""label0"" Style=""{StaticResource vsmTest}""/>
-</StackLayout>
-</ContentPage>";
+//				string xaml = @"<?xml version=""1.0"" encoding=""UTF - 8""?>
+//<ContentPage
+//xmlns=""http://xamarin.com/schemas/2014/forms""
+//xmlns:x=""http://schemas.microsoft.com/winfx/2009/xaml""
+//xmlns:generic=""clr-namespace:System.Collections.Generic;assembly=mscorlib""
+//x:Class=""Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests"">
+//<ContentPage.Resources>
+//	<ResourceDictionary>
+//		<Style TargetType = ""Label"" x:Key=""vsmTest"">
+//			<Setter Property = ""BackgroundColor"" Value = ""Green"" />
+//			<Setter Property = ""VisualStateManager.VisualStateGroups"">
+//					<generic:List x:TypeArguments=""VisualStateGroup"">
+//						<VisualStateGroup x:Name = ""Common"">
+//							<VisualState x:Name = ""Disabled"">
+//								<VisualState.Setters>
+//									<Setter Property=""TextColor"" Value=""Red"" />
+//								</VisualState.Setters>
+//							</VisualState>
+//						</VisualStateGroup>
+//						<VisualStateGroup x:Name = ""Other"">
+//							<VisualState x:Name = ""Hover"">
+//								<VisualState.Setters>
+//									<Setter Property=""TextColor"" Value=""Blue"" />
+//								</VisualState.Setters>
+//							</VisualState>
+//						</VisualStateGroup>
+//					</generic:List>
+//			</Setter>
+//		</Style>
+//	</ResourceDictionary>
+//</ContentPage.Resources>
+//	<StackLayout>
+//		<Label x:Name = ""label0"" Style=""{StaticResource vsmTest}""/>
+//</StackLayout>
+//</ContentPage>";
 
-				var page = new ContentPage();
-				Assert.DoesNotThrow(() => page.LoadFromXaml(xaml));
+				var layout = new VisualStateManagerTests(useCompiledXaml);
 
-				var layout = page.Content as StackLayout;
+				//var page = new ContentPage();
+				//Assert.DoesNotThrow(() => page.LoadFromXaml(xaml));
+				//var layout = page.Content as StackLayout;
+				//var label = layout.Children.FirstOrDefault() as Label;
+				var label = layout.Label0;
 
-				if (layout != null)
-				{
-					var label = layout.Children.FirstOrDefault() as Label;
-
-					if (label != null)
+				if (label != null)
 					{
 						var groups = VisualStateManager.GetVisualStateGroups(label);
 						Assert.AreEqual(2, groups.Count);
@@ -95,9 +92,9 @@ x:Class=""Xamarin.Forms.Xaml.UnitTests.VisualStateManagerTests"">
 
 						Assert.AreEqual(label.TextColor, Color.Red);
 					}
-				}
+				
 
-				//var layout = new VisualStateManagerTests(useCompiledXaml);
+				//
 				//Assert.AreEqual(layout.label0.TextColor, Color.Default);
 
 				//var movedToState = VisualStateManager.GoToState(layout.label0, "Disabled");

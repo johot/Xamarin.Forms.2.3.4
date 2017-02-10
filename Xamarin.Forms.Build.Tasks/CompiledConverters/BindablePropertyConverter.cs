@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Microsoft.Build.Framework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -39,6 +41,14 @@ namespace Xamarin.Forms.Core.XamlC
 							typeName = (ttnode as ValueNode).Value as string;
 						else if (ttnode is IElementNode)
 							typeName = ((ttnode as IElementNode).CollectionItems.FirstOrDefault() as ValueNode)?.Value as string ?? ((ttnode as IElementNode).Properties [new XmlName("", "TypeName")] as ValueNode)?.Value as string;
+					} else if (parent.XmlType.Name == "VisualState") {
+						var current = parent.Parent as IElementNode;
+						while (current != null && current.XmlType.Name != "Style")
+						{
+							current = current.Parent as IElementNode;
+						}
+
+						typeName = (current?.Properties[new XmlName("", "TargetType")] as ValueNode)?.Value as string;
 					}
 				} else if ((node.Parent as ElementNode)?.XmlType.NamespaceUri == "http://xamarin.com/schemas/2014/forms" && (node.Parent as ElementNode)?.XmlType.Name == "Trigger")
 					typeName = ((node.Parent as ElementNode).Properties [new XmlName("", "TargetType")] as ValueNode).Value as string;
