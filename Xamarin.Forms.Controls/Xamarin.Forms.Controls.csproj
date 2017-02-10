@@ -115,6 +115,10 @@
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\VisualElementiOS.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGalleries\WindowsPlatformSpecificsGalleryHelpers.cs" />
     <Compile Include="GalleryPages\PlatformSpecificsGallery.cs" />
+    <Compile Include="GalleryPages\VisualStateManagerGalleries\EntryDisabledStatesGallery.xaml.cs">
+      <DependentUpon>EntryDisabledStatesGallery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GalleryPages\VisualStateManagerGalleries\VisualStateManagerGallery.cs" />
     <Compile Include="LegacyRepro\Page1.xaml.cs">
       <DependentUpon>Page1.xaml</DependentUpon>
     </Compile>
@@ -355,6 +359,12 @@
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GalleryPages\VisualStateManagerGalleries\EntryDisabledStatesGallery.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Target Name="BeforeBuild">
     <CreateItem Include="blank.config">

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-//	[ContentProperty("VisualStateGroups")]
 	public class VisualStateManager
 	{
 		public static readonly BindableProperty VisualStateGroupsProperty =

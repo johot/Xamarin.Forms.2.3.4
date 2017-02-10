@@ -4,6 +4,9 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using WVisualStateManager = Windows.UI.Xaml.VisualStateManager;
+using WVisualStateGroup = Windows.UI.Xaml.VisualStateGroup;
+using WVisualState = Windows.UI.Xaml.VisualState;
 
 namespace Xamarin.Forms.Platform.UWP
 {
@@ -121,14 +124,14 @@ namespace Xamarin.Forms.Platform.UWP
 			if (VisualTreeHelper.GetChildrenCount(control) == 0)
 				control.ApplyTemplate();
 
-			VisualStateManager.GoToState(control, "Disabled", true);
+			WVisualStateManager.GoToState(control, "Disabled", true);
 
 			var rootElement = (FrameworkElement)VisualTreeHelper.GetChild(control, 0);
 
 			var cache = new VisualStateCache();
-			IList<VisualStateGroup> groups = VisualStateManager.GetVisualStateGroups(rootElement);
+			var groups = WVisualStateManager.GetVisualStateGroups(rootElement);
 
-			VisualStateGroup common = null;
+			WVisualStateGroup common = null;
 			foreach (var group in groups)
 			{
 				if (group.Name == "CommonStates")
@@ -144,7 +147,7 @@ namespace Xamarin.Forms.Platform.UWP
 
 			if (common != null)
 			{
-				foreach (VisualState state in common.States)
+				foreach (var state in common.States)
 				{
 					if (state.Name == "Normal")
 						cache.Normal = state;
@@ -183,7 +186,7 @@ namespace Xamarin.Forms.Platform.UWP
 
 			var rootElement = (FrameworkElement)VisualTreeHelper.GetChild(control, 0);
 
-			IList<VisualStateGroup> groups = VisualStateManager.GetVisualStateGroups(rootElement);
+			var groups = WVisualStateManager.GetVisualStateGroups(rootElement);
 
 			if (cache.FocusStates != null)
 				groups.Add(cache.FocusStates);
@@ -199,7 +202,7 @@ namespace Xamarin.Forms.Platform.UWP
 			if (cache.PointerOver != null)
 				commonStates.States.Add(cache.PointerOver);
 
-			VisualStateManager.GoToState(control, "Normal", true);
+			WVisualStateManager.GoToState(control, "Normal", true);
 
 			cache = null;
 		}
@@ -246,8 +249,8 @@ namespace Xamarin.Forms.Platform.UWP
 
 		class VisualStateCache
 		{
-			public VisualStateGroup FocusStates;
-			public VisualState Normal, PointerOver, Pressed;
+			public WVisualStateGroup FocusStates;
+			public WVisualState Normal, PointerOver, Pressed;
 		}
 	}
 }
