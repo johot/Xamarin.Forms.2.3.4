@@ -12,7 +12,10 @@ namespace Xamarin.Forms
 
 		public static readonly BindableProperty InputTransparentProperty = BindableProperty.Create("InputTransparent", typeof(bool), typeof(VisualElement), default(bool));
 
-		public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create("IsEnabled", typeof(bool), typeof(VisualElement), true);
+		public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create("IsEnabled", typeof(bool), typeof(VisualElement), true,
+			propertyChanged: OnIsEnabledPropertyChanged);
+
+		
 
 		static readonly BindablePropertyKey XPropertyKey = BindableProperty.CreateReadOnly("X", typeof(double), typeof(VisualElement), default(double));
 
@@ -736,6 +739,18 @@ namespace Xamarin.Forms
 			{
 				element.OnUnfocus();
 			}
+		}
+
+		static void OnIsEnabledPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+		{
+			var element = bindable as VisualElement;
+			if (element == null)
+			{
+				return;
+			}
+
+			var isEnabled = (bool)newValue;
+			VisualStateManager.GoToState(element, isEnabled ? "Disabled" : "Normal");
 		}
 
 		static void OnRequestChanged(BindableObject bindable, object oldvalue, object newvalue)

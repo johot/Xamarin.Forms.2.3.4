@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using WVisualStateManager = Windows.UI.Xaml.VisualStateManager;
 
 namespace Xamarin.Forms.Platform.WinRT
 {
@@ -84,7 +85,7 @@ namespace Xamarin.Forms.Platform.WinRT
 		{
 			base.OnGotFocus (e);
 
-			VisualStateManager.GoToState (this, "Focused", true);
+			WVisualStateManager.GoToState (this, "Focused", true);
 		}
 
 		protected override void OnLostFocus (RoutedEventArgs e)
@@ -105,7 +106,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 		void GoToNormal ()
 		{
-			VisualStateManager.GoToState (this, (IsEnabled) ? "Normal" : "Disabled", false);
+			WVisualStateManager.GoToState (this, (IsEnabled) ? "Normal" : "Disabled", false);
 		}
 
 		void UpdatePlaceholder ()
@@ -124,7 +125,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			else if (FocusState != FocusState.Unfocused)
 				state = "Focused";
 
-			VisualStateManager.GoToState (this, state, true);
+			WVisualStateManager.GoToState (this, state, true);
 		}
 
 		static void OnQueryTextChanged (DependencyObject d, DependencyPropertyChangedEventArgs e)

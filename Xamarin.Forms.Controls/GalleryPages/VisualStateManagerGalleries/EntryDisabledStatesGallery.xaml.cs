@@ -14,5 +14,20 @@ namespace Xamarin.Forms.Controls.GalleryPages.VisualStateManagerGalleries
 		{
 			InitializeComponent();
 		}
+
+		void Button0_OnClicked(object sender, EventArgs e)
+		{
+			Entry0.IsEnabled = !Entry0.IsEnabled;
+		}
+
+		void Button1_OnClicked(object sender, EventArgs e)
+		{
+			Entry1.IsEnabled = !Entry1.IsEnabled;
+		}
+
+		void Button2_OnClicked(object sender, EventArgs e)
+		{
+			Entry2.IsEnabled = !Entry2.IsEnabled;
+		}
 	}
 }
