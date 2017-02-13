@@ -21,6 +21,23 @@
           </generic:List>
         </Setter>
       </Style>
+
+      <Style TargetType="Entry" x:Key="OtherStyle">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+          <generic:List x:TypeArguments="VisualStateGroup">
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal" />
+              <VisualState x:Name="Disabled">
+                <VisualState.Setters>
+                  <Setter Property="TextColor" Value="Default" />
+                  <Setter Property="PlaceholderColor" Value="Default" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </generic:List>
+        </Setter>
+      </Style>
+    
     </ResourceDictionary>
   </ContentPage.Resources>
 

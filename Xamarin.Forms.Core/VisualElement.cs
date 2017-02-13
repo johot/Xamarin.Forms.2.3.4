@@ -750,7 +750,8 @@ namespace Xamarin.Forms
 			}
 
 			var isEnabled = (bool)newValue;
-			VisualStateManager.GoToState(element, isEnabled ? "Disabled" : "Normal");
+			// TODO hartez 2017/02/13 11:43:56 These state names should be consts defined somewhere	
+			VisualStateManager.GoToState(element, isEnabled ? "Normal" : "Disabled");
 		}
 
 		static void OnRequestChanged(BindableObject bindable, object oldvalue, object newvalue)
