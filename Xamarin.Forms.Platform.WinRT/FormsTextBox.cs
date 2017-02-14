@@ -49,7 +49,10 @@ namespace Xamarin.Forms.Platform.WinRT
 		{
 			TextChanged += OnTextChanged;
 			SelectionChanged += OnSelectionChanged;
+			IsEnabledChanged += OnIsEnabledChanged;
 		}
+
+	
 
 		public Brush BackgroundFocusBrush
 		{
@@ -328,6 +331,19 @@ namespace Xamarin.Forms.Platform.WinRT
 				InputScope = _cachedInputScope;
 				IsSpellCheckEnabled = _cachedSpellCheckSetting;
 				IsTextPredictionEnabled = _cachedPredictionsSetting;
+			}
+		}
+
+		public bool DeferToNativeVsm = true;
+
+		void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+		{
+			var isEnabled = (bool)dependencyPropertyChangedEventArgs.NewValue;
+
+			if (DeferToNativeVsm)
+			{
+				Windows.UI.Xaml.VisualStateManager.GoToState(sender as Control, isEnabled ? "NativeNormal" : "NativeDisabled", true);
+				
 			}
 		}
 	}

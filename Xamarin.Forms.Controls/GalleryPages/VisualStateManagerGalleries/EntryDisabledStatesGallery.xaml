@@ -22,7 +22,8 @@
               <VisualState x:Name="Disabled">
                 <VisualState.Setters>
                   <Setter Property="TextColor" Value="Default" />
-                  <Setter Property="PlaceholderColor" Value="Default" />
+                  <!--<Setter Property="PlaceholderColor" Value="Default" />-->
+                  <Setter Property="BackgroundColor" Value="Default" />
                 </VisualState.Setters>
               </VisualState>
             </VisualStateGroup>
@@ -39,6 +40,7 @@
                 <VisualState.Setters>
                   <Setter Property="TextColor" Value="LightCoral" />
                   <Setter Property="PlaceholderColor" Value="LightGreen" />
+                  <Setter Property="BackgroundColor" Value="LightGray" />
                 </VisualState.Setters>
               </VisualState>
             </VisualStateGroup>
@@ -50,20 +52,23 @@
 
   <StackLayout>
 
-    <!-- 
-    Also, modify the FormsTextBoxStyle to remove the textcolor/placeholdercolor from disabled; leave the rest for now
-    You're on the right track. Play around with chaning LightCoral and LightGreen to Color.Default, make sure the original colors get preserved
+    <!-- TODO
+    
+    Set background colors for each textbox (and the states) to make sure you've got backgrounds working right
+    Apply the "fakedefault" as a real default VSG for Entry
+    Give this a try on Android, iOS
+    Apply this to WinRT and WP8
     
     -->
     
     <Label Text="The Entry below uses the default; when IsEnabled is false, it uses the default native colors for the control."/>
-    <Entry x:Name="Entry0" TextColor="Blue" PlaceholderColor="Green" Placeholder="placeholder"></Entry>
+    <Entry x:Name="Entry0" Style="{StaticResource FakeDefault}" TextColor="Blue" PlaceholderColor="Green" Placeholder="placeholder"></Entry>
     <Button Text="Toggle IsEnabled" x:Name="Button0" Clicked="Button0_OnClicked"></Button>
 
     <Label Text="The Entry below has its VSM cleared; whatever TextColor/PlaceholderTextColor are set to will persist even if IsEnabled is false." Margin="0,20,0,0"/>
-    <Entry x:Name="Entry1" Style="{StaticResource PersistentColor}" TextColor="MediumVioletRed" PlaceholderColor="MediumPurple" Placeholder="placeholder">
-      <VisualStateManager.VisualStateGroups></VisualStateManager.VisualStateGroups>
-    </Entry>
+    <Entry x:Name="Entry1" Style="{StaticResource PersistentColor}" TextColor="MediumVioletRed" 
+           PlaceholderColor="MediumPurple" Placeholder="placeholder"
+          BackgroundColor="Beige"></Entry>
     <Button Text="Toggle IsEnabled" x:Name="Button1" Clicked="Button1_OnClicked"></Button>
 
     <Label Text="The Entry below uses VSM to customize the colors when IsEnabled is false." Margin="0,20,0,0"/>

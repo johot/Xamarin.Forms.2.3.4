@@ -9,6 +9,7 @@ namespace Xamarin.Forms
 {
 	public class VisualStateManager
 	{
+		// TODO hartez 2017/02/14 10:32:35 Figure out whether null as a default meaning legacy or some specific subclass makes more sense	
 		public static readonly BindableProperty VisualStateGroupsProperty =
 			BindableProperty.CreateAttached("VisualStateGroups", typeof(IList<VisualStateGroup>), typeof(VisualElement), new List<VisualStateGroup>());
 
