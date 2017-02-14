@@ -34,6 +34,6 @@
     Targets
   -->
   <Target Name="Install">
-    <MSBuild Projects="@(TargetProject)" Targets="Install" Properties="Platform=$(MetaPlatform)" />
+    <MSBuild Projects="@(DebuggerTargetProject)" Targets="Install" Properties="Platform=$(MetaPlatform)" />
   </Target>
 </Project>
