@@ -25,8 +25,8 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="uwp:FormsTextBox">
-					<Grid>
-						<Grid.Resources>
+                    <Grid>
+                        <Grid.Resources>
 							<Style x:Name="DeleteButtonStyle" TargetType="Button">
 								<Setter Property="Template">
 									<Setter.Value>
@@ -34,7 +34,8 @@
 											<Grid x:Name="ButtonLayoutGrid" BorderBrush="{ThemeResource TextBoxButtonBorderThemeBrush}"
 											      BorderThickness="{TemplateBinding BorderThickness}"
 											      Background="{ThemeResource TextBoxButtonBackgroundThemeBrush}">
-												<VisualStateManager.VisualStateGroups>
+                                              
+                                                <VisualStateManager.VisualStateGroups>
 													<VisualStateGroup x:Name="CommonStates">
 														<VisualState x:Name="Normal" />
 														<VisualState x:Name="PointerOver">
@@ -84,10 +85,10 @@
 							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
 						<VisualStateManager.VisualStateGroups>
-                            <!-- TODO Explain this once you figure it out -->
-                            <VisualStateGroup x:Name="NativeManaged">
-                                <VisualState x:Name="NativeNormal" />
-                                <VisualState x:Name="NativeDisabled">
+                            <!-- TODO Hopefully once we sort out GoToStateCore, we can swap these back -->
+                            <VisualStateGroup x:Name="FormsManaged">
+                                <VisualState x:Name="FormsNormal" />
+                                <VisualState x:Name="FormsDisabled">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground"
 										                               Storyboard.TargetName="HeaderContentPresenter">

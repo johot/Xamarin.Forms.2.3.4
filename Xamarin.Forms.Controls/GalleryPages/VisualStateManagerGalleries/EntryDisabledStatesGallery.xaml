@@ -14,7 +14,7 @@
         </Setter>
       </Style>
 
-      <Style TargetType="Entry" x:Key="FakeDefault">
+      <!--<Style TargetType="Entry" x:Key="FakeDefault">
         <Setter Property="VisualStateManager.VisualStateGroups">
           <generic:List x:TypeArguments="VisualStateGroup">
             <VisualStateGroup x:Name="CommonStates">
@@ -22,14 +22,14 @@
               <VisualState x:Name="Disabled">
                 <VisualState.Setters>
                   <Setter Property="TextColor" Value="Default" />
-                  <!--<Setter Property="PlaceholderColor" Value="Default" />-->
+                  --><!--<Setter Property="PlaceholderColor" Value="Default" />--><!--
                   <Setter Property="BackgroundColor" Value="Default" />
                 </VisualState.Setters>
               </VisualState>
             </VisualStateGroup>
           </generic:List>
         </Setter>
-      </Style>
+      </Style>-->
 
       <Style TargetType="Entry" x:Key="CustomDisabledState">
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -62,7 +62,7 @@
     -->
     
     <Label Text="The Entry below uses the default; when IsEnabled is false, it uses the default native colors for the control."/>
-    <Entry x:Name="Entry0" Style="{StaticResource FakeDefault}" TextColor="Blue" PlaceholderColor="Green" Placeholder="placeholder"></Entry>
+    <Entry x:Name="Entry0" TextColor="Blue" PlaceholderColor="Green" Placeholder="placeholder"></Entry>
     <Button Text="Toggle IsEnabled" x:Name="Button0" Clicked="Button0_OnClicked"></Button>
 
     <Label Text="The Entry below has its VSM cleared; whatever TextColor/PlaceholderTextColor are set to will persist even if IsEnabled is false." Margin="0,20,0,0"/>

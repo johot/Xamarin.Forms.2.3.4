@@ -15,8 +15,6 @@ namespace Xamarin.Forms
 		public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create("IsEnabled", typeof(bool), typeof(VisualElement), true,
 			propertyChanged: OnIsEnabledPropertyChanged);
 
-		
-
 		static readonly BindablePropertyKey XPropertyKey = BindableProperty.CreateReadOnly("X", typeof(double), typeof(VisualElement), default(double));
 
 		public static readonly BindableProperty XProperty = XPropertyKey.BindableProperty;

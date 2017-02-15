@@ -34,14 +34,9 @@ namespace Xamarin.Forms.Platform.WinRT
 					var textBox = new FormsTextBox { Style = Windows.UI.Xaml.Application.Current.Resources["FormsTextBoxStyle"] as Windows.UI.Xaml.Style };
 					SetNativeControl(textBox);
 
-					if (VisualStateManager.GetVisualStateGroups(e.NewElement).Count == 0)
-					{
-						textBox.DeferToNativeVsm = true;
-					}
-					else
-					{
-						textBox.DeferToNativeVsm = false;
-					}
+					// If the developer hasn't specified a Visual State Group list (even an empty one), then 
+					// we leave the state management to the native VSM
+					textBox.DeferToNativeVsm = VisualStateManager.GetVisualStateGroups(e.NewElement) == null;
 
 					textBox.TextChanged += OnNativeTextChanged;
 					textBox.KeyUp += TextBoxOnKeyUp;
