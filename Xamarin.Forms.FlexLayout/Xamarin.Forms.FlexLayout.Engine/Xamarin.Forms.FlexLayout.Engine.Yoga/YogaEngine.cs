@@ -295,7 +295,7 @@ namespace Xamarin.FlexLayoutEngine.Yoga
 			var flexWidthMode = widthMode.ConvertTo<FlexMeasureMode>();
 			var flexheightMode = heightMode.ConvertTo<FlexMeasureMode>();
 
-			dynamic size = _internalMeasure(this, width, flexWidthMode, height, flexheightMode);
+			Size size = _internalMeasure(this, width, flexWidthMode, height, flexheightMode);
 
 			return MeasureOutput.Make((float)size.Width, (float)size.Height);
 		}

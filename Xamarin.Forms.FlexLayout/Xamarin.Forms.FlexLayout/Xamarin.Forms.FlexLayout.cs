@@ -257,7 +257,7 @@ namespace Xamarin.Forms
 
 		}
 
-		object MeasureView(IFlexNode node, float width, FlexMeasureMode widthMode, float height, FlexMeasureMode heightMode)
+		Size MeasureView(IFlexNode node, float width, FlexMeasureMode widthMode, float height, FlexMeasureMode heightMode)
 		{
 			var constrainedWidth = (widthMode == FlexMeasureMode.None) ? float.MaxValue : width;
 			var constrainedHeight = (heightMode == FlexMeasureMode.None) ? float.MaxValue : height;
