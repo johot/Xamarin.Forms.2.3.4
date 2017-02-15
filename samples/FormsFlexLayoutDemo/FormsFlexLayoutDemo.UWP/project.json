@@ -1,0 +1,15 @@
+﻿{
+  "dependencies": {
+    "Facebook.Yoga": "1.1.0.10",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+    "Xamarin.Forms": "2.3.5.26-nightly"
+  },
+  "frameworks": {
+    "uap10.0": {}
+  },
+  "runtimes": {
+    "win10-arm": {},
+    "win10-x86": {},
+    "win10-x64": {}
+  }
+}
