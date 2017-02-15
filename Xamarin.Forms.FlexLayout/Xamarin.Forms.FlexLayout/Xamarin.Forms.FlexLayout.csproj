@@ -8,7 +8,7 @@
     <ProjectGuid>{75708B5A-FFD6-48E1-A765-27B026B94F3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamarin.Forms.FlexLayout</RootNamespace>
+    <RootNamespace>Xamarin.Forms.Flex</RootNamespace>
     <AssemblyName>Xamarin.Forms.FlexLayout</AssemblyName>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

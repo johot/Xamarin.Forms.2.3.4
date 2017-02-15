@@ -1,13 +1,15 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "Facebook.Yoga": "1.1.0.18",
-    "Xamarin.Forms": "2.3.3.180",
-    "NETStandard.Library": "1.6.0"
+    "Facebook.Yoga": "1.1.0.18-pre",
+    "NETStandard.Library": "1.6.0",
+    "Xamarin.Forms": "2.3.3.180"
   },
   "frameworks": {
     "netstandard1.0": {
-      "imports": [ "portable-net45+wpa81+wp8+win8" ]
+      "imports": [
+        "portable-net45+wpa81+wp8+win8"
+      ]
     }
   }
 }
