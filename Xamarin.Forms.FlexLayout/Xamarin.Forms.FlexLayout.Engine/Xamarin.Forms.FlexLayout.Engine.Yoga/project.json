@@ -2,6 +2,7 @@
   "supports": {},
   "dependencies": {
     "Facebook.Yoga": "1.1.0.18",
+    "Xamarin.Forms": "2.3.3.180",
     "NETStandard.Library": "1.6.0"
   },
   "frameworks": {
