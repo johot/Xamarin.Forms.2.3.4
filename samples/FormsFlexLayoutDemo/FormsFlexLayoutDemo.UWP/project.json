@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Facebook.Yoga": "1.1.0.22",
+    "Facebook.Yoga": "1.1.0.22-pre",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Xamarin.Forms": "2.3.5.26-nightly"
   },
