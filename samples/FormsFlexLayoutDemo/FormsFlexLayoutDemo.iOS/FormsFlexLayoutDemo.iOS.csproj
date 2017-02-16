@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Facebook.Yoga, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Facebook.Yoga.1.1.0.21-pre\lib\Xamarin.iOS10\Facebook.Yoga.dll</HintPath>
+      <HintPath>..\..\..\packages\Facebook.Yoga.1.1.0.22-pre\lib\Xamarin.iOS10\Facebook.Yoga.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
