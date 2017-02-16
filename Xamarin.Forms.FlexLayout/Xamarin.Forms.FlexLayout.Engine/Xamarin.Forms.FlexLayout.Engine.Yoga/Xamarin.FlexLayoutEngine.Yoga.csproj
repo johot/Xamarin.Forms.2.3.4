@@ -46,8 +46,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.csproj">
-      <Project>{75708b5a-ffd6-48e1-a765-27b026b94f3c}</Project>
+    <ProjectReference Include="..\..\Xamarin.Forms.FlexLayout.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>Xamarin.Forms.FlexLayout</Name>
     </ProjectReference>
   </ItemGroup>

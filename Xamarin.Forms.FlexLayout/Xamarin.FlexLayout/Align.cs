@@ -1,5 +1,5 @@
 ﻿#if FORMS
-namespace Xamarin.Forms
+namespace Xamarin.Forms.Flex
 #else
 namespace Xamarin.FlexLayout
 #endif
