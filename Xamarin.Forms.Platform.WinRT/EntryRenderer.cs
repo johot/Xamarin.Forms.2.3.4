@@ -36,6 +36,7 @@ namespace Xamarin.Forms.Platform.WinRT
 
 					// If the developer hasn't specified a Visual State Group list (even an empty one), then 
 					// we leave the state management to the native VSM
+					// TODO hartez 2017/02/15 15:59:04 This should be a property, not just a field	
 					textBox.DeferToNativeVsm = VisualStateManager.GetVisualStateGroups(e.NewElement) == null;
 
 					textBox.TextChanged += OnNativeTextChanged;

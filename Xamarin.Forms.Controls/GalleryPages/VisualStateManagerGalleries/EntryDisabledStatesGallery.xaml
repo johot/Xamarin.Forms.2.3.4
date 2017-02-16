@@ -14,23 +14,6 @@
         </Setter>
       </Style>
 
-      <!--<Style TargetType="Entry" x:Key="FakeDefault">
-        <Setter Property="VisualStateManager.VisualStateGroups">
-          <generic:List x:TypeArguments="VisualStateGroup">
-            <VisualStateGroup x:Name="CommonStates">
-              <VisualState x:Name="Normal" />
-              <VisualState x:Name="Disabled">
-                <VisualState.Setters>
-                  <Setter Property="TextColor" Value="Default" />
-                  --><!--<Setter Property="PlaceholderColor" Value="Default" />--><!--
-                  <Setter Property="BackgroundColor" Value="Default" />
-                </VisualState.Setters>
-              </VisualState>
-            </VisualStateGroup>
-          </generic:List>
-        </Setter>
-      </Style>-->
-
       <Style TargetType="Entry" x:Key="CustomDisabledState">
         <Setter Property="VisualStateManager.VisualStateGroups">
           <generic:List x:TypeArguments="VisualStateGroup">
@@ -66,13 +49,15 @@
     <Button Text="Toggle IsEnabled" x:Name="Button0" Clicked="Button0_OnClicked"></Button>
 
     <Label Text="The Entry below has its VSM cleared; whatever TextColor/PlaceholderTextColor are set to will persist even if IsEnabled is false." Margin="0,20,0,0"/>
-    <Entry x:Name="Entry1" Style="{StaticResource PersistentColor}" TextColor="MediumVioletRed" 
-           PlaceholderColor="MediumPurple" Placeholder="placeholder"
-          BackgroundColor="Beige"></Entry>
+    <Entry x:Name="Entry1" Style="{StaticResource PersistentColor}" TextColor="MediumVioletRed" PlaceholderColor="MediumPurple" Placeholder="placeholder">
+
+      <!--TODO Verify that dropping an empty visual state group list in here works as well-->
+      
+    </Entry>
     <Button Text="Toggle IsEnabled" x:Name="Button1" Clicked="Button1_OnClicked"></Button>
 
     <Label Text="The Entry below uses VSM to customize the colors when IsEnabled is false." Margin="0,20,0,0"/>
-    <Entry x:Name="Entry2" Style="{StaticResource CustomDisabledState}" TextColor="Red" PlaceholderColor="Green" Placeholder="placeholder"></Entry>
+    <Entry x:Name="Entry2" Style="{StaticResource CustomDisabledState}"  TextColor="Red" PlaceholderColor="Green" Placeholder="placeholder"></Entry>
     <Button Text="Toggle IsEnabled" x:Name="Button2" Clicked="Button2_OnClicked"></Button>
   </StackLayout>
 
