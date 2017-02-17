@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +32,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook.Yoga, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Facebook.Yoga.1.1.0.23-pre\lib\net45\Facebook.Yoga.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -58,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlexLayoutEngineTests.cs" />
     <Compile Include="FlexLayoutTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\Xamarin.FlexLayoutEngine.Yoga.csproj">
+      <Project>{bee8e0b8-bd65-4a0c-86b2-7f964eb7460a}</Project>
+      <Name>Xamarin.FlexLayoutEngine.Yoga</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>Xamarin.Forms.FlexLayout</Name>
@@ -80,7 +93,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.5.26-nightly\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.5.26-nightly\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets'))" />
   </Target>
+  <Import Project="..\..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets" Condition="Exists('..\..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

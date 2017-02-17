@@ -60,7 +60,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook.Yoga, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Facebook.Yoga.1.1.0.22-pre\lib\MonoAndroid\Facebook.Yoga.dll</HintPath>
+      <HintPath>..\..\..\packages\Facebook.Yoga.1.1.0.23-pre\lib\MonoAndroid\Facebook.Yoga.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">

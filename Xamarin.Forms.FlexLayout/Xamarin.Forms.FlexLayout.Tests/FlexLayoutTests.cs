@@ -16,6 +16,7 @@ namespace Xamarin.Forms.FlexLayoutTests
         public override void Setup()
         {
             base.Setup();
+            
          //   Device.PlatformServices = new MockPlatformServices();
         }
 
@@ -25,12 +26,7 @@ namespace Xamarin.Forms.FlexLayoutTests
             base.TearDown();
             //Device.PlatformServices = null;
         }
-
-        [Test]
-        public void ThrowsOnInitWithNoEngine()
-        {
-            Assert.Throws<InvalidOperationException>(() => new FlexLayout());
-        }
+      
     }
 
     public class BaseTestFixture

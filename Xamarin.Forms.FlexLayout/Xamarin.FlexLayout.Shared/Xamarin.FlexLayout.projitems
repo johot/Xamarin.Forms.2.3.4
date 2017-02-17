@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Align.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FlexDirection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FlexLayout.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FlexLayoutEngine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FlexLayoutExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IFlexNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Justify.cs" />
