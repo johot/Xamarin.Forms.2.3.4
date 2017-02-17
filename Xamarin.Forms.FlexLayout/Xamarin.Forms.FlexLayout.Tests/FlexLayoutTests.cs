@@ -29,9 +29,7 @@ namespace Xamarin.Forms.FlexLayoutTests
         [Test]
         public void ThrowsOnInitWithNoEngine()
         {
-         
-
-            Assert.Throws<Exception>(() => new  FlexLayout());
+            Assert.Throws<InvalidOperationException>(() => new FlexLayout());
         }
     }
 
