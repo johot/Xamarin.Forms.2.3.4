@@ -16,6 +16,8 @@ namespace Xamarin.Forms.Platform.Android
 			AutoPackage = false;
 		}
 
+        IEditorController ElementController => Element;
+
 		void ITextWatcher.AfterTextChanged(IEditable s)
 		{
 		}
@@ -53,7 +55,7 @@ namespace Xamarin.Forms.Platform.Android
 				edit.AddTextChangedListener(this);
 				edit.OnBackKeyboardPressed += (sender, args) =>
 				{
-					Element.SendCompleted();
+                    ElementController.SendCompleted();
 					edit.ClearFocus();
 				};
 			}
@@ -89,7 +91,7 @@ namespace Xamarin.Forms.Platform.Android
 		internal override void OnNativeFocusChanged(bool hasFocus)
 		{
 			if (Element.IsFocused && !hasFocus) // Editor has requested an unfocus, fire completed event
-				Element.SendCompleted();
+                ElementController.SendCompleted();
 		}
 
 		void UpdateFont()
