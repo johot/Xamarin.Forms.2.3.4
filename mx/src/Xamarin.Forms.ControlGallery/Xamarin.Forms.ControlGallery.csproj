@@ -1200,7 +1200,7 @@
     <AndroidAsset Include="android\Assets\default.css" />
     <AndroidAsset Include="android\Assets\local.html" />
     <AndroidAsset Include="android\Assets\WebImages\XamarinLogo.png" />
-    <Content Include="Info.plist" />
+    <None Include="Info.plist" />
     <Content Include="ios\bank%402x.png" />
     <Content Include="ios\bank.png" />
     <Content Include="ios\calculator%402x.png" />

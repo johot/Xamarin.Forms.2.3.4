@@ -42,6 +42,8 @@
     <NugetMicrosoftAzureVersion>2.0.1</NugetMicrosoftAzureVersion>
     <NugetXamarinFormsXamlVersion>0.0.30</NugetXamarinFormsXamlVersion>
     <NugetXamarinTestCloudAgentVersion>0.20.3</NugetXamarinTestCloudAgentVersion>
+    <NugetNunitVersion>2.6.4</NugetNunitVersion>
+    <NugetXamarinUITestVersion>2.0.0</NugetXamarinUITestVersion>
   </PropertyGroup>
   
   <!--nuget paths-->

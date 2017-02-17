@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGaller
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery.WinPhone.Debug", "src\Xamarin.Forms.ControlGallery\debug\Xamarin.Forms.ControlGallery.WinPhone.Debug\Xamarin.Forms.ControlGallery.WinPhone.Debug.csproj", "{120B7106-70AF-4D23-923F-C15A6892DC74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.ControlGallery.UITests", "src\Xamarin.Forms.ControlGallery.UITests\Xamarin.Forms.ControlGallery.UITests.csproj", "{6487F984-F17F-44E1-A6E7-40764901D6B2}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		sub\mxbuild\mxbuild.projitems*{2fdd0418-fa09-4556-b6ed-10e07c1f6db9}*SharedItemsImports = 13
@@ -305,24 +307,36 @@ Global
 		{96D89208-4EB9-4451-BE73-8A9DF3D9D7B7}.Release|Win Universal.ActiveCfg = release|[none]
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Android.ActiveCfg = debug|monoDroid
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Android.Build.0 = debug|monoDroid
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|IOS.ActiveCfg = debug|[none]
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|IOS.ActiveCfg = debug|xamarin.ios
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|IOS.Build.0 = debug|xamarin.ios
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Portable.ActiveCfg = debug|dotnet
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Portable.Build.0 = debug|dotnet
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Phone.ActiveCfg = debug|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (arm).ActiveCfg = debug|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x32).ActiveCfg = debug|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x64).ActiveCfg = debug|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Universal.ActiveCfg = debug|[none]
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Phone.ActiveCfg = debug|wpa.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Phone.Build.0 = debug|wpa.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (arm).ActiveCfg = debug|win.arm
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (arm).Build.0 = debug|win.arm
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x32).ActiveCfg = debug|win.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x32).Build.0 = debug|win.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x64).ActiveCfg = debug|win.64
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Tablet (x64).Build.0 = debug|win.64
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Universal.ActiveCfg = debug|uap.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Debug|Win Universal.Build.0 = debug|uap.32
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Android.ActiveCfg = release|monoDroid
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Android.Build.0 = release|monoDroid
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|IOS.ActiveCfg = release|[none]
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|IOS.ActiveCfg = release|xamarin.ios
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|IOS.Build.0 = release|xamarin.ios
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Portable.ActiveCfg = release|dotnet
 		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Portable.Build.0 = release|dotnet
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Phone.ActiveCfg = release|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (arm).ActiveCfg = release|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x32).ActiveCfg = release|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x64).ActiveCfg = release|[none]
-		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Universal.ActiveCfg = release|[none]
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Phone.ActiveCfg = release|wpa.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Phone.Build.0 = release|wpa.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (arm).ActiveCfg = release|win.arm
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (arm).Build.0 = release|win.arm
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x32).ActiveCfg = release|win.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x32).Build.0 = release|win.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x64).ActiveCfg = release|win.64
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Tablet (x64).Build.0 = release|win.64
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Universal.ActiveCfg = release|uap.32
+		{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}.Release|Win Universal.Build.0 = release|uap.32
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Debug|Android.ActiveCfg = debug|Any CPU
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Debug|Android.Build.0 = debug|Any CPU
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Debug|Android.Deploy.0 = debug|Any CPU
@@ -339,9 +353,7 @@ Global
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Android.Build.0 = release|Any CPU
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Android.Deploy.0 = release|Any CPU
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|IOS.ActiveCfg = release|[none]
-		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Portable.ActiveCfg = release|Any CPU
-		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Portable.Build.0 = release|Any CPU
-		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Portable.Deploy.0 = release|Any CPU
+		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Portable.ActiveCfg = release|[none]
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Win Phone.ActiveCfg = release|[none]
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Win Tablet (arm).ActiveCfg = release|[none]
 		{FC4F3C7F-3CD5-4F8E-8B72-139A8B526A45}.Release|Win Tablet (x32).ActiveCfg = release|[none]
@@ -350,7 +362,7 @@ Global
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|Android.ActiveCfg = debug|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|IOS.ActiveCfg = debug|iPhoneSimulator
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|IOS.Build.0 = debug|iPhoneSimulator
-		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|Portable.ActiveCfg = debug|iPhone
+		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|Portable.ActiveCfg = debug|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|Win Phone.ActiveCfg = debug|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|Win Tablet (arm).ActiveCfg = debug|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Debug|Win Tablet (x32).ActiveCfg = debug|[none]
@@ -359,7 +371,7 @@ Global
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Android.ActiveCfg = release|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|IOS.ActiveCfg = release|iPhoneSimulator
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|IOS.Build.0 = release|iPhoneSimulator
-		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Portable.ActiveCfg = release|iPhone
+		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Portable.ActiveCfg = release|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Win Phone.ActiveCfg = release|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Win Tablet (arm).ActiveCfg = release|[none]
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Win Tablet (x32).ActiveCfg = release|[none]
@@ -367,7 +379,7 @@ Global
 		{1E88D3E4-B29B-4AA7-89FB-49405A917559}.Release|Win Universal.ActiveCfg = release|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Android.ActiveCfg = debug|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|IOS.ActiveCfg = debug|[none]
-		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Portable.ActiveCfg = debug|x86
+		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Portable.ActiveCfg = debug|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Win Phone.ActiveCfg = debug|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Win Tablet (arm).ActiveCfg = debug|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Win Tablet (x32).ActiveCfg = debug|[none]
@@ -377,7 +389,7 @@ Global
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Debug|Win Universal.Deploy.0 = debug|x86
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Android.ActiveCfg = release|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|IOS.ActiveCfg = release|[none]
-		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Portable.ActiveCfg = release|x86
+		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Portable.ActiveCfg = release|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Win Phone.ActiveCfg = release|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Win Tablet (arm).ActiveCfg = release|[none]
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Win Tablet (x32).ActiveCfg = release|[none]
@@ -387,7 +399,7 @@ Global
 		{60527F31-6CC7-472F-A013-DD2A5B51044E}.Release|Win Universal.Deploy.0 = release|x86
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Android.ActiveCfg = debug|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|IOS.ActiveCfg = debug|[none]
-		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Portable.ActiveCfg = debug|x86
+		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Portable.ActiveCfg = debug|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Win Phone.ActiveCfg = debug|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Win Tablet (arm).ActiveCfg = debug|ARM
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Win Tablet (arm).Build.0 = debug|ARM
@@ -401,7 +413,7 @@ Global
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Debug|Win Universal.ActiveCfg = debug|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Android.ActiveCfg = release|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|IOS.ActiveCfg = release|[none]
-		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Portable.ActiveCfg = release|x86
+		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Portable.ActiveCfg = release|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Win Phone.ActiveCfg = release|[none]
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Win Tablet (arm).ActiveCfg = release|ARM
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Win Tablet (arm).Build.0 = release|ARM
@@ -415,7 +427,7 @@ Global
 		{4BCCA0E8-7068-41F7-818F-815697A3117E}.Release|Win Universal.ActiveCfg = release|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Android.ActiveCfg = debug|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|IOS.ActiveCfg = debug|[none]
-		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Portable.ActiveCfg = debug|x86
+		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Portable.ActiveCfg = debug|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Win Phone.ActiveCfg = debug|x86
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Win Phone.Build.0 = debug|x86
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Win Phone.Deploy.0 = debug|x86
@@ -425,7 +437,7 @@ Global
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Debug|Win Universal.ActiveCfg = debug|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Android.ActiveCfg = release|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|IOS.ActiveCfg = release|[none]
-		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Portable.ActiveCfg = release|x86
+		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Portable.ActiveCfg = release|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Win Phone.ActiveCfg = release|x86
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Win Phone.Build.0 = release|x86
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Win Phone.Deploy.0 = release|x86
@@ -433,6 +445,26 @@ Global
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Win Tablet (x32).ActiveCfg = release|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Win Tablet (x64).ActiveCfg = release|[none]
 		{120B7106-70AF-4D23-923F-C15A6892DC74}.Release|Win Universal.ActiveCfg = release|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Android.ActiveCfg = debug|android.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Android.Build.0 = debug|android.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|IOS.ActiveCfg = debug|ios.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|IOS.Build.0 = debug|ios.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Portable.ActiveCfg = debug|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Win Phone.ActiveCfg = debug|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Win Tablet (arm).ActiveCfg = debug|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Win Tablet (x32).ActiveCfg = debug|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Win Tablet (x64).ActiveCfg = debug|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Debug|Win Universal.ActiveCfg = debug|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Android.ActiveCfg = release|android.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Android.Build.0 = release|android.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|IOS.ActiveCfg = release|ios.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|IOS.Build.0 = release|ios.aut
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Portable.ActiveCfg = release|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Win Phone.ActiveCfg = release|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Win Tablet (arm).ActiveCfg = release|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Win Tablet (x32).ActiveCfg = release|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Win Tablet (x64).ActiveCfg = release|[none]
+		{6487F984-F17F-44E1-A6E7-40764901D6B2}.Release|Win Universal.ActiveCfg = release|[none]
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -454,5 +486,6 @@ Global
 		{60527F31-6CC7-472F-A013-DD2A5B51044E} = {FF056C89-6CD5-42C9-A3BD-BF36A07BC536}
 		{4BCCA0E8-7068-41F7-818F-815697A3117E} = {FF056C89-6CD5-42C9-A3BD-BF36A07BC536}
 		{120B7106-70AF-4D23-923F-C15A6892DC74} = {FF056C89-6CD5-42C9-A3BD-BF36A07BC536}
+		{6487F984-F17F-44E1-A6E7-40764901D6B2} = {453F471B-9F4F-4431-85F8-FB7BA2035659}
 	EndGlobalSection
 EndGlobal

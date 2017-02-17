@@ -147,3 +147,14 @@ type %srcDir%Xamarin.Forms.ControlGallery\windows\tablet\app.xaml.cs           >
 
 move /y %srcDir%Xamarin.Forms.ControlGallery\windows\tablet\BrokenImageSourceHandler.cs %srcDir%Xamarin.Forms.ControlGallery\windows\
 copy /y %srcDir%Xamarin.Forms.ControlGallery\windows\tablet\StringProvider.cs  %srcDir%Xamarin.Forms.ControlGallery\windows\uwp\
+
+erase /s %srcDir%Xamarin.Forms.ControlGallery.UITests\*.cs
+xcopy /S/Y %repoDir%Xamarin.Forms.CustomAttributes\*.cs                        %srcDir%Xamarin.Forms.ControlGallery.UITests\CustomAttributes\ /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Core.Android.UITests\*.cs                    %srcDir%Xamarin.Forms.ControlGallery.UITests\Android\       /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Core.Windows.UITests\*.cs                    %srcDir%Xamarin.Forms.ControlGallery.UITests\Windows\       /EXCLUDE:%~dp0excludeObjBin.txt
+xcopy /S/Y %repoDir%Xamarin.Forms.Core.ios.UITests\*.cs                        %srcDir%Xamarin.Forms.ControlGallery.UITests\               /EXCLUDE:%~dp0excludeObjBin.txt
+mkdir %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\
+mkdir %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\Properties
+move %srcDir%Xamarin.Forms.ControlGallery.UITests\PlatformQueries.cs           %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\
+move %srcDir%Xamarin.Forms.ControlGallery.UITests\Properties\AssemblyInfo.cs   %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\Properties
+xcopy /S/Y %repoDir%Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\*.cs     %srcDir%Xamarin.Forms.ControlGallery.UITests\issues\     /EXCLUDE:%~dp0excludeObjBin.txt

@@ -51,7 +51,7 @@ using Xamarin.Forms.Internals;
 #endif
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.UITests")]
-//[assembly:InternalsVisibleTo("Xamarin.Forms.Core.UITests")]
+[assembly: InternalsVisibleTo("Xamarin.Forms.ControlGallery.UITests")]
 
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.iOS.UITests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Android.UITests")]

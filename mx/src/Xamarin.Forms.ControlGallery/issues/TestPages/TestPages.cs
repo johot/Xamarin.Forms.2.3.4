@@ -15,7 +15,11 @@ namespace Xamarin.Forms.Controls
 {
 	internal static class AppPaths
     {
-        public static string ApkPath = "../../../Xamarin.Forms.ControlGallery.Android/bin/Debug/AndroidControlGallery.AndroidControlGallery-Signed.apk";
+#if !MXBUILD
+		public static string ApkPath = "../../../Xamarin.Forms.ControlGallery.Android/bin/Debug/AndroidControlGallery.AndroidControlGallery-Signed.apk";
+#else
+		public static string ApkPath = "../../../Xamarin.Forms.ControlGallery/monoDroid.app/7.0/AndroidControlGallery.AndroidControlGallery-Signed.apk";
+#endif
 
 		// Have to continue using the old BundleId for now; Test Cloud doesn't like
 		// when you change the BundleId

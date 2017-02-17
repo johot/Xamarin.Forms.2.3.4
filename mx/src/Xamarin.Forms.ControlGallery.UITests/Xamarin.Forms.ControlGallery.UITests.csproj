@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
+    <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
+  </PropertyGroup>
+  <!--
+  
+    Properties
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+  <Import Project="$(ExtXfDir)\xf.aut.hierarchy.props" />
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{6487F984-F17F-44E1-A6E7-40764901D6B2}</ProjectGuid>
+    <RootNamespace>Xamarin.Forms.ControlGallery.UITests</RootNamespace>
+    <DefineConstants>$(DefineConstants)UITEST;</DefineConstants>
+    <NoWarn>$(NoWarn)0114;0108;4014;0649;0169;0168;0219;</NoWarn>
+    <NugetCopyLocal>true</NugetCopyLocal>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Project="$(NugetNunitShim)" />
+    <Import Project="$(XamarinUITestShim)" />
+    <Import Project="$(NugetXamarinFormsXamlBuildShim)" />
+  </ImportGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <NugetProjectReference Include="..\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj">
+      <Project>{9DB2F292-8034-4E06-89AD-98BBDA4306B9}</Project>
+      <Name>Xamarin.Forms.Xaml</Name>
+      <Platform>$(DotNetLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+  </ItemGroup>
+  <!--
+  
+    Android
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|android.aut' " >
+    <OutputPath>..\..\bld\bin\debug\Xamarin.Forms.ControlGallery.UITests\android.aut\4.5</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|android.aut' " >
+    <OutputPath>..\..\bld\bin\release\Xamarin.Forms.ControlGallery.UITests\android.aut\4.5</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(MobilePlatform) '== '$(AndroidMobilePlatformId)' ">
+    <DefineConstants>$(DefineConstants)__ANDROID__;</DefineConstants>
+  </PropertyGroup>
+  <ImportGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+  </ImportGroup>
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+      <Platform>$(AndroidLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{7D13BAC2-C6A4-416A-B07E-C169B199E52B}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+      <Platform>$(AndroidLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+  </ItemGroup>
+  <!--
+  
+    iOS
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|ios.aut' " >
+    <OutputPath>..\..\bld\bin\debug\Xamarin.Forms.ControlGallery.UITests\ios.aut\4.5</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|ios.aut' " >
+    <OutputPath>..\..\bld\bin\release\Xamarin.Forms.ControlGallery.UITests\ios.aut\4.5</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(IosMobilePlatformId)' ">
+    <DefineConstants>$(DefineConstants)__IOS__;</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(IosMobilePlatformId)' ">
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+      <Platform>$(IosUnifiedLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{7D13BAC2-C6A4-416A-B07E-C169B199E52B}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+      <Platform>$(IosUnifiedLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+  </ItemGroup>
+  <!--
+  
+    Windows
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|windows.aut' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|windows.aut' " />
+  <PropertyGroup Condition=" '$(MobilePlatform)' == '$(WindowsAutomationLibraryPlatformId)' ">
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MobilePlatform)' == '$(WindowsAutomationLibraryPlatformId)' ">
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+      <Platform>$(WindowsLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{7D13BAC2-C6A4-416A-B07E-C169B199E52B}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+      <Platform>$(WindowsLibraryPlatformId)</Platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+  </ItemGroup>
+  <!--
+  
+    Source
+  -->
+  <ItemGroup>
+    <Compile Include="$(ExtIdDir)\GlobalBuildInfo.cs">
+      <Link>Properties\GlobalBuildInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <Compile Include="Android\PlatformQueries.cs" />
+    <Compile Include="Android\PlatformTests\DisplayAlertUITestsAndroid.cs" />
+    <Compile Include="Android\Properties\AssemblyInfo.cs" />
+    <Compile Include="BaseTestFixture.cs" />
+    <Compile Include="CustomAttributes\TestAttributes.cs" />
+    <Compile Include="CustomAttributes\UiTestAttribute.cs" />
+    <Compile Include="ios\PlatformQueries.cs" />
+    <Compile Include="ios\Properties\AssemblyInfo.cs" />
+    <Compile Include="issues\AddingMultipleItemsListView.cs" />
+    <Compile Include="issues\AppBarIconColors.cs" />
+    <Compile Include="issues\Bugzilla21177.cs" />
+    <Compile Include="issues\Bugzilla21368.cs" />
+    <Compile Include="issues\Bugzilla21501.cs" />
+    <Compile Include="issues\Bugzilla21780.cs" />
+    <Compile Include="issues\Bugzilla22229.xaml.cs" />
+    <Compile Include="issues\Bugzilla22401.cs" />
+    <Compile Include="issues\Bugzilla23942.xaml.cs" />
+    <Compile Include="issues\Bugzilla24574.cs" />
+    <Compile Include="issues\Bugzilla24769.cs" />
+    <Compile Include="issues\Bugzilla25234.cs" />
+    <Compile Include="issues\Bugzilla25662.cs" />
+    <Compile Include="issues\Bugzilla25979.cs" />
+    <Compile Include="issues\Bugzilla26032.xaml.cs" />
+    <Compile Include="issues\Bugzilla26171.cs" />
+    <Compile Include="issues\Bugzilla26233.cs" />
+    <Compile Include="issues\Bugzilla26501.cs" />
+    <Compile Include="issues\Bugzilla26868.cs" />
+    <Compile Include="issues\Bugzilla26993.cs" />
+    <Compile Include="issues\Bugzilla27085.cs" />
+    <Compile Include="issues\Bugzilla27318.xaml.cs" />
+    <Compile Include="issues\Bugzilla27350.cs" />
+    <Compile Include="issues\Bugzilla27378.cs" />
+    <Compile Include="issues\Bugzilla27417.cs" />
+    <Compile Include="issues\Bugzilla27417Xaml.xaml.cs" />
+    <Compile Include="issues\Bugzilla27581.cs" />
+    <Compile Include="issues\Bugzilla27642.cs" />
+    <Compile Include="issues\Bugzilla27698.cs" />
+    <Compile Include="issues\Bugzilla27779.cs" />
+    <Compile Include="issues\Bugzilla28001.cs" />
+    <Compile Include="issues\Bugzilla28240.cs" />
+    <Compile Include="issues\Bugzilla28498.cs" />
+    <Compile Include="issues\Bugzilla28570.cs" />
+    <Compile Include="issues\Bugzilla28575.cs" />
+    <Compile Include="issues\Bugzilla28709.cs" />
+    <Compile Include="issues\Bugzilla28796.cs" />
+    <Compile Include="issues\Bugzilla28939.cs" />
+    <Compile Include="issues\Bugzilla29017.cs" />
+    <Compile Include="issues\Bugzilla29107.xaml.cs" />
+    <Compile Include="issues\Bugzilla29110.cs" />
+    <Compile Include="issues\Bugzilla29128.cs" />
+    <Compile Include="issues\Bugzilla29158.cs" />
+    <Compile Include="issues\Bugzilla29229.cs" />
+    <Compile Include="issues\Bugzilla29247.cs" />
+    <Compile Include="issues\Bugzilla29257.cs" />
+    <Compile Include="issues\Bugzilla29363.cs" />
+    <Compile Include="issues\Bugzilla29453.cs" />
+    <Compile Include="issues\Bugzilla30317.cs" />
+    <Compile Include="issues\Bugzilla30324.cs" />
+    <Compile Include="issues\Bugzilla30353.cs" />
+    <Compile Include="issues\Bugzilla30651.cs" />
+    <Compile Include="issues\Bugzilla30835.cs" />
+    <Compile Include="issues\Bugzilla30935.cs" />
+    <Compile Include="issues\Bugzilla31029.cs" />
+    <Compile Include="issues\Bugzilla31114.cs" />
+    <Compile Include="issues\Bugzilla31145.cs" />
+    <Compile Include="issues\Bugzilla31255.cs" />
+    <Compile Include="issues\Bugzilla31330.cs" />
+    <Compile Include="issues\Bugzilla31333.cs" />
+    <Compile Include="issues\Bugzilla31366.cs" />
+    <Compile Include="issues\Bugzilla31395.cs" />
+    <Compile Include="issues\Bugzilla31602.cs" />
+    <Compile Include="issues\Bugzilla31806.cs" />
+    <Compile Include="issues\Bugzilla31964.cs" />
+    <Compile Include="issues\Bugzilla31967.xaml.cs" />
+    <Compile Include="issues\Bugzilla32033.cs" />
+    <Compile Include="issues\Bugzilla32034.cs" />
+    <Compile Include="issues\Bugzilla32040.cs" />
+    <Compile Include="issues\Bugzilla32148.cs" />
+    <Compile Include="issues\Bugzilla32230.cs" />
+    <Compile Include="issues\Bugzilla32447.xaml.cs" />
+    <Compile Include="issues\Bugzilla32462.cs" />
+    <Compile Include="issues\Bugzilla32487.cs" />
+    <Compile Include="issues\Bugzilla32615.cs" />
+    <Compile Include="issues\Bugzilla32691.cs" />
+    <Compile Include="issues\Bugzilla32776.cs" />
+    <Compile Include="issues\Bugzilla32801.cs" />
+    <Compile Include="issues\Bugzilla32842.xaml.cs" />
+    <Compile Include="issues\Bugzilla32847.cs" />
+    <Compile Include="issues\Bugzilla32898.cs" />
+    <Compile Include="issues\Bugzilla32902.cs" />
+    <Compile Include="issues\Bugzilla33268.cs" />
+    <Compile Include="issues\Bugzilla33450.cs" />
+    <Compile Include="issues\Bugzilla33561.cs" />
+    <Compile Include="issues\Bugzilla33578.cs" />
+    <Compile Include="issues\Bugzilla33612.cs" />
+    <Compile Include="issues\Bugzilla33714.cs" />
+    <Compile Include="issues\Bugzilla33870.cs" />
+    <Compile Include="issues\Bugzilla33890.cs" />
+    <Compile Include="issues\Bugzilla34007.cs" />
+    <Compile Include="issues\Bugzilla34061.cs" />
+    <Compile Include="issues\Bugzilla34072.cs" />
+    <Compile Include="issues\Bugzilla34561.cs" />
+    <Compile Include="issues\Bugzilla34632.cs" />
+    <Compile Include="issues\Bugzilla34720.cs" />
+    <Compile Include="issues\Bugzilla34727.cs" />
+    <Compile Include="issues\Bugzilla34912.cs" />
+    <Compile Include="issues\Bugzilla35078.cs" />
+    <Compile Include="issues\Bugzilla35127.cs" />
+    <Compile Include="issues\Bugzilla35132.cs" />
+    <Compile Include="issues\Bugzilla35157.cs" />
+    <Compile Include="issues\Bugzilla35294.cs" />
+    <Compile Include="issues\Bugzilla35472.cs" />
+    <Compile Include="issues\Bugzilla35477.cs" />
+    <Compile Include="issues\Bugzilla35490.cs" />
+    <Compile Include="issues\Bugzilla35733.cs" />
+    <Compile Include="issues\Bugzilla35736.cs" />
+    <Compile Include="issues\Bugzilla35738.cs" />
+    <Compile Include="issues\Bugzilla36009.cs" />
+    <Compile Include="issues\Bugzilla36014.cs" />
+    <Compile Include="issues\Bugzilla36171.cs" />
+    <Compile Include="issues\Bugzilla36393.cs" />
+    <Compile Include="issues\Bugzilla36479.cs" />
+    <Compile Include="issues\Bugzilla36559.cs" />
+    <Compile Include="issues\Bugzilla36649.cs" />
+    <Compile Include="issues\Bugzilla36681.cs" />
+    <Compile Include="issues\Bugzilla36788.cs" />
+    <Compile Include="issues\Bugzilla36802.cs" />
+    <Compile Include="issues\Bugzilla36846.cs" />
+    <Compile Include="issues\Bugzilla36955.cs" />
+    <Compile Include="issues\Bugzilla37431.cs" />
+    <Compile Include="issues\Bugzilla37462.cs" />
+    <Compile Include="issues\Bugzilla37601.cs" />
+    <Compile Include="issues\Bugzilla37625.cs" />
+    <Compile Include="issues\Bugzilla37841.cs" />
+    <Compile Include="issues\Bugzilla37863.cs" />
+    <Compile Include="issues\Bugzilla38105.cs" />
+    <Compile Include="issues\Bugzilla38112.cs" />
+    <Compile Include="issues\Bugzilla38284.cs" />
+    <Compile Include="issues\Bugzilla38416.xaml.cs" />
+    <Compile Include="issues\Bugzilla38658.cs" />
+    <Compile Include="issues\Bugzilla38827.xaml.cs" />
+    <Compile Include="issues\Bugzilla38978.cs" />
+    <Compile Include="issues\Bugzilla39331.cs" />
+    <Compile Include="issues\Bugzilla39378.xaml.cs" />
+    <Compile Include="issues\Bugzilla39395.cs" />
+    <Compile Include="issues\Bugzilla39458.cs" />
+    <Compile Include="issues\Bugzilla39461.cs" />
+    <Compile Include="issues\Bugzilla39463.xaml.cs" />
+    <Compile Include="issues\Bugzilla39483.xaml.cs" />
+    <Compile Include="issues\Bugzilla39486.cs" />
+    <Compile Include="issues\Bugzilla39489.cs" />
+    <Compile Include="issues\Bugzilla39530.cs" />
+    <Compile Include="issues\Bugzilla39624.cs" />
+    <Compile Include="issues\Bugzilla39636.xaml.cs" />
+    <Compile Include="issues\Bugzilla39668.cs" />
+    <Compile Include="issues\Bugzilla39702.cs" />
+    <Compile Include="issues\Bugzilla39768.cs" />
+    <Compile Include="issues\Bugzilla39821.cs" />
+    <Compile Include="issues\Bugzilla39829.cs" />
+    <Compile Include="issues\Bugzilla39853.cs" />
+    <Compile Include="issues\Bugzilla39908.cs" />
+    <Compile Include="issues\Bugzilla39963.cs" />
+    <Compile Include="issues\Bugzilla39987.cs" />
+    <Compile Include="issues\Bugzilla40005.cs" />
+    <Compile Include="issues\Bugzilla40173.cs" />
+    <Compile Include="issues\Bugzilla40185.cs" />
+    <Compile Include="issues\Bugzilla40333.cs" />
+    <Compile Include="issues\Bugzilla40408.cs" />
+    <Compile Include="issues\Bugzilla40704.cs" />
+    <Compile Include="issues\Bugzilla40722.cs" />
+    <Compile Include="issues\Bugzilla40824.cs" />
+    <Compile Include="issues\Bugzilla40858.cs" />
+    <Compile Include="issues\Bugzilla40911.cs" />
+    <Compile Include="issues\Bugzilla40955.cs" />
+    <Compile Include="issues\Bugzilla40998.cs" />
+    <Compile Include="issues\Bugzilla41029.cs" />
+    <Compile Include="issues\Bugzilla41038.cs" />
+    <Compile Include="issues\Bugzilla41078.cs" />
+    <Compile Include="issues\Bugzilla41153.cs" />
+    <Compile Include="issues\Bugzilla41205.cs" />
+    <Compile Include="issues\Bugzilla41271.cs" />
+    <Compile Include="issues\Bugzilla41415.cs" />
+    <Compile Include="issues\Bugzilla41418.cs" />
+    <Compile Include="issues\Bugzilla41424.cs" />
+    <Compile Include="issues\Bugzilla41842.cs" />
+    <Compile Include="issues\Bugzilla42069.cs" />
+    <Compile Include="issues\Bugzilla42069_Page.xaml.cs" />
+    <Compile Include="issues\Bugzilla42074.cs" />
+    <Compile Include="issues\Bugzilla42075.cs" />
+    <Compile Include="issues\Bugzilla42277.cs" />
+    <Compile Include="issues\Bugzilla42329.cs" />
+    <Compile Include="issues\Bugzilla42364.cs" />
+    <Compile Include="issues\Bugzilla42519.cs" />
+    <Compile Include="issues\Bugzilla42602.cs" />
+    <Compile Include="issues\Bugzilla42832.cs" />
+    <Compile Include="issues\Bugzilla43161.cs" />
+    <Compile Include="issues\Bugzilla43214.cs" />
+    <Compile Include="issues\Bugzilla43516.cs" />
+    <Compile Include="issues\Bugzilla43663.cs" />
+    <Compile Include="issues\Bugzilla44044.cs" />
+    <Compile Include="issues\Bugzilla44129.cs" />
+    <Compile Include="issues\Bugzilla44166.cs" />
+    <Compile Include="issues\Bugzilla44338.cs" />
+    <Compile Include="issues\Bugzilla44461.cs" />
+    <Compile Include="issues\Bugzilla44476.cs" />
+    <Compile Include="issues\Bugzilla44584.cs" />
+    <Compile Include="issues\Bugzilla44777.cs" />
+    <Compile Include="issues\Bugzilla44944.cs" />
+    <Compile Include="issues\Bugzilla45743.cs" />
+    <Compile Include="issues\Bugzilla46494.cs" />
+    <Compile Include="issues\Bugzilla46630.cs" />
+    <Compile Include="issues\Bugzilla47971.cs" />
+    <Compile Include="issues\Bugzilla48158.cs" />
+    <Compile Include="issues\CarouselAsync.cs" />
+    <Compile Include="issues\ComplexListView.cs" />
+    <Compile Include="issues\DataTemplateGridImageTest.cs" />
+    <Compile Include="issues\DefaultColorToggleTest.cs" />
+    <Compile Include="issues\DisposedSharedPages.cs" />
+    <Compile Include="issues\FailImageSource.cs" />
+    <Compile Include="issues\ImageLoadingErrorHandling.cs" />
+    <Compile Include="issues\InputTransparentIssue.cs" />
+    <Compile Include="issues\IsInvokeRequiredRaceCondition.cs" />
+    <Compile Include="issues\IsPasswordToggleTest.cs" />
+    <Compile Include="issues\IsShowingUserIssue.cs" />
+    <Compile Include="issues\Issue1025.cs" />
+    <Compile Include="issues\Issue1026.cs" />
+    <Compile Include="issues\Issue1028.cs" />
+    <Compile Include="issues\Issue1075.cs" />
+    <Compile Include="issues\Issue1097.cs" />
+    <Compile Include="issues\Issue1146.cs" />
+    <Compile Include="issues\Issue1219.cs" />
+    <Compile Include="issues\Issue1228.cs" />
+    <Compile Include="issues\Issue1236.cs" />
+    <Compile Include="issues\Issue1259.cs" />
+    <Compile Include="issues\Issue1267.cs" />
+    <Compile Include="issues\Issue1305.cs" />
+    <Compile Include="issues\Issue1329.cs" />
+    <Compile Include="issues\Issue1384.cs" />
+    <Compile Include="issues\Issue1400.cs" />
+    <Compile Include="issues\Issue1461.cs" />
+    <Compile Include="issues\Issue1497.xaml.cs" />
+    <Compile Include="issues\Issue1538.cs" />
+    <Compile Include="issues\Issue1545.xaml.cs" />
+    <Compile Include="issues\Issue1546.cs" />
+    <Compile Include="issues\Issue1554.xaml.cs" />
+    <Compile Include="issues\Issue1557.cs" />
+    <Compile Include="issues\Issue1566.cs" />
+    <Compile Include="issues\Issue1567.cs" />
+    <Compile Include="issues\Issue1568.xaml.cs" />
+    <Compile Include="issues\Issue1583.cs" />
+    <Compile Include="issues\Issue1590.cs" />
+    <Compile Include="issues\Issue1593.cs" />
+    <Compile Include="issues\Issue1598.cs" />
+    <Compile Include="issues\Issue1613.cs" />
+    <Compile Include="issues\Issue1618.cs" />
+    <Compile Include="issues\Issue1641.xaml.cs" />
+    <Compile Include="issues\Issue1644.cs" />
+    <Compile Include="issues\Issue1653.xaml.cs" />
+    <Compile Include="issues\Issue1653v2.xaml.cs" />
+    <Compile Include="issues\Issue1664.cs" />
+    <Compile Include="issues\Issue1680.cs" />
+    <Compile Include="issues\Issue1682.cs" />
+    <Compile Include="issues\Issue1685.cs" />
+    <Compile Include="issues\Issue1691.cs" />
+    <Compile Include="issues\Issue1698.cs" />
+    <Compile Include="issues\Issue1700.cs" />
+    <Compile Include="issues\Issue1703.cs" />
+    <Compile Include="issues\Issue1705.cs" />
+    <Compile Include="issues\Issue1712.xaml.cs" />
+    <Compile Include="issues\Issue1722.cs" />
+    <Compile Include="issues\Issue1723.cs" />
+    <Compile Include="issues\Issue1741.xaml.cs" />
+    <Compile Include="issues\Issue1742.cs" />
+    <Compile Include="issues\Issue1747.xaml.cs" />
+    <Compile Include="issues\Issue1755.cs" />
+    <Compile Include="issues\Issue1758.cs" />
+    <Compile Include="issues\Issue1762.cs" />
+    <Compile Include="issues\Issue1763.cs" />
+    <Compile Include="issues\Issue1766.xaml.cs" />
+    <Compile Include="issues\Issue1769.cs" />
+    <Compile Include="issues\Issue1777.cs" />
+    <Compile Include="issues\Issue181.cs" />
+    <Compile Include="issues\Issue1851.cs" />
+    <Compile Include="issues\Issue1875.cs" />
+    <Compile Include="issues\Issue1888.cs" />
+    <Compile Include="issues\Issue1891.cs" />
+    <Compile Include="issues\Issue1895.cs" />
+    <Compile Include="issues\Issue1898.xaml.cs" />
+    <Compile Include="issues\Issue1905.cs" />
+    <Compile Include="issues\Issue1914.cs" />
+    <Compile Include="issues\Issue194.cs" />
+    <Compile Include="issues\Issue198.cs" />
+    <Compile Include="issues\Issue206.cs" />
+    <Compile Include="issues\Issue214.cs" />
+    <Compile Include="issues\Issue2143.cs" />
+    <Compile Include="issues\Issue2222.cs" />
+    <Compile Include="issues\Issue22246_BZ.cs" />
+    <Compile Include="issues\Issue2241.cs" />
+    <Compile Include="issues\Issue2248.cs" />
+    <Compile Include="issues\Issue2259.cs" />
+    <Compile Include="issues\Issue2266.cs" />
+    <Compile Include="issues\Issue2270.cs" />
+    <Compile Include="issues\Issue2272.cs" />
+    <Compile Include="issues\Issue2282.xaml.cs" />
+    <Compile Include="issues\Issue2288.xaml.cs" />
+    <Compile Include="issues\Issue2289.xaml.cs" />
+    <Compile Include="issues\Issue229.cs" />
+    <Compile Include="issues\Issue2291.cs" />
+    <Compile Include="issues\Issue2292.cs" />
+    <Compile Include="issues\Issue2294.cs" />
+    <Compile Include="issues\Issue2333.cs" />
+    <Compile Include="issues\Issue2339.cs" />
+    <Compile Include="issues\Issue2354.cs" />
+    <Compile Include="issues\Issue2357.xaml.cs" />
+    <Compile Include="issues\Issue2411.cs" />
+    <Compile Include="issues\Issue2414.cs" />
+    <Compile Include="issues\Issue2470.xaml.cs" />
+    <Compile Include="issues\Issue2563.cs" />
+    <Compile Include="issues\Issue2594.cs" />
+    <Compile Include="issues\Issue2597.cs" />
+    <Compile Include="issues\Issue260.cs" />
+    <Compile Include="issues\Issue2615.cs" />
+    <Compile Include="issues\Issue2628.cs" />
+    <Compile Include="issues\Issue2634.cs" />
+    <Compile Include="issues\Issue264.cs" />
+    <Compile Include="issues\Issue2659.xaml.cs" />
+    <Compile Include="issues\Issue2775.cs" />
+    <Compile Include="issues\Issue2777.xaml.cs" />
+    <Compile Include="issues\Issue2783.cs" />
+    <Compile Include="issues\Issue2794.cs" />
+    <Compile Include="issues\Issue2809.cs" />
+    <Compile Include="issues\Issue2883.cs" />
+    <Compile Include="issues\Issue2923.cs" />
+    <Compile Include="issues\Issue2927.cs" />
+    <Compile Include="issues\Issue2948.cs" />
+    <Compile Include="issues\Issue2951.xaml.cs" />
+    <Compile Include="issues\Issue2953.cs" />
+    <Compile Include="issues\Issue2954.cs" />
+    <Compile Include="issues\Issue2961.cs" />
+    <Compile Include="issues\Issue2963.cs" />
+    <Compile Include="issues\Issue2964.cs" />
+    <Compile Include="issues\Issue2965.cs" />
+    <Compile Include="issues\Issue2976.cs" />
+    <Compile Include="issues\Issue2981.cs" />
+    <Compile Include="issues\Issue2983.cs" />
+    <Compile Include="issues\Issue2987.cs" />
+    <Compile Include="issues\Issue3086.xaml.cs" />
+    <Compile Include="issues\Issue3276.cs" />
+    <Compile Include="issues\Issue3292.cs" />
+    <Compile Include="issues\Issue3319.xaml.cs" />
+    <Compile Include="issues\Issue342.cs" />
+    <Compile Include="issues\Issue416.cs" />
+    <Compile Include="issues\Issue417.cs" />
+    <Compile Include="issues\Issue465.cs" />
+    <Compile Include="issues\Issue488.cs" />
+    <Compile Include="issues\Issue530.cs" />
+    <Compile Include="issues\Issue55555.cs" />
+    <Compile Include="issues\Issue764.cs" />
+    <Compile Include="issues\Issue773.cs" />
+    <Compile Include="issues\Issue774.cs" />
+    <Compile Include="issues\Issue852.cs" />
+    <Compile Include="issues\Issue886.cs" />
+    <Compile Include="issues\Issue889.cs" />
+    <Compile Include="issues\Issue892.cs" />
+    <Compile Include="issues\Issue935.cs" />
+    <Compile Include="issues\Issue968.cs" />
+    <Compile Include="issues\Issue973.cs" />
+    <Compile Include="issues\ListViewViewCellBinding.cs" />
+    <Compile Include="issues\ModalActivityIndicatorTest.cs" />
+    <Compile Include="issues\ModelContentPage.cs" />
+    <Compile Include="issues\NavigationStackTests.cs" />
+    <Compile Include="issues\NavPage.cs" />
+    <Compile Include="issues\PlatformSpecifics_iOSTranslucentNavBarX.xaml.cs" />
+    <Compile Include="issues\ScrollViewOutOfBounds.cs" />
+    <Compile Include="issues\StackLayoutIssue.cs" />
+    <Compile Include="issues\SwipeBackNavCrash.cs" />
+    <Compile Include="issues\TabbedPageTests.cs" />
+    <Compile Include="issues\TabbedPageWithList.cs" />
+    <Compile Include="issues\TestPages\ScreenshotConditionalApp.cs" />
+    <Compile Include="issues\TestPages\TestPages.cs" />
+    <Compile Include="issues\_Template.cs" />
+    <Compile Include="Queries.cs" />
+    <Compile Include="Remotes\BaseViewContainerRemote.cs" />
+    <Compile Include="Remotes\EventViewContainerRemote.cs" />
+    <Compile Include="Remotes\LayeredViewContainerRemote.cs" />
+    <Compile Include="Remotes\RemoteFactory.cs" />
+    <Compile Include="Remotes\StateViewContainerRemote.cs" />
+    <Compile Include="Remotes\ViewContainerRemote.cs" />
+    <Compile Include="Tests\ActionSheetUITests.cs" />
+    <Compile Include="Tests\ActivityIndicatorUITests.cs" />
+    <Compile Include="Tests\AppearingUITests.cs" />
+    <Compile Include="Tests\AutomationIDUITests.cs" />
+    <Compile Include="Tests\BoxViewUITests.cs" />
+    <Compile Include="Tests\ButtonUITests.cs" />
+    <Compile Include="Tests\ContextActionsUITests.cs" />
+    <Compile Include="Tests\DatePickerUITests.cs" />
+    <Compile Include="Tests\DisplayAlertUITests.cs" />
+    <Compile Include="Tests\EditorUITests.cs" />
+    <Compile Include="Tests\EntryUITests.cs" />
+    <Compile Include="Tests\FrameUITests.cs" />
+    <Compile Include="Tests\ImageUITests.cs" />
+    <Compile Include="Tests\LabelUITests.cs" />
+    <Compile Include="Tests\Legacy-CellsUITests.cs" />
+    <Compile Include="Tests\Legacy-UnevenListTests.cs" />
+    <Compile Include="Tests\PickerUITests.cs" />
+    <Compile Include="Tests\ProgressBarUITests.cs" />
+    <Compile Include="Tests\RootGalleryUITests.cs" />
+    <Compile Include="Tests\ScrollViewUITests.cs" />
+    <Compile Include="Tests\SearchBarUITests.cs" />
+    <Compile Include="Tests\SliderUITests.cs" />
+    <Compile Include="Tests\StepperUITests.cs" />
+    <Compile Include="Tests\SwitchUITests.cs" />
+    <Compile Include="Tests\TimePickerUITests.cs" />
+    <Compile Include="Tests\ToolbarItemTests.cs" />
+    <Compile Include="Tests\ViewUITests.cs" />
+    <Compile Include="Tests\WebViewUITests.cs" />
+    <Compile Include="UITestCategories.cs" />
+    <Compile Include="Utilities\AppExtensions.cs" />
+    <Compile Include="Utilities\Drag.cs" />
+    <Compile Include="Utilities\Gestures.cs" />
+    <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="Utilities\NumericExtensions.cs" />
+    <Compile Include="Utilities\ParsingUtils.cs" />
+    <Compile Include="Utilities\UITestCustomExceptions.cs" />
+    <Compile Include="Utilities\ViewInspector.cs" />
+    <Compile Include="Windows\App.cs" />
+    <Compile Include="Windows\PlatformQueries.cs" />
+    <Compile Include="Windows\Properties\AssemblyInfo.cs" />
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+    <None Include="Android\.dir.props" />
+    <None Include="ios\.dir.props" />
+    <None Include="Windows\.dir.props" />
+  </ItemGroup>
+  <!--
+
+    Targets
+  -->
+  <Import Project="*\.dir.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+</Project>
