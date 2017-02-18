@@ -37,9 +37,6 @@ namespace Xamarin.Forms
 		static bool? s_isiOS9OrNewer;
         static bool? s_isiOS10OrNewer;
 #endif
-
-
-
         static Forms()
 		{
 			if (nevertrue)
