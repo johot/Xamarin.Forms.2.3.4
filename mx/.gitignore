@@ -1,7 +1,7 @@
 lfx
 bld
 drp
-packages
+/packages
 build.txt
 build.log
 build.pp
