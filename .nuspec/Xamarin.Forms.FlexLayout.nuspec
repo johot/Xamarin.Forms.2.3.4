@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Xamarin.Forms.FlexLayout</id>
+    <version>1.0.0</version>
+    <authors>Xamarin Inc.</authors>
+    <owners>Xamarin Inc.</owners>
+    <tags>xamarin forms xamarinforms xamarin.forms flexlayout flexbox</tags>
+    <licenseUrl>http://aka.ms/xamarin-forms-license</licenseUrl>
+    <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
+    <projectUrl>http://xamarin.com/forms</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Use Flexlayout and Xamarin Forms to build native UIs for iOS, Android, and Windows Phone from a single, shared C# codebase</description>
+    <copyright>Copyright 2013-2017</copyright>
+    <dependencies>
+      <group targetFramework="portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20">
+        <dependency id="Xamarin.Forms" version="2.3.3.180"/>
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!--PCL-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout\bin\$Configuration$\Xamarin.Forms.FlexLayout.dll" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout\bin\$Configuration$\Xamarin.Forms.FlexLayout.*pdb" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout\bin\$Configuration$\Xamarin.Forms.FlexLayout.*mdb" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20" />
+  </files>
+</package>

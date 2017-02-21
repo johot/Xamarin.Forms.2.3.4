@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Xamarin.FlexLayout.Engine.Yoga</id>
+    <version>1.0.0</version>
+    <authors>Xamarin Inc.</authors>
+    <owners>Xamarin Inc.</owners>
+    <tags>xamarin forms xamarinforms xamarin.forms flexlayout flexbox engine yoga</tags>
+    <licenseUrl>http://aka.ms/xamarin-forms-license</licenseUrl>
+    <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
+    <projectUrl>http://xamarin.com/forms</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Use Flexlayout and Xamarin Forms to build native UIs for iOS, Android, and Windows Phone from a single, shared C# codebase</description>
+    <copyright>Copyright 2013-2017</copyright>
+    <dependencies>
+      <group targetFramework="portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20">
+        <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
+        <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
+      </group>
+      <group targetFramework="MonoAndroid">
+        <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
+        <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
+      </group>
+      <group targetFramework="Xamarin.iOS10">
+        <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
+        <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
+      </group>
+      <group targetFramework="uap">
+        <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
+        <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
+      </group>
+      <group targetFramework="Xamarin.Mac">
+        <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
+        <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
+      </group>
+
+    </dependencies>
+  </metadata>
+  <files>
+    <!--PCL-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*mdb" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20" />
+    <!--Android-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\MonoAndroid" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\MonoAndroid" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*mdb" target="lib\MonoAndroid" />
+    <!--iOS-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\Xamarin.iOS10" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\Xamarin.iOS10" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*mdb" target="lib\Xamarin.iOS10" />
+    <!--UWP-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\uap10.0" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\uap10.0" />
+    <!--MAC-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\Xamarin.Mac" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\Xamarin.Mac" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*mdb" target="lib\Xamarin.Mac" />
+  </files>
+</package>

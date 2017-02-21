@@ -33,6 +33,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{345B112E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.FlexLayout.Tests", "Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Tests\Xamarin.Forms.FlexLayout.Tests.csproj", "{054CDEF5-3128-4F82-A960-AFF59708518B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{68191756-24D2-4F8E-81AF-B39C66CA6446}"
+	ProjectSection(SolutionItems) = preProject
+		.nuspec\Xamarin.FlexLayout.Engine.Yoga.nuspec = .nuspec\Xamarin.FlexLayout.Engine.Yoga.nuspec
+		.nuspec\Xamarin.Forms.FlexLayout.nuspec = .nuspec\Xamarin.Forms.FlexLayout.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Xamarin.Forms.FlexLayout\Xamarin.FlexLayout.Shared\Xamarin.FlexLayout.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
