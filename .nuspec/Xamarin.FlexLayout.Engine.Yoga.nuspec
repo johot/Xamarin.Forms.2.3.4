@@ -33,6 +33,10 @@
         <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
         <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
       </group>
+      <group targetFramework="Xamarin.Mac20">
+        <dependency id="Xamarin.Forms.FlexLayout" version="1.0.0"/>
+        <dependency id="Facebook.Yoga" version="1.1.0.23-pre"/>
+      </group>
 
     </dependencies>
   </metadata>
@@ -56,5 +60,9 @@
     <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\Xamarin.Mac" />
     <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\Xamarin.Mac" />
     <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*mdb" target="lib\Xamarin.Mac" />
+    <!--MAC-->
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.dll" target="lib\Xamarin.Mac20" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*pdb" target="lib\Xamarin.Mac20" />
+    <file src="..\Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Engine\Xamarin.Forms.FlexLayout.Engine.Yoga\bin\$Configuration$\Xamarin.FlexLayoutEngine.Yoga.*mdb" target="lib\Xamarin.Mac20" />
   </files>
 </package>
