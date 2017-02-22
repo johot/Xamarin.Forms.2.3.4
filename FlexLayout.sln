@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{2B99BA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{345B112E-34A9-4E6C-8E44-F0C20703B6B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.FlexLayout.Tests", "Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Tests\Xamarin.Forms.FlexLayout.Tests.csproj", "{054CDEF5-3128-4F82-A960-AFF59708518B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.FlexLayout.UnitTests", "Xamarin.Forms.FlexLayout\Xamarin.Forms.FlexLayout.Tests\Xamarin.Forms.FlexLayout.UnitTests.csproj", "{054CDEF5-3128-4F82-A960-AFF59708518B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{68191756-24D2-4F8E-81AF-B39C66CA6446}"
 	ProjectSection(SolutionItems) = preProject
