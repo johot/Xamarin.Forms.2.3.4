@@ -27,7 +27,7 @@ namespace Xamarin.Forms
             GetNode((View)s).AlignSelf = (Align)n;
         });
 
-        public static readonly BindableProperty FlexDirectionProperty = BindableProperty.Create(nameof(FlexDirection), typeof(FlexDirection), typeof(FlexLayout), default(FlexDirection), propertyChanging: (s, o, n) =>
+        public static readonly BindableProperty FlexDirectionProperty = BindableProperty.Create(nameof(FlexDirection), typeof(FlexDirection), typeof(FlexLayout), FlexDirection.Row, propertyChanging: (s, o, n) =>
         {
             GetNode((View)s).FlexDirection = (FlexDirection)n;
             (s as FlexLayout).InvalidateLayout();
@@ -171,9 +171,17 @@ namespace Xamarin.Forms
 
         protected override void LayoutChildren(double x, double y, double width, double height)
         {
-            if (!IsEnabled) return;
-
             ApplyLayout(x, y, width, height);
+        }
+
+        protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
+        {
+            return base.OnMeasure(widthConstraint, heightConstraint);
+        }
+
+        protected override void InvalidateMeasure()
+        {
+            base.InvalidateMeasure();
         }
 
         static IFlexNode GetNode(View bindable)
@@ -211,6 +219,7 @@ namespace Xamarin.Forms
 
         void AttachNodesFromViewHierachy(View view)
         {
+
             var node = GetNode(view);
             // Only leaf nodes should have a measure function
             if (view.IsLeaf())
@@ -221,9 +230,13 @@ namespace Xamarin.Forms
             }
 
             node.SetMeasure(null);
+
+            if (view != this)
+                return;
+
             // Create a list of all the subviews that we are going to use for layout.
             var subviewsToInclude = new List<View>();
-            foreach (var subview in Children)
+            foreach (var subview in FlexLayoutExtensions.GetChildren(view))
             {
                 if (GetIsIncluded(subview))
                 {
@@ -238,16 +251,12 @@ namespace Xamarin.Forms
                 {
                     var subView = subviewsToInclude[i];
                     var subViewNode = GetNode(subView);
-
+                    subViewNode.FlexDirection = FlexDirection.Column;
                     subViewNode.MarginLeft = (float)subView.Margin.Left;
                     subViewNode.MarginTop = (float)subView.Margin.Top;
                     subViewNode.MarginRight = (float)subView.Margin.Right;
                     subViewNode.MarginBottom = (float)subView.Margin.Bottom;
-                    subViewNode.Width = (float)subView.WidthRequest;
-                    subViewNode.Height = (float)subView.HeightRequest;
-                    subViewNode.MinHeight = (float)subView.MinimumHeightRequest;
-                    subViewNode.MinWidth = (float)subView.MinimumWidthRequest;
-
+                
                     node.Insert(i, subViewNode);
                 }
             }

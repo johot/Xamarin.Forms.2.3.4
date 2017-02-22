@@ -20,12 +20,15 @@ namespace Xamarin.FlexLayout
         const string _FlexAlignSelfPropertyName = "AlignSelf";
         const string _FlexIsIncludedPropertyName = "IsIncluded";
         const string _FlexNodePropertyName = "Node";
+        static bool s_shouldLayoutChildrenOfLayoutSubViews = false;
+        static Type s_engineType;
 
         IFlexNode _root;
         public FlexLayout()
         {
             InitNode();
         }
+
         public void ApplyLayout(double x, double y, double width, double height)
         {
             _root.Left = (float)x;
@@ -35,7 +38,10 @@ namespace Xamarin.FlexLayout
             CalculateLayoutWithSize((float)width, (float)height);
             ApplyLayoutToViewHierarchy(this);
         }
-
+        public static void RegisterEngine(Type engineType)
+        {
+            s_engineType = engineType;
+        }
 
         static float SanitizeMeasurement(float constrainedSize, float measuredSize, FlexMeasureMode measureMode)
         {
@@ -56,7 +62,6 @@ namespace Xamarin.FlexLayout
             return result;
         }
 
-
         static void ApplyLayoutToViewHierarchy(NativeView view)
         {
             if (!GetIsIncluded(view))
@@ -64,11 +69,12 @@ namespace Xamarin.FlexLayout
 
             var node = GetNode(view);
 
-            if (!(view is FlexLayout))
+            if (!(view is FlexLayout) && node != null)
                 ApplyLayoutToNativeView(view, node);
 
             if (view.IsLeaf())
                 return;
+
             foreach (var subView in FlexLayoutExtensions.GetChildren(view))
                 ApplyLayoutToViewHierarchy(subView);
         }
@@ -110,6 +116,7 @@ namespace Xamarin.FlexLayout
                 viewINPC.PropertyChanged += ChildPropertyChanged;
 
         }
+
         void UnregisterChild(NativeView view)
         {
             if (view == null)
@@ -134,22 +141,13 @@ namespace Xamarin.FlexLayout
             node.Height = height;
             node.CalculateLayout();
         }
-
-
-        private static Type _engineType;
-
+  
         IFlexNode GetNewFlexNode()
         {
-            if (_engineType == null)
+            if (s_engineType == null)
                 throw new InvalidOperationException("You must call FlexLayout.RegisterEngine");
-            var instance = Activator.CreateInstance(_engineType);
+            var instance = Activator.CreateInstance(s_engineType);
             return instance as IFlexNode;
         }
-
-        public static void RegisterEngine(Type engineType)
-        {
-            _engineType = engineType;
-        }
-
     }
 }

@@ -30,9 +30,9 @@ namespace Xamarin.FlexLayout
         public static IEnumerable<NativeView> GetChildren(NativeView view)
         {
             var result = new List<NativeView>();
-            if (view is Xamarin.Forms.Layout<Xamarin.Forms.View>)
+            if (view is FlexLayout)
             {
-                result.AddRange((view as Xamarin.Forms.Layout<Xamarin.Forms.View>).Children);
+                result.AddRange((view as FlexLayout).Children);
             }
 
             return result;

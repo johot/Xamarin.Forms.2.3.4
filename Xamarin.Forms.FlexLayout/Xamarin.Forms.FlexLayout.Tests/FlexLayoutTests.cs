@@ -18,7 +18,7 @@ namespace Xamarin.Forms.FlexLayoutTests
         {
             base.Setup();
             global::Xamarin.Forms.FlexLayout.RegisterEngine(typeof(Xamarin.FlexLayoutEngine.Yoga.YogaEngine));
-            //   Device.PlatformServices = new MockPlatformServices();
+            Device.PlatformServices = new MockPlatformServices();
         }
 
         [TearDown]
@@ -26,7 +26,7 @@ namespace Xamarin.Forms.FlexLayoutTests
         {
             base.TearDown();
             global::Xamarin.Forms.FlexLayout.RegisterEngine(null);
-            //Device.PlatformServices = null;
+            Device.PlatformServices = null;
         }
 
 
@@ -64,8 +64,8 @@ namespace Xamarin.Forms.FlexLayoutTests
             Assert.AreEqual(912, layout.Width);
             Assert.AreEqual(912, layout.Height);
 
-            Assert.AreEqual(new Rectangle(0, 0, 912, 20), label1.Bounds);
-            Assert.AreEqual(new Rectangle(0, 20, 912, 20), label2.Bounds);
+            Assert.AreEqual(new Rectangle(0, 0, 100, 912), label1.Bounds);
+            Assert.AreEqual(new Rectangle(100, 0, 100, 912), label2.Bounds);
         }
 
         [Test]
@@ -86,8 +86,8 @@ namespace Xamarin.Forms.FlexLayoutTests
             Assert.AreEqual(912, layout.Width);
             Assert.AreEqual(912, layout.Height);
 
-            Assert.AreEqual(new Rectangle(0, 0, 100, 20), label1.Bounds);
-            Assert.AreEqual(new Rectangle(0, 20, 100, 20), label2.Bounds);
+            Assert.AreEqual(new Rectangle(0, 0, 100, 912), label1.Bounds);
+            Assert.AreEqual(new Rectangle(100, 0, 100, 912), label2.Bounds);
         }
 
         [Test]
@@ -108,52 +108,50 @@ namespace Xamarin.Forms.FlexLayoutTests
             Assert.AreEqual(912, layout.Width);
             Assert.AreEqual(912, layout.Height);
 
-            Assert.AreEqual(new Rectangle(5, 0, 100, 20), label1.Bounds);
-            Assert.AreEqual(new Rectangle(5, 20, 100, 20), label2.Bounds);
+            Assert.AreEqual(new Rectangle(5, 0, 100, 912), label1.Bounds);
+            Assert.AreEqual(new Rectangle(110, 0, 100, 912), label2.Bounds);
         }
 
         [Test]
         public void TestAttachingViews()
         {
             var platform = new UnitPlatform();
-            var layout = new FlexLayout();
+            var layout = new FlexLayout { FlexDirection = Flex.FlexDirection.Column };
             layout.Platform = platform;
-            layout.FlexDirection = Flex.FlexDirection.Column;
+            layout.IsPlatformEnabled = true;
 
-            var subView1 = new FlexLayout();
+            var subView1 = new StackLayout();
             subView1.Platform = platform;
             subView1.IsPlatformEnabled = true;
-            subView1.FlexDirection = Flex.FlexDirection.Column;
             subView1.WidthRequest = 100;
             FlexLayout.SetGrow(subView1, 1);
             layout.Children.Add(subView1);
 
-            var subView2 = new FlexLayout();
+            var subView2 = new StackLayout();
             subView2.Platform = platform;
-            subView1.IsPlatformEnabled = true;
-            subView2.FlexDirection = Flex.FlexDirection.Column;
+            subView2.IsPlatformEnabled = true;
             subView2.WidthRequest = 150;
             FlexLayout.SetGrow(subView2, 1);
             layout.Children.Add(subView2);
 
             foreach (var view in new[] { subView1, subView2 })
             {
-                var someView = new Label { Text = "Hello", Platform = platform, IsPlatformEnabled = true, WidthRequest = 100 };
+                var someView = new Label { Text = "Hello", IsPlatformEnabled = true };
                 view.Children.Add(someView);
             }
-            layout.Layout(new Rectangle(0, 0, 912, 912));
 
+            layout.Layout(new Rectangle(0, 0, 300, 50));
 
             foreach (var view in new[] { subView1, subView2 })
             {
-                var someView = new Label { Text = "Hello", Platform = platform, IsPlatformEnabled = true, WidthRequest = 100 };
+                var someView = new Label { Text = "Hello", IsPlatformEnabled = true };
                 view.Children.Add(someView);
             }
 
-            layout.Layout(new Rectangle(0, 0, 912, 912));
+            layout.Layout(new Rectangle(0, 0, 300, 20));
 
-            Assert.AreEqual(subView1.Bounds.Size.Width, 100);
-            Assert.AreEqual(subView1.Bounds.Size.Width, 25);
+            Assert.AreEqual(300, subView1.Bounds.Size.Width);
+            Assert.AreEqual(20, subView1.Bounds.Size.Height);
 
             foreach (var subview in subView1.Children)
             {
@@ -163,6 +161,9 @@ namespace Xamarin.Forms.FlexLayoutTests
                 Assert.IsFalse(double.IsNaN(subviewSize.Width));
                 Assert.IsFalse(double.IsNaN(subviewSize.Height));
             }
+
+            Assert.AreEqual(300, subView2.Bounds.Size.Width);
+            Assert.AreEqual(20, subView2.Bounds.Size.Height);
 
             foreach (var subview in subView2.Children)
             {
@@ -202,6 +203,34 @@ namespace Xamarin.Forms.FlexLayoutTests
             layout.Children.Clear();
 
             Assert.True(layout.IsLeaf());
+        }
+
+
+        [Test]
+        public void TestIsLeafWithNestedFlexLayouts()
+        {
+            var platform = new UnitPlatform();
+            var layout = new FlexLayout { FlexDirection = Flex.FlexDirection.Column };
+            layout.WidthRequest = 300;
+            layout.HeightRequest = 50;
+            layout.Platform = platform;
+            layout.IsPlatformEnabled = true;
+
+            var layout2 = new FlexLayout();
+
+            var label1 = new Label { Platform = platform, IsPlatformEnabled = true };
+        
+            layout2.Children.Add(label1);
+
+            layout.Children.Add(layout2);
+
+            Assert.IsFalse(layout2.IsLeaf());
+
+            Assert.IsTrue(label1.IsLeaf());
+
+            layout2.Children.Remove(label1);
+        
+            Assert.IsTrue(layout2.IsLeaf());
         }
 
     }
