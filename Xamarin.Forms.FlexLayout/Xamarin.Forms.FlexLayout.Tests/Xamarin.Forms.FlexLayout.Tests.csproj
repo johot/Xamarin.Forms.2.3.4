@@ -7,8 +7,8 @@
     <ProjectGuid>{054CDEF5-3128-4F82-A960-AFF59708518B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamarin.Forms.FlexLayout.Tests</RootNamespace>
-    <AssemblyName>Xamarin.Forms.FlexLayout.Tests</AssemblyName>
+    <RootNamespace>Xamarin.Forms.FlexLayout.UnitTests</RootNamespace>
+    <AssemblyName>Xamarin.Forms.Core.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Xamarin.Forms.Core.UnitTests\UnitPlatform.cs">
+      <Link>UnitPlatform.cs</Link>
+    </Compile>
     <Compile Include="FlexLayoutEngineTests.cs" />
     <Compile Include="FlexLayoutTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
