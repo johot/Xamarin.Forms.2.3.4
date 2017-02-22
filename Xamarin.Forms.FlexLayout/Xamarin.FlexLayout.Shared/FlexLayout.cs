@@ -100,8 +100,6 @@ namespace Xamarin.FlexLayout
 
         void RegisterChild(NativeView view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
             IFlexNode node = GetNewFlexNode();
             SetNode(view, node);
             FlexLayoutExtensions.Bridges.Add(node, view);
@@ -112,8 +110,6 @@ namespace Xamarin.FlexLayout
         }
         void UnregisterChild(NativeView view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
             var node = GetNode(view);
             SetNode(view, null);
             FlexLayoutExtensions.Bridges.Remove(node);

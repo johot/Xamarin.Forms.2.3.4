@@ -22,7 +22,7 @@ namespace Xamarin.Forms.FlexLayoutTests
         public override void TearDown()
         {
             base.TearDown();
-            global::Xamarin.Forms.FlexLayout.RegisterEngine(null);
+            //Device.PlatformServices = null;
         }
 
         [Test]
