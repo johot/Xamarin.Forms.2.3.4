@@ -284,9 +284,7 @@ namespace Xamarin.FlexLayoutEngine.Yoga
 		public void SetMeasure(MeasureFunc measureView)
 		{
 			_internalMeasure = measureView;
-			if (measureView == null)
-				SetMeasureFunction(null);
-			else
+			if (_internalMeasure != null)
 				SetMeasureFunction(MeasureView);
 		}
 
