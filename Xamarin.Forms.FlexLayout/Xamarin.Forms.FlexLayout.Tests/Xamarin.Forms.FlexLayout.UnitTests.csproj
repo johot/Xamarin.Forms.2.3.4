@@ -74,6 +74,7 @@
     <Compile Include="FlexLayoutBaseTestFixture.cs" />
     <Compile Include="FlexLayoutEngineTests.cs" />
     <Compile Include="FlexLayoutTests.cs" />
+    <Compile Include="FlexTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FlexDirectionTests.cs" />
   </ItemGroup>
