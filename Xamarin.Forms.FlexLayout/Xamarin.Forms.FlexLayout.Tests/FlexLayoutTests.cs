@@ -1,35 +1,15 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Xamarin.Forms.Core.UnitTests;
 
 namespace Xamarin.Forms.FlexLayoutTests
 {
 	[TestFixture]
-	public class FlexLayoutTests : BaseTestFixture
-	{
-		[SetUp]
-		public override void Setup()
-		{
-			base.Setup();
-			global::Xamarin.Forms.FlexLayout.RegisterEngine(typeof(Xamarin.FlexLayoutEngine.Yoga.YogaEngine));
-			Device.PlatformServices = new MockPlatformServices();
-		}
-
-		[TearDown]
-		public override void TearDown()
-		{
-			base.TearDown();
-			global::Xamarin.Forms.FlexLayout.RegisterEngine(null);
-			Device.PlatformServices = null;
-		}
-
-
+	public class FlexLayoutTests : FlexLayoutBaseTestFixture
+    {
+	
 		[Test]
 		public void ThrowsOnNullAdd()
 		{

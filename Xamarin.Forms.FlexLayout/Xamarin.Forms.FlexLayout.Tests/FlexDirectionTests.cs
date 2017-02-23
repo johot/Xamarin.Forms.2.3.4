@@ -6,25 +6,8 @@ using Xamarin.Forms.Core.UnitTests;
 namespace Xamarin.Forms.FlexLayoutTests
 {
     [TestFixture]
-    public class FlexDirectionTests : BaseTestFixture
+    public class FlexDirectionTests : FlexLayoutBaseTestFixture
     {
-
-        [SetUp]
-        public override void Setup()
-        {
-            base.Setup();
-            global::Xamarin.Forms.FlexLayout.RegisterEngine(typeof(Xamarin.FlexLayoutEngine.Yoga.YogaEngine));
-            Device.PlatformServices = new MockPlatformServices();
-        }
-
-        [TearDown]
-        public override void TearDown()
-        {
-            base.TearDown();
-            global::Xamarin.Forms.FlexLayout.RegisterEngine(null);
-            Device.PlatformServices = null;
-        }
-
         [Test]
         public void TestFlexDirectionColumnWithoutHeight()
         {

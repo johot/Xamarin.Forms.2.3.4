@@ -70,6 +70,8 @@
     <Compile Include="..\..\Xamarin.Forms.Core.UnitTests\UnitPlatform.cs">
       <Link>UnitPlatform.cs</Link>
     </Compile>
+    <Compile Include="FlexAlignSelfTests.cs" />
+    <Compile Include="FlexLayoutBaseTestFixture.cs" />
     <Compile Include="FlexLayoutEngineTests.cs" />
     <Compile Include="FlexLayoutTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
