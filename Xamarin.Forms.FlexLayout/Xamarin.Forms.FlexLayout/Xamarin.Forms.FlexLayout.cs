@@ -259,6 +259,7 @@ namespace Xamarin.Forms
 					subViewNode.FlexGrow = GetGrow(subView);
 					subViewNode.FlexBasis = GetBasis(subView);
 					subViewNode.FlexShrink = GetShrink(subView);
+                    subViewNode.AlignSelf = GetAlignSelf(subView);
 					node.Insert(i, subViewNode);
 				}
 			}

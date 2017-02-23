@@ -20,7 +20,6 @@ namespace Xamarin.FlexLayout
 		const string _FlexAlignSelfPropertyName = "AlignSelf";
 		const string _FlexIsIncludedPropertyName = "IsIncluded";
 		const string _FlexNodePropertyName = "Node";
-		static bool s_shouldLayoutChildrenOfLayoutSubViews = false;
 		static Type s_engineType;
 
 		IFlexNode _root;
@@ -62,23 +61,6 @@ namespace Xamarin.FlexLayout
 			return result;
 		}
 
-		static void ApplyLayoutToViewHierarchy(NativeView view)
-		{
-			if (!GetIsIncluded(view))
-				return;
-
-			var node = GetNode(view);
-
-			if (!(view is FlexLayout) && node != null)
-				ApplyLayoutToNativeView(view, node);
-
-			if (view.IsLeaf())
-				return;
-
-			foreach (var subView in FlexLayoutExtensions.GetChildren(view))
-				ApplyLayoutToViewHierarchy(subView);
-		}
-
 		static bool NodeHasExactSameChildren(IFlexNode node, NativeView[] subviews)
 		{
 			if (node.Count() != subviews.Length)
@@ -104,14 +86,37 @@ namespace Xamarin.FlexLayout
 			return _root;
 		}
 
-		void RegisterChild(NativeView view)
+        void ApplyLayoutToViewHierarchy(NativeView view)
+        {
+            if (!GetIsIncluded(view))
+                return;
+
+            var node = GetNode(view);
+
+            if (view != this && node != null)
+                ApplyLayoutToNativeView(view, node);
+
+            if (view.IsLeaf())
+                return;
+
+            foreach (var subView in FlexLayoutExtensions.GetChildren(view))
+                ApplyLayoutToViewHierarchy(subView);
+        }
+
+        void RegisterChild(NativeView view)
 		{
 			if (view == null)
 				throw new ArgumentNullException(nameof(view));
-			IFlexNode node = GetNewFlexNode();
-			SetNode(view, node);
-			FlexLayoutExtensions.Bridges.Add(node, view);
-			var viewINPC = view as INotifyPropertyChanged;
+            IFlexNode node = GetNode(view);
+
+            if (node == null)
+            {
+                node = GetNewFlexNode();
+                SetNode(view, node);
+                FlexLayoutExtensions.Bridges.Add(node, view);
+            }
+
+            var viewINPC = view as INotifyPropertyChanged;
 			if (viewINPC != null)
 				viewINPC.PropertyChanged += ChildPropertyChanged;
 
