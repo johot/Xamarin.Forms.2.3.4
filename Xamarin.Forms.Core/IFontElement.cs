@@ -5,6 +5,8 @@ namespace Xamarin.Forms
 		//note to implementor: implement the properties publicly
 		FontAttributes FontAttributes { get; }
 		string FontFamily { get; }
+
+		[TypeConverter(typeof(FontSizeConverter))]
 		double FontSize { get; }
 
 		//note to implementor: but implement the methods explicitly

@@ -3,16 +3,16 @@ namespace Xamarin.Forms
 	static class FontElement
 	{
 		public static readonly BindableProperty FontFamilyProperty =
-			BindableProperty.Create("FontFamily", typeof(string), typeof(FontElement), default(string),
+			BindableProperty.Create("FontFamily", typeof(string), typeof(IFontElement), default(string),
 									propertyChanged: OnFontFamilyChanged);
 
 		public static readonly BindableProperty FontSizeProperty =
-			BindableProperty.Create("FontSize", typeof(double), typeof(FontElement), -1.0,
+			BindableProperty.Create("FontSize", typeof(double), typeof(IFontElement), -1.0,
 									propertyChanged: OnFontSizeChanged,
 									defaultValueCreator: FontSizeDefaultValueCreator);
 
 		public static readonly BindableProperty FontAttributesProperty =
-			BindableProperty.Create("FontAttributes", typeof(FontAttributes), typeof(FontElement), FontAttributes.None,
+			BindableProperty.Create("FontAttributes", typeof(FontAttributes), typeof(IFontElement), FontAttributes.None,
 									propertyChanged: OnFontAttributesChanged);
 
 		static void OnFontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
