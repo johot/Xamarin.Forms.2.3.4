@@ -241,16 +241,16 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 
 		[Test]
-		public void TestColorTypeConverter ()
+		public void TestColorTypeConverter()
 		{
-			var converter = new ColorTypeConverter ();
-			Assert.True (converter.CanConvertFrom (typeof(string)));
+			var converter = new ColorTypeConverter();
+			Assert.True(converter.CanConvertFrom(typeof(string)));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("Color.Blue"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("Blue"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("blue"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("#0000ff"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("#00f"));
-			Assert.AreEqual(Color.Blue.MultiplyAlpha(2.0/3.0), converter.ConvertFromInvariantString("#a00f"));
+			Assert.AreEqual(Color.Blue.MultiplyAlpha(2.0 / 3.0), converter.ConvertFromInvariantString("#a00f"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("rgb(0,0, 255)"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("rgb(0,0, 300)"));
 			Assert.AreEqual(Color.Blue, converter.ConvertFromInvariantString("rgb(0,0, 300)"));
@@ -263,8 +263,12 @@ namespace Xamarin.Forms.Core.UnitTests
 			Assert.AreEqual(Color.Accent, converter.ConvertFromInvariantString("Accent"));
 			var hotpink = Color.FromHex("#FF69B4");
 			Color.Accent = hotpink;
-			Assert.AreEqual (Color.Accent, converter.ConvertFromInvariantString ("Accent"));
-			Assert.Throws<InvalidOperationException> (() => converter.ConvertFromInvariantString (""));
+			Assert.AreEqual(Color.Accent, converter.ConvertFromInvariantString("Accent"));
+			Assert.AreEqual(Color.Default, converter.ConvertFromInvariantString("#12345"));
+			Assert.Throws<InvalidOperationException>(() => converter.ConvertFromInvariantString(""));
+			Assert.Throws<InvalidOperationException>(() => converter.ConvertFromInvariantString("rgb(0,0,255"));
+			Assert.Throws<InvalidOperationException>(() => converter.ConvertFromInvariantString("hsl(12, 100%)"));
+			Assert.Throws<InvalidOperationException>(() => converter.ConvertFromInvariantString("rgba(0,0,255)"));
 		}
 
 		[Test]
