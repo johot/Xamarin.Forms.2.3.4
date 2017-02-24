@@ -83,8 +83,8 @@
   
     Android
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|monoDroid.app' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|monoDroid.app' " />
   <PropertyGroup Condition=" '$(MobilePlatform)' == '$(AndroidMobilePlatformId)' ">
     <AndroidManifest>android\Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>

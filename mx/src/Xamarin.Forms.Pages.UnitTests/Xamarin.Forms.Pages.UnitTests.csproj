@@ -20,6 +20,7 @@
     <OutputType>Library</OutputType>
     <ProjectGuid>{6795C22F-99A9-48D1-A52D-0504BE187D7D}</ProjectGuid>
     <RootNamespace>Xamarin.Forms.UnitTests</RootNamespace>
+    <NugetCopyLocal>true</NugetCopyLocal>
   </PropertyGroup>
   <!--
   
@@ -53,8 +54,12 @@
   
     Portable
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " >
+    <OutputPath>..\..\bld\bin\debug\Xamarin.Forms.Pages.UnitTests\netstandard\4.5\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " >
+    <OutputPath>..\..\bld\bin\release\Xamarin.Forms.Pages.UnitTests\netstandard\4.5\</OutputPath>
+  </PropertyGroup>
   <ImportGroup>
     <Import Project="$(NugetNewtonsoftJsonShim)" />
     <Import Project="$(NugetNunitShim)" />

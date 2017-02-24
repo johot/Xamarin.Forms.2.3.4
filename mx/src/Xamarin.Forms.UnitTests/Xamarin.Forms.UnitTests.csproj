@@ -21,6 +21,7 @@
     <ProjectGuid>{CEBB44CB-4B0C-480A-9D87-675C65B49EA9}</ProjectGuid>
     <RootNamespace>Xamarin.Forms.UnitTests</RootNamespace>
     <NoWarn>0114;0672;0108;0067;0168;0169;0219;0612;0618;1998;4014</NoWarn>
+    <NugetCopyLocal>true</NugetCopyLocal>
   </PropertyGroup>
   <!--
   
@@ -45,8 +46,12 @@
   
     Portable
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " >
+    <OutputPath>..\..\bld\bin\debug\Xamarin.Forms.UnitTests\netstandard\4.5\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " >
+    <OutputPath>..\..\bld\bin\release\Xamarin.Forms.UnitTests\netstandard\4.5\</OutputPath>
+  </PropertyGroup>
   <ImportGroup>
     <Import Project="$(NugetNunitShim)" />
   </ImportGroup>
