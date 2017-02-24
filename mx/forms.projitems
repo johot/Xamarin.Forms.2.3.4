@@ -88,8 +88,10 @@
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.Azure\Xamarin.Forms.Pages.Azure.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages.UnitTests\Xamarin.Forms.Pages.UnitTests.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Pages\Xamarin.Forms.Pages.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.UnitTests\Xamarin.Forms.UnitTests.csproj" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml.BuildTasks\nuspec.props" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.Xaml.BuildTasks\packages.config" />
     <None Include="$(MSBuildThisFileDirectory)src\Xamarin.Forms.ControlGallery.UITests\Xamarin.Forms.ControlGallery.UITests.csproj" />

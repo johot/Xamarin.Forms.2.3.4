@@ -25,12 +25,14 @@
   <!--shim-->
   <PropertyGroup>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.csproj</ShimInclude>
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.UnitTests.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.AppLinks.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Bindings.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.BuildTasks.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.ControlGallery.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Maps.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.csproj</ShimInclude>
+    <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.UnitTests.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Pages.Azure.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Xaml.csproj</ShimInclude>
     <ShimInclude>$(ShimInclude);$(ShimDir)**\Xamarin.Forms.Xaml.BuildTasks.csproj</ShimInclude>

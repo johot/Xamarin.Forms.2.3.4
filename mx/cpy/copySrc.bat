@@ -158,3 +158,9 @@ mkdir %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\Properties
 move %srcDir%Xamarin.Forms.ControlGallery.UITests\PlatformQueries.cs           %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\
 move %srcDir%Xamarin.Forms.ControlGallery.UITests\Properties\AssemblyInfo.cs   %srcDir%Xamarin.Forms.ControlGallery.UITests\ios\Properties
 xcopy /S/Y %repoDir%Xamarin.Forms.Controls.Issues\Xamarin.Forms.Controls.Issues.Shared\*.cs     %srcDir%Xamarin.Forms.ControlGallery.UITests\issues\     /EXCLUDE:%~dp0excludeObjBin.txt
+
+erase /s %srcDir%Xamarin.Forms.UnitTests\*.cs
+xcopy /S/Y %repoDir%Xamarin.Forms.Core.UnitTests\*.cs                          %srcDir%Xamarin.Forms.UnitTests\                            /EXCLUDE:%~dp0excludeObjBin.txt
+
+erase /s %srcDir%Xamarin.Forms.Pages.UnitTests\*.cs
+xcopy /S/Y %repoDir%Xamarin.Forms.Pages.UnitTests\*.cs                         %srcDir%Xamarin.Forms.Pages.UnitTests\                      /EXCLUDE:%~dp0excludeObjBin.txt

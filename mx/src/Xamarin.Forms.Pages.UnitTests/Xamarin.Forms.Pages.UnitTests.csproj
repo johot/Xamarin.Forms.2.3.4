@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
+    <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
+  </PropertyGroup>
+  <!--
+  
+    Properties
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+  <Import Project="$(ExtXfDir)\xf.netstd.hierarchy.props" />
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{6795C22F-99A9-48D1-A52D-0504BE187D7D}</ProjectGuid>
+    <RootNamespace>Xamarin.Forms.UnitTests</RootNamespace>
+  </PropertyGroup>
+  <!--
+  
+    Library
+  -->
+  <ItemGroup>
+    <Compile Include="$(ExtIdDir)\GlobalBuildInfo.cs">
+      <Link>Properties\GlobalBuildInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <Compile Include="DataPageTests.cs" />
+    <Compile Include="DataSourceListTests.cs" />
+    <Compile Include="IntegrationTests.cs" />
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+    <Compile Include="..\Xamarin.Forms.UnitTests\MockPlatformServices.cs">
+      <Link>MockPlatformServices.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.UnitTests\UnitPlatform.cs">
+      <Link>UnitPlatform.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <!--
+  
+    Portable
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
+  <ImportGroup>
+    <Import Project="$(NugetNewtonsoftJsonShim)" />
+    <Import Project="$(NugetNunitShim)" />
+  </ImportGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms</Name>
+      <platform>dotnet</platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+      <platform>dotnet</platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Pages\Xamarin.Forms.Pages.csproj">
+      <Project>{EDAFAA1D-61F5-4DDA-B6B4-3E94AAD2C3EE}</Project>
+      <Name>Xamarin.Forms.Pages</Name>
+      <platform>dotnet</platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+  </ItemGroup>
+  <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+  </ItemGroup>
+  <!--
+
+    Targets
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+</Project>

@@ -27,7 +27,11 @@ using Xamarin.Forms.Internals;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Maps.Portable")]
 #endif
 [assembly: InternalsVisibleTo("iOSUnitTests")]
+#if !MXBUILD
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.UnitTests")]
+#else
+[assembly: InternalsVisibleTo("Xamarin.Forms.UnitTests")]
+#endif
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.Android.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.WP8.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.UnitTests")]

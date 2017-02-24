@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
+    <!--VS project type is a function of the first ProjectTypeGuids found in the text of the project file-->
+  </PropertyGroup>
+  <!--
+  
+    Properties
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory)\, .pre.props))\.pre.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .props))\.props" />
+  <Import Project="$(ExtXfDir)\xf.netstd.hierarchy.props" />
+  <!--
+  
+    Universal
+  -->
+  <PropertyGroup Condition=" '$(Platform)' == '[none]' " />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{CEBB44CB-4B0C-480A-9D87-675C65B49EA9}</ProjectGuid>
+    <RootNamespace>Xamarin.Forms.UnitTests</RootNamespace>
+    <NoWarn>0114;0672;0108;0067;0168;0169;0219;0612;0618;1998;4014</NoWarn>
+  </PropertyGroup>
+  <!--
+  
+    Library
+  -->
+  <ItemGroup Condition="true">
+    <Compile Include="$(ExtIdDir)\GlobalBuildInfo.cs">
+      <Link>Properties\GlobalBuildInfo.cs</Link>
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+    </Compile>
+    <Compile Include="$(ExtIdDir)BuildInfo.cs">
+      <DependentUpon>BuildInfo.t.cs</DependentUpon>
+      <Link>Properties\BuildInfo.cs</Link>
+    </Compile>
+    <None Include="$(ExtIdDir)BuildInfo.t.cs">
+      <IsMxbuildTemplate>true</IsMxbuildTemplate>
+      <Link>Properties\BuildInfo.t.cs</Link>
+      <CompileOutput>BuildInfo.cs</CompileOutput>
+    </None>
+  </ItemGroup>
+  <!--
+  
+    Portable
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'debug|netstandard' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'release|netstandard' " />
+  <ImportGroup>
+    <Import Project="$(NugetNunitShim)" />
+  </ImportGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <NugetProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms</Name>
+      <platform>dotnet</platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+    <NugetProjectReference Include="..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+      <platform>dotnet</platform>
+      <Private>true</Private>
+    </NugetProjectReference>
+  </ItemGroup>
+  <!--
+    ======
+    SOURCE
+    ======
+  -->
+  <ItemGroup>
+    <Compile Include="AbsoluteLayoutTests.cs" />
+    <Compile Include="AnimatableKeyTests.cs" />
+    <Compile Include="AppLinkEntryTests.cs" />
+    <Compile Include="BaseTestFixture.cs" />
+    <Compile Include="BehaviorTest.cs" />
+    <Compile Include="BindableObjectExtensionTests.cs" />
+    <Compile Include="BindableObjectUnitTests.cs" />
+    <Compile Include="BindablePropertyUnitTests.cs" />
+    <Compile Include="BindingBaseUnitTests.cs" />
+    <Compile Include="BindingExpressionTests.cs" />
+    <Compile Include="BindingTests.cs" />
+    <Compile Include="BindingTypeConverterTests.cs" />
+    <Compile Include="BindingUnitTests.cs" />
+    <Compile Include="BoxViewUnitTests.cs" />
+    <Compile Include="ButtonUnitTest.cs" />
+    <Compile Include="CarouselPageTests.cs" />
+    <Compile Include="CellTests.cs" />
+    <Compile Include="ColorUnitTests.cs" />
+    <Compile Include="CommandSourceTests.cs" />
+    <Compile Include="CommandTests.cs" />
+    <Compile Include="ContentFormUnitTests.cs" />
+    <Compile Include="ContentViewUnitTest.cs" />
+    <Compile Include="ContraintTypeConverterTests.cs" />
+    <Compile Include="ControlTemplateTests.cs" />
+    <Compile Include="DataTemplateSelectorTests.cs" />
+    <Compile Include="DataTemplateTests.cs" />
+    <Compile Include="DataTriggerTests.cs" />
+    <Compile Include="DatePickerUnitTest.cs" />
+    <Compile Include="DependencyServiceTests.cs" />
+    <Compile Include="DistanceTests.cs" />
+    <Compile Include="DynamicBindingContextTests.cs" />
+    <Compile Include="DynamicResourceTests.cs" />
+    <Compile Include="EasingTests.cs" />
+    <Compile Include="EditorTests.cs" />
+    <Compile Include="EffectTests.cs" />
+    <Compile Include="ElementTests.cs" />
+    <Compile Include="EntryCellTests.cs" />
+    <Compile Include="EntryUnitTests.cs" />
+    <Compile Include="EventTriggerTest.cs" />
+    <Compile Include="FluentTests.cs" />
+    <Compile Include="FontUnitTests.cs" />
+    <Compile Include="FormattedStringTests.cs" />
+    <Compile Include="FrameUnitTests.cs" />
+    <Compile Include="GeocoderUnitTests.cs" />
+    <Compile Include="GridLengthTypeConverterTests.cs" />
+    <Compile Include="GridTests.cs" />
+    <Compile Include="GroupViewUnitTests.cs" />
+    <Compile Include="ImageSourceTests.cs" />
+    <Compile Include="ImageTests.cs" />
+    <Compile Include="KeyboardTests.cs" />
+    <Compile Include="LabelTests.cs" />
+    <Compile Include="LayoutOptionsUnitTests.cs" />
+    <Compile Include="ListProxyTests.cs" />
+    <Compile Include="ListViewTests.cs" />
+    <Compile Include="MapSpanTests.cs" />
+    <Compile Include="MapTests.cs" />
+    <Compile Include="MarginTests.cs" />
+    <Compile Include="MasterDetailFormUnitTests.cs" />
+    <Compile Include="MenuItemTests.cs" />
+    <Compile Include="MessagingCenterTests.cs" />
+    <Compile Include="MockPlatformServices.cs" />
+    <Compile Include="MockViewModel.cs" />
+    <Compile Include="MotionTests.cs" />
+    <Compile Include="MultiPageTests.cs" />
+    <Compile Include="MultiTriggerTests.cs" />
+    <Compile Include="NativeBindingTests.cs" />
+    <Compile Include="NavigationMenuUnitTests.cs" />
+    <Compile Include="NavigationModelTests.cs" />
+    <Compile Include="NavigationProxyTests.cs" />
+    <Compile Include="NavigationUnitTest.cs" />
+    <Compile Include="NotifiedPropertiesTests.cs" />
+    <Compile Include="NotifyCollectionChangedEventArgsExtensionsTests.cs" />
+    <Compile Include="ObservableWrapperTests.cs" />
+    <Compile Include="OpenGLViewUnitTests.cs" />
+    <Compile Include="PageTests.cs" />
+    <Compile Include="PanGestureRecognizerUnitTests.cs" />
+    <Compile Include="PickerTests.cs" />
+    <Compile Include="PinchGestureRecognizerTests.cs" />
+    <Compile Include="PinTests.cs" />
+    <Compile Include="PlatformSpecificsTests.cs" />
+    <Compile Include="PointTests.cs" />
+    <Compile Include="PositionTests.cs" />
+    <Compile Include="ProgressBarTests.cs" />
+    <Compile Include="RectangleUnitTests.cs" />
+    <Compile Include="RegistrarUnitTests.cs" />
+    <Compile Include="RelativeLayoutTests.cs" />
+    <Compile Include="ResourceDictionaryTests.cs" />
+    <Compile Include="ScrollViewUnitTests.cs" />
+    <Compile Include="SearchBarUnitTests.cs" />
+    <Compile Include="SizeTests.cs" />
+    <Compile Include="SliderUnitTests.cs" />
+    <Compile Include="StackLayoutUnitTests.cs" />
+    <Compile Include="StepperUnitTests.cs" />
+    <Compile Include="StyleTests.cs" />
+    <Compile Include="SwitchCellTests.cs" />
+    <Compile Include="SwitchUnitTests.cs" />
+    <Compile Include="TabbedFormUnitTests.cs" />
+    <Compile Include="TableModelTests.cs" />
+    <Compile Include="TableRootUnitTests.cs" />
+    <Compile Include="TableSectionTests.cs" />
+    <Compile Include="TableViewUnitTests.cs" />
+    <Compile Include="TapGestureRecognizerTests.cs" />
+    <Compile Include="TemplatedItemsListTests.cs" />
+    <Compile Include="TextCellTests.cs" />
+    <Compile Include="ThicknessTests.cs" />
+    <Compile Include="TimePickerUnitTest.cs" />
+    <Compile Include="ToolbarItemTests.cs" />
+    <Compile Include="ToolbarTrackerTests.cs" />
+    <Compile Include="TriggerTests.cs" />
+    <Compile Include="TypedBindingUnitTests.cs" />
+    <Compile Include="TypeUnitTests.cs" />
+    <Compile Include="UnitPlatform.cs" />
+    <Compile Include="UriImageSourceTests.cs" />
+    <Compile Include="ViewCellTests.cs" />
+    <Compile Include="ViewUnitTests.cs" />
+    <Compile Include="WeakEventManagerTests.cs" />
+    <Compile Include="WebViewUnitTests.cs" />  </ItemGroup>
+  <!--
+
+    Targets
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .targets))\.targets" />
+</Project>
