@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Globalization;
 
 namespace Xamarin.Forms
 {
@@ -247,12 +248,12 @@ namespace Xamarin.Forms
 				maxValue = 100;
 				elem = elem.Substring(0, elem.Length - 1);
 			}
-			return (double)(int.Parse(elem).Clamp(0, maxValue)) / maxValue;
+			return (double)(int.Parse(elem, NumberStyles.Number, CultureInfo.InvariantCulture).Clamp(0, maxValue)) / maxValue;
 		}
 
 		static double ParseOpacity(string elem)
 		{
-			return double.Parse(elem).Clamp(0, 1);
+			return double.Parse(elem, NumberStyles.Number, CultureInfo.InvariantCulture).Clamp(0, 1);
 		}
 	}
 }
