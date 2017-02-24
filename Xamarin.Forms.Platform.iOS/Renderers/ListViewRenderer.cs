@@ -173,8 +173,12 @@ namespace Xamarin.Forms.Platform.iOS
 
 				controller.ScrollToRequested -= OnScrollToRequested;
 				var templatedItems = ((ITemplatedItemsView<Cell>)e.OldElement).TemplatedItems;
+                
+                //<Curbits>
+                e.OldElement.ReloadRowsRequested += OnReloadRowsRequested;
+                //</Curbits>
 
-				templatedItems.CollectionChanged -= OnCollectionChanged;
+                templatedItems.CollectionChanged -= OnCollectionChanged;
 				templatedItems.GroupedCollectionChanged -= OnGroupedCollectionChanged;
 			}
 
@@ -194,9 +198,13 @@ namespace Xamarin.Forms.Platform.iOS
 						Control.SetContentOffset(offset, true);
 					});
 				}
-				_shouldEstimateRowHeight = true;
 
-				var controller = (IListViewController)e.NewElement;
+                //<Curbits>
+                _shouldEstimateRowHeight = false;
+                //_shouldEstimateRowHeight = true;
+                //</Curbits>
+
+                var controller = (IListViewController)e.NewElement;
 
 				controller.ScrollToRequested += OnScrollToRequested;
 				var templatedItems = ((ITemplatedItemsView<Cell>)e.NewElement).TemplatedItems;
@@ -204,7 +212,11 @@ namespace Xamarin.Forms.Platform.iOS
 				templatedItems.CollectionChanged += OnCollectionChanged;
 				templatedItems.GroupedCollectionChanged += OnGroupedCollectionChanged;
 
-				UpdateRowHeight();
+                //<Curbits>
+                e.NewElement.ReloadRowsRequested += OnReloadRowsRequested;
+                //</Curbits>
+
+                UpdateRowHeight();
 
 				Control.Source = _dataSource = e.NewElement.HasUnevenRows ? new UnevenListViewDataSource(e.NewElement, _tableViewController) : new ListViewDataSource(e.NewElement, _tableViewController);
 
@@ -222,9 +234,34 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 
 			base.OnElementChanged(e);
-		}
+        }
 
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        //<Curbits>
+
+        void OnReloadRowsRequested(object sender, ListView.ReloadRowsRequestedEventArgs e)
+        {
+            NSIndexPath[] nsIndexPaths = new NSIndexPath[e.RowSections.Count];
+
+            for (int i = 0; i < nsIndexPaths.Length; i++)
+            {
+                nsIndexPaths[i] = NSIndexPath.FromRowSection(e.RowSections[i].Row, e.RowSections[i].Section);
+            }
+
+            //Console.WriteLine("Reloading rows...");
+
+            UITableViewRowAnimation animation = UITableViewRowAnimation.Automatic;
+
+            if ((e.Animation is int) || (e.Animation is Enum))
+            {
+                animation = (UITableViewRowAnimation)((int)e.Animation);
+            }
+
+            Control.ReloadRows(nsIndexPaths, animation);
+        }
+
+        //</Curbits>
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
 			if (e.PropertyName == ListView.RowHeightProperty.PropertyName)
@@ -608,7 +645,17 @@ namespace Xamarin.Forms.Platform.iOS
 
 			public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
 			{
-				var cell = GetCellForPath(indexPath);
+                //<Curbits>
+
+                float rowHeight = List.GetRowHeightInternal(new ListView.RowSection(indexPath.Row, indexPath.Section));
+                if (!float.IsNaN(rowHeight))
+                {
+                    return rowHeight;
+                }
+
+                //</Curbits>
+
+                var cell = GetCellForPath(indexPath);
 
 				if (List.RowHeight == -1 && cell.Height == -1 && cell is ViewCell)
 				{
