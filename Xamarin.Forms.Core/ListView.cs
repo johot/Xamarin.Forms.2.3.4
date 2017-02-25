@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms.Platform;
@@ -600,5 +601,51 @@ namespace Xamarin.Forms
 		{
 			return _platformConfigurationRegistry.Value.On<T>();
 		}
-	}
+
+        //<Curbits>
+
+        protected virtual float GetRowHeight(RowSection rowSection)
+        {
+            return float.NaN;
+        }
+
+        internal float GetRowHeightInternal(RowSection rowSection)
+        {
+            return GetRowHeight(rowSection);
+        }
+
+        internal class ReloadRowsRequestedEventArgs : EventArgs
+        {
+            public ReloadRowsRequestedEventArgs(IList<RowSection> rowSections, object animation = null)
+            {
+                Animation = animation;
+                RowSections = rowSections;
+            }
+
+            public IList<RowSection> RowSections { get; private set; }
+            public object Animation { get; set; }
+        }
+
+        public class RowSection
+        {
+            public RowSection(int row, int section = 0)
+            {
+                Row = row;
+                Section = section;
+            }
+
+            public int Row { get; set; }
+            public int Section { get; set; }
+        }
+
+        internal event EventHandler<ReloadRowsRequestedEventArgs> ReloadRowsRequested;
+
+        public void ReloadRows(IList<RowSection> rowSections, object animation = null)
+        {
+            if (ReloadRowsRequested != null)
+                ReloadRowsRequested(this, new ReloadRowsRequestedEventArgs(rowSections, animation));
+        }
+
+        //</Curbits>
+    }
 }
