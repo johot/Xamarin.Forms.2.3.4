@@ -1,0 +1,1 @@
+`nupack xamarin.forms.nuspec -properties configuration=debug`
